@@ -1,4 +1,8 @@
-import { Application, Context, NotFoundException, ConflictException, BadRequestException } from "./deps.ts";
+import { Application, Context, NotFoundException, ConflictException, BadRequestException, MiddlewareFunc, HandlerFunc } from "./deps.ts";
+import React from "https://dev.jspm.io/react";
+import ReactDOMServer from "https://dev.jspm.io/react-dom/server";
+import { Basic } from "./frontend/basic.jsx";
+import { CompanyFrontend } from "./frontend/company.jsx";
 
 const app = new Application();
 
@@ -29,8 +33,29 @@ feedbacks.set(test_company, [
 ]); 
 
 
+app.use((next) =>
+  (c) => {
+    let e = next(c);
+    if (React.isValidElement(e)) {
+      e = ReactDOMServer.renderToString(e);
+    }
+
+    return e;
+  }
+);
+
 app
-  .get("/:company_name", (context: Context) => {
+  .get("/", (context: Context) => {
+
+    return Basic()
+  })
+  .get("/site/:company_name", (context: Context) => {
+
+    const { company_name } = context.params; 
+    const company = companies.get(company_name);
+    return CompanyFrontend({company});
+  })
+  .get("api/companies/:company_name", (context: Context) => {
     
     console.log(JSON.stringify(context, null, 4))
 
@@ -42,7 +67,7 @@ app
     
     return context.json(company);
   })
-  .post("/", async (context: Context) => {
+  .post("api/companies", async (context: Context) => {
 
     const company = (await context.body()) as Company
     if (!company.name)
@@ -57,13 +82,13 @@ app
       info: "company created"
     }, 201);
   })
-  .get("/:company_name/feedbacks", async (context: Context) => {
+  .get("/api/companies/:company_name/feedbacks", async (context: Context) => {
 
     const company = (await context.body()) as Company;
     const body = feedbacks.get(company)!; 
     return context.json(body);
   })
-  .post("/:company_name/feedbacks", async (context: Context) => {
+  .post("/api/cmpanies/:company_name/feedbacks", async (context: Context) => {
 
     const { company_name } = context.params; 
     const feedback = (await context.body()) as Feedback;
