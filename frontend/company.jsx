@@ -7,6 +7,7 @@ export const CompanyFrontend = (props) => {
 
     const [comment, setComment] = React.useState(null); 
     const [indicator, setIndicator] = React.useState(null);
+    const [feedbacks, setFeedbacks] = React.useState([]);
 
     const send = async () => {
 
@@ -20,8 +21,15 @@ export const CompanyFrontend = (props) => {
 
         console.log(response);
     }
+
+    const fetchFeedback = async () => {
+
+        const response = await fetch(`/api/companies/${company.name}/feedbacks`); 
+        const feedbacks = await response.json(); 
+        setFeedbacks(feedbacks);
+    }
     
-    return <>
+    return (<div>
         <h1>Give feedback to {company.name}</h1>
         <input type="text" placeholder="your feedback" onChange={(event) => {
             setComment(event.target.value); 
@@ -32,5 +40,14 @@ export const CompanyFrontend = (props) => {
             <button onClick={() => { setIndicator("bad") }}>:-(</button>
         </div>
         <button onClick={send}>Send feedback</button>
-    </>
+
+        <h1>Previous feedback</h1>
+        <button onClick={fetchFeedback}>Load feedback</button>
+        {feedbacks.map(feedback => <>
+            <p>{feedback.indicator}</p>
+            <p>{feedback.comment}</p>
+        </>
+        )}
+
+    <div/>)
 }
