@@ -1,8 +1,9 @@
 import { App, get, post, contentType } from 'https://denopkg.com/syumai/dinatra/mod.ts';
 
-const get_brand = get("/api/brands", () => {
+const get_brand = get("/api/brands/:name", ({ params }) => {
 
     //stuff.. 
+    console.log("param name", params.name)
     return [200, contentType("json"), JSON.stringify({name: "testbrand"})]
 });
 
@@ -15,13 +16,8 @@ const brand_endpoints = [
     get_brand, post_brand
 ]
 
-const handlers = [
+export const handlers = [
     ...brand_endpoints
 ]
 
-
-
-const app = new App(1234); 
-app.register(...handlers);
-app.serve();
 
