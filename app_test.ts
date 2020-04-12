@@ -1,19 +1,38 @@
+import { Drash } from "./deps.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-import { server } from "./app.ts";
-const { test } = Deno;
+import { ResponsesAPI, get_server_config } from "./app.ts";
+
+const { Server } = Drash.Http
 
 
+let port: number; 
 
-const port = Math.floor(Math.random()*(9000-1000+1)+1000);
-const s = server(port)
-test("Wrapped test", async () => {
+const server_test = async (name: string, test: () => any) => {
 
-    s.run()
-    let response = await fetch(`http://localhost:${port}/api/brands/test/responses`, {
-        method: "GET",
-    });
+    const wrapped = async () => {
+        
+        const server = new Drash.Http.Server(get_server_config(2000));
+        console.log(server);
+        server.run(); 
+
+        try {
+            
+            await test(); 
+        } finally {
+            
+            await server.close();
+        }
+    }
+
+    Deno.test(name, wrapped);
+}
+
+const fetch_responses = (brand_name: string) => 
+    fetch(`http://localhost:${port}/api/brands/${brand_name}/responses`)
+
+server_test("Wrapped test", async () => {
+
+    const response = await fetch_responses("test");
     const json = await response.json(); 
-    console.log("HEI", json)
-    assertEquals(JSON.parse(await response.json()), []);
-    s.close()
-})
+    assertEquals(json.responses, []);
+});
