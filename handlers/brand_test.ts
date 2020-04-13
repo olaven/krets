@@ -1,12 +1,10 @@
-import { App } from "./deps.ts";
-import { handlers } from "./nap.ts";
-import { assertEquals, assert, assertNotEquals } from "./deps.ts";
-
-
+import { App } from "../deps.ts";
+import { assertEquals, assert, assertNotEquals } from "../deps.ts";
+import { handlers } from "./handlers.ts";
 
 const { test } = Deno; 
 
-const with_server = (action: (port: number) => any) => async () => {
+const with_app = (action: (port: number) => any) => async () => {
 
     const port = Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
     const app = new App(port); 
@@ -17,7 +15,7 @@ const with_server = (action: (port: number) => any) => async () => {
     app.close();
 } 
 
-test("Can fetch server in test", with_server(async port => {
+test("Can fetch server in test", with_app(async port => {
 
     const response = await fetch(`http://localhost:${port}/api/brands/test`);
     await response.text();

@@ -1,4 +1,4 @@
-import { get, post, contentType } from './deps.ts';
+import { get, post, contentType } from '../deps.ts';
 
 const get_brand = get("/api/brands/:name", ({ params }) => {
 
@@ -12,12 +12,9 @@ const post_brand = post("/api/brands", () => {
     return [201, "created"]
 });
 
-const brand_endpoints = [
-    get_brand, post_brand
-]
 
-export const handlers = [
-    ...brand_endpoints
+export const brand_endpoints = [
+    get_brand, post_brand
 ]
 
 
