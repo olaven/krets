@@ -1,4 +1,4 @@
-import { App, get, post, contentType } from 'https://denopkg.com/syumai/dinatra/mod.ts';
+import { get, post, contentType } from './deps.ts';
 
 const get_brand = get("/api/brands/:name", ({ params }) => {
 
