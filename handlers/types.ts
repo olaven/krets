@@ -1,6 +1,6 @@
 
 export interface Response extends Record<string, any> {
-    indicator: 'smile' | 'neutral' | 'bad', 
+    indicator: 'smile' | 'neutral' | 'sad', 
     comment: string
 }
 

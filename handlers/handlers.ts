@@ -1,4 +1,4 @@
-import { brand_endpoints } from "./brand.ts";
+import { brand_endpoints } from "./brand/brand.ts";
 
 export const handlers = [
     ...brand_endpoints
