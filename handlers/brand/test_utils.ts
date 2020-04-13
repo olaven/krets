@@ -1,13 +1,13 @@
 import { App } from "../../deps.ts";
 import { Brand } from "../types.ts";
-import { brand_endpoints } from "./brand.ts";
+import { brand_handlers } from "./brand_handlers.ts";
 
 export const with_app = (action: (port: number) => any) => async () => {
 
     const port = Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
     const app = new App(port); 
     app.serve(); 
-    app.register(...brand_endpoints);
+    app.register(...brand_handlers);
     
     await action(port); 
     app.close();

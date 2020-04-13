@@ -26,7 +26,7 @@ const post_brand = post("/api/brands", ({ params }) => {
 });
 
 
-export const brand_endpoints = [
+export const brand_handlers = [
     get_brand, post_brand
 ]
 
