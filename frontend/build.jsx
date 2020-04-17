@@ -1,9 +1,14 @@
-import { App, NewApp } from "../public/app.jsx";
-import { React, ReactDOM } from "../deps.ts";
+import { App, NewApp } from "./app.jsx";
+import React from "https://dev.jspm.io/react";
+import ReactDOMServer from "https://dev.jspm.io/react-dom/server";
 
-console.log(ReactDOM);
-ReactDOM.render(App())
+const app = App()
+if (React.isValidElement(app)){
 
-ReactDOM.render
+    const rendered = ReactDOMServer.renderToString(app); 
+    console.log("rendered", rendered);
+}
+
+
 
 
