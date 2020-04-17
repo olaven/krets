@@ -1,8 +1,7 @@
-import { App, NewApp } from "./app.jsx";
-import React from "https://dev.jspm.io/react";
+import { Root } from "./root.jsx";
 import ReactDOMServer from "https://dev.jspm.io/react-dom/server";
 
-const wrap_in_html = (rendered) => `
+const wrap_in_html = (rendered: string) => `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -16,9 +15,9 @@ const wrap_in_html = (rendered) => `
     </html>
 `
 
-export const build = async () => {
+export const build_frontend = async () => {
 
-    const app = App()
+    const app = Root()
     const rendered_app = ReactDOMServer.renderToString(app);
     const html = wrap_in_html(rendered_app);
     await Deno.create("./public/index.html");
