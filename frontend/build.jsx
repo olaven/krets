@@ -16,12 +16,15 @@ const wrap_in_html = (rendered) => `
     </html>
 `
 
+export const build = async () => {
 
-const app = App()
-const rendered_app = ReactDOMServer.renderToString(app);
-const html = wrap_in_html(rendered_app); 
-await Deno.create("./public/index.html");
-await Deno.writeFile("./public/index.html", new TextEncoder().encode(html));
+    const app = App()
+    const rendered_app = ReactDOMServer.renderToString(app);
+    const html = wrap_in_html(rendered_app);
+    await Deno.create("./public/index.html");
+    await Deno.writeFile("./public/index.html", new TextEncoder().encode(html));
+}
+
 
 
 
