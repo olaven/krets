@@ -1,4 +1,4 @@
-import { assertEquals } from "../../deps.ts";
+import { assertEquals } from "../../../deps.ts";
 import { Brand } from "../types.ts";
 import { with_brand_app, fetch_brand, post_brand } from "./test_utils.ts";
 

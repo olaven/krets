@@ -1,4 +1,4 @@
-import { get, post, contentType } from "../../deps.ts";
+import { get, post, contentType } from "../../../deps.ts";
 import { Response } from "../types.ts";
 import { database } from "../database.ts";
 

@@ -1,4 +1,4 @@
-import { App } from "../deps.ts";
+import { App } from "../../deps.ts";
 
 /**
  * Starts a server with given handlers on a random port. 
