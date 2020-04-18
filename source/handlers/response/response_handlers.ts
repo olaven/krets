@@ -26,7 +26,7 @@ const post_response = post("/api/brands/:brand_name/responses", ({params, body})
     if (!response.comment || !response.indicator)
         return [400, `${response} is not a valid response`]; 
 
-
+    //FIXME: contains a lot of reads. Is inefficient 
     if (!database.responses.get(brand_name)) 
         database.responses.set(brand_name, []);
 
