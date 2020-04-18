@@ -45,17 +45,3 @@ test("Returns 404 if the brand is not present", with_brand_app(async (port) => {
     const response = await fetch_brand(port, "somebrand"); 
     assertEquals(404, response.status);
 })); 
-
-test("Separating body and params", with_brand_app(async (port) => {
-
-    const body = JSON.stringify({ name: "body_name" }); 
-    const response = await fetch(`http://localhost:${port}/api/test/param_name`, {
-        method: "POST", 
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: body
-    });
-
-    assertEquals(response.status, 200);
-}))

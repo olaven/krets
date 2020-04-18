@@ -25,17 +25,9 @@ const post_brand = post("/api/brands", ({ body }) => {
     return [201, "Brand created"];
 });
 
-const test = post("/api/test/:name", ({params, body}) => {
-
-    console.log("HELLO");
-    console.log("param name: ", params.name); 
-    console.log("body name: ", body.name);
-    return [200, "good"]
-})
-
 
 export const brand_handlers = [
-    get_brand, post_brand, test 
+    get_brand, post_brand
 ]
 
 
