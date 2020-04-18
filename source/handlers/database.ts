@@ -1,9 +1,5 @@
 import { Brand, Response } from "./types.ts"
 
-
-/* const brands: [string, Brand][] = []
-const brand_to_response: [string, Response[]][] = [] */
-
 const brands = new Map<string, Brand>()
 const brand_to_response = new Map<string, Response[]>(); 
 
@@ -14,6 +10,10 @@ const brand_to_response = new Map<string, Response[]>();
 export const database = {
     brands, responses: brand_to_response
 }
+
+/* const brands: [string, Brand][] = []
+const brand_to_response: [string, Response[]][] = [] */
+
 /* export const database = {
     brands: {
         set: (name: string, brand: Brand) => {

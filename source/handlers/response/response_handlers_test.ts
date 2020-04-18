@@ -4,7 +4,7 @@ import { post_brand, with_brand_app } from "../brand/test_utils.ts";
 import { Response } from "../types.ts";
 
 const { test } = Deno; 
-/* 
+
 test("Can GET response", with_response_app(async (port) => {
     
     const brand_name = "GETBrand";
@@ -43,4 +43,4 @@ test("can post response", with_response_app(async (port) => {
     }); 
 
     assertEquals(201, response.status);
-})); */
+})); 

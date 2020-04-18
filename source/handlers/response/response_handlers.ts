@@ -4,9 +4,8 @@ import { database } from "../database.ts";
 
 const get_responses = get("/api/brands/:brand_name/responses", ({params}) => {
 
-
-    const { name: brand_name } = params; 
-    const responses = database.responses.get(brand_name); 
+    const { brand_name } = params
+    const responses = database.responses.get(brand_name);
 
     if (!responses && responses !== []) {
 
@@ -18,20 +17,21 @@ const get_responses = get("/api/brands/:brand_name/responses", ({params}) => {
     return [200, contentType('json'), JSON.stringify(responses)]; 
 });
 
-const post_response = post("/api/brands/:brand_name/responses", ({body}) => {
+const post_response = post("/api/brands/:brand_name/responses", ({params, body}) => {
 
-    const { brand_name } = body; 
-    const {indicator, comment} = body as Response;
-    const response = { indicator, comment };
-
-    const responses = database.responses.get(brand_name) as Response[]
-    if (!responses && responses !== [])
-        return [404, `Responses for ${brand_name} does not exist`];
+    console.log("HEISANN ");
+    const { brand_name } = params; 
+    const response = body as Response;
 
     if (!response.comment || !response.indicator)
         return [400, `${response} is not a valid response`]; 
 
-    database.responses.set(brand_name, [ response, ...responses ])
+
+    if (!database.responses.get(brand_name)) 
+        database.responses.set(brand_name, []);
+
+    const existing_responses = database.responses.get(brand_name) as Response[]
+    database.responses.set(brand_name, [ response, ...existing_responses ])
 
     return [201, "Created response"];
 });
