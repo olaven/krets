@@ -11,24 +11,31 @@ const get_brand = get("/api/brands/:name", ({ params }) => {
     else return [404, "resource not found"]
 });
 
-const post_brand = post("/api/brands", ({ params }) => {
+const post_brand = post("/api/brands", ({ body }) => {
 
-    const brand = params as Brand; 
+    const brand = body as Brand; 
     if (!brand.name)
         return [400, "Brand must have a name"]
     if (database.brands.get(brand.name))
         return [409, "Brand already exists"]
 
-        console.log("posted new brand ", brand)
     database.brands.set(brand.name, brand);
     database.responses.set(brand.name, []);
 
     return [201, "Brand created"];
 });
 
+const test = post("/api/test/:name", ({params, body}) => {
+
+    console.log("HELLO");
+    console.log("param name: ", params.name); 
+    console.log("body name: ", body.name);
+    return [200, "good"]
+})
+
 
 export const brand_handlers = [
-    get_brand, post_brand
+    get_brand, post_brand, test 
 ]
 
 

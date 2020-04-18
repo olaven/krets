@@ -18,10 +18,10 @@ const get_responses = get("/api/brands/:brand_name/responses", ({params}) => {
     return [200, contentType('json'), JSON.stringify(responses)]; 
 });
 
-const post_response = post("/api/brands/:brand_name/responses", ({params}) => {
+const post_response = post("/api/brands/:brand_name/responses", ({body}) => {
 
-    const { brand_name } = params; 
-    const {indicator, comment} = params as Response;
+    const { brand_name } = body; 
+    const {indicator, comment} = body as Response;
     const response = { indicator, comment };
 
     const responses = database.responses.get(brand_name) as Response[]
