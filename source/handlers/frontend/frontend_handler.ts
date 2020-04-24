@@ -1,13 +1,11 @@
 import { get } from "../../../deps.ts";
 
 import { renderBody } from "./rendering.js"
-import { App } from "../../../public/app.js";
+import { Home } from "../../../public/components/home/home.js";
 
 
-const index_handler = get("/", () => {
-
-    return renderBody(App);
-});
+const index_handler = get("/", () => 
+    renderBody(Home, "./components/home/render.js"));
 
 const brand_page_handler = get("/:brand_name", ({params}) => {
 
