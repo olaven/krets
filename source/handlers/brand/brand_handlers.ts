@@ -11,9 +11,9 @@ const get_brand = get("/api/brands/:name", ({ params }) => {
     else return [404, "resource not found"]
 });
 
-const post_brand = post("/api/brands", ({ body }) => {
+const post_brand = post("/api/brands", ({ params }) => {
 
-    const brand = body as Brand; 
+    const brand = params as Brand; 
     if (!brand.name)
         return [400, "Brand must have a name"]
     if (database.brands.get(brand.name))

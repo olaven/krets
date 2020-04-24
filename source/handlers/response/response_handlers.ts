@@ -17,11 +17,12 @@ const get_responses = get("/api/brands/:brand_name/responses", ({params}) => {
     return [200, contentType('json'), JSON.stringify(responses)]; 
 });
 
-const post_response = post("/api/brands/:brand_name/responses", ({params, body}) => {
+const post_response = post("/api/brands/:brand_name/responses", ({params}) => {
 
-    console.log("HEISANN ");
+
     const { brand_name } = params; 
-    const response = body as Response;
+    const { indicator, comment } = params;
+    const response = { indicator, comment }
 
     if (!response.comment || !response.indicator)
         return [400, `${response} is not a valid response`]; 
