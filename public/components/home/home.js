@@ -1,8 +1,5 @@
-import htm from "https://unpkg.com/htm@2.2.1/dist/htm.module.js";
-import {
-    h as preact,
-    Component
-} from "https://unpkg.com/preact@10.0.5/dist/preact.module.js";
+import htm from "https://unpkg.com/htm@3.0.3/dist/htm.module.js";
+import {h as preact} from "https://unpkg.com/preact@10.0.5/dist/preact.module.js";
 
 const h = htm.bind(preact);
 
@@ -10,7 +7,7 @@ export const Home = () => {
 
   return h`
     <div>Functional Rendered</div>
-    <button onClick=${() => {console.log("triggered js")}}>Trigger JS</button>
+    <button onClick=${() => { console.log("triggered") }}>Trigger JS</button>
   `
 }
 /* export class Home extends Component {
