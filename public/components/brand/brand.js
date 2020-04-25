@@ -1,6 +1,6 @@
 import { h } from "../../deps_component.js"
 
-export const Brand = (props) => {
+const Brand = (props) => {
 
     const { name } = props
     console.log("rendered");
@@ -9,3 +9,5 @@ export const Brand = (props) => {
         <button onClick=${() => {console.log("brand trigerd")}}>trigger</buton>
     `
 }
+
+export default Brand

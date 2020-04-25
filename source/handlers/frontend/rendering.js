@@ -9,7 +9,7 @@ import { renderToString } from "https://cdn.pika.dev/preact-render-to-string";
 < script src = "https://unpkg.com/htm@2.2.1/dist/htm.module.js" > < /script>  <
     script src = "https://unpkg.com/preact@10.0.5/dist/preact.module.js" > < /script>  */
 
-export const renderBody = (Component, client_script, script_content) => {
+export const renderBody = (Component, component_path) => {
 
     return renderToString(html `
         <html>
@@ -24,11 +24,11 @@ export const renderBody = (Component, client_script, script_content) => {
                     const html = htm.bind(h);
 
                     
-                    import { Brand } from './components/brand/brand.js';
+                    import Component from '${component_path}';
 
                                         //TODO: generic props object 
-                    function withProps() { return ${Component}({name: 'HEI'}) }
-                    client_render(${Component});
+                    function withProps() { return Component({name: 'HEI'}) }
+                    client_render(withProps);
                     
                 </script>
             </head>
