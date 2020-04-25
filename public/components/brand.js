@@ -1,10 +1,11 @@
-import { h } from "../deps_component.js"
+import { h } from "../deps_frontend.js"
+
 
 const Brand = (props) => {
     
     const { name } = props
     return h `
-        <div>Brand name: ${name}</div>
+        <div style=${{color: "red"}}>Brand name: ${name}</div>
         <button onClick=${() => {console.log("brand trigerd")}}>trigger</buton>
     `
 }

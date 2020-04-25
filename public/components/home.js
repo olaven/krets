@@ -1,10 +1,19 @@
-import { h } from "../deps_component.js"
+import { h, useState, useEffect } from "../deps_frontend.js"
+
 
 const Home = () => {
 
+  const [ name, setName ] = useState("state not set");
+
+  useEffect(() => {
+
+    console.log("hei")
+  }, [])
+  
   return h`
     <div>Functional Rendered</div>
-    <button onClick=${() => { console.log("triggered") }}>Trigger JS</button>
+    ${name}
+    <button onClick=${() => { setName("Changed") }}>Trigger JS</button>
   `
 }
 
