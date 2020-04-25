@@ -1,5 +1,5 @@
 import htm from "https://unpkg.com/htm@2.2.1/dist/htm.module.js";
-import { h } from "https://unpkg.com/preact@10.0.5/dist/preact.module.js";
+import {h,hydrate,} from 'https://unpkg.com/preact@10.0.5/dist/preact.module.js';
 const html = htm.bind(h);
 
 //NOTE: File is JS because TS complains about types in this module
@@ -9,34 +9,41 @@ import { renderToString } from "https://cdn.pika.dev/preact-render-to-string";
 < script src = "https://unpkg.com/htm@2.2.1/dist/htm.module.js" > < /script>  <
     script src = "https://unpkg.com/preact@10.0.5/dist/preact.module.js" > < /script>  */
 
-export const renderBody = (Component, component_path) => {
+export const renderBody = (Component, component_path, props) => {
 
-    return renderToString(html `
+    const stringified_props = JSON.stringify(props)
+    
+    const withProps = () => Component(stringified_props)
+    const jsx = html `<${withProps} page="All" />`
+    const hydrated = hydrate(jsx, document.body);
+    
+    console.log(stringified_props);
+    //return renderToString(html `
+    return `
         <html>
             <head>
                 <script type="module">
                 
-
-                    import { client_render } from './components/client.js'
                     import htm from 'https://unpkg.com/htm@2.2.1/dist/htm.module.js';
                     import {h,hydrate,} from 'https://unpkg.com/preact@10.0.5/dist/preact.module.js';
-
                     const html = htm.bind(h);
 
-                    
+                    function client_render(Component) {
+    
+                        const jsx = html \`<\${Component} page="All" />\`
+                        const hydrated = hydrate(jsx, document.body);
+                        return hydrated
+                    }
+                                    
                     import Component from '${component_path}';
-
-                                        //TODO: generic props object 
-                    function withProps() { return Component({name: 'HEI'}) }
+                    function withProps() { return Component(${stringified_props}) }
                     client_render(withProps);
-                    
                 </script>
             </head>
             <body>
-                <${Component} page="All" />
+                ${hydrated}
             </body>
-        </html>
-    `);
+        </html>`
 } 
 
 

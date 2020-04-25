@@ -1,4 +1,4 @@
-import { h } from "../../deps_component.js"
+import { h } from "../deps_component.js"
 
 const Brand = (props) => {
 
