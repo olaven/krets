@@ -2,16 +2,19 @@ import { get } from "../../../deps.ts";
 
 import { renderBody } from "./rendering.js"
 import { Home } from "../../../public/components/home/home.js";
+import { Brand } from "../../../public/components/brand/brand.js";
 
 
 const index_handler = get("/", () => 
     renderBody(Home, "./components/home/render.js"));
 
-const brand_page_handler = get("/:brand_name", ({params}) => {
+const brand_page_handler = get("/:name", ({params}) => {
 
-    return params.brand_name;
-})
+    const { name } = params;
+    const withProps = () => Brand({ name });
+    return renderBody(withProps, "./components/brand/render.js");
+});
 
 export const frontend_handlers = [
-    index_handler, brand_page_handler
+    brand_page_handler, index_handler
 ]
