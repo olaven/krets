@@ -6,5 +6,6 @@ export const Brand = (props) => {
     console.log("rendered");
     return h `
         <div>Brand name: ${name}</div>
+        <button onClick=${() => {console.log("brand trigerd")}}>trigger</buton>
     `
 }
