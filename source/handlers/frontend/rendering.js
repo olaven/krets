@@ -1,10 +1,6 @@
-import htm from "https://unpkg.com/htm@2.2.1/dist/htm.module.js";
-import {h,hydrate,} from 'https://unpkg.com/preact@10.0.5/dist/preact.module.js';
-const html = htm.bind(h);
-
 //NOTE: File is JS because TS complains about types in this module
 import { renderToString } from "https://cdn.pika.dev/preact-render-to-string";
-
+ 
 /*
 < script src = "https://unpkg.com/htm@2.2.1/dist/htm.module.js" > < /script>  <
     script src = "https://unpkg.com/preact@10.0.5/dist/preact.module.js" > < /script>  */
@@ -12,13 +8,8 @@ import { renderToString } from "https://cdn.pika.dev/preact-render-to-string";
 export const renderBody = (Component, component_path, props) => {
 
     const stringified_props = JSON.stringify(props)
-    
     const withProps = () => Component(stringified_props)
-    const jsx = html `<${withProps} page="All" />`
-    const hydrated = hydrate(jsx, document.body);
     
-    console.log(stringified_props);
-    //return renderToString(html `
     return `
         <html>
             <head>
@@ -41,7 +32,7 @@ export const renderBody = (Component, component_path, props) => {
                 </script>
             </head>
             <body>
-                ${hydrated}
+                ${renderToString(withProps())}
             </body>
         </html>`
 } 
