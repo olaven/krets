@@ -2,10 +2,11 @@ import { get } from "../../../deps.ts";
 
 import { renderBody } from "./rendering.js"
 import Brand from "../../../public/components/brand.js";
+import Home from "../../../public/components/home.js";
 
 
 const index_handler = get("/", () => 
-    renderBody("./components/home.js"))
+    renderBody(Home, "./components/home.js", {}))
     
 
 //NOTE: passing script here, as that allows for the props to pass as well. Generalize when working 
