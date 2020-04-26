@@ -1,15 +1,10 @@
-import { h, useState, useEffect } from "../deps_frontend.js"
-
+import { h, useState } from "../deps_frontend.js"
 
 const Home = () => {
 
   const [ name, setName ] = useState("state not set");
 
-  useEffect(() => {
 
-    console.log("hei")
-  }, [])
-  
   return h`
     <div>Functional Rendered</div>
     ${name}
