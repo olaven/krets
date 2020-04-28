@@ -1,5 +1,5 @@
 //NOTE: File is JS because TS complains about types in this module
-import { renderToString } from "https://cdn.pika.dev/preact-render-to-string";
+import { renderToString } from "https://cdn.pika.dev/preact-render-to-string/";
 
 
 export const renderBody = (Component, component_path, props) => {
@@ -12,8 +12,8 @@ export const renderBody = (Component, component_path, props) => {
             <head>
                 <script type="module">
                 
-                    import htm from 'https://unpkg.com/htm@2.2.1/dist/htm.module.js';
-                    import {h,hydrate,} from 'https://unpkg.com/preact@10.0.5/dist/preact.module.js';
+                    import htm from 'https://cdn.pika.dev/htm@2.2.1';
+                    import {h,hydrate,} from 'https://cdn.pika.dev/preact';
                     const html = htm.bind(h);
 
                     function client_render(Component) {
