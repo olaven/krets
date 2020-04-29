@@ -1,4 +1,7 @@
-import {options as n} from "./preact.js";
+import {
+    options as n
+} from 'https://cdn.pika.dev/preact@latest'; //'./preact.js'
+
 let t = []
 let u = []
 let r = []
