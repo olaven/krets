@@ -17,7 +17,6 @@ const Home = () => {
       
       console.log("feil her: ", response)
     }
-
   }
 
   return h`<${Layout}>

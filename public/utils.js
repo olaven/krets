@@ -5,7 +5,7 @@
  */
 export const http = async (url, options) => 
     typeof Deno !== 'undefined'?
-        null: 
+        (url, options) => {/*Intentionally blank*/}: 
         fetch(url, options); 
 
 
@@ -16,3 +16,6 @@ export const post = async (url, body) => http(url, {
     }, 
     body: JSON.stringify(body)
 });
+
+export const get = (url) => http(url, {});
+
