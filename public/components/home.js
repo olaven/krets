@@ -1,6 +1,6 @@
 import Layout from "./layout.js";
 import { h, useState } from "../deps_frontend.js"
-import { http } from "../utils.js";
+import { post } from "../utils.js";
 
 
 const Home = () => {
@@ -9,9 +9,7 @@ const Home = () => {
 
   const onRegister = async () => {
 
-    const response = await http("/api/brands", { method: "post", body: JSON.stringify({
-      name
-    }) });
+    const response = await post("/api/brands", { name });
     if (response.status === 201) {
 
       console.log("laget")

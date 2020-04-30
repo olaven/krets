@@ -11,8 +11,10 @@ const get_brand = get("/api/brands/:name", ({ params }) => {
     else return [404, "resource not found"]
 });
 
-const post_brand = post("/api/brands", ({ params }) => {
+const post_brand = post("/api/brands", (context) => {
 
+    console.log("context: ", context);
+    const { params } = context;
     const brand = params as Brand; 
 
     if (!brand.name)
