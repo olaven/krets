@@ -4,6 +4,6 @@
  * @param {*} options 
  */
 export const http = async (url, options) => 
-    Deno? 
+    typeof Deno !== 'undefined'?
         null: 
         fetch(url, options)
