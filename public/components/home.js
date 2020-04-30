@@ -8,7 +8,7 @@ const Home = () => {
   return h`
     <div>Functional Rendered</div>
     <button onClick=${() => { setName("Changed") }}>Trigger JS</button>
-    ${name}
+    <div>${name}</div>
   `
 }
 
