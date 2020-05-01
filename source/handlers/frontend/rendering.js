@@ -4,39 +4,34 @@ import { renderToString } from "../../../public/deps_frontend.js";
 export const renderBody = (Component, component_path, props) => {
 
     const stringified_props = JSON.stringify(props)
-    const withProps = () => Component(stringified_props)
-
-    const rendered = renderToString(withProps())
+    const rendered = renderToString(Component(stringified_props))
 
     return `
         <html>
             <head>
+                <script type="module">
+
+                    import { h as preact, hydrate } from 'https://cdn.pika.dev/preact';
+                    import htm from "https://cdn.pika.dev/htm";
+                    
+                    export const h = htm.bind(preact);
+
+                    const client_render = (Component) => {
+                        
+                        const jsx = h \`<\${Component} page="All" />\`
+                        const hydrated = hydrate(jsx, document.getElementById("root"));
+                        return hydrated
+                    }
+                                    
+                    import Component from '${component_path}';
+                    client_render(() => Component(${stringified_props}));
+
+                </script>
             </head>
             <body>
                     <div id="root">
                         ${rendered}
                     </div>
-
-                    <script type="module">
-
-                        import { h as preact, hydrate } from 'https://cdn.pika.dev/preact';
-                        export { renderToString } from "https://cdn.pika.dev/preact-render-to-string";
-                        import htm from "https://cdn.pika.dev/htm";
-                        
-                        export const h = htm.bind(preact);
-
-                        function client_render(Component) {
-                            
-                            const jsx = h \`<\${Component} page="All" />\`
-                            const hydrated = hydrate(jsx, document.getElementById("root"));
-                            return hydrated
-                        }
-                                        
-                        import Component from '${component_path}';
-                        function withProps() { return Component(${stringified_props}) }
-                        client_render(withProps);
-
-                    </script>
             </body>
         </html>`
 } 
