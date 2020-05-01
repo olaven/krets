@@ -18,7 +18,6 @@ export const dotenv = async () => {
     get_pairs(file_content).forEach(pair => {
 
         const [key, value] = [pair[0], pair[1]];
-        console.log("setting ", key, value)
         Deno.env.set(key, value);
-    })
+    }); 
 }
