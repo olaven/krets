@@ -20,7 +20,6 @@ const Home = () => {
   }
 
   return h`<${Layout}>
-      <h1>Krets</h1>
       <input type="text" placeholder="ditt navn" value="${name}" onChange=${(event) => {setName(event.target.value)}}></input>
       <button onClick=${onRegister}>registrer</button>
   </${Layout}>`
