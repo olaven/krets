@@ -1,1 +1,1 @@
-denon --allow-net --allow-read --allow-write ./app.ts
+deno --allow-net --allow-env --allow-read --allow-write ./app.ts
