@@ -1,15 +1,12 @@
 
 import { app } from "./deps.ts";
 import { handlers } from "./source/handlers/handlers.js";
-import { dotenv } from "./dotenv.ts";
+import { load_environment } from "./environment.ts";
 
 
 
 //loading env
-await dotenv()
-
-console.log(Deno.env.toObject())
-
+await load_environment();
 
 //starting server
 app(...handlers);

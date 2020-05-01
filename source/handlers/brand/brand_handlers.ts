@@ -13,7 +13,6 @@ const get_brand = get("/api/brands/:name", ({ params }) => {
 
 const post_brand = post("/api/brands", (context) => {
 
-    console.log("context: ", context);
     const { params } = context;
     const brand = params as Brand; 
 

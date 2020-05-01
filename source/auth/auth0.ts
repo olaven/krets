@@ -1,4 +1,4 @@
-export const get_auth0_env = () => {
+export const get_auth0 = () => {
 
     const {
         auth0_client_id, 
