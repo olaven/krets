@@ -1,4 +1,7 @@
-import { App } from "../../deps.ts";
+import { App } from "../deps.ts";
+
+const random_port = () => 
+    Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
 
 /**
  * Starts a server with given handlers on a random port. 
@@ -7,11 +10,11 @@ import { App } from "../../deps.ts";
  * @param handlers 
  * @param action 
  */
-export const with_app = (handlers: any[], action: (port: number) => any) => async () => {
+export const with_app = (handlers: any[], action: (port: number) => any, port = random_port()) => async () => {
 
-    const port = Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
     const app = new App(port); 
-    app.serve(); 
+    
+    app.serve();
     app.register(...handlers);
     
     await action(port); 

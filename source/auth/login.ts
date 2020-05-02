@@ -7,19 +7,23 @@ export const build_query = (config: any) => `?${Object.entries(config)
 /**
  * Logs in with Auth0
  */
-export const login = async () => {
+export const login = async (port: number) => {
 
     const auth0 = get_auth0()
     
     const query_params = build_query({
         response_type: "code", 
         client_id: auth0.auth0_client_id, 
-        connection: null, 
-        redirect_uri: "https://localhost:8080/api/auth/callback", //TODO: some solution here
-        state: null, 
+        connection: "undefined", 
+        redirect_uri: `https://localhost:${port}/api/auth/callback`, //TODO: some solution here
+        state: "undefined", 
     });
     
-    const response = await fetch(`${auth0.auth0_domain}/authorize${query_params}`);
+    console.log("going to fetch");
+    const url = `${auth0.auth0_domain}/authorize${query_params}`;
+    console.log("going to fetch: ", url);
+    const response = await fetch(url);
+    console.log(response);
     console.log(await response.text())
     console.log("response; ", response)
     return response;

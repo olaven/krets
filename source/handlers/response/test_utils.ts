@@ -1,4 +1,4 @@
-import { with_app, test_post, test_get } from "../test_utils.ts"
+import { with_app, test_post, test_get } from "../../test_utils.ts"
 import { response_handlers } from "./response_handlers.ts"
 import { Response } from "../types.ts";
 import { brand_handlers } from "../brand/brand_handlers.ts";

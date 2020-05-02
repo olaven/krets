@@ -1,6 +1,6 @@
 import { Brand } from "../types.ts";
 import { brand_handlers } from "./brand_handlers.ts";
-import { with_app, test_get, test_post } from "../test_utils.ts";
+import { with_app, test_get, test_post } from "../../test_utils.ts";
 
 export const with_brand_app = (action: (port: number) => any) => 
     with_app(brand_handlers, action)

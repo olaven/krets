@@ -1,16 +1,19 @@
 import { build_query, login } from "./login.ts";
 import { assertThrows, assertEquals, assertNotEquals } from "../../deps.ts";
 import { load_environment, clear_environment } from "../../environment.ts";
+import { with_auth_app } from "./test_utils.ts";
 const { test } = Deno; 
 
 
-test("Login runs", async () => {
+test("Login runs", with_auth_app(async (port) => {
 
     await load_environment();
-    const response = await login();
-    await response.arrayBuffer()
+    console.log("before login");
+    const response = await login(port);
+    console.log("after login");
+    await response.arrayBuffer();
     await clear_environment(); 
-})
+}))
 
 test(`build_query returns something`, () => {
 
