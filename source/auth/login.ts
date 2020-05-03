@@ -5,13 +5,21 @@ export const build_query = (config: any) => `?${Object.entries(config)
     .join(`&`)}`;
 
 /**
+ * Gets token? idk yet, something to work
  * Logs in with Auth0
  */
 export const login = async (port: number) => {
 
     const auth0 = get_auth0()
-    
+
     const query_params = build_query({
+        grant_type: `authorization_code`,
+        client_id: auth0.auth0_client_id, 
+        client_secret: auth0.auth0_client_secret, 
+        
+    })
+    
+    /* const query_params = build_query({
         response_type: "code", 
         client_id: auth0.auth0_client_id, 
         connection: "undefined", 
@@ -24,8 +32,7 @@ export const login = async (port: number) => {
     console.log("going to fetch: ", url);
     const response = await fetch(url);
     console.log(response);
-    console.log(await response.text())
-    console.log("response; ", response)
+    console.log(await response.text()) */
     return response;
 }
 

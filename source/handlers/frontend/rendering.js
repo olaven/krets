@@ -3,6 +3,7 @@ import { renderToString } from "../../../public/deps_frontend.js";
 
 export const renderBody = (Component, component_path, props) => {
 
+
     const stringified_props = JSON.stringify(props)
     const rendered = renderToString(Component(stringified_props))
 
