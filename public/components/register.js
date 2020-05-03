@@ -23,7 +23,7 @@ const Register = (props) => {
 
     const { auth0_client_id, auth0_domain } = props; 
 
-    const onRegister = async () => {
+    const onImplicit = async () => {
 
         const query = build_query({
             audience: `${auth0_domain}/api/v2`, 
@@ -40,8 +40,33 @@ const Register = (props) => {
     }
     
 
+    console.log(props);
+    const onUniversal = async () => {
+
+        /**
+         GET https: //krets.eu.auth0.com/authorize?
+             response_type = code | token &
+             client_id = si4eE1tnSMdh0pwD4Rt6ZKPgLoqioxzG &
+             connection = CONNECTION &
+             redirect_uri = undefined &
+             state = STATE
+         */
+
+        const query = build_query({
+            response_type: "code",
+            client_id: auth0_client_id, 
+            //connection: "CONNECTION", 
+            redirect_uri: "localhost:8080/amloggedin", 
+            state: "KRETS_STATE"
+        }); 
+
+        const response = await get(`${auth0_domain}/authorize${query}`); 
+        console.log(response);
+    }
+
     return h `<${Layout}>
-        <button onClick=${onRegister}>registrer</button>
+        <button onClick=${onImplicit}>registrer implicit (not working)</button>
+        <button onClick=${onUniversal}>universal login</button>
     </${Layout}>`
 }
 
