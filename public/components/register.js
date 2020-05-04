@@ -21,7 +21,7 @@ const build_query = (config) => `?${Object.entries(config)
 
 const Register = (props) => {
 
-    const { auth0_client_id, auth0_domain } = props; 
+    const { auth0_client_id, auth0_domain, host_uri } = props; 
 
     const onImplicit = async () => {
 
@@ -63,12 +63,11 @@ const Register = (props) => {
         const response = await get(`${auth0_domain}/authorize${query}`); 
         console.log(response);
     }
-
-    const url = "https://krets.eu.auth0.com/login?client=si4eE1tnSMdh0pwD4Rt6ZKPgLoqioxzG&redirectu_uri=localhost:8080/"
+    
     return h `<${Layout}>
         <button onClick=${onImplicit}>registrer implicit (not working)</button>
         <button onClick=${onUniversal}>universal login</button>
-        <a href=${url}>Try link</a>
+        <a href=${`https://krets.eu.auth0.com/login?client=${auth0_client_id}&redirect_uri=${host_uri}`}>Try link</a>
     </${Layout}>`
 }
 

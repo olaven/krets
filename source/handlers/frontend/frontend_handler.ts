@@ -19,10 +19,10 @@ const brand_page_handler = get("/:name", ({params}) =>
 //NOTE: JUST TESTING 
 const register_handler_FLOW_test = get("/p/register", context => {
 
-    const { auth0_client_id, auth0_domain } = get_auth0() 
+    const { auth0_client_id, auth0_domain, host_uri } = get_auth0() 
 
     return renderBody(Register, "../components/register.js", {
-        auth0_client_id, auth0_domain
+        auth0_client_id, auth0_domain, host_uri
     }); 
 });
     

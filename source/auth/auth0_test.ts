@@ -53,4 +53,4 @@ test("Throws if variables are missing", () => {
 
         const env = get_auth0();
     });
-})
+});
