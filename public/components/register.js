@@ -45,18 +45,18 @@ const Register = (props) => {
 
         /**
          GET https: //krets.eu.auth0.com/authorize?
-             response_type = code | token &
-             client_id = si4eE1tnSMdh0pwD4Rt6ZKPgLoqioxzG &
-             connection = CONNECTION &
-             redirect_uri = undefined &
-             state = STATE
+            response_type = code | token &
+            client_id = si4eE1tnSMdh0pwD4Rt6ZKPgLoqioxzG &
+            connection = CONNECTION &
+            redirect_uri = undefined &
+            state = STATE
          */
 
         const query = build_query({
             response_type: "code",
             client_id: auth0_client_id, 
             //connection: "CONNECTION", 
-            redirect_uri: "localhost:8080/amloggedin", 
+            redirect_uri: "https://localhost:8080/amloggedin", 
             state: "KRETS_STATE"
         }); 
 
@@ -64,9 +64,11 @@ const Register = (props) => {
         console.log(response);
     }
 
+    const url = "https://krets.eu.auth0.com/login?client=si4eE1tnSMdh0pwD4Rt6ZKPgLoqioxzG&redirectu_uri=localhost:8080/"
     return h `<${Layout}>
         <button onClick=${onImplicit}>registrer implicit (not working)</button>
         <button onClick=${onUniversal}>universal login</button>
+        <a href=${url}>Try link</a>
     </${Layout}>`
 }
 
