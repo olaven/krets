@@ -10,7 +10,7 @@ import { get_auth0 } from "../../auth/auth0.ts"
 
 const index_handler = get("/", context => {
 
-    console.log(context)
+    
     return renderBody(Home, "./components/home.js", {});
 }) 
 

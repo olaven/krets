@@ -1,9 +1,14 @@
 import Layout from "./layout.js";
-import { h, useState } from "../deps_frontend.js"
+import { h, useContext } from "../deps_frontend.js"
 import { get } from "../utils.js";
+import { AuthContext } from "../context/auth_context.js";
 
 
 const Home = () => {
+
+  const { todo } = useContext(AuthContext);
+  console.log("mottok oppdatert todo: ", todo);
+
 
   const parse_hash = () => {
 
@@ -11,9 +16,8 @@ const Home = () => {
     location.hash.substring(1)
       .split("&")
       .map(pair => pair.split("="))
-      .forEach(pair => {
+      .forEach(([key, value]) => {
 
-        const [key, value] = pair;
         parsed[key] = value;
       }); 
 

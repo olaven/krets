@@ -70,6 +70,9 @@ function T(n, t) {
 }
 
 function w(n) {
+
+    
+    if (!u.context) return n.__
     var r = u.context[n.__c];
     if (!r) return n.__;
     var i = a(t++);
@@ -145,4 +148,4 @@ export const useImperativeHandle = s;
 export const useMemo = y;
 export const useCallback = T;
 export const useContext = w;
-export const useDebugValue = A;
+export const useDebugValue = A; 

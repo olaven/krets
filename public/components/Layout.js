@@ -1,4 +1,5 @@
 import { h } from "../deps_frontend.js"
+import { AuthContextProvider } from "../context/auth_context.js"
 
 //TODO: some kind of color system: https://colors.lol/
 
@@ -37,7 +38,7 @@ const Footer = () => {
 
 const Layout = (props) => {
 
-    return h`<div>
+    return h`<${AuthContextProvider}>
         <${Header}}>
             Krets.
         </${Header}>
@@ -45,7 +46,7 @@ const Layout = (props) => {
             ${props.children}
         </div> 
         <${Footer}/>
-    </div>`
+    </${AuthContextProvider}>`
 }
 
 
