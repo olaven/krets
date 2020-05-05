@@ -1,27 +1,45 @@
 import Layout from "./layout.js";
 import { h, useState } from "../deps_frontend.js"
-import { post } from "../utils.js";
+import { get } from "../utils.js";
 
 
 const Home = () => {
 
-  const [ name, setName ] = useState("");
+  const parse_hash = () => {
 
-  const onRegister = async () => {
+    const parsed = {};
+    location.hash.substring(1)
+      .split("&")
+      .map(pair => pair.split("="))
+      .forEach(pair => {
 
-    const response = await post("/api/brands", { name });
-    if (response.status === 201) {
+        const [key, value] = pair;
+        parsed[key] = value;
+      }); 
 
-      console.log("laget")
-    } else {
-      
-      console.log("feil her: ", response)
-    }
+      return parsed;
   }
 
+  const fetch_user = async () => {
+
+      const url = `https://krets.eu.auth0.com/userinfo`;
+
+      const { access_token } = parse_hash();
+
+      const response = await get(url, {
+          headers: {
+              "Authorization": `Bearer ${access_token}`
+          }
+      }); 
+
+      const body = await response.json()
+      console.log(body)
+  }
+
+  
+
   return h`<${Layout}>
-      <input type="text" placeholder="ditt navn" value="${name}" onChange=${(event) => {setName(event.target.value)}}></input>
-      <button onClick=${onRegister}>registrer</button>
+      <button onClick=${fetch_user}>fetch user</button>
   </${Layout}>`
 }
 

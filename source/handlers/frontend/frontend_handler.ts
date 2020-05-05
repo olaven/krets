@@ -8,8 +8,12 @@ import Register from "../../../public/components/register.js";
 import { get_auth0 } from "../../auth/auth0.ts"
 
 
-const index_handler = get("/", () => 
-    renderBody(Home, "./components/home.js", {}))
+const index_handler = get("/", context => {
+
+    console.log(context)
+    return renderBody(Home, "./components/home.js", {});
+}) 
+
     
 
 //NOTE: passing script here, as that allows for the props to pass as well. Generalize when working 

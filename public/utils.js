@@ -17,5 +17,5 @@ export const post = async (url, body) => http(url, {
     body: JSON.stringify(body)
 });
 
-export const get = (url) => http(url, {});
+export const get = (url, options = {}) => http(url, options);
 
