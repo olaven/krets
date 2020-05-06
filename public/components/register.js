@@ -11,23 +11,6 @@ const Register = (props) => {
     const { auth0_client_id, auth0_domain, host_uri } = props; 
     const [ url, setUrl ] = useState("")
 
-    const fetch_user = async () => {
-
-        const url = `https://krets.eu.auth0.com/userinfo`;
-
-        //TODO: pass from server? 
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('access_token');
-        console.log(token);
-
-        const response = await get(url, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        }); 
-
-        console.log(response)
-    }
 
     useEffect(() => {
 
@@ -38,7 +21,6 @@ const Register = (props) => {
     return h `<${Layout}>
         
         <a href=${url}>Login</a>
-        <button onClick=${fetch_user}>fetch user info</button>
     </${Layout}>`
 }
 
