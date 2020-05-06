@@ -48,6 +48,16 @@ test("Loads client domain", () => {
     clear_env();
 });
 
+test("Loads host uri", () => {
+
+    const host_uri = "https://localhost:1234"
+    mock_env("id", "secret", "domain", host_uri);
+    
+    const env = get_auth0();
+    assertEquals(env.host_uri, host_uri) ;
+    clear_env();
+});
+
 test("Throws if variables are missing", () => {
 
     //NOTE: not mocking env 
