@@ -229,6 +229,7 @@ export function useCallback(callback, args) {
  * @param {import('./internal').PreactContext} context
  */
 export function useContext(context) {
+    console.log("current component: ",currentComponent);
     const provider = currentComponent.context[context._id];
     // We could skip this call here, but than we'd not call
     // `options._hook`. We need to do that in order to make

@@ -2,11 +2,12 @@ import { get_auth0 } from "./auth0.ts"
 import { assertThrows, assertEquals } from "../../deps.ts";
 const { test } = Deno
 
-const mock_env = (id: string, secret: string, domain: string) => {
+const mock_env = (id: string, secret: string, domain: string, host_uri = "localhost:8080") => {
 
     Deno.env.set("auth0_client_id", id);
     Deno.env.set("auth0_client_secret", secret);
     Deno.env.set("auth0_domain", domain);
+    Deno.env.set("host_uri", host_uri)
 }
 
 const clear_env = () => {
@@ -20,6 +21,7 @@ test("Loads client id", () => {
 
     const id = "my amazing id"
     mock_env(id, "secret", "domain");
+    console.log("env", Deno.env.toObject())
 
     const env = get_auth0();
     assertEquals(env.auth0_client_id, id);
