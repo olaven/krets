@@ -8,7 +8,6 @@ import { AuthContext } from "../context/auth_context.js";
 const Home = (props) => {
 
   const context = useContext(AuthContext);  
-  console.log("authcontext: ", context)
 
   const fetch_user = async () => {
 
@@ -25,7 +24,7 @@ const Home = (props) => {
       console.log(body)
   }
 
-  return h`<${Layout}>
+  return h`<${Layout} auth0=${props}>
       <button onClick=${fetch_user}>fetch user</button>
   </${Layout}>`
 }

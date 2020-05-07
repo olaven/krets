@@ -10,7 +10,10 @@ import { get_auth0 } from "../../auth/auth0.ts"
 
 const index_handler = get("/", context => {
 
-    return renderBody(Home, "./components/home.js");
+    const { auth0_client_id, auth0_domain, host_uri } = get_auth0();
+    return renderBody(Home, "./components/home.js", 
+        { auth0_client_id, auth0_domain, host_uri }
+    );
 }) 
 
     
