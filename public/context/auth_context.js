@@ -18,7 +18,6 @@ export const AuthContextProvider = props => {
     
     const { access_token } = url.parse_hash(window.location);
 
-
     const [ user, setUser ] = useState(null);
 
     useEffect(async () => {
@@ -33,6 +32,9 @@ export const AuthContextProvider = props => {
             
             const user = await response.json(); 
             setUser(user);
+
+            const storage = window.localStorage; 
+            storage.setItem("access_token", access_token)
         }
     }, [ access_token ])
 
