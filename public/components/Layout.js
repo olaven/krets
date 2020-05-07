@@ -12,13 +12,20 @@ const header_style = {
     margin: "0"
 }
 
+const footer_style = {
+    position: "fixed",
+    left: 0,
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "seagreen",
+    color: "white",
+    textAlign: "center"
+}
 
-const Header = props => {
 
-    const { auth0_client_id, auth0_domain, host_uri } = props.auth0; 
-    const login_uri = `${auth0_domain}/login?client=${auth0_client_id}&redirect_uri=${host_uri}&response_type=token`;
+const Header = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, login_uri } = useContext(AuthContext);
 
     const LoginButton = user? 
         () => h`<p>You are logged in as ${user}</p>`:
@@ -32,17 +39,7 @@ const Header = props => {
 
 const Footer = () => {
 
-    const style = {
-        position: "fixed", 
-        left: 0, 
-        bottom: 0, 
-        width: "100%", 
-        backgroundColor: "seagreen", 
-        color: "white",
-        textAlign: "center"
-    }
-
-    return h`<div style=${style}>
+    return h`<div style=${footer_style}>
         om Krets.
     </div>`
 }
@@ -53,8 +50,8 @@ const Footer = () => {
  */
 const Layout = (props) => {
 
-    return h`<${AuthContextProvider}>
-        <${Header} auth0=${props.auth0}>
+    return h`<${AuthContextProvider} auth0=${props.auth0}>
+        <${Header}>
             Krets.
         </${Header}>
         <div>
