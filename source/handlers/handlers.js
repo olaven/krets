@@ -7,7 +7,7 @@ export const handlers = [
     ...brand_handlers, 
     ...response_handlers, 
     ...frontend_handlers, 
-    ...user_handlers,
+    ...user_handlers
 ]
 
 

@@ -17,15 +17,25 @@ const Home = (props) => {
       const response = await http.get(endpoint, {
           headers: {
               "Authorization": `Bearer ${access_token}`
-          }
+          } 
       }); 
 
-      const body = await response.json()
-      console.log(body)
+      console.log(response)
+      const text = await response.text();
+      console.log("text: ", text);
+  }
+
+  const retrieve_token = async () => {
+
+    //const url = "https://krets.eu.auth0.com/authorize"
+    const url = "/api/authorize";
+    const response = await http.get(url); 
+    console.log(response);
   }
 
   return h`<${Layout} auth0=${props}>
       <button onClick=${fetch_user}>fetch user</button>
+      <button onClick=${retrieve_token}>retrive token</button>
   </${Layout}>`
 }
 
