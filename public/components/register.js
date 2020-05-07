@@ -1,10 +1,7 @@
 import Layout from "./layout.js";
 import { h, useState, useEffect } from "../deps_frontend.js"
-import { get } from "../utils.js";
 
-const build_query = (config) => `?${Object.entries(config)
-    .map(entry => `${entry[0]}=${entry[1]}`)
-    .join(`&`)}`;
+
 
 const Register = (props) => {
 

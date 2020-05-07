@@ -1,5 +1,5 @@
 import { h, useState, useEffect } from "../deps_frontend.js"
-import { get } from "../utils.js"
+import { http } from "../utils/http.js"
 
 import Layout from './layout.js'
 
@@ -10,7 +10,7 @@ const useBrand = (name) => {
 
     const getBrand = async () => {
 
-        const response = await get(`/api/brands/${name}`);
+        const response = await http.get(`/api/brands/${name}`);
         if (response.status === 200) {
 
             const brand = await response.json();

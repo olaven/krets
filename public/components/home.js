@@ -1,36 +1,21 @@
 import Layout from "./layout.js";
 import { h, useContext } from "../deps_frontend.js"
-import { get } from "../utils.js";
+import { http, url } from "../utils/utils.js";
 import { AuthContext } from "../context/auth_context.js";
 
 
-const Home = () => {
 
-  const { todo } = useContext(AuthContext);
-  console.log("mottok oppdatert todo: ", todo);
+const Home = (props) => {
 
-
-  const parse_hash = () => {
-
-    const parsed = {};
-    location.hash.substring(1)
-      .split("&")
-      .map(pair => pair.split("="))
-      .forEach(([key, value]) => {
-
-        parsed[key] = value;
-      }); 
-
-      return parsed;
-  }
+  const context = useContext(AuthContext);  
+  console.log("authcontext: ", context)
 
   const fetch_user = async () => {
 
-      const url = `https://krets.eu.auth0.com/userinfo`;
+      const endpoint = `https://krets.eu.auth0.com/userinfo`;
+      const { access_token } = url.parse_hash(endpoint);
 
-      const { access_token } = parse_hash();
-
-      const response = await get(url, {
+      const response = await http.get(endpoint, {
           headers: {
               "Authorization": `Bearer ${access_token}`
           }
@@ -39,8 +24,6 @@ const Home = () => {
       const body = await response.json()
       console.log(body)
   }
-
-  
 
   return h`<${Layout}>
       <button onClick=${fetch_user}>fetch user</button>

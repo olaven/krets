@@ -9,20 +9,22 @@ export const AuthContext = createContext({});
  */
 export const AuthContextProvider = props => {
 
-    const [todo, setTodo] = useState("original todo thing");
+    /* console.log("props here: ", props)
+    const { auth0_client_id, auth0_domain, host_uri } = props;
+    const [url, setUrl] = useState(""); 
+    // const [ token, setToken ] = useState(null); //needed? 
+    const [ user, setUser ] = useState(null);
 
     useEffect(() => {
-        (async () => {
 
-            const response = await fetch("https://jsonplaceholder.typicode.com/todos/1"); 
-            const todo = await response.json(); 
-            setTodo(todo);
-        })(); 
-    }, []); 
+        const url = `https://krets.eu.auth0.com/login?client=${auth0_client_id}&redirect_uri=${host_uri}&response_type=token`;
+        setUrl(url)
+    }, [auth0_client_id, auth0_domain, host_uri]) */
 
-    console.log("oppdaterte todo: ", todo)
+    const [ user, setUser ] = useState(null);
 
-    return h`<${AuthContext.Provider} value=${{todo}}> 
+
+    return h`<${AuthContext.Provider} value=${{user, setUser}}> 
         ${props.children} 
     </${AuthContext.Provider}>` 
 };
