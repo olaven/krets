@@ -8,34 +8,42 @@ const random_port = () =>
 /**
  * Starts a server with given handlers on a random port. 
  * `action` is executed before the server is stopped. 
- * The port is received through the paramter of `action`
+ * The port is received through the paramter of `action`. 
+ * 
+ * Also runs with DB started up and clead afterwards
+ *  
  * @param handlers 
  * @param action 
  */
 export const with_app = (handlers: any[], action: (port: number) => any, port = random_port()) => async () => {
 
-    const app = new App(port); 
+    await with_db(async () => {
     
-    app.serve();
-    app.register(...handlers);
-    
-    await action(port); 
-    app.close();
+        const app = new App(port);
+
+        app.serve();
+        app.register(...handlers);
+
+        await action(port);
+
+        app.close();
+    });
 } 
+
 
 /**
  * Starts up the database before test runs
  * and clears it afterwards 
  * @param action 
  */
-export const database_test = (name: string, action: () => any) => {
+export const with_db = async (action: () => any) => {
 
     //TODO: enable fresh db when relevant (maps right now)
-    Deno.test(name, action);
+    await action(); 
 
-    database.brands.clear(); 
+    database.brands.clear();
     database.responses.clear();
-    database.users.clear(); 
+    database.users.clear();
 }
 
 
