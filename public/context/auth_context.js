@@ -46,7 +46,8 @@ const use_token = () => {
 const use_user = (access_token, auth0_domain) => {
 
     const [ user, set_user ] = useState(null);
-
+    
+    
     useEffect(async () => {
 
         if (access_token) {
