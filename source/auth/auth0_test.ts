@@ -21,7 +21,6 @@ test("Loads client id", () => {
 
     const id = "my amazing id"
     mock_env(id, "secret", "domain");
-    console.log("env", Deno.env.toObject())
 
     const env = get_auth0();
     assertEquals(env.auth0_client_id, id);

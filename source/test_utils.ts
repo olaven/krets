@@ -1,4 +1,6 @@
 import { App } from "../deps.ts";
+import { User } from "./handlers/types.ts";
+import { database } from "./handlers/database.ts";
 
 const random_port = () => 
     Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
@@ -20,6 +22,16 @@ export const with_app = (handlers: any[], action: (port: number) => any, port = 
     await action(port); 
     app.close();
 } 
+
+export const as_user = async (action: (user: User) => Promise<void> | void) => {
+    //TODO: generate random string
+
+    const id = Math.random().toString(36).substring(7);
+    const user = { id };
+    //TODO: add to db
+    await action(user);
+    //TODO: remove from db
+};
 
 export const test_get = async (url: string) => {
 

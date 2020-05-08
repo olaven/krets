@@ -4,7 +4,7 @@ import { Brand } from '../types.ts';
 
 const get_brand = get("/api/brands/:name", ({ params }) => {
 
-    const { name } = params; 
+    const { name, owner } = params; 
     const brand = database.brands.get(name); 
 
     if (brand) return [200, contentType("json"), JSON.stringify(brand)];
@@ -15,6 +15,7 @@ const post_brand = post("/api/brands", (context) => {
 
     const { params } = context;
     const brand = params as Brand; 
+
 
     if (!brand.name)
         return [400, "Brand must have a name"]

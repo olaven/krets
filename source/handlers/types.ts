@@ -11,7 +11,7 @@ export interface Response extends Record<string, any> {
  */
 export interface Brand extends Record<string, any> {
     name: string, 
-    owner: User
+    owner_id: string, 
 }
 
 /**
