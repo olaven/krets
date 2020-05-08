@@ -23,14 +23,29 @@ export const with_app = (handlers: any[], action: (port: number) => any, port = 
     app.close();
 } 
 
+/**
+ * Starts up the database before test runs
+ * and clears it afterwards 
+ * @param action 
+ */
+export const database_test = (name: string, action: () => any) => {
+
+    //TODO: enable fresh db when relevant (maps right now)
+    Deno.test(name, action);
+
+    database.brands.clear(); 
+    database.responses.clear();
+    database.users.clear(); 
+}
+
+
 export const as_user = async (action: (user: User) => Promise<void> | void) => {
     //TODO: generate random string
 
     const id = Math.random().toString(36).substring(7);
     const user = { id };
-    //TODO: add to db
+    
     await action(user);
-    //TODO: remove from db
 };
 
 export const test_get = async (url: string) => {
