@@ -76,6 +76,13 @@ const use_user = (access_token, auth0_domain) => {
     return user; 
 }
 
+const build_login_uri = (auth0_domain, auth0_client_id, host_uri) => 
+    `${auth0_domain}/login${url.build_query({
+        client: auth0_client_id, 
+        redirect_uri: host_uri, 
+        response_type: 'token',
+    })}`
+
 /**
  * Handles current authentication status 
  * of applicaxtion user. Available in all children 
@@ -83,10 +90,8 @@ const use_user = (access_token, auth0_domain) => {
  */
 export const AuthContextProvider = props => {
 
-    if (!props.auth0) console.warn("authContext did not receive auth0 info");
-
-    const { auth0_client_id, auth0_domain, host_uri } = props.auth0; 
-    const login_uri = `${auth0_domain}/login?client=${auth0_client_id}&redirect_uri=${host_uri}&response_type=token`;
+    const { auth0_domain, auth0_client_id, host_uri } = props.auth0; 
+    const login_uri = build_login_uri(auth0_domain, auth0_client_id, host_uri);
     
     const access_token = use_token();
     const user = use_user(access_token, auth0_domain);
