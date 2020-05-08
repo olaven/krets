@@ -3,6 +3,10 @@ import { h, createContext, useEffect, useState } from "../deps_frontend.js";
 
 export const AuthContext = createContext({});
 
+/**
+ * Effect -> Gets access token from 
+ * appropriate location 
+ */
 const use_token = () => {
 
     const [ access_token, set_access_token ] = useState(null);
@@ -18,14 +22,27 @@ const use_token = () => {
             set_access_token(access_token);
         } else {
 
-            const from_storage = storage.get("access_token");
+            const from_storage = storage.getItem("access_token");
             set_access_token(from_storage);
         }
     }, []);
 
+    useEffect(() => {
+
+        if (access_token) {
+
+            //TODO: validate (may have fetched old one from localstorage)
+        }
+    }, [ access_token ]);
+
     return access_token;
 }
 
+/**
+ * Effect -> Gets user, if access 
+ * @param {string} access_token  
+ * @param {string} auth0_domain 
+ */
 const use_user = (access_token, auth0_domain) => {
 
     const [ user, set_user ] = useState(null);
