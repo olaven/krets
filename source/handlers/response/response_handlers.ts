@@ -1,4 +1,5 @@
 import { get, post, contentType } from "../../../deps.ts";
+import { created, not_found, ok } from "../http_responses.ts";
 import { Response } from "../types.ts";
 import { database } from "../database.ts";
 
@@ -7,14 +8,10 @@ const get_responses = get("/api/brands/:brand_name/responses", ({params}) => {
     const { brand_name } = params
     const responses = database.responses.get(brand_name);
 
-    if (!responses && responses !== []) {
+    if (!responses && responses !== []) 
+        return not_found(`Responses for ${brand_name} does not exist`)        
 
-        console.log("COuld not find", responses)
-        return [404, `Responses for ${brand_name} does not exist`];
-    }
-        
-
-    return [200, contentType('json'), JSON.stringify(responses)]; 
+    return ok(responses)
 });
 
 const post_response = post("/api/brands/:brand_name/responses", ({params}) => {
@@ -34,7 +31,7 @@ const post_response = post("/api/brands/:brand_name/responses", ({params}) => {
     const existing_responses = database.responses.get(brand_name) as Response[]
     database.responses.set(brand_name, [ response, ...existing_responses ])
 
-    return [201, "Created response"];
+    return created()
 });
 
 

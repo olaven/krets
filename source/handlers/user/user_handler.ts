@@ -1,32 +1,8 @@
 import { get, post, contentType } from "../../../deps.ts";
+import { ok, not_found, error, created, not_authorized, conflict} from "../http_responses.ts";
 import { database } from "../database.ts";
 import { token_is_valid } from "../../auth/auth0.ts";
 
-
-//TODO: separate this out to separate module and rewrite handlers with it 
-const ok = <T> (payload: T): [number, { "Content-Type": string }, string] => 
-    [200, contentType("json"), JSON.stringify(payload)]; 
-
-const basic_response = (code: number, message: string): [number, string] => 
-    [code, message]
-
-const not_found = () => 
-    [404, "Resource not found"];
-
-const error = (message = ""): [number, string] => 
-    basic_response(400, message);
-
-const created = (message = "Created.") => 
-    basic_response(201, message);
-
-const conflict = (message = "Conflicting resource") => 
-    basic_response(409, message)
-
-const not_authorized = () => 
-    basic_response(403, "Unauthorized");
-
-const not_authenticated = () => 
-    basic_response(401, "Unauthenticated");
 
 const get_user = get("/api/users/:name", ({ params }) => {
 
