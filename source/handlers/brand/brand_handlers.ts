@@ -29,7 +29,7 @@ const post_brand = post("/api/brands", (context) => {
 });
 
 
-export const brand_handlers = [
+export const brand_handlers = () => [
     get_brand, post_brand
 ]
 

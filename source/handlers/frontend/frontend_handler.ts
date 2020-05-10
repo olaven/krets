@@ -21,6 +21,6 @@ const brand_page_handler = get("/:name", ({params}) =>
     renderBody(Brand, "./components/brand.js", { name: params.name }));
 
 
-export const frontend_handlers = [
+export const frontend_handlers = () => [
     brand_page_handler, index_handler
 ]

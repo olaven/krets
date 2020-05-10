@@ -35,7 +35,7 @@ const post_response = post("/api/brands/:brand_name/responses", ({params}) => {
 });
 
 
-export const response_handlers = [
+export const response_handlers = () => [
     get_responses, 
     post_response
 ]

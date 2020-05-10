@@ -8,9 +8,9 @@ import { TokenValidator } from "../auth/auth0.ts";
 export const handlers = 
     (token_is_valid: TokenValidator) => 
         [
-            ...brand_handlers, 
-            ...response_handlers, 
-            ...frontend_handlers, 
+            ...brand_handlers(), 
+            ...response_handlers(), 
+            ...frontend_handlers(), 
             ...user_handlers(token_is_valid)
         ]
 

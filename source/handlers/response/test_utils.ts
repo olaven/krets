@@ -8,7 +8,7 @@ import { brand_handlers } from "../brand/brand_handlers.ts";
 NOTE: contains both response and brand endpoints, 
 as brand-endpoints are needed in test */
 export const with_response_app = (action: (port: number) => any) => 
-    with_app([...brand_handlers, ...response_handlers], action); 
+    with_app([...brand_handlers(), ...response_handlers()], action); 
 
 export const get_responses = async (port: number, brand_name: string) => 
     test_get(`http://localhost:${port}/api/brands/${brand_name}/responses`); 
