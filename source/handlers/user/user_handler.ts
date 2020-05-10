@@ -4,6 +4,7 @@ import { database } from "../database.ts";
 
 import { TokenValidator } from "../../auth/auth0.ts";
 
+
 export const user_handlers = 
     (token_is_valid: TokenValidator) => [
         

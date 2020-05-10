@@ -56,19 +56,20 @@ export const as_user = async (action: (user: User) => Promise<void> | void) => {
     await action(user);
 };
 
-export const test_get = async (url: string) => {
+export const test_get = async (url: string, options: any = {}) => {
 
-    const response = await fetch(url); 
+    const response = await fetch(url, options); 
     await response.arrayBuffer(); //https://github.com/denoland/deno/issues/4735
     return response
 }
 
-export const test_post = async <T> (url: string, payload: T) => {
+export const test_post = async <T> (url: string, payload: T, options = {}) => {
 
     const response = await fetch(url, {
         method: "POST", 
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            ...options
         },
         body: JSON.stringify(payload)
     }); 
