@@ -48,11 +48,11 @@ export const with_db = async (action: () => any) => {
 
 
 export const as_user = async (action: (user: User) => Promise<void> | void) => {
-    //TODO: generate random string
 
     const id = Math.random().toString(36).substring(7);
     const user = { id };
-    
+
+    database.users.set(id, user);
     await action(user);
 };
 

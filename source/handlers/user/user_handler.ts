@@ -8,22 +8,29 @@ import { TokenValidator } from "../../auth/auth0.ts";
 export const user_handlers = 
     (token_is_valid: TokenValidator) => [
         
-        get("/api/users/:name", ({ params }) => {
+        get("/api/users/:id", ({ params }) => {
 
             //TODO: Auth0 token validation or something like it
             const { id } = params;
             const user = database.users.get(id);
-
+            
             if (!user) {
-                not_found();
+                return not_found();
             }
             
             return ok(user);
         }),
 
-        post("/api/users", async ({ params }) => {
+        post("/api/users", async (context) => {
 
-            const {id, auth_token: access_token} = params; 
+
+            console.log("Entire context: ", context)
+            const {id} = context.params; 
+            const headers = context.headers; 
+            console.log("headers: ", headers);
+            const access_token = "PLACEHOLDER";
+
+            console.log("id: ", id, "access_token", access_token)
             if (!id || !access_token)
                 return error("id and auth_token must be defined");
 
