@@ -1,6 +1,9 @@
 import { App } from "../deps.ts";
-import { User } from "./handlers/types.ts";
+import { User, Brand, Response } from "./handlers/types.ts";
 import { database } from "./handlers/database.ts";
+import { handlers } from "./handlers/handlers.ts";
+import { brand_handlers } from "./handlers/brand/brand_handlers.ts";
+import { response_handlers } from "./handlers/response/response_handlers.ts";
 
 const random_port = () => 
     Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
@@ -15,7 +18,7 @@ const random_port = () =>
  * @param handlers 
  * @param action 
  */
-export const with_app = (handlers: any[], action: (port: number) => any, port = random_port()) => async () => {
+const with_app = (handlers: any[], action: (port: number) => any, port = random_port()) => async () => {
 
     await with_db(async () => {
     
@@ -56,14 +59,14 @@ export const as_user = async (action: (user: User) => Promise<void> | void) => {
     await action(user);
 };
 
-export const test_get = async (url: string, options: any = {}) => {
+const test_get = async (url: string, options: any = {}) => {
 
     const response = await fetch(url, options); 
     await response.arrayBuffer(); //https://github.com/denoland/deno/issues/4735
     return response
 }
 
-export const test_post = async <T> (url: string, payload: T, options = {}) => {
+const test_post = async <T> (url: string, payload: T, options = {}) => {
 
     const response = await fetch(url, {
         method: "POST", 
@@ -76,4 +79,66 @@ export const test_post = async <T> (url: string, payload: T, options = {}) => {
 
     await response.arrayBuffer(); 
     return response; 
+}
+
+/**
+ * ====================================
+ * Utils for testing response endpoints
+ * ====================================
+ */
+
+
+//NOTE: contains both response and brand endpoints, as brand-endpoints are needed in test 
+export const with_response_app = (action: (port: number) => any) => 
+    with_app([...brand_handlers(), ...response_handlers()], action); 
+
+export const get_responses = async (port: number, brand_name: string) => 
+    test_get(`http://localhost:${port}/api/brands/${brand_name}/responses`); 
+
+export const post_response = async (port: number, brand_name: string, response: Response) => 
+    test_post(`http://localhost:${port}/api/brands/${brand_name}/responses`, response); 
+
+/**
+ * =================================
+ * Utils for testing brand endpoints
+ * =================================
+ */
+
+export const with_brand_app = (action: (port: number) => any) => 
+    with_app(brand_handlers(), action)
+
+export const fetch_brand = async (port: number, brand_name: string) => 
+    test_get(`http://localhost:${port}/api/brands/${brand_name}`)
+
+export const post_brand = async (port: number, brand: Brand) => 
+    test_post(`http://localhost:${port}/api/brands`, brand)
+
+
+const authorization_header = (access_token: string) => ({
+    headers: { 'Authorization': `Bearer ${access_token}` }
+}); 
+
+
+/**
+ * ===============================
+ * Utils for testing user endpints
+ * ===============================
+ */
+
+export const fetch_user = async (port: number, user_id: string, access_token: string) => 
+    test_get(`http://localhost:${port}/api/users/${user_id}`, authorization_header(access_token));
+
+export const post_user = async (port: number, user: User, access_token: string) => 
+    test_post(`http://localhost:${port}/api/users`, user, authorization_header(access_token));
+
+
+export const user_test = (valid_tokens: string[], action: (port: number, user: User) => (void | Promise<void>)) => {
+
+    const mock_token_validator = async (access_token: string) => 
+        valid_tokens.includes(access_token); 
+    
+    //TODO: with db 
+    return with_app(handlers(mock_token_validator), (port) => 
+        as_user(user => action(port, user))
+    );
 }

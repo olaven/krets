@@ -1,7 +1,6 @@
 import { assertEquals } from "../../../deps.ts";
 import { Brand, User } from "../types.ts";
-import { with_brand_app, fetch_brand, post_brand} from "./test_utils.ts";
-import { as_user } from "../../test_utils.ts";
+import { as_user, post_brand, fetch_brand, with_brand_app } from "../../test_utils.ts";
 
 
 const { test } = Deno; 

@@ -1,10 +1,9 @@
 import { assertEquals } from "../../../deps.ts";
-import { with_response_app, post_response, get_responses } from "./test_utils.ts";
-import { post_brand, with_brand_app } from "../brand/test_utils.ts";
-import { as_user } from "../../test_utils.ts";
+import { as_user, post_response, get_responses, with_response_app, post_brand } from "../../test_utils.ts";
 import { Response } from "../types.ts";
 
 const { test } = Deno; 
+
 
 test("Can GET response", with_response_app(port =>
     as_user(async ({ id }) =>  {
