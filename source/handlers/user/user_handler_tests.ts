@@ -6,36 +6,34 @@ import { with_app, as_user, test_get, test_post } from "../../test_utils.ts";
 
 const { test } = Deno;
 
-const fetch_user = async (port: number, user_id: string, access_token: string) => 
-    test_get(`http://localhost:${port}/api/users/${user_id}`, {
-        headers: {
+const authorization_header = (access_token: string) => ({
+    headers: {
             'Authorization': `Bearer ${access_token}`
-        }
-    });
+    }
+}); 
+
+const fetch_user = async (port: number, user: User, access_token: string) => 
+    test_get(`http://localhost:${port}/api/users/${user.id}`, authorization_header(access_token));
 
 const post_user = async (port: number, user: User, access_token: string) => 
-    test_post(`http://localhost:${port}/api/users`, user, {
-        headers: {
-            'Authorization': `Bearer ${access_token}`
-        }
-    });
+    test_post(`http://localhost:${port}/api/users`, user, authorization_header(access_token));
 
-const with_user_app = (valid_tokens: string[], action: (port: number) => any) => {
+const user_test = (valid_tokens: string[], action: (port: number, user: User) => (void | Promise<void>)) => {
 
-    const mock_token_validator = async (access_token: string) =>
-        valid_tokens.includes(access_token);
-
-    return with_app(handlers(mock_token_validator), action);
+    const mock_token_validator = async (access_token: string) => 
+        valid_tokens.includes(access_token); 
+    
+    
+    return with_app(handlers(mock_token_validator), (port) => 
+        as_user(user => action(port, user))
+    );
 }
 
-//const user_test = (valid_tokens; string, action: (port: number, user: User))
-
 test("User app returns true or false depending on mocked token validator's input", 
-    with_user_app(["valid_token"], port => 
-        as_user(async user => {
+    user_test(["valid_token"], async (port, user) => {
 
-            const response = await post_user(port, user.id, "first_valid");
-            assertEquals(response.status, 200);
-        }
-    )
-)); 
+        //NOTE: this test does not actually utilize tokens (yet?), it is just demonstrating `user_test`
+        const response = await fetch_user(port, user, "valid_token");
+        assertEquals(response.status, 200)
+    })
+); 
