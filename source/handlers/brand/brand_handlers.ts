@@ -14,8 +14,8 @@ const get_brand = get("/api/brands/:name", ({ params }) => {
 
 const post_brand = post("/api/brands", (context) => {
 
-    const { params } = context;
-    const brand = params as Brand; 
+    const { body } = context;
+    const brand = (JSON.parse(body)) as Brand;
 
     if (!brand.name)
         return error("Brand must have a name")

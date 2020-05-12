@@ -14,7 +14,6 @@ const useBrand = (name) => {
         if (response.status === 200) {
 
             const brand = await response.json();
-            console.log("awaited thing", brand)
             setBrand(brand);
         } else {
 

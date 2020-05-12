@@ -2,6 +2,7 @@ import { assertEquals, assertNotEquals } from "../../../deps.ts";
 import { User } from "../types.ts";
 import { handlers } from "../handlers.ts";
 import { user_test, post_user, fetch_user } from "../../test_utils.ts";
+import { database } from "../database.ts";
 
 const { test } = Deno;
 
@@ -29,21 +30,16 @@ test("Posting user is only allowed if token is valid", async () => {
     const second_valid_token = "my_second_valid_token";
     const invalid_token = "some_INVALID_token";
 
-    await user_test([first_valid_token, second_valid_token], async (port, user) => {
+    const post_test = async (expected_status: number, token: string) => user_test([first_valid_token, second_valid_token], 
+        async (port, user) => {
 
-        const response = await post_user(port, user, first_valid_token); 
-        assertEquals(response.status, 201); 
-    })(); 
+            database.users.delete(user.id); //NOTE: needed because `as_user` 
+            
+            const response = await post_user(port, user, first_valid_token);
+            assertEquals(response.status, 201);
+        })();
 
-    await user_test([first_valid_token, second_valid_token], async (port, user) => {
-
-        const response = await post_user(port, user, second_valid_token); 
-        assertEquals(response.status, 201); 
-    })(); 
-
-    await user_test([first_valid_token, second_valid_token], async (port, user) => {
-
-        const response = await post_user(port, user, invalid_token); 
-        assertEquals(response.status, 401); 
-    })(); 
+    await post_test(201, first_valid_token);
+    await post_test(201, second_valid_token);
+    await post_test(201, invalid_token);
 });

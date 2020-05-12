@@ -14,11 +14,11 @@ const get_responses = get("/api/brands/:brand_name/responses", ({params}) => {
     return ok(responses)
 });
 
-const post_response = post("/api/brands/:brand_name/responses", ({params}) => {
+const post_response = post("/api/brands/:brand_name/responses", ({params, body}) => {
 
 
     const { brand_name } = params; 
-    const { indicator, comment } = params;
+    const { indicator, comment } = JSON.parse(body);
     const response = { indicator, comment }
 
     if (!response.comment || !response.indicator)

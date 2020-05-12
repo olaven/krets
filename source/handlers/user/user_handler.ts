@@ -24,11 +24,11 @@ export const user_handlers =
         post("/api/users", async (context) => {
 
 
-            console.log("Entire context: ", context)
-            const {id} = context.params; 
-            const headers = context.headers
-        
-            const access_token = headers.get("Authorization")
+
+            const { id } = (JSON.parse(context.body));
+            const access_token = context.headers.get("Authorization")?.split(" ")[1];
+
+    
 
             if (!id || !access_token)
                 return error("id and auth_token must be defined");

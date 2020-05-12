@@ -66,17 +66,22 @@ const test_get = async (url: string, options: any = {}) => {
     return response
 }
 
-const test_post = async <T> (url: string, payload: T, options = {}) => {
+const test_post = async <T> (url: string, payload: T, options: RequestInit = {}) => {
 
-    const response = await fetch(url, {
+    const headers = { ...(options.headers) }
+
+    const merged_options = {
+        ...options,
         method: "POST", 
         headers: {
             "Content-Type": "application/json",
-            ...options
+            ...headers
         },
-        body: JSON.stringify(payload)
-    }); 
-
+        body: JSON.stringify(payload), 
+    }
+    
+    
+    const response = await fetch(url, merged_options); 
     await response.arrayBuffer(); 
     return response; 
 }
