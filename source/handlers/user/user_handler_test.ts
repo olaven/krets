@@ -3,7 +3,6 @@ import { User } from "../types.ts";
 import { handlers } from "../handlers.ts";
 import { user_test, post_user, fetch_user } from "../../test_utils.ts";
 
-
 const { test } = Deno;
 
 test("User app returns true or false depending on mocked token validator's input", 

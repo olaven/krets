@@ -26,11 +26,10 @@ export const user_handlers =
 
             console.log("Entire context: ", context)
             const {id} = context.params; 
-            const headers = context.headers; 
-            console.log("headers: ", headers);
-            const access_token = "PLACEHOLDER";
+            const headers = context.headers
+        
+            const access_token = headers.get("Authorization")
 
-            console.log("id: ", id, "access_token", access_token)
             if (!id || !access_token)
                 return error("id and auth_token must be defined");
 
