@@ -35,11 +35,29 @@ test("Posting user is only allowed if token is valid", async () => {
 
             database.users.delete(user.id); //NOTE: needed because `as_user` 
             
-            const response = await post_user(port, user, first_valid_token);
-            assertEquals(response.status, 201);
+            const response = await post_user(port, user, token);
+            assertEquals(response.status, expected_status);
         })();
 
     await post_test(201, first_valid_token);
     await post_test(201, second_valid_token);
-    await post_test(201, invalid_token);
+    await post_test(403, invalid_token);
 });
+
+test("Posting user twice returns 409, even if token is valid", async () => {
+
+    const valid_token = "valid_token_value";
+    const post_test = async (expected_status: number, token: string, delete_user: boolean) => user_test([valid_token], 
+        async (port, user) => {
+
+            if (delete_user) {
+                database.users.delete(user.id); //NOTE: needed because `as_user`   
+            }
+            
+            const response = await post_user(port, user, token);
+            assertEquals(response.status, expected_status);
+        })();
+
+    await post_test(201, valid_token, true);
+    await post_test(409, valid_token, false); 
+})
