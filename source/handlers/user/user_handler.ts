@@ -38,7 +38,6 @@ export const user_handlers =
                     id 
                 });
 
-                console.log("posted user", {id})
                 return created()
             }
 

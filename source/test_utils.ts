@@ -113,7 +113,10 @@ export const with_brand_app = (action: (port: number) => any) =>
     with_app(brand_handlers(), action)
 
 export const fetch_brand = async (port: number, brand_name: string) => 
-    test_get(`http://localhost:${port}/api/brands/${brand_name}`)
+    test_get(`http://localhost:${port}/api/brands/${brand_name}`);
+
+export const get_brands = async (port: number, owner_id: string) => 
+    test_get(`http://localhost:${port}/api/brands?id=${owner_id}`);
 
 export const post_brand = async (port: number, brand: Brand) => 
     test_post(`http://localhost:${port}/api/brands`, brand)

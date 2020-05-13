@@ -4,7 +4,7 @@ import { h, createContext, useEffect, useState } from "../deps_frontend.js";
 export const AuthContext = createContext({});
 
 /**
- * Effect -> Gets access token from 
+ * Hook -> Gets access token from 
  * appropriate location 
  */
 const use_token = () => {
@@ -39,7 +39,7 @@ const use_token = () => {
 }
 
 /**
- * Effect -> Gets user, if access 
+ * Hook -> Gets user, if access 
  * @param {string} access_token  
  * @param {string} auth0_domain 
  */
@@ -74,7 +74,6 @@ const use_user = (access_token, auth0_domain) => {
 
     const post_new_user = async () => {
 
-        console.log("updating with user", user);
         if (user) {
 
             const database_user = { id: user.sub }
