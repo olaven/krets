@@ -47,8 +47,7 @@ const use_user = (access_token, auth0_domain) => {
 
     const [ user, set_user ] = useState(null);
     
-    
-    useEffect(async () => {
+    const update_user = async () => {
 
         if (access_token) {
 
@@ -71,7 +70,40 @@ const use_user = (access_token, auth0_domain) => {
 
             set_user(null);
         }
-    }, [access_token])
+    }
+
+    const post_new_user = async () => {
+
+        console.log("updating with user", user);
+        if (user) {
+
+            const database_user = { id: user.sub }
+            const initial_response = await http.get(`/api/users/${database_user.id}`); 
+
+            console.log(initial_response)
+            
+            if (initial_response.status !== 200) {
+
+                const post_response = await http.post(`/api/users`, database_user, {
+                    'Authorization': `Bearer ${access_token}`
+                });
+                if (post_response.status !== 201) {
+
+                    console.error("Error posting this user in Krets backend", post_response); 
+                } 
+            } else if (initial_response.status === 200) {
+
+
+                console.info("The user was already registered :)");
+            } else {
+
+                console.error("Something unexpected occured checking if user exists.", initial_response)
+            }
+        }
+    }
+    
+    useEffect(update_user, [access_token]); 
+    useEffect(post_new_user, [ user ]); 
 
 
     return user; 
