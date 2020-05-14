@@ -69,7 +69,9 @@ test("Can get brands by owner", with_brand_app(port => {
 
         //FIXME: this test fails due to connectio issue.
 
+        console.log("before getting brand on port", port, "with id", id);
         const response = await get_brands(port, id);
+        console.log("after getting brand on port", port, "with id", id);
 
         assertEquals(response.status, 200);
         const received_brands = (await response.json()) as Brand[]; 
@@ -85,6 +87,6 @@ test("Can get brands by owner", with_brand_app(port => {
 
 test("Returns 404 if the brand is not present", with_brand_app(async (port) => {
 
-    const response = await fetch_brand(port, "somebrand"); 
+    const response = await fetch_brand(port, "somebrand");
     assertEquals(404, response.status);
 })); 

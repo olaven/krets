@@ -46,7 +46,7 @@ const post_brand = post("/api/brands", (context) => {
 
 
 export const brand_handlers = () => [
-    get_brand, post_brand
+    get_brand, get_brand_by_owner, post_brand
 ]
 
 
