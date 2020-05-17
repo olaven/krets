@@ -3,10 +3,10 @@ import { not_found, conflict, error, ok } from "../http_responses.ts";
 import { database } from '../database.ts';
 import { Brand } from '../types.ts';
 
-const get_brand = get("/api/brands/:name", ({ params }) => {
+const get_brand = get("/api/brands/:url_name", ({ params }) => {
 
-    const { name } = params; 
-    const brand = database.brands.get(name); 
+    const { url_name } = params; 
+    const brand = database.brands.get(url_name); 
 
     if (brand) return [200, contentType("json"), JSON.stringify(brand)];
     return not_found()
@@ -37,11 +37,11 @@ const post_brand = post("/api/brands", (context) => {
 
     if (!brand.name || !brand.owner_id || !brand.url_name)
         return error("Brand must have a name")
-    if (database.brands.get(brand.name))
+    if (database.brands.get(brand.url_name))
         return conflict("Brand already exists")
 
-    database.brands.set(brand.name, brand);
-    database.responses.set(brand.name, []);
+    database.brands.set(brand.url_name, brand);
+    database.responses.set(brand.url_name, []);
 
     return [201, "Brand created"];
 });

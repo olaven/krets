@@ -10,8 +10,9 @@ const { test } = Deno;
 test("Can GET brand", with_brand_app(port => 
     as_user(async ({ id }) => {
 
-        await post_brand(port, { name: "test", owner_id: id, url_name: "my-new-brand" });
-        const response = await fetch_brand(port, "test");
+        const name = "test";
+        await post_brand(port, { name: name, owner_id: id, url_name: name });
+        const response = await fetch_brand(port, name);
         assertEquals(200, response.status);
     })
 ));
@@ -50,6 +51,28 @@ test("Cannot post if brand name already exists", with_brand_app((port) =>
     })) 
 );
 
+test("Brand uniquenes is checked with url_name, not regular name", with_brand_app((port) => 
+    as_user(async ({ id }) => {
+
+        const full_name = "name"; 
+        const url_name = "url_name";
+        const DIFFERENT_URL = "url_name_b";
+
+        const orignal = { name: full_name, url_name: url_name, owner_id: id};
+        const duplicate_full_name = { name: full_name, url_name: DIFFERENT_URL, owner_id: id };
+        const duplicate_url_name = { name: "ORIGINAL NAME", url_name: url_name, owner_id: id };
+
+        const original_response = await post_brand(port, orignal)
+        assertEquals(original_response.status, 201);
+
+        const full_name_response = await post_brand(port, duplicate_full_name);
+        assertEquals(full_name_response.status, 201); 
+
+        const url_name_response = await post_brand(port, duplicate_full_name);
+        assertEquals(url_name_response.status, 409);
+    })
+));
+
 test("Can get brands by owner", with_brand_app(port => 
     as_user(async ({ id }) => {
 
@@ -76,7 +99,6 @@ test("Can get brands by owner", with_brand_app(port =>
         });
         assertEquals(received_brands.length, 2); 
         assertEquals(database.brands.size, 4);
-
     })
 ))
 
