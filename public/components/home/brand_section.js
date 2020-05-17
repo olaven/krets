@@ -41,7 +41,12 @@ const BrandList = () => {
 
     return h `<h2>Dine sider:</h2>
     ${brands.map(brand => 
-        h`<div>${brand.name}</div>`  
+        h`<div>
+            <h3>${brand.name}</h3> 
+            <a href=${brand.url_name}>Gi tilbakemelding</a> <br></br>
+            <a>DEL</a> <br></br>
+            <a>Dashbord</a> <br></br>
+        </div>`  
     )}`;
 }
 
