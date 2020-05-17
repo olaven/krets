@@ -29,22 +29,36 @@ const useBrand = (url_name) => {
     return brand; 
 }
 
+const BrandPresentation = props => {
+
+    return h`<div>present brand here</div>`
+}
+
+const ResponseSection = props => {
+
+    return h`<div>give response</div>`
+}
+
+const BrandNotFound = () => h`<div>
+    <h1>Auda!</h1>
+    <p>Denne Krets-siden finnes ikke...</p>
+    <p>Kanskje du skal <a href="/">lage den?</a></p>
+</div>`
+
 const Brand = (props) => {
     
     const { url_name } = props
     const brand = useBrand(url_name);
 
-    console.log("props", props);
-    
-    if (!brand) return h`<${Layout} auth0=${props.auth0}>
-        <h1>Auda!</h1>
-        <p>Denne Krets-siden finnes ikke...</p>
-        <p>Kanskje du skal <a href="/">lage den?</a></p>
-    </${Layout}}`
-
     return h `<${Layout} auth0=${props.auth0}>
-        <h1>${brand.name} sin Krets-side!</h1>
-    </${Layout}>`
+        ${brand?
+            h`<div>
+                <${BrandPresentation}/>
+                <${ResponseSection}/>
+            </div>`: 
+            h`<${BrandNotFound}/>`
+        }
+    </${Layout}>`;
 }
 
 export default Brand
