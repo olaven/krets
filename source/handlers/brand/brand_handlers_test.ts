@@ -1,6 +1,7 @@
 import { assertEquals } from "../../../deps.ts";
 import { Brand, User } from "../types.ts";
-import { as_user, post_brand, fetch_brand, with_brand_app } from "../../test_utils.ts";
+import { database } from "../database.ts";
+import { as_user, post_brand, fetch_brand, get_brands, with_brand_app } from "../../test_utils.ts";
 
 
 const { test } = Deno; 
@@ -49,8 +50,40 @@ test("Cannot post if brand name already exists", with_brand_app((port) =>
     })) 
 );
 
+test("Can get brands by owner", with_brand_app(port => 
+    as_user(async ({ id }) => {
+
+        const first_expected_name = "first_expected";
+        const second_expected_name = "second_expected";
+
+        [
+            { name: first_expected_name, owner_id: id },
+            { name: second_expected_name, owner_id: id },
+            { name: "first_UNEXPECTED", owner_id: "another_id"},
+            { name: "second_UNEXPECTED", owner_id: "yet_another_id"},
+        ].forEach(brand => {
+
+            database.brands.set(brand.name, brand); 
+        }); 
+
+        const response = await get_brands(port, id);
+
+        assertEquals(response.status, 200);
+        const received_brands = (await response.json()) as Brand[]; 
+
+        received_brands.forEach(brand => {
+            assertEquals(brand.owner_id, id);
+        });
+        assertEquals(received_brands.length, 2); 
+        assertEquals(database.brands.size, 4);
+
+    })
+))
+
+
+
 test("Returns 404 if the brand is not present", with_brand_app(async (port) => {
 
-    const response = await fetch_brand(port, "somebrand"); 
+    const response = await fetch_brand(port, "somebrand");
     assertEquals(404, response.status);
 })); 

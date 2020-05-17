@@ -13,10 +13,11 @@ const http_request = async (url, options) =>
  * POST request, only running in 
  * browser, not in Deno-server
  */
-const post = async (url, body) => http_request(url, {
+const post = async (url, body, additional_headers = {}) => http_request(url, {
     method: "post",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json", 
+        ...additional_headers
     },
     body: JSON.stringify(body)
 });

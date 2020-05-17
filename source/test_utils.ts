@@ -61,6 +61,7 @@ export const as_user = async (action: (user: User) => Promise<void> | void) => {
 
 const test_get = async (url: string, options: any = {}) => {
 
+    console.log("fetching a get with url", url)
     const response = await fetch(url, options); 
     await response.arrayBuffer(); //https://github.com/denoland/deno/issues/4735
     return response
@@ -112,10 +113,13 @@ export const post_response = async (port: number, brand_name: string, response: 
 export const with_brand_app = (action: (port: number) => any) => 
     with_app(brand_handlers(), action)
 
-export const fetch_brand = async (port: number, brand_name: string) => 
-    test_get(`http://localhost:${port}/api/brands/${brand_name}`)
+export const fetch_brand = (port: number, brand_name: string) => 
+    test_get(`http://localhost:${port}/api/brands/${brand_name}`);
 
-export const post_brand = async (port: number, brand: Brand) => 
+export const get_brands = (port: number, owner_id: string) =>
+    test_get(`http://localhost:${port}/api/brands?id=${owner_id}`);
+
+export const post_brand = (port: number, brand: Brand) => 
     test_post(`http://localhost:${port}/api/brands`, brand)
 
 
@@ -130,10 +134,10 @@ const authorization_header = (access_token: string) => ({
  * ===============================
  */
 
-export const fetch_user = async (port: number, user_id: string, access_token: string) => 
+export const fetch_user = (port: number, user_id: string, access_token: string) => 
     test_get(`http://localhost:${port}/api/users/${user_id}`, authorization_header(access_token));
 
-export const post_user = async (port: number, user: User, access_token: string) => 
+export const post_user = (port: number, user: User, access_token: string) => 
     test_post(`http://localhost:${port}/api/users`, user, authorization_header(access_token));
 
 
