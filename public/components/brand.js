@@ -1,7 +1,7 @@
 import { h, useState, useEffect } from "../deps_frontend.js"
 import { http } from "../utils/http.js"
 
-import Layout from './Layout.js'
+import Layout from './layout.js'
 
 
 const useBrand = (name) => {
