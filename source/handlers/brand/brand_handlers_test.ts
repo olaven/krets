@@ -50,8 +50,7 @@ test("Cannot post if brand name already exists", with_brand_app((port) =>
     })) 
 );
 
-test("Can get brands by owner", with_brand_app(port => {
-    
+test("Can get brands by owner", with_brand_app(port => 
     as_user(async ({ id }) => {
 
         const first_expected_name = "first_expected";
@@ -67,7 +66,7 @@ test("Can get brands by owner", with_brand_app(port => {
             database.brands.set(brand.name, brand); 
         }); 
 
-        //FIXME: this test fails due to connectio issue.
+        //FIXME: this test fails due to connection issue.
 
         console.log("before getting brand on port", port, "with id", id);
         const response = await get_brands(port, id);
@@ -80,10 +79,12 @@ test("Can get brands by owner", with_brand_app(port => {
             assertEquals(brand.owner_id, id);
         });
         assertEquals(received_brands.length, 2); 
-        assertEquals(database.brands.size, 5);
+        assertEquals(database.brands.size, 4);
 
-    });
-}))
+    })
+))
+
+
 
 test("Returns 404 if the brand is not present", with_brand_app(async (port) => {
 
