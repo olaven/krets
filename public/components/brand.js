@@ -4,13 +4,13 @@ import { http } from "../utils/http.js"
 import Layout from './layout.js'
 
 
-const useBrand = (name) => {
+const useBrand = (url_name) => {
 
-    const [ brand, setBrand ] = useState({ name: "loading..." }); 
+    const [ brand, setBrand ] = useState({ url_name: "loading..." }); 
 
     const getBrand = async () => {
 
-        const response = await http.get(`/api/brands/${name}`);
+        const response = await http.get(`/api/brands/${url_name}`);
         if (response.status === 200) {
 
             const brand = await response.json();
@@ -31,8 +31,8 @@ const useBrand = (name) => {
 
 const Brand = (props) => {
     
-    const { name } = props
-    const brand = useBrand(name);
+    const { url_name } = props
+    const brand = useBrand(url_name);
 
     console.log("props", props);
     
