@@ -40,18 +40,71 @@ const BrandList = () => {
   const { user } = useContext(AuthContext);
   const brands = use_brands(user);
   
-  return h`<h2>Dine navn:</h2>
+  return h`<h2>Dine sider:</h2>
     ${brands.map(brand => 
       h`<div>${brand.name}</div>`  
     )}`;
 }
 
+const BrandCreator = () => {
+
+  const { user } = useContext(AuthContext); 
+  const [ name, setName ] = useState("");
+
+  const updateName = event => {
+
+    const name = event.target.value; 
+    setName(name);
+  }
+
+  const postBrand = async () => {
+
+    const id = user.sub //NOTE: using auth0 user for now 
+    const brand = { name, owner_id: user.sub}
+    const response = await http.post(`/api/brands`, brand);
+
+    if (response.status === 201) {
+
+      console.log("CREATED");
+    } else if (response.status === 409) {
+
+      //TODO: kontinuerlig sjekk? 
+      console.log("Already exists.")
+    } else {
+
+      console.error("En feil", response);
+    }
+  }
+
+  return h`<div>
+    <h2>Lag ${name? `${name} sin`: `din`} Krets-side!</h2>
+    <input type="text" value=${name} onInput=${updateName}/>
+    <button disabled=${!name} onClick=${postBrand}>${name? `Opprett ${name}`: "Opprett siden"}</button>
+  </div>`
+}
+
+/**
+ * Viewing and creating brands
+ * Visible on the front page if 
+ * the user is logged in. 
+ */
+const BrandSection = () => {
+
+  const { user } = useContext(AuthContext);
+
+  return user? 
+    h`<div>
+      <${BrandCreator}/>
+      <${BrandList}/>
+    </div>`: null
+
+}
+
 const Home = (props) => {
 
   return h`<${Layout} auth0=${props}>
-      Krets home page
       
-      <${BrandList}/>
+      <${BrandSection}/>
   </${Layout}>`
 }
 

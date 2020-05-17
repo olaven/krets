@@ -125,7 +125,6 @@ export const AuthContextProvider = props => {
     const access_token = use_token();
     const user = use_user(access_token, auth0_domain);
 
-    console.log("user in context: ", user);
 
     return h`<${AuthContext.Provider} value=${{user, login_uri}}> 
         ${props.children} 
