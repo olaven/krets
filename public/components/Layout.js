@@ -28,7 +28,7 @@ const Header = () => {
     const { user, login_uri } = useContext(AuthContext);
 
     const LoginButton = user? 
-        () => h`<p>You are logged in as ${user.name}</p>`:
+        () => h`<p>Du er logget inn som ${user.name}</p>`:
         () => h`<a href=${login_uri}>login/signup</a>`
 
     return h`<div style=${header_style}>
