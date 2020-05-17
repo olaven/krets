@@ -33,7 +33,9 @@ const post_brand = post("/api/brands", (context) => {
     const { body } = context;
     const brand = (JSON.parse(body)) as Brand;
 
-    if (!brand.name)
+    //TODO: validate brand name as valid URL-characters
+
+    if (!brand.name || !brand.owner_id || !brand.url_name)
         return error("Brand must have a name")
     if (database.brands.get(brand.name))
         return conflict("Brand already exists")

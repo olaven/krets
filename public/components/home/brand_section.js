@@ -47,14 +47,16 @@ const BrandList = () => {
 
 const BrandCreator = () => {
 
-    const {
-        user
-    } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    
     const [name, setName] = useState("");
+    const [url_name, set_url_name] = useState("");
 
     const updateName = event => {
 
         const name = event.target.value;
+
+        set_url_name(formatted_name(name));
         setName(name);
     }
 
@@ -63,6 +65,7 @@ const BrandCreator = () => {
         const id = user.sub //NOTE: using auth0 user for now 
         const brand = {
             name,
+            url_name: url_name,
             owner_id: user.sub
         }
         const response = await http.post(`/api/brands`, brand);
@@ -80,8 +83,20 @@ const BrandCreator = () => {
         }
     }
 
+    //PLACEHOLDER
+    const formatted_name = name => 
+        name.toLowerCase()
+            .replaceAll(" ", "-")
+            .replaceAll("æ", "ae")
+            .replaceAll("Æ", "ae")
+            .replaceAll("ø", "oe")
+            .replaceAll("Ø", "oe")
+            .replaceAll("å", "aa")
+            .replaceAll("Å", "aa");
+
     return h `<div>
         <h2>Lag ${name? `${name} sin`: `din`} Krets-side!</h2>
+        <p>Sidens URL: ${name? `krets.app/${url_name}`:``}</p>
         <input type="text" value=${name} onInput=${updateName}/>
         <button disabled=${!name} onClick=${postBrand}>${name? `Opprett ${name}`: "Opprett siden"}</button>
     </div>`

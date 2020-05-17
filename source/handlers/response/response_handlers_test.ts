@@ -9,7 +9,7 @@ test("Can GET response", with_response_app(port =>
     as_user(async ({ id }) =>  {
     
         const brand_name = "GETBrand";
-        await post_brand(port, { name: brand_name, owner_id: id }); 
+        await post_brand(port, { name: brand_name, owner_id: id, url_name: brand_name }); 
 
         const posted_responses: Response[] = [
             { indicator: 'smile', comment: "hei" }
@@ -29,7 +29,7 @@ test("Response-array is initialized when a new company is created", with_respons
     as_user(async ({ id }) => {
 
         const name = "fresh_brand"
-        await post_brand(port, { name, owner_id: id }); 
+        await post_brand(port, { name, owner_id: id, url_name: name }); 
         const response = await get_responses(port, name); 
         const responses = await response.json(); 
 
@@ -41,7 +41,7 @@ test("can post response", with_response_app(async (port) =>
     as_user(async ({ id }) => {
 
         const brand_name = "new brand";
-        await post_brand(port, { name: brand_name, owner_id: id })
+        await post_brand(port, { name: brand_name, owner_id: id, url_name: brand_name })
         const response = await post_response(port, brand_name, {
             indicator: 'smile',
             comment: 'positive comment'
