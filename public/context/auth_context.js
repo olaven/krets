@@ -78,8 +78,6 @@ const use_user = (access_token, auth0_domain) => {
 
             const database_user = { id: user.sub }
             const initial_response = await http.get(`/api/users/${database_user.id}`); 
-
-            console.log(initial_response)
             
             if (initial_response.status !== 200) {
 
@@ -104,7 +102,6 @@ const use_user = (access_token, auth0_domain) => {
     useEffect(update_user, [access_token]); 
     useEffect(post_new_user, [ user ]); 
 
-
     return user; 
 }
 
@@ -127,6 +124,8 @@ export const AuthContextProvider = props => {
     
     const access_token = use_token();
     const user = use_user(access_token, auth0_domain);
+
+    console.log("user in context: ", user);
 
     return h`<${AuthContext.Provider} value=${{user, login_uri}}> 
         ${props.children} 

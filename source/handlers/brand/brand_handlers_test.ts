@@ -66,11 +66,7 @@ test("Can get brands by owner", with_brand_app(port =>
             database.brands.set(brand.name, brand); 
         }); 
 
-        //FIXME: this test fails due to connection issue.
-
-        console.log("before getting brand on port", port, "with id", id);
         const response = await get_brands(port, id);
-        console.log("after getting brand on port", port, "with id", id);
 
         assertEquals(response.status, 200);
         const received_brands = (await response.json()) as Brand[]; 
