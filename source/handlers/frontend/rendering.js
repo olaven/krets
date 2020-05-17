@@ -10,6 +10,7 @@ export const renderBody = (Component, component_path, props) => {
     return `
         <html>
             <head>
+                <meta charset="UTF-8">
                 <script type="module">
                     import { h, hydrate } from 'https://cdn.pika.dev/preact';
                     import Component from '${component_path}';

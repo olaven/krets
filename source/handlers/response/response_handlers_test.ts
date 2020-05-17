@@ -50,3 +50,18 @@ test("can post response", with_response_app(async (port) =>
         assertEquals(201, response.status);
     }))
 ); 
+
+
+test("Empty comment is OK", with_response_app(async (port) =>
+    as_user(async ({ id }) => {
+
+        const brand_name = "new brand";
+        await post_brand(port, { name: brand_name, owner_id: id, url_name: brand_name })
+        const response = await post_response(port, brand_name, {
+            indicator: 'smile',
+            comment: '' //NOTE: empty
+        }); 
+
+        assertEquals(201, response.status);
+    }))
+); 
