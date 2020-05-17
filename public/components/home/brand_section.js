@@ -72,14 +72,15 @@ const BrandCreator = () => {
 
         if (response.status === 201) {
 
-            console.log("CREATED");
+            alert(`${name} er laget!`)
         } else if (response.status === 409) {
 
             //TODO: kontinuerlig sjekk? 
-            console.log("Already exists.")
+            alert("Finnes allerede..");
         } else {
 
-            console.error("En feil", response);
+            alert("En feil oppsto..")
+            console.error("Feilen:", response);
         }
     }
 
