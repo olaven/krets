@@ -48,7 +48,6 @@ const BrandList = () => {
 
 const Home = (props) => {
 
-
   return h`<${Layout} auth0=${props}>
       Krets home page
       

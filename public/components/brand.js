@@ -33,14 +33,16 @@ const Brand = (props) => {
     
     const { name } = props
     const brand = useBrand(name);
+
+    console.log("props", props);
     
-    if (!brand) return h`<${Layout}>
+    if (!brand) return h`<${Layout} auth0=${props.auth0}>
         <h1>Auda!</h1>
         <p>Denne Krets-siden finnes ikke...</p>
         <p>Kanskje du skal <a href="/">lage den?</a></p>
     </${Layout}}`
 
-    return h `<${Layout}>
+    return h `<${Layout} auth0=${props.auth0}>
         <h1>${brand.name} sin Krets-side!</h1>
     </${Layout}>`
 }
