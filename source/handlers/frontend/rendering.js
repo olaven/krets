@@ -18,6 +18,8 @@ export const renderBody = (Component, component_path, props) => {
 					hydrate(jsx, document.getElementById("root"));
                 </script>
             </head>
+            <!-- Script to load page faster -->
+            <script src="//instant.page/5.0.1" type="module" integrity="sha384-0DvoZ9kNcB36fWcQApIMIGQoTzoBDYTQ85e8nmsfFOGz4RHAdUhADqJt4k3K2uLS"></script>
             <body>
                     <div id="root">
                         ${rendered}
