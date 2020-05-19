@@ -7,7 +7,7 @@ const Home = (props) => {
   return h`<${Layout} auth0=${props}>
       
       <${BrandSection}/>
-  </${Layout}>`
+  </${Layout}>`;
 }
 
 
