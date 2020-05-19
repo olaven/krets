@@ -3,8 +3,8 @@ import { renderToString, h } from "../../../public/deps_frontend.js";
 export const renderBody = (Component, component_path, props) => {
 
     
-    //const rendered = renderToString(h(Component, props)); //FIXME: crashes .lenght of undefined in htm
-    const rendered = ""; 
+    const rendered = renderToString(Component({...props}));
+    //const rendered = ""; 
     const stringified_props = JSON.stringify(props)
 
     return `
