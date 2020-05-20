@@ -33,7 +33,7 @@ jobs:
         AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
         HOST_URI: https://${{ secrets.HOST }}:${{ secrets.WEB_PORT }}/
       with:
-        hosts: ${{ secrets.HOST }}
+        hosts: "${{ secrets.USERNAME}}@${{ secrets.HOST }}"
         privateKey: ${{ secrets.SSH_KEY }}
         command: |
             cd /opt/app
