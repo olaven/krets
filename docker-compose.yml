@@ -4,3 +4,8 @@ services:
         build: "."
         ports:
             - "80:8080"
+        environment: 
+            - auth0_client_id
+            - auth0_client_secret 
+            - auth0_domain  
+            - host_uri
