@@ -21,7 +21,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
+        port: ${{ secrets.SSH_PORT }}
         source: "."
         target: "/opt/app"
 
@@ -36,5 +36,5 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
+        port: ${{ secrets.SSH_PORT }}
         script: cd /opt/app && docker-compose up --build
