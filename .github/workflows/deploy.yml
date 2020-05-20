@@ -37,10 +37,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
+        envs: auth0_client_id, auth0_client_secret, auth0_domain, host_uri
         script: |
-          auth0_client_id=${{ secrets.AUTH0_CLIENT_ID }}
-          auth0_client_secret=${{ secrets.AUTH0_CLIENT_SECRET }}
-          auth0_domain=${{ secrets.AUTH0_DOMAIN }}
-          host_uri=https://${{ secrets.HOST }}:${{ secrets.WEB_PORT }}/
           cd /opt/app && docker-compose up --build
         script: cd /opt/app && docker-compose up --build
