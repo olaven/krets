@@ -25,6 +25,20 @@ jobs:
         source: "."
         target: "/opt/app"
 
+    - name: Test environment variable 
+      uses: appleboy/scp-action@master 
+      env: 
+        G: "GURO", 
+        E: "ELON", 
+        l: "Lowercasename"
+      with: 
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.SSH_PORT }}
+        envs: G,E
+        script: echo "$G and $E <- should be GURO and ELON, and $l should be Lowercasename"
+
     - name: Starting application
       uses: appleboy/ssh-action@master
       env: 
