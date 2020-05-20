@@ -41,5 +41,6 @@ jobs:
         script: |
             cd /opt/app
             echo "$AUTH0_DOMAIN <- is the auth0 domain"
-            docker-compose up --build
+            docker-compose up --build -d
+      run: echo "$AUTH0_DOMAIN is the aut0 domain in Github Actions" 
     
