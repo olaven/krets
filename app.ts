@@ -15,7 +15,7 @@ try {
     console.warn("->", error);
 }
 
-//console.log("environment: ", Deno.env.toObject());
+console.log("AUTH0_DOMAIN: ", Deno.env.get("AUTH0_DOMAIN"));
 
 //starting server
 app(...handlers(token_is_valid));
