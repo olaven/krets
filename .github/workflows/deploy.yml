@@ -25,22 +25,35 @@ jobs:
         source: "."
         target: "/opt/app"
 
-    - name: Starting application
-      uses: appleboy/ssh-action@master
-      env: 
-        AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }} 
-        AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-        HOST_URI: https://${{ secrets.HOST }}:${{ secrets.WEB_PORT }}/
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.SSH_PORT }}
-        envs: AUTH0_CLIENT_ID,AUTH0_CLIENT_SECRET,AUTH0_DOMAIN,HOST_URI
-        script: |
-            cd /opt/app
-            echo "$AUTH0_DOMAIN <- is the auth0 domain"
-            docker-compose up --build -d
-      run: echo "$AUTH0_DOMAIN is the aut0 domain in Github Actions" 
+    - name: Execute SSH commmands on remote server
+    uses: JimCronqvist/action-ssh@master
+    env: 
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }} 
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      HOST_URI: https://${{ secrets.HOST }}:${{ secrets.WEB_PORT }}/
+    with:
+      hosts: '${{ secrets.HOST }}'
+      privateKey: ${{ secrets.SSH_KEY }}
+      command: |
+        cd /opt/app
+        echo "$AUTH0_DOMAIN <- is the auth0 domain"
+        docker-compose up --build -d
+    # - name: Starting application
+    #   uses: appleboy/ssh-action@master
+    #   env: 
+    #     AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }} 
+    #     AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+    #     AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+    #     HOST_URI: https://${{ secrets.HOST }}:${{ secrets.WEB_PORT }}/
+    #   with:
+    #     host: ${{ secrets.HOST }}
+    #     username: ${{ secrets.USERNAME }}
+    #     password: ${{ secrets.PASSWORD }}
+    #     port: ${{ secrets.SSH_PORT }}
+    #     envs: AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_DOMAIN, HOST_URI
+    #     script: |
+    #         cd /opt/app
+    #         echo "$AUTH0_DOMAIN <- is the auth0 domain"
+    #         docker-compose up --build -d
     
