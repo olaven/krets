@@ -39,6 +39,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         envs: auth0_client_id,auth0_client_secret,auth0_domain,host_uri
         script: |
+          echo $auth0_client_id
           sudo apt-get install unzip -y
           curl -fsSL https://deno.land/x/install/install.sh | sh
           cd /opt/app 
