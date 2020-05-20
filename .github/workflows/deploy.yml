@@ -35,6 +35,7 @@ jobs:
       with:
         hosts: "${{ secrets.USERNAME}}@${{ secrets.HOST }}"
         privateKey: ${{ secrets.SSH_KEY }}
+        debug: true #DELETE THIS LOG
         command: |
             cd /opt/app
             echo "$AUTH0_DOMAIN <- is the auth0 domain"
