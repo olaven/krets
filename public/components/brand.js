@@ -1,7 +1,7 @@
 import { h, useState, useEffect } from "../deps_frontend.js"
 import { http } from "../utils/http.js"
 
-import Layout from './layout.js'
+import Outline from './outline.js'
 
 
 const useBrand = (url_name) => {
@@ -50,7 +50,7 @@ const Brand = (props) => {
     const { url_name } = props
     const brand = useBrand(url_name);
 
-    return h `<${Layout} auth0=${props.auth0}>
+    return h `<${Outline} auth0=${props.auth0}>
         ${brand?
             h`<div>
                 <${BrandPresentation}/>
@@ -58,7 +58,7 @@ const Brand = (props) => {
             </div>`: 
             h`<${BrandNotFound}/>`
         }
-    </${Layout}>`;
+    </${Outline}>`;
 }
 
 export default Brand
