@@ -14,4 +14,17 @@ export const handlers =
             ...user_handlers(token_is_valid)
         ]
 
+/* const contentType = (type: string) => "MOCK CONTENT TYPE"
 
+const static_handler = () => 
+        get(`/public/*`, ({ path }) => {
+
+            if (path.endsWith(".ts")) {
+
+
+                const compiled_code = Deno.compile(path); 
+                return [200, contentType("text/plain"), compiled_code]
+            }; 
+        })
+
+ */
