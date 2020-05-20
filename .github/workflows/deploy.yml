@@ -38,7 +38,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         envs: AUTH0_CLIENT_ID,AUTH0_CLIENT_SECRET,AUTH0_DOMAIN,HOST_URI
-        script: docker-compose up --build
+        script: cd /opt/app && docker-compose up --build
           #echo $auth0_client_id
           #sudo apt-get install unzip -y
           #curl -fsSL https://deno.land/x/install/install.sh | sh
