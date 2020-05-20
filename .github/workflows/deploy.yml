@@ -21,7 +21,7 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        password: ${{ secrets.PASSWORD }}
       with:
         source: "."
         target: "/opt/app"
