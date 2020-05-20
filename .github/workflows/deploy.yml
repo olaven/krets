@@ -28,8 +28,8 @@ jobs:
     - name: Test environment variable 
       uses: appleboy/ssh-action@master 
       env: 
-        G: "GURO", 
-        E: "ELON", 
+        G: "GURO" 
+        E: "ELON" 
         l: "Lowercasename"
       with: 
         host: ${{ secrets.HOST }}
