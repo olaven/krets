@@ -30,8 +30,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        #KEY: ${{ secrets.SSHKEY }}
+        username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
         script: chmod +x ./run.sh && ./run.sh # cd /opt/app && docker-compose up 
