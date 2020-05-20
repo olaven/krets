@@ -33,7 +33,7 @@ jobs:
         AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
         HOST_URI: https://${{ secrets.HOST }}:${{ secrets.WEB_PORT }}/
       with:
-        hosts: "${{ secrets.USERNAME}}@${{ secrets.HOST }}"
+        hosts: "${{ secrets.USERNAME}}@${{ secrets.HOST }}:${{ secrets.SSH_PORT }}"
         privateKey: ${{ secrets.SSH_KEY }}
         debug: true #DELETE THIS LOG
         command: |
