@@ -25,6 +25,11 @@ jobs:
         source: "."
         target: "/opt/app"
 
+    - name: Install Deno 
+      uses: denolib/setup-deno@master
+      with:
+        deno-version: 1.0.0
+
     - name: Starting application
       uses: appleboy/ssh-action@master
       env: 
@@ -38,4 +43,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         envs: auth0_client_id,auth0_client_secret,auth0_domain,host_uri
-        script: cd /opt/app && docker-compose up --build
+        script: cd /opt/app && chmod +x ./run.sh && ./ruh.sh #docker-compose up --build
+    
