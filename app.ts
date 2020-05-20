@@ -6,7 +6,14 @@ import { token_is_valid } from "./source/auth/auth0.ts";
 
 
 //loading env
-await load_environment();
+try {
+
+    await load_environment();
+} catch(error) {
+
+    console.warn("Could not load .env"); 
+    console.warn("->", error);
+}
 
 //starting server
 app(...handlers(token_is_valid));
