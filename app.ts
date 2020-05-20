@@ -15,6 +15,8 @@ try {
     console.warn("->", error);
 }
 
+//console.log("environment: ", Deno.env.toObject());
+
 //starting server
 app(...handlers(token_is_valid));
 
