@@ -41,7 +41,6 @@ jobs:
         script: |
           sudo apt-get install unzip -y
           curl -fsSL https://deno.land/x/install/install.sh | sh
-          export DENO_INSTALL="/***/.deno"
-          export PATH="$DENO_INSTALL/bin:$PATH"
-          cd /opt/app && chmod +x ./run.sh && ./run.sh #docker-compose up --build
+          cd /opt/app 
+          /***/.deno/bin/deno run --allow-net --allow-read --allow-env --allow-write ./app.ts 
     
