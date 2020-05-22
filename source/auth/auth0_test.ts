@@ -4,17 +4,18 @@ const { test } = Deno
 
 const mock_env = (id: string, secret: string, domain: string, host_uri = "localhost:8080") => {
 
-    Deno.env.set("auth0_client_id", id);
-    Deno.env.set("auth0_client_secret", secret);
-    Deno.env.set("auth0_domain", domain);
-    Deno.env.set("host_uri", host_uri)
+    Deno.env.set("AUTH0_CLIENT_ID", id);
+    Deno.env.set("AUTH0_CLIENT_SECRET", secret);
+    Deno.env.set("AUTH0_DOMAIN", domain);
+    Deno.env.set("HOST_URI", host_uri)
 }
 
 const clear_env = () => {
 
-    Deno.env.set("auth0_client_id", "");
-    Deno.env.set("auth0_client_secret", "");
-    Deno.env.set("auth0_domain", "");
+    Deno.env.set("AUTH0_CLIENT_ID;", "");
+    Deno.env.set("AUTH0_CLIENT_SECRET", "");
+    Deno.env.set("AUTH0_DOMAIN", "");
+    Deno.env.set("HOST_URI", "");
 }
 
 test("Loads client id", () => {

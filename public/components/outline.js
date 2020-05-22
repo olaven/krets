@@ -48,7 +48,7 @@ const Footer = () => {
  * Wraps site layout 
  * props.auth0 = { auth0_client_id, auth0_domain, host_uri } 
  */
-const Layout = (props) => {
+const Outline = (props) => {
 
     return h`<${AuthContextProvider} auth0=${props.auth0}>
         <${Header}>
@@ -62,4 +62,4 @@ const Layout = (props) => {
 }
 
 
-export default Layout;
+export default Outline;
