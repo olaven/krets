@@ -1,0 +1,19 @@
+{
+  "name": "krets",
+  "version": "0.0.1",
+  "description": "Frictionless feedback",
+  "main": "index.js",
+  "repository": "https://github.com/olaven/krets.git",
+  "author": "olaven <olav@sundfoer.com>",
+  "license": "TODO",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.4.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
