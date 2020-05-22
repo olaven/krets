@@ -1,5 +1,5 @@
 import { get, post, contentType } from "../../../deps.ts";
-import { created, not_found, ok } from "../http_responses.ts";
+import { created, not_found, ok, error } from "../http_responses.ts";
 import { Response } from "../types.ts";
 import { database } from "../database.ts";
 
@@ -21,8 +21,8 @@ const post_response = post("/api/brands/:brand_name/responses", ({params, body})
     const { indicator, comment } = JSON.parse(body);
     const response = { indicator, comment }
 
-    if (!response.comment || !response.indicator)
-        return [400, `${response} is not a valid response`]; 
+    if ((!response.comment && response.comment !== '') || !response.indicator)
+        return error(`${response} is not a valid response`);
 
     //FIXME: contains a lot of reads. Is inefficient 
     if (!database.responses.get(brand_name)) 

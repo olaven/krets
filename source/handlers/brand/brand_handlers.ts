@@ -6,6 +6,7 @@ import { Brand } from '../types.ts';
 const get_brand = get("/api/brands/:url_name", ({ params }) => {
 
     const { url_name } = params; 
+
     const brand = database.brands.get(url_name); 
 
     if (brand) return [200, contentType("json"), JSON.stringify(brand)];
