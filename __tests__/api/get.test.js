@@ -5,7 +5,7 @@ import listen from 'test-listen'
 import {
     apiResolver
 } from 'next/dist/next-server/server/api-utils'
-import handler from '../../src/pages/api/test.js';
+import handler from '../../src/pages/api/test';
 
 describe('Testin endpoints', () => {
     let server

@@ -1,11 +1,11 @@
 import auth0 from "../auth/auth0";
 import { useEffect } from "react";
 
-function HomePage() {
+const HomePage = () => {
 
     const fetchUser = async () => {
 
-        console.log("Running fetch user")
+        console.log("Running fetch user");
         const res = await fetch('/api/me');
         if (res.ok) {
             const user = await res.json()
@@ -19,8 +19,8 @@ function HomePage() {
     useEffect(() => { fetchUser }, []);
 
 
-    return <div > 
-        <h1>Welcome to Next.js! </h1>
+    return <div> 
+        <h1>Welcome to Next.js!</h1>
         < a href="/api/login"> Login</a>
         <a href="/api/logout">Logout</a>
         <button onClick={fetchUser}>fetch user</button>

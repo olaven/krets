@@ -5,7 +5,12 @@ const {
 
 module.exports = {
     ...defaults,
-    moduleFileExtensions: ['js'],
+    globals: {
+        "ts-jest": {
+            tsConfig: "tsconfig.json"
+        }
+    },
+    moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
     testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
     collectCoverage: true,
     coveragePathIgnorePatterns: ['/node_modules/', 'enzyme.js', '/.next/'],
