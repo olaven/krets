@@ -1,4 +1,4 @@
-import auth0 from "../auth0.js";
+import auth0 from "../auth/auth0";
 import { useEffect } from "react";
 
 function HomePage() {

@@ -1,5 +1,3 @@
-//require("reflect-metadata");
-import "reflect-metadata"
 import {Entity} = from "typeorm";
 
 @Entity()
