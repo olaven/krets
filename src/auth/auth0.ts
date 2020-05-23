@@ -14,15 +14,15 @@ const {
 } = config;
 
 export default initAuth0({
-    domain: AUTH0_DOMAIN,
-    clientId: AUTH0_CLIENT_ID,
+    domain: AUTH0_DOMAIN as string,
+    clientId: AUTH0_CLIENT_ID as string,
     clientSecret: AUTH0_CLIENT_SECRET,
     scope: 'openid profile',
-    redirectUri: REDIRECT_URI,
-    postLogoutRedirectUri: POST_LOGOUT_REDIRECT_URI,
+    redirectUri: REDIRECT_URI as string,
+    postLogoutRedirectUri: POST_LOGOUT_REDIRECT_URI as string,
     session: {
         // The secret used to encrypt the cookie.
-        cookieSecret: SESSION_COOKIE_SECRET,
+        cookieSecret: SESSION_COOKIE_SECRET as string,
         // The cookie lifetime (expiration) in seconds. Set to 8 hours by default.
         cookieLifetime: 60 * 60 * 8,
         // (Optional) The cookie domain this should run on. Leave it blank to restrict it to your domain.

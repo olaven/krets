@@ -16,6 +16,12 @@ const HomePage = () => {
         }
     }
 
+    const fetchProtecteRoute = async () => {
+
+        const response = await fetch("/api/protected");
+        console.log(response);
+    }
+
     useEffect(() => { fetchUser }, []);
 
 
@@ -24,6 +30,7 @@ const HomePage = () => {
         < a href="/api/login"> Login</a>
         <a href="/api/logout">Logout</a>
         <button onClick={fetchUser}>fetch user</button>
+        <button onClick={fetchProtecteRoute}>fetch protected route</button> 
     </div>
 }
 
