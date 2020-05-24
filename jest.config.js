@@ -12,6 +12,7 @@ module.exports = {
     },
     moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
     testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+    testEnvironment: "node",
     collectCoverage: true,
     coveragePathIgnorePatterns: ['/node_modules/', 'enzyme.js', '/.next/'],
     coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
