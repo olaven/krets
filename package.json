@@ -14,10 +14,13 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",
+    "@rebass/preset": "^4.0.5",
+    "emotion-theming": "^10.0.27",
     "next": "^9.4.2",
     "pg": "^8.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "rebass": "^4.0.7",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25"
   },

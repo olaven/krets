@@ -1,5 +1,6 @@
 import auth0 from "../auth/auth0";
 import { useEffect } from "react";
+import { Heading, Button, Link } from "rebass"
 
 const HomePage = () => {
 
@@ -26,11 +27,13 @@ const HomePage = () => {
 
 
     return <div> 
-        <h1>Welcome to Next.js!</h1>
-        < a href="/api/login"> Login</a>
-        <a href="/api/logout">Logout</a>
-        <button onClick={fetchUser}>fetch user</button>
-        <button onClick={fetchProtecteRoute}>fetch protected route</button> 
+        <Heading fontSize={[ 5, 6, 7 ]} color='primary'>
+            Velkommen til Krets
+        </Heading>
+        <Link href="/api/login"> Login</Link>
+        <Link href="/api/logout">Logout</Link>
+        <Button onClick={fetchUser} variant='primary'>fetch user</Button>
+        <Button onClick={fetchProtecteRoute}>fetch protected route</Button>
     </div>
 }
 
