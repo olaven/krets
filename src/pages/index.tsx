@@ -1,10 +1,10 @@
 import auth0 from "../auth/auth0";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Heading, Button, Link } from "rebass"
 
 const HomePage = () => {
 
-    const fetchUser = async () => {
+    /* const fetchUser = async () => {
 
         console.log("Running fetch user");
         const res = await fetch('/api/me');
@@ -21,9 +21,34 @@ const HomePage = () => {
 
         const response = await fetch("/api/protected");
         console.log(response);
-    }
+    } */
 
-    useEffect(() => { fetchUser }, []);
+
+    const [ user, setUser ] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+
+            console.log("Running fetch user");
+            const res = await fetch('/api/me');
+            if (res.ok) {
+                const user = await res.json()
+                setUser(user);
+                console.log(user);
+            } else {
+
+                setUser(null);
+                console.error(res)
+            }
+
+        
+        }
+
+        fetchUser(); 
+    }, [])
+
+
+    
 
 
     return <div> 
@@ -32,8 +57,11 @@ const HomePage = () => {
         </Heading>
         <Link href="/api/login"> Login</Link>
         <Link href="/api/logout">Logout</Link>
-        <Button onClick={fetchUser} variant='primary'>fetch user</Button>
-        <Button onClick={fetchProtecteRoute}>fetch protected route</Button>
+        {user? 
+            <div>du er logget inn som {user.name}</div>: 
+            <div>Du er ikke logget inn</div>}
+        {/* <Button onClick={fetchUser} variant='primary'>fetch user</Button>
+        <Button onClick={fetchProtecteRoute}>fetch protected route</Button> */}
     </div>
 }
 
