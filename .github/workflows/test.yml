@@ -1,16 +1,19 @@
-name: Test
+name: Tests
 
-on:
-    [push, pull_request]                
-
+on: [push, pull_request]
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@master
-          - uses: denolib/setup-deno@master
-            with:
-              deno-version: 1.0.0
-          - name: Build
-            run: ./test.sh
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: yarn 
+    - run: yarn test
+      env: # NOT USED RN
+        CI: true

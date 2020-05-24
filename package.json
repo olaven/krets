@@ -1,0 +1,41 @@
+{
+  "name": "krets",
+  "version": "0.0.1",
+  "description": "Frictionless feedback",
+  "main": "index.js",
+  "repository": "https://github.com/olaven/krets.git",
+  "author": "olaven <olav@sundfoer.com>",
+  "license": "TODO",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest ./__tests__ --testPathIgnorePatterns support/*"
+  },
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^0.13.0",
+    "@rebass/preset": "^4.0.5",
+    "emotion-theming": "^10.0.27",
+    "next": "^9.4.2",
+    "pg": "^8.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rebass": "^4.0.7",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@types/node": "^14.0.5",
+    "@types/react": "^16.9.35",
+    "@types/test-listen": "^1.1.0",
+    "dotenv": "^8.2.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "jest": "^26.0.1",
+    "jest-config": "^26.0.1",
+    "nodemon": "^2.0.4",
+    "test-listen": "^1.1.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  }
+}
