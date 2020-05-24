@@ -4,26 +4,6 @@ import { Heading, Button, Link } from "rebass"
 
 const HomePage = () => {
 
-    /* const fetchUser = async () => {
-
-        console.log("Running fetch user");
-        const res = await fetch('/api/me');
-        if (res.ok) {
-            const user = await res.json()
-            console.log(user);
-        } else {
-
-            console.error(res)
-        }
-    }
-
-    const fetchProtecteRoute = async () => {
-
-        const response = await fetch("/api/protected");
-        console.log(response);
-    } */
-
-
     const [ user, setUser ] = useState<any>(null);
 
     useEffect(() => {
