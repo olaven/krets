@@ -1,38 +1,80 @@
 import "reflect-metadata";
+import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {setupServer, teardownServer} from "./testutils";
-import brands from "../../src/pages/api/brands";
+import handler from "../../src/pages/api/brands";
 import {Server} from "net";
-import auth0 from "../../src/auth/auth0"
-import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
-import {ISessionStore} from "@auth0/nextjs-auth0/dist/session/store";
-import {NextApiRequest} from "next";
+import {NextApiRequest, NextApiResponse} from "next";
+import {LoginOptions} from "@auth0/nextjs-auth0/dist/handlers/login";
+import {CallbackOptions} from "@auth0/nextjs-auth0/dist/handlers/callback";
+import {ProfileOptions} from "@auth0/nextjs-auth0/dist/handlers/profile";
+import {IApiRoute} from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
+import {IClaims, ISession} from "@auth0/nextjs-auth0/dist/session/session";
+import {AccessTokenRequest, AccessTokenResponse, ITokenCache} from "@auth0/nextjs-auth0/dist/tokens/token-cache";
 
-const getSession = (session, request: NextApiRequest): ISessionStore => {
-    const store: ISessionStore = {
-        read(): Promise<ISession | null | undefined> {
-            return Promise.resolve(session);
-        },
-        save(): Promise<ISession | null | undefined> {
-            return Promise.resolve(session);
+jest.mock("../../src/auth/auth0", () => ({
+
+    handleLogin: (req: NextApiRequest, res: NextApiResponse, options?: LoginOptions) => {
+
+        console.log("Inside login");
+        // NO MOCK IMPLEMENTATION
+    },
+
+    handleCallback: (req: NextApiRequest, res: NextApiResponse, options?: CallbackOptions) => {
+        console.log("Inside handlecallback");
+        // NO MOCK IMPLEMENTATION
+    },
+
+    handleLogout: (req: NextApiRequest, res: NextApiResponse) => {
+        console.log("Inside handleLogout");
+        // NO MOCK IMPLEMENTATION
+    },
+
+    handleProfile: (req: NextApiRequest, res: NextApiResponse, options?: ProfileOptions) => {
+        console.log("Inside handleProfile");
+        // NO MOCK IMPLEMENTATION
+    },
+
+    getSession: async (req: NextApiRequest): Promise<ISession> => {
+
+        console.log("Inside getsession");
+
+        //Promise<ISession | null | undefined>
+        return {
+            accessToken: undefined,
+            accessTokenExpiresAt: 0,
+            accessTokenScope: undefined,
+            createdAt: 0,
+            idToken: undefined,
+            refreshToken: undefined,
+            user: {
+
+            }
         }
-    };
+    },
 
-    if (saveStore) {
-        store.save = saveStore;
-    }
+    requireAuthentication: (apiRoute: IApiRoute) => {
 
-    return store;
-};
+        console.log("Inside requireauthentication");
+        return apiRoute
+    },
 
-expect(mockedUseAuth0).toHaveBeenCalled();
+    tokenCache: (req: NextApiRequest, res: NextApiResponse) => {
 
-mockedUseAuth0.mockReturnValue({
-  isAuthenticated: true,
-  user,
-  logout: jest.fn(),
-  loginWithRedirect: jest.fn()
-});
+        //ITokenCache
+        const cache: ITokenCache = {
+            getAccessToken(accessTokenRequest?: AccessTokenRequest): Promise<AccessTokenResponse> {
+
+                return new Promise<AccessTokenResponse>(() => ({
+                    accessToken: "ACCESS TOKEN :D"
+                }));
+            }
+        }
+    },
+}));
+
+
+
 
 describe("The brand endpoint", () => {
 
@@ -41,7 +83,8 @@ describe("The brand endpoint", () => {
 
     beforeAll(async () => {
 
-        [server, url] = await setupServer(brands);
+        console.log("Handler passed; ");
+        [server, url] = await setupServer(handler, "/api/brands");
     });
 
     afterAll(async () => {
@@ -51,6 +94,7 @@ describe("The brand endpoint", () => {
 
     it("does not give access when user is not authenticated", async () => {
 
+        console.log("URL: ", url);
         const response = await fetch(url);
         expect(response.status).toEqual(401);
     })

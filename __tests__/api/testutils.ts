@@ -5,11 +5,11 @@ import {Server} from "net";
 import {NextApiHandler} from "next";
 import {describe, expect, it, test} from "@jest/globals";
 
-export const setupServer = async (handler: NextApiHandler): Promise<[Server, string]> => {
+export const setupServer = async (handler: NextApiHandler, path: string): Promise<[Server, string]> => {
 
     const server = http.createServer((req, res) =>
         apiResolver(req, res, undefined, handler, undefined));
-    const url = await listen(server);
+    const url = (`${await listen(server)}${path}`);
     return [server, url]
 };
 
