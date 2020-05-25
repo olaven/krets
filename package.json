@@ -30,6 +30,7 @@
     "@types/react": "^16.9.35",
     "@types/rebass": "^4.0.6",
     "@types/test-listen": "^1.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.0",
     "dotenv": "^8.2.0",
     "isomorphic-unfetch": "^3.0.0",
     "jest": "^26.0.1",

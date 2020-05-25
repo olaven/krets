@@ -1,4 +1,5 @@
-import { PrimaryColumn, BaseEntity } from "typeorm";
+import "reflect-metadata"
+import { PrimaryColumn, Entity, BaseEntity } from "typeorm";
 
 
 @Entity()
@@ -9,6 +10,8 @@ export class User extends BaseEntity {
         constraints with user-id
      */
 
-    @PrimaryColumn()
+    @PrimaryColumn('text', {
+        length: 500
+    })
     id: number;
 }
