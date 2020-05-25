@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
+import {User} from "./User";
 
 @Entity()
 export class Brand extends BaseEntity {
@@ -11,6 +12,6 @@ export class Brand extends BaseEntity {
     })
     name: string;
 
-    @Column
-    owner: User 
+    @ManyToOne(type => User)
+    owner: User;
 }

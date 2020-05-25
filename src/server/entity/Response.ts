@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
+import {Brand} from "./Brand";
 
 @Entity()
 export class Response extends BaseEntity {
@@ -11,9 +12,9 @@ export class Response extends BaseEntity {
     })
     text: string;
 
-    @Column("emotion")
+    @Column()
     emotion: string;
 
-    @Column("brand")
+    @ManyToOne(type => Brand)
     brand: Brand; 
 }

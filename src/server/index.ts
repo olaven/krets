@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import {Photo} from "./entity/Photo";
 
 import { createServer } from 'http'
 import { parse } from 'url'
