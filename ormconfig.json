@@ -1,0 +1,28 @@
+[
+  {
+    "name": "local development",
+    "type": "postgres",
+    "host": "localhost",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "local",
+    "synchronize": true,
+    "logging": true,
+    "entities": [
+      "entity*//*.js,modules*//**//*entity*//*.js*/"
+    ]
+  },
+  {
+    "name": "test",
+    "type": "postgres",
+    "host": "localhost",
+    "username": "postgres",
+    "password": "",
+    "database": "test",
+    "synchronize": true,
+    "entities": [
+      "entity*//*.js,modules*//**//*entity*//*.js*/"
+    ],
+    "dropSchema": true
+  }
+]

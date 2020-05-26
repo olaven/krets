@@ -1,11 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, PrimaryColumn} from "typeorm";
 import {User} from "./User";
 
 @Entity()
 export class Brand extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn()
+    id: string; //LOWECASE-without special chars/spaces version of name
 
     @Column({
         length: 150
