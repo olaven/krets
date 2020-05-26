@@ -1,6 +1,9 @@
 [
   {
-    "name": "local development",
+    "name": "production"
+  },
+  {
+    "name": "local",
     "type": "postgres",
     "host": "localhost",
     "username": "postgres",
@@ -9,7 +12,10 @@
     "synchronize": true,
     "logging": true,
     "entities": [
-      "entity*//*.js,modules*//**//*entity*//*.js*/"
+      "./src/server/entities/**.ts"
+    ],
+    "migrations": [
+      "./src/server/migrations/**.ts"
     ]
   },
   {
@@ -21,7 +27,10 @@
     "database": "test",
     "synchronize": true,
     "entities": [
-      "entity*//*.js,modules*//**//*entity*//*.js*/"
+      "./src/server/entities/**.ts"
+    ],
+    "migrations": [
+      "./src/server/migrations/**.ts"
     ],
     "dropSchema": true
   }

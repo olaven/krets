@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, PrimaryCo
 import {User} from "./User";
 
 @Entity()
-export class Brand extends BaseEntity {
+export class Brand {
 
     @PrimaryColumn()
     id: string; //LOWECASE-without special chars/spaces version of name

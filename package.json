@@ -7,9 +7,9 @@
   "author": "olaven <olav@sundfoer.com>",
   "license": "TODO",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "NODE_ENV=local nodemon",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production next start",
     "test": "NODE_ENV=test jest ./__tests__ --testPathIgnorePatterns support/*"
   },
   "dependencies": {
@@ -23,7 +23,7 @@
     "react-qrcode-logo": "^2.2.1",
     "rebass": "^4.0.7",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.25"
+    "typeorm": "0.2.22"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.8.3",

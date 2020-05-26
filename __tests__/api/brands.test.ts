@@ -4,6 +4,7 @@ import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {setupServer, teardownServer} from "./testutils";
 import handler from "../../src/pages/api/brands";
 import {Server} from "net";
+import TypeormConnection, {getPostgresConnection} from "../../src/server/TypeormConnection";
 
 
 jest.mock("../../src/auth/auth0");
@@ -15,6 +16,7 @@ describe("The brand endpoint", () => {
 
     beforeAll(async () => {
 
+        await TypeormConnection.connect();
         [server, url] = await setupServer(handler, "/api/brands");
     });
 
