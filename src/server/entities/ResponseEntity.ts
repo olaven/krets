@@ -1,8 +1,8 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
-import {Brand} from "./Brand";
+import {BrandEntity} from "./BrandEntity";
 
 @Entity()
-export class Response extends BaseEntity {
+export class ResponseEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -15,6 +15,6 @@ export class Response extends BaseEntity {
     @Column()
     emotion: string;
 
-    @ManyToOne(type => Brand)
-    brand: Brand; 
+    @ManyToOne(type => BrandEntity)
+    brand: BrandEntity;
 }

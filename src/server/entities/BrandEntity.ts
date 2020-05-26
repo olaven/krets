@@ -1,8 +1,8 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, PrimaryColumn} from "typeorm";
-import {User} from "./User";
+import {UserEntity} from "./UserEntity";
 
 @Entity()
-export class Brand {
+export class BrandEntity {
 
     @PrimaryColumn()
     id: string; //LOWECASE-without special chars/spaces version of name
@@ -12,6 +12,6 @@ export class Brand {
     })
     name: string;
 
-    @ManyToOne(type => User)
-    owner: User;
+    @ManyToOne(type => UserEntity)
+    owner: UserEntity;
 }
