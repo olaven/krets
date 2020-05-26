@@ -10,9 +10,8 @@ export default auth0.requireAuthentication(async function brand (request, respon
     if (request.method === "GET") {
 
         const { user } = session;
-        //const brands = Brand.find({owner: user.id});
+        const brands = Brand.find({owner: user.id});
 
-        const brands = [];
         response
             .status(200)
             .json(brands);
