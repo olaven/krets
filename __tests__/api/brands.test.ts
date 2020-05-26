@@ -11,69 +11,16 @@ import {ProfileOptions} from "@auth0/nextjs-auth0/dist/handlers/profile";
 import {IApiRoute} from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
 import {IClaims, ISession} from "@auth0/nextjs-auth0/dist/session/session";
 import {AccessTokenRequest, AccessTokenResponse, ITokenCache} from "@auth0/nextjs-auth0/dist/tokens/token-cache";
-
-jest.mock("../../src/auth/auth0", () => ({
-
-    handleLogin: (req: NextApiRequest, res: NextApiResponse, options?: LoginOptions) => {
-
-        console.log("Inside login");
-        // NO MOCK IMPLEMENTATION
-    },
-
-    handleCallback: (req: NextApiRequest, res: NextApiResponse, options?: CallbackOptions) => {
-        console.log("Inside handlecallback");
-        // NO MOCK IMPLEMENTATION
-    },
-
-    handleLogout: (req: NextApiRequest, res: NextApiResponse) => {
-        console.log("Inside handleLogout");
-        // NO MOCK IMPLEMENTATION
-    },
-
-    handleProfile: (req: NextApiRequest, res: NextApiResponse, options?: ProfileOptions) => {
-        console.log("Inside handleProfile");
-        // NO MOCK IMPLEMENTATION
-    },
-
-    getSession: async (req: NextApiRequest): Promise<ISession> => {
-
-        console.log("Inside getsession");
-
-        //Promise<ISession | null | undefined>
-        return {
-            accessToken: undefined,
-            accessTokenExpiresAt: 0,
-            accessTokenScope: undefined,
-            createdAt: 0,
-            idToken: undefined,
-            refreshToken: undefined,
-            user: {
-
-            }
-        }
-    },
-
-    requireAuthentication: (apiRoute: IApiRoute) => {
-
-        console.log("Inside requireauthentication");
-        return apiRoute
-    },
-
-    tokenCache: (req: NextApiRequest, res: NextApiResponse) => {
-
-        //ITokenCache
-        const cache: ITokenCache = {
-            getAccessToken(accessTokenRequest?: AccessTokenRequest): Promise<AccessTokenResponse> {
-
-                return new Promise<AccessTokenResponse>(() => ({
-                    accessToken: "ACCESS TOKEN :D"
-                }));
-            }
-        }
-    },
-}));
+import {ISessionStore} from "@auth0/nextjs-auth0/dist/session/store";
 
 
+
+
+
+
+
+jest.mock("../../src/auth/auth0");
+import auth0 from "../../src/auth/auth0"
 
 
 describe("The brand endpoint", () => {
@@ -83,7 +30,6 @@ describe("The brand endpoint", () => {
 
     beforeAll(async () => {
 
-        console.log("Handler passed; ");
         [server, url] = await setupServer(handler, "/api/brands");
     });
 
@@ -94,8 +40,18 @@ describe("The brand endpoint", () => {
 
     it("does not give access when user is not authenticated", async () => {
 
-        console.log("URL: ", url);
-        const response = await fetch(url);
+
+        const response = await fetch(url, {
+            headers: {
+                'x-mock-is-authenticated': "true"
+            }
+        });
         expect(response.status).toEqual(401);
+    })
+
+    it("does give access when user is authenticated", async () => {
+
+        const response = await fetch(url);
+        expect(response.status).toEqual(200);
     })
 });
