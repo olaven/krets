@@ -17,6 +17,12 @@ export default class TypeormConnection {
 
         return this.connection;
     }
+
+    static close() {
+
+        return this.connection.close()
+    }
+
 }
 
 export const getPostgresConnection = async () => {

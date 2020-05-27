@@ -1,39 +1,12 @@
 import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {setupServer, teardownServer} from "./testutils";
+import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, uid} from "./testutils";
 import handler from "../../src/pages/api/brands";
 import {Server} from "net";
 import TypeormConnection from "../../src/server/TypeormConnection";
 import * as faker from "faker";
-import {BrandEntity} from "../../src/server/entities/BrandEntity";
 
-
-const authenticatedFetch = (uid: string, url, options: any = {headers: {}}) =>
-    fetch(url, {
-        ...options,
-        headers: {
-            'x-mock-is-authenticated': uid,
-            ...options.headers
-        },
-    });
-
-//TODO: Brand DTO?
-const postBrand = (brand: {id: string, name: string}, url: string, userId: string) => authenticatedFetch(userId, url,{
-    method: "POST",
-    headers: {
-        "content-type": "application/json",
-    },
-    body: JSON.stringify((brand))
-});
-
-const uid = () => faker.random.uuid();
-
-const getBrands = async (url: string, userId = uid()) => {
-
-    const response = await authenticatedFetch(userId, url);
-    return response.json();
-};
 
 jest.mock("../../src/auth/auth0");
 
@@ -50,6 +23,7 @@ describe("The brand endpoint", () => {
 
     afterAll(async () => {
 
+        await TypeormConnection.close();
         await teardownServer(server);
     });
 
@@ -69,12 +43,9 @@ describe("The brand endpoint", () => {
 
         const userId = uid();
 
-        //NOTE: not including owner
-       const brand = {
+       const response = await postBrand({
            id: "my-brand", name: "My Brand"
-       };
-
-       const response = await postBrand(brand, url, userId);
+       }, url, userId);
 
        expect(response.status).toEqual(201)
     });

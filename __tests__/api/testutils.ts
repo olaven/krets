@@ -4,6 +4,44 @@ import {apiResolver} from 'next/dist/next-server/server/api-utils'
 import {Server} from "net";
 import {NextApiHandler} from "next";
 import {describe, expect, it, test} from "@jest/globals";
+import fetch from "isomorphic-unfetch";
+import * as faker from "faker";
+
+
+//TODO: Brand DTO?
+export const postBrand = (brand: {id: string, name: string}, url: string, userId: string = uid()) => authenticatedFetch(userId, url,{
+    method: "POST",
+    headers: {
+        "content-type": "application/json",
+    },
+    body: JSON.stringify((brand))
+});
+
+export const uid = () => faker.random.uuid();
+
+export const getBrands = async (url: string, userId = uid()) => {
+
+    const response = await authenticatedFetch(userId, url);
+    return response.json();
+};
+
+
+/**
+ * Does a fetch with a x-mock-is-authenticated header.
+ * This header is compatible with the mock implementation of Auth0
+ * @param uid
+ * @param url
+ * @param options
+ */
+export const authenticatedFetch = (uid: string, url, options: any = {headers: {}}) =>
+    fetch(url, {
+        ...options,
+        headers: {
+            'x-mock-is-authenticated': uid,
+            ...options.headers
+        },
+    });
+
 
 export const setupServer = async (handler: NextApiHandler, path: string): Promise<[Server, string]> => {
 
