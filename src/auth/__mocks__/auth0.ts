@@ -36,13 +36,15 @@ export default ({
         createdAt: 0,
         idToken: undefined,
         refreshToken: undefined,
-        user: {}
+        user: {
+            sub: req.headers["x-mock-is-authenticated"]
+        }
     }),
 
 
     requireAuthentication: (apiRoute: IApiRoute): IApiRoute => async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 
-        if (req.headers["x-mock-is-authenticated"]) {
+        if (!req.headers["x-mock-is-authenticated"]) {
 
             res.status(401).json({
                 error: 'not_authenticated',

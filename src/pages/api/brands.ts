@@ -14,35 +14,35 @@ export default auth0.requireAuthentication(async function brand (request, respon
     if (request.method === "GET") {
 
 
-        const brands = repository.find({owner: user.sub});
+        const brands = await repository.find({owner: user.sub});
+
+        console.log("Finding brands for user: ", user.sub, brands);
 
         response
             .status(200)
             .json(brands);
     } else if (request.method === "POST") {
 
-        const brand = await request.body as BrandEntity;
-        if (brand.owner !== user.sub) {
-
-            response
-                .status(403)
-                .send("You are not allowed to post this response");
-        }
+        //NOTE: automatically st brand owner
+        const brand = await request.body;
+        brand.ownerId = user.sub; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
 
         try {
 
             const result = await repository.save(brand);
-            console.log("result data? ", result);
+
+            console.log("stored brand: ", result);
+
+            response
+                .status(201)
+                .json(result)
         } catch (error) {
 
-            console.error("SOme error wihu", error);
+            //TODO: different depending on error
             throw error;
         }
 
 
-        response
-            .status(201)
-            .send("Not implemented")
     }
 });
 
