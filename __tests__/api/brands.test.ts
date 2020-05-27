@@ -93,10 +93,7 @@ describe("The brand endpoint", () => {
         }
 
         const after = await getBrands(url, userId);
-
-        console.log("BEROFER", before);
-
-        expect(before.length).toEqual(0);
-        expect(after.length).toEqual(n);
+        //expect(before.length).toEqual(0);
+        expect(after.length).toEqual(before.length + n);
     });
 });

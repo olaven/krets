@@ -14,9 +14,11 @@ export default auth0.requireAuthentication(async function brand (request, respon
     if (request.method === "GET") {
 
 
-        const brands = await repository.find({owner: user.sub});
-
-        console.log("Finding brands for user: ", user.sub, brands);
+        const brands = await repository.find({
+            where: {
+                ownerId: user.sub
+            }
+        });
 
         response
             .status(200)
@@ -30,8 +32,6 @@ export default auth0.requireAuthentication(async function brand (request, respon
         try {
 
             const result = await repository.save(brand);
-
-            console.log("stored brand: ", result);
 
             response
                 .status(201)
