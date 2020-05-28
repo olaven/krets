@@ -7,6 +7,18 @@ import {IApiRoute} from "@auth0/nextjs-auth0/dist/handlers/require-authenticatio
 import {AccessTokenRequest, AccessTokenResponse, ITokenCache} from "@auth0/nextjs-auth0/dist/tokens/token-cache";
 
 
+const getSession = async (req: NextApiRequest): Promise<ISession> => ({
+    accessToken: undefined,
+    accessTokenExpiresAt: 0,
+    accessTokenScope: undefined,
+    createdAt: 0,
+    idToken: undefined,
+    refreshToken: undefined,
+    user: {
+        sub: req.headers["x-mock-is-authenticated"]
+    }
+});
+
 export default ({
     handleLogin: (req: NextApiRequest, res: NextApiResponse, options?: LoginOptions) => {
 
@@ -14,9 +26,20 @@ export default ({
         // NO MOCK IMPLEMENTATION
     },
 
-    handleCallback: (req: NextApiRequest, res: NextApiResponse, options?: CallbackOptions) => {
-        console.log("Inside handlecallback");
-        // NO MOCK IMPLEMENTATION
+    handleCallback: async (req: NextApiRequest, res: NextApiResponse, options?: CallbackOptions) => {
+
+        let session = await getSession(req);
+        if (options && options.onUserLoaded) {
+            await options.onUserLoaded(req, res, session, {mock: "STATE"});
+        }
+
+        res.end();
+
+        /*res.writeHead(302, {
+            Location: "/somemockredirect"
+        });
+        res.end();*/
+
     },
 
     handleLogout: (req: NextApiRequest, res: NextApiResponse) => {
@@ -29,17 +52,7 @@ export default ({
         // NO MOCK IMPLEMENTATION
     },
 
-    getSession: async (req: NextApiRequest): Promise<ISession | null> => ({
-        accessToken: undefined,
-        accessTokenExpiresAt: 0,
-        accessTokenScope: undefined,
-        createdAt: 0,
-        idToken: undefined,
-        refreshToken: undefined,
-        user: {
-            sub: req.headers["x-mock-is-authenticated"]
-        }
-    }),
+    getSession: getSession,
 
 
     requireAuthentication: (apiRoute: IApiRoute): IApiRoute => async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
