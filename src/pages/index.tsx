@@ -28,13 +28,21 @@ const HomePage = () => {
 
     
 
+    const fetchBrand = async () => {
 
-    return <div> 
+        const response = await fetch("api/brands/brand-id/responses");
+        console.log(response);
+    };
+
+    return <div>
         <Heading fontSize={[ 5, 6, 7 ]} color='primary'>
             Velkommen til Krets
         </Heading>
         <Link href="/api/auth/login"> Login</Link>
         <Link href="/api/auth/logout">Logout</Link>
+
+        <button onClick={fetchBrand}>fetch api</button>
+
         {user? 
             <div>du er logget inn som {user.name}</div>: 
             <div>Du er ikke logget inn</div>}

@@ -41,6 +41,19 @@ describe("Endpoint for getting a specific brand", () => {
         console.log("RESULT FROM ADDING DATA BEFOREHAND", result);
         console.log("what am I asking for? ", full);
 
+        const wait = async (seconds: number) => {
+
+            return new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+
+                    resolve()
+                }, seconds * 1000);
+            });
+        };
+
+        await wait(4);
+
         const getResponse = await fetch(full);
         expect(getResponse.status).toEqual(200);
     });

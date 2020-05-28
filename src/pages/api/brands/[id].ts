@@ -1,22 +1,12 @@
-import {NextApiRequest, NextApiResponse} from "next";
 import TypeormConnection from "../../../server/TypeormConnection";
 import {BrandEntity} from "../../../server/entities/BrandEntity";
 
 
-export default async function specificBrand(request: NextApiRequest, response: NextApiResponse) {
+export default async function brandHandler(request, response) {
 
+    console.log("Entier query: ", request.query);
     const { id } = request.query;
-
     const repository = TypeormConnection.connection.getRepository(BrandEntity);
-
-    //const all = await repository.findByIds([id]);
-    //console.log("all: ", all);
-
-    /*const brand = await repository.findOne({
-        where: {
-            id: id
-        }
-    });*/
 
     console.log("What am I querying for? ", id);
     const brand = await repository.createQueryBuilder("brand")
