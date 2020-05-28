@@ -50,11 +50,11 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const userRepositoy = TypeormConnection.connection.getRepository(UserEntity);
+        const userRepository = TypeormConnection.connection.getRepository(UserEntity);
         const brandRepository = TypeormConnection.connection.getRepository(BrandEntity);
         const responseRepository = TypeormConnection.connection.getRepository(ResponseEntity);
 
-        const user = await userRepositoy.save({
+        const user = await userRepository.save({
             id: faker.random.uuid()
         });
 
@@ -68,19 +68,19 @@ describe("The endpoint for responses", () => {
 
 
 
-        await responseRepository.save([{
-            text: "OK",
-            emotion: 'neutral',
-            brand
-        },
+        await responseRepository.save([
+            {
+                text: "OK",
+                emotion: 'neutral',
+                brand
+            },
             {
                 text: "Good!",
                 emotion: 'happy',
                 brand
             }
-        ])
+        ]);
         await brandRepository.save(brand);
-        const all = await responseRepository.find();
 
         const response = await fetch(fullURL(brand.id));
         expect(response.status).toEqual(200);

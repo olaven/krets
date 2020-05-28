@@ -10,7 +10,7 @@
     "dev": "NODE_ENV=local nodemon",
     "build": "next build",
     "start": "NODE_ENV=production next start",
-    "test": "NODE_ENV=test jest ./__tests__ --testPathIgnorePatterns support/*"
+    "test": "NODE_ENV=test jest --runInBand ./__tests__ --testPathIgnorePatterns support/*"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",

@@ -2,10 +2,17 @@ import TypeormConnection from "../../../server/TypeormConnection";
 import {BrandEntity} from "../../../server/entities/BrandEntity";
 
 
+//TODO: placeholder because query does not work in jest test (node env) https://github.com/vercel/next.js/issues/13505
+const getId = (url: string) => {
+
+    const split = url.split("/");
+    const id = split[split.length - 1];
+    return id;
+};
+
 export default async function brandHandler(request, response) {
 
-    console.log("Entier query: ", request.query);
-    const { id } = request.query;
+    const id = getId(request.url);
     const repository = TypeormConnection.connection.getRepository(BrandEntity);
 
     console.log("What am I querying for? ", id);
