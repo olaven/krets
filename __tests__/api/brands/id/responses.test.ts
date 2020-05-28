@@ -1,3 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
+
+
 import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
@@ -8,6 +13,7 @@ import handler from '../../../../src/pages/api/brands/[id]/responses';
 import TypeormConnection from "../../../../src/server/TypeormConnection";
 import {ResponseEntity} from "../../../../src/server/entities/ResponseEntity";
 import {BrandEntity} from "../../../../src/server/entities/BrandEntity";
+import {UserEntity} from "../../../../src/server/entities/UserEntity";
 
 
 jest.mock("../../../../src/auth/auth0");
@@ -44,32 +50,39 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
+        const userRepositoy = TypeormConnection.connection.getRepository(UserEntity);
         const brandRepository = TypeormConnection.connection.getRepository(BrandEntity);
         const responseRepository = TypeormConnection.connection.getRepository(ResponseEntity);
 
-        const brandId = faker.random.uuid();
-        await brandRepository.save({
-            id: brandId,
-            name: faker.company.companyName(),
-            ownerId: faker.random.uuid()
+        const user = await userRepositoy.save({
+            id: faker.random.uuid()
         });
 
-        await responseRepository.save([
-            {
-                text: "OK",
-                emotion: 'neutral',
-                brandId: brandId
-            },
+        const brand = await brandRepository.save({
+            id: faker.random.words(1),
+            name: faker.company.companyName(),
+            owner: {
+                id: user.id
+            }
+        });
+
+
+
+        await responseRepository.save([{
+            text: "OK",
+            emotion: 'neutral',
+            brand
+        },
             {
                 text: "Good!",
                 emotion: 'happy',
-                brandId: brandId
+                brand
             }
-        ]);
+        ])
+        await brandRepository.save(brand);
+        const all = await responseRepository.find();
 
-
-
-        const response = await fetch(fullURL(brandId));
+        const response = await fetch(fullURL(brand.id));
         expect(response.status).toEqual(200);
 
         const responses = await response.json();
