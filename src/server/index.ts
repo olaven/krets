@@ -12,18 +12,21 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 TypeormConnection.connect()
-    .then(() => console.log("Connected to database"))
+    .then(() => {
+
+        console.log("Connected to database");
+        app.prepare().then(async () => {
+
+            createServer((req, res) => {
+
+                const parsedUrl = parse(req.url, true);
+                handle(req, res, parsedUrl)
+
+            }).listen(port, () => {
+
+                console.log(`Listening on ${port} as ${process.env.NODE_ENV}`)
+            })
+        });
+    })
     .catch((error) => console.error("Could not connect to database", error));
 
-app.prepare().then(async () => {
-
-    createServer((req, res) => {
-
-        const parsedUrl = parse(req.url, true);
-        handle(req, res, parsedUrl)
-
-    }).listen(port, () => {
-
-        console.log(`Listening on ${port} as ${process.env.NODE_ENV}`)
-    })
-});
