@@ -7,7 +7,7 @@
   "author": "olaven <olav@sundfoer.com>",
   "license": "TODO",
   "scripts": {
-    "dev": "NODE_ENV=local nodemon",
+    "dev": "NODE_ENV=development nodemon",
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "test": "NODE_ENV=test jest --runInBand ./__tests__ --testPathIgnorePatterns support/*"

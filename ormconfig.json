@@ -3,7 +3,7 @@
     "name": "production"
   },
   {
-    "name": "local",
+    "name": "development",
     "type": "postgres",
     "host": "localhost",
     "username": "postgres",

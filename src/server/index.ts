@@ -1,27 +1,29 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
 
 import { createServer } from 'http'
 import next from 'next'
+const { parse } = require('url')
+import TypeormConnection from "./TypeormConnection";
 
 
 const port = parseInt(process.env.PORT || '3000', 10);
-  const dev = process.env.NODE_ENV !== 'production';
-  const app = next({ dev });
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
-  createServer().listen(port);
+TypeormConnection.connect()
+    .then(() => console.log("Connected to database"))
+    .catch((error) => console.error("Could not connect to database", error));
 
-  // tslint:disable-next-line:no-console
-  console.log(
-    `> Server listening at http://localhost:${port} as ${
-      dev ? 'development' : process.env.NODE_ENV
-    }`
-  );
+app.prepare().then(async () => {
 
-createConnection().then(connection => {
-    
-  console.log("CONNECTED TO DATABASE");
+    createServer((req, res) => {
+
+        const parsedUrl = parse(req.url, true);
+        handle(req, res, parsedUrl)
+
+    }).listen(port, () => {
+
+        console.log(`Listening on ${port} as ${process.env.NODE_ENV}`)
+    })
 });
-
-}).catch(error => console.log(error));
