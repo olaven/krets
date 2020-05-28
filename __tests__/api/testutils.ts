@@ -29,18 +29,26 @@ export const getBrands = async (url: string, userId = uid()) => {
 /**
  * Does a fetch with a x-mock-is-authenticated header.
  * This header is compatible with the mock implementation of Auth0
- * @param uid
+ * @param userId
  * @param url
  * @param options
  */
-export const authenticatedFetch = (uid: string, url, options: any = {headers: {}}) =>
-    fetch(url, {
+export const authenticatedFetch = (userId: string, url: string, options: any = {headers: {}}) => {
+
+
+    const mergedOptions = {
         ...options,
         headers: {
-            'x-mock-is-authenticated': uid,
+            'x-mock-is-authenticated': userId,
             ...options.headers
         },
-    });
+    };
+
+    console.log("URL with options: ", url,  options.method);
+
+    return fetch(url, mergedOptions);
+};
+
 
 
 export const setupServer = async (handler: NextApiHandler, path: string): Promise<[Server, string]> => {

@@ -5,14 +5,25 @@ import {BrandEntity} from "../../../server/entities/BrandEntity";
 
 export default async function specificBrand(request: NextApiRequest, response: NextApiResponse) {
 
-    const { query: { id } } = request;
-    console.log("typeormconnection", TypeormConnection.connection);
+    const { id } = request.query;
+
     const repository = TypeormConnection.connection.getRepository(BrandEntity);
 
-    const brand = await repository.find({ where: {
-        id
-    }});
+    //const all = await repository.findByIds([id]);
+    //console.log("all: ", all);
 
+    /*const brand = await repository.findOne({
+        where: {
+            id: id
+        }
+    });*/
+
+    console.log("What am I querying for? ", id);
+    const brand = await repository.createQueryBuilder("brand")
+        .where("brand.id = :id", { id: id })
+        .getOne();
+
+    console.log("FOUND BRAND: ", brand);
     if (brand) {
 
         response

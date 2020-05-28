@@ -11,7 +11,6 @@ export default class TypeormConnection {
             const connectionName = process.env.NODE_ENV;
             const options = await getConnectionOptions(connectionName);
 
-            console.log("options: ", options);
             this.connection = await  createConnection(options);
         }
 

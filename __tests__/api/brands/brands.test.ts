@@ -1,14 +1,14 @@
 import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, uid} from "./testutils";
-import handler from "../../src/pages/api/brands";
+import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, uid} from "../testutils";
+import handler from "../../../src/pages/api/brands";
 import {Server} from "net";
-import TypeormConnection from "../../src/server/TypeormConnection";
+import TypeormConnection from "../../../src/server/TypeormConnection";
 import * as faker from "faker";
 
 
-jest.mock("../../src/auth/auth0");
+jest.mock("../../../src/auth/auth0");
 
 describe("The brand endpoint", () => {
 

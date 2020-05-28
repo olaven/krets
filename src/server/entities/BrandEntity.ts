@@ -1,4 +1,13 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, PrimaryColumn, JoinColumn} from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    BaseEntity,
+    ManyToOne,
+    PrimaryColumn,
+    JoinColumn,
+    VersionColumn
+} from "typeorm";
 import {UserEntity} from "./UserEntity";
 
 @Entity()

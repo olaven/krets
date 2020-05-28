@@ -1,7 +1,7 @@
-import auth0 from "../../auth/auth0";
-import {ResponseEntity} from "../../server/entities/ResponseEntity"
-import {BrandEntity} from "../../server/entities/BrandEntity";
-import TypeormConnection, {getPostgresConnection} from "../../server/TypeormConnection";
+import auth0 from "../../../auth/auth0";
+import {ResponseEntity} from "../../../server/entities/ResponseEntity"
+import {BrandEntity} from "../../../server/entities/BrandEntity";
+import TypeormConnection, {getPostgresConnection} from "../../../server/TypeormConnection";
 import {getRepository, Repository} from "typeorm";
 import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
 
@@ -29,6 +29,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
         const brand = await request.body;
         brand.ownerId = user.sub; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
 
+
         try {
 
             const result = await repository.save(brand);
@@ -38,8 +39,10 @@ export default auth0.requireAuthentication(async function brand (request, respon
                 .json(result)
         } catch (error) {
 
+            console.log("Brand iwht error: ", brand);
             //TODO: different depending on error
-            throw error;
+            console.error("Erorr here: ", error);
+            throw error
         }
 
 
