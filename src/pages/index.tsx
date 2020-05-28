@@ -30,7 +30,7 @@ const HomePage = () => {
 
     const fetchBrand = async () => {
 
-        const response = await fetch("api/brands/brand-id/responses");
+        const response = await fetch("api/brands/brand-id/id");
         console.log(response);
     };
 

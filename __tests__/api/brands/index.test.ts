@@ -7,10 +7,9 @@ import {Server} from "net";
 import TypeormConnection from "../../../src/server/TypeormConnection";
 import * as faker from "faker";
 
-
 jest.mock("../../../src/auth/auth0");
 
-describe("The brand endpoint", () => {
+describe("The brands endpoint", () => {
 
     let server: Server;
     let url: string;

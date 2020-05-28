@@ -18,7 +18,7 @@ describe("Endpoint for getting a specific brand", () => {
     beforeAll(async () => {
 
         brandRepository = (await TypeormConnection.connect()).getRepository(BrandEntity);
-        //NOTE: URL does not include [id] - must be added in tests
+        //NOTE: URL does not include id - must be added in tests
        [server, url] = await setupServer(handler, "/api/brands/")
     });
 

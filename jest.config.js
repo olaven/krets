@@ -1,7 +1,7 @@
-require('dotenv').config()
+require('dotenv').config();
 const {
     defaults
-} = require('jest-config')
+} = require('jest-config');
 
 module.exports = {
     ...defaults,
@@ -11,7 +11,7 @@ module.exports = {
         }
     },
     moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
-    testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/', '*utils.ts'],
+    testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
     testEnvironment: "node",
     collectCoverage: true,
     coveragePathIgnorePatterns: ['/node_modules/', 'enzyme.js', '/.next/'],

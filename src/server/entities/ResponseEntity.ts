@@ -13,7 +13,7 @@ export class ResponseEntity extends BaseEntity {
     text: string;
 
     @Column()
-    emotion: string;
+    emotion: 'sad' | 'neutral' | 'happy';
 
     @ManyToOne(type => BrandEntity)
     brand: BrandEntity;
