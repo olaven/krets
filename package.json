@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
     "build": "next build",
-    "start": "NODE_ENV=production next start",
+    "start": "next start",
     "test": "NODE_ENV=test jest --runInBand ./__tests__ --testPathIgnorePatterns support/*"
   },
   "dependencies": {
