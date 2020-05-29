@@ -17,7 +17,7 @@ describe("Endpoint for getting a specific brand", () => {
 
     beforeAll(async () => {
 
-        brandRepository = (await TypeormConnection.connect()).getRepository(BrandEntity);
+        brandRepository = (await TypeormConnection.getConnection()).getRepository(BrandEntity);
         //NOTE: URL does not include id - must be added in tests
        [server, url] = await setupServer(handler, "/api/brands/")
     });
@@ -40,7 +40,7 @@ describe("Endpoint for getting a specific brand", () => {
         const full = fullUrl(brand.id);
         console.log("RESULT FROM ADDING DATA BEFOREHAND", result);
         console.log("what am I asking for? ", full);
-        
+
 
         const getResponse = await fetch(full);
         expect(getResponse.status).toEqual(200);

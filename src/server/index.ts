@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 import { createServer } from 'http'
 import next from 'next'
-const { parse } = require('url')
+const { parse } = require('url');
 import TypeormConnection from "./TypeormConnection";
 
 
@@ -11,6 +11,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+/*
 TypeormConnection.connect()
     .then(() => {
 
@@ -30,3 +31,4 @@ TypeormConnection.connect()
     })
     .catch((error) => console.error("Could not connect to database", error));
 
+*/

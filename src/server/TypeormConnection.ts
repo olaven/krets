@@ -2,9 +2,29 @@ import {getConnectionOptions, createConnection, Connection} from "typeorm";
 
 export default class TypeormConnection {
 
-    static connection: Connection;
+    private static connection: Connection;
+    static async getConnection() {
 
-    static async connect() {
+      if (!this.connection) {
+
+          const connectionName = process.env.NODE_ENV;
+          const options = await getConnectionOptions(connectionName);
+
+          try {
+
+              this.connection = await createConnection(options);
+              console.log("Lazily connected to database");
+          } catch (error) {
+
+              console.error("Error connecting to database", error);
+              throw error;
+          }
+      }
+
+      return this.connection;
+    };
+
+    /*static async connect() {
 
         if (!this.connection) {
 
@@ -15,7 +35,7 @@ export default class TypeormConnection {
         }
 
         return this.connection;
-    }
+    }*/
 
     static close() {
 

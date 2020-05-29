@@ -16,7 +16,6 @@ describe("The brands endpoint", () => {
 
     beforeAll(async () => {
 
-        await TypeormConnection.connect();
         [server, url] = await setupServer(handler, "/api/brands");
     });
 

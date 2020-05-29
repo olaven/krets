@@ -14,9 +14,10 @@ const getId = (url: string) => {
 
 export default async function responsesForBrandInURL(request: NextApiRequest, response: NextApiResponse) {
 
+    const connection = await TypeormConnection.getConnection();
     const id = getId(request.url);
 
-    const brandRepository = TypeormConnection.connection.getRepository(BrandEntity);
+    const brandRepository = connection.getRepository(BrandEntity);
     const brand = await brandRepository.createQueryBuilder("brand")
         .where("brand.id = :id", { id })
         .getOne();
@@ -30,9 +31,7 @@ export default async function responsesForBrandInURL(request: NextApiRequest, re
         return;
     }
 
-    const repository = TypeormConnection.connection.getRepository(ResponseEntity);
-
-    const all = await repository.find();
+    const repository = connection.getRepository(ResponseEntity);
 
     const responses = await repository.createQueryBuilder("response")
         .where("response.brand.id = :id", { id })

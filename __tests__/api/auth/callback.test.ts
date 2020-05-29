@@ -16,7 +16,7 @@ describe("The callback endpoint", () => {
 
     beforeAll(async () => {
 
-        await TypeormConnection.connect();
+        //await TypeormConnection.getConn();
         [server, url] = await setupServer(handler, "/api/auth/callback");
     });
 
@@ -28,7 +28,7 @@ describe("The callback endpoint", () => {
 
     it("does create user if the user is new", async () => {
 
-        const repository = TypeormConnection.connection.getRepository(UserEntity);
+        const repository = (await TypeormConnection.getConnection()).getRepository(UserEntity);
         const uid = faker.random.uuid();
 
         const before = await repository.count({where: {id: uid}});
@@ -41,7 +41,7 @@ describe("The callback endpoint", () => {
 
     it("does _not_ create if user already exists", async () => {
 
-        const repository = TypeormConnection.connection.getRepository(UserEntity);
+        const repository = (await TypeormConnection.getConnection()).getRepository(UserEntity);
         const user = await repository.save({
             id: faker.random.uuid()
         });

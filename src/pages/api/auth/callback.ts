@@ -6,7 +6,7 @@ import {UserEntity} from "../../../server/entities/UserEntity";
 
 const createIfNotPresent = async (id: string) => {
 
-  const repository = TypeormConnection.connection.getRepository(UserEntity);
+  const repository = (await TypeormConnection.getConnection()).getRepository(UserEntity);
   const user = { id };
 
   const count = await repository.createQueryBuilder("user")

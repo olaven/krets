@@ -9,7 +9,7 @@ import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
 export default auth0.requireAuthentication(async function brand (request, response) {
 
     const { user } = await auth0.getSession(request);
-    const repository = TypeormConnection.connection.getRepository(BrandEntity);
+    const repository = (await TypeormConnection.getConnection()).getRepository(BrandEntity);
 
     if (request.method === "GET") {
 

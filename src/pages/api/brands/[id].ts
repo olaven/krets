@@ -13,7 +13,7 @@ const getId = (url: string) => {
 export default async function brandHandler(request, response) {
 
     const id = getId(request.url);
-    const repository = TypeormConnection.connection.getRepository(BrandEntity);
+    const repository = (await TypeormConnection.getConnection()).getRepository(BrandEntity);
 
     console.log("What am I querying for? ", id);
     const brand = await repository.createQueryBuilder("brand")

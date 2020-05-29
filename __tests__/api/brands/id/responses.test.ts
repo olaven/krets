@@ -28,7 +28,6 @@ describe("The endpoint for responses", () => {
 
     beforeAll(async () => {
 
-        await TypeormConnection.connect();
         [server, url] = await setupServer(handler, "/api/brands");
     });
 
@@ -50,9 +49,10 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const userRepository = TypeormConnection.connection.getRepository(UserEntity);
-        const brandRepository = TypeormConnection.connection.getRepository(BrandEntity);
-        const responseRepository = TypeormConnection.connection.getRepository(ResponseEntity);
+        const connection = await TypeormConnection.getConnection();
+        const userRepository = connection.getRepository(UserEntity);
+        const brandRepository = connection.getRepository(BrandEntity);
+        const responseRepository = connection.getRepository(ResponseEntity);
 
         const user = await userRepository.save({
             id: faker.random.uuid()
