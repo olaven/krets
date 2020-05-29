@@ -81,7 +81,6 @@ describe("The endpoint for responses", () => {
                 brand
             }
         ]);
-        await brandRepository.save(brand);
 
         const response = await fetch(fullURL(brand.id));
         expect(response.status).toEqual(200);

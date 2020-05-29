@@ -6,6 +6,7 @@ import handler from "../../../src/pages/api/brands";
 import {Server} from "net";
 import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import * as faker from "faker";
+import {UserEntity} from "../../../src/server/entities/UserEntity";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -13,10 +14,12 @@ describe("The brands endpoint", () => {
 
     let server: Server;
     let url: string;
+    let userRepository;
 
     beforeAll(async () => {
 
         await DatabaseConnection.connect();
+        userRepository = (await DatabaseConnection.get()).getRepository(UserEntity);
         [server, url] = await setupServer(handler, "/api/brands");
     });
 
@@ -41,6 +44,9 @@ describe("The brands endpoint", () => {
     it("Is possible to create brand if authenticated", async () => {
 
         const userId = uid();
+        await userRepository.save({
+            id: userId
+        });
 
        const response = await postBrand({
            id: "my-brand", name: "My Brand"
@@ -52,17 +58,20 @@ describe("The brands endpoint", () => {
     it("/brands returns all brands belonging to given user", async () => {
 
         const n = 5;
-        const userId = uid();
-        const before = await getBrands(url, userId);
+        const user = await userRepository.save({
+            id: uid()
+        });
+
+        const before = await getBrands(url, user.id);
 
         for (let i = 0; i < n; i++) {
 
             await postBrand({
                 id: faker.random.uuid(), name: faker.company.companyName()
-            }, url, userId);
+            }, url, user.id);
         }
 
-        const after = await getBrands(url, userId);
+        const after = await getBrands(url, user.id);
         //expect(before.length).toEqual(0);
         expect(after.length).toEqual(before.length + n);
     });

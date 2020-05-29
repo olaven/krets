@@ -11,11 +11,18 @@ export default auth0.requireAuthentication(async function brand (request, respon
     if (request.method === "GET") {
 
 
-        const brands = await repository.find({
+        const brands = await repository.createQueryBuilder("brand")
+            .innerJoin("brand.owner", "owner")
+            .where("owner.id = :id", {id: user.sub})
+            .getMany();
+        /*const brands = await repository.find({
+            relations: ["owner"],
             where: {
-                ownerId: user.sub
+                owner: {
+                    id:    user.sub
+                }
             }
-        });
+        });*/
 
         response
             .status(200)
@@ -24,13 +31,14 @@ export default auth0.requireAuthentication(async function brand (request, respon
 
         //NOTE: automatically st brand owner
         const brand = await request.body;
-        brand.ownerId = user.sub; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
+        brand.owner = { id: user.sub}; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
 
 
         try {
 
             const result = await repository.save(brand);
 
+            console.log("AFter save: ", result);
             response
                 .status(201)
                 .json(result)

@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -12,12 +11,14 @@
     "forceConsistentCasingInFileNames": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "jsx": "preserve",
     "experimentalDecorators": true,
+    "module": "esnext",
+    "outDir": "dist",
+    "target": "esnext",
+    "isolatedModules": true,
     "noEmit": true
   },
   "exclude": [
