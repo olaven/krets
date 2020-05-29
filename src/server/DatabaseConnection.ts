@@ -13,12 +13,19 @@ export default class DatabaseConnection {
 
       if (!this.connection) {
 
-          const connectionName = process.env.NODE_ENV;
-          const options = await getConnectionOptions(connectionName);
 
           try {
 
-              this.connection = await createConnection(options);
+              if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+
+                  const connectionName = process.env.NODE_ENV;
+                  const options = await getConnectionOptions(connectionName);
+                  this.connection = await createConnection(options);
+              } else {
+
+                  this.connection = await createConnection();
+              }
+
               console.log("Lazily connected to database");
           } catch (error) {
 
