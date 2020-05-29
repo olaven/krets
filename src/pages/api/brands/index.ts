@@ -33,7 +33,6 @@ export default auth0.requireAuthentication(async function brand (request, respon
         const brand = await request.body;
         brand.owner = { id: user.sub}; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
 
-
         try {
 
             const result = await repository.save(brand);

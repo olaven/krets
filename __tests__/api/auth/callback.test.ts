@@ -3,7 +3,7 @@ import {Server} from "net";
 import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import handler from "../../../src/pages/api/auth/callback";
 import {authenticatedFetch, setupServer, teardownServer} from "../testutils";
-import {expect, jest} from "@jest/globals";
+import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import * as faker from "faker";
 import {UserEntity} from "../../../src/server/entities/UserEntity";
 

@@ -22,7 +22,7 @@ export class BrandEntity {
     })
     name: string;
 
-    @ManyToOne(type => UserEntity)
+    @ManyToOne(type => UserEntity, (user) => user.brands)
     owner: UserEntity;
 
     @OneToMany(type => ResponseEntity, (response: ResponseEntity) => response.brand, {
