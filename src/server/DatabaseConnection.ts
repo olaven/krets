@@ -5,7 +5,7 @@ export default class DatabaseConnection {
     private static connection: Connection;
 
     /**
-     * Returns the connection object. 
+     * Returns the connection object.
      * Instantiates a new connection
      * if not already present.
      */
