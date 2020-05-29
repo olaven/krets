@@ -2,7 +2,7 @@ import {afterAll, beforeAll, describe, expect, it} from "@jest/globals";
 import {postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/brands/[id]";
 import * as faker from "faker";
-import TypeormConnection from "../../../src/server/TypeormConnection";
+import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import {BrandEntity} from "../../../src/server/entities/BrandEntity";
 
 describe("Endpoint for getting a specific brand", () => {
@@ -17,14 +17,14 @@ describe("Endpoint for getting a specific brand", () => {
 
     beforeAll(async () => {
 
-        brandRepository = (await TypeormConnection.getConnection()).getRepository(BrandEntity);
+        brandRepository = (await DatabaseConnection.get()).getRepository(BrandEntity);
         //NOTE: URL does not include id - must be added in tests
        [server, url] = await setupServer(handler, "/api/brands/")
     });
 
     afterAll(async () => {
 
-        await TypeormConnection.close();
+        await DatabaseConnection.close();
         await teardownServer(server)
     });
 

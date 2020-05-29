@@ -4,7 +4,7 @@ import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/brands";
 import {Server} from "net";
-import TypeormConnection from "../../../src/server/TypeormConnection";
+import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import * as faker from "faker";
 
 jest.mock("../../../src/auth/auth0");
@@ -21,7 +21,7 @@ describe("The brands endpoint", () => {
 
     afterAll(async () => {
 
-        await TypeormConnection.close();
+        await DatabaseConnection.close();
         await teardownServer(server);
     });
 

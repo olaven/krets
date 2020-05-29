@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import auth0 from '../../../auth/auth0';
-import TypeormConnection from "../../../server/TypeormConnection";
+import DatabaseConnection from "../../../server/DatabaseConnection";
 import {UserEntity} from "../../../server/entities/UserEntity";
 
 
 const createIfNotPresent = async (id: string) => {
 
-  const repository = (await TypeormConnection.getConnection()).getRepository(UserEntity);
+  const repository = (await DatabaseConnection.get()).getRepository(UserEntity);
   const user = { id };
 
   const count = await repository.createQueryBuilder("user")

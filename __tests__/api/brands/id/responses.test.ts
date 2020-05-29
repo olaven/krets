@@ -10,7 +10,7 @@ import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, u
 import * as faker from "faker";
 import {Server} from "net";
 import handler from '../../../../src/pages/api/brands/[id]/responses';
-import TypeormConnection from "../../../../src/server/TypeormConnection";
+import DatabaseConnection from "../../../../src/server/DatabaseConnection";
 import {ResponseEntity} from "../../../../src/server/entities/ResponseEntity";
 import {BrandEntity} from "../../../../src/server/entities/BrandEntity";
 import {UserEntity} from "../../../../src/server/entities/UserEntity";
@@ -33,7 +33,7 @@ describe("The endpoint for responses", () => {
 
     afterAll(async () => {
 
-        await TypeormConnection.close();
+        await DatabaseConnection.close();
         await teardownServer(server);
     });
 
@@ -49,7 +49,7 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const connection = await TypeormConnection.getConnection();
+        const connection = await DatabaseConnection.get();
         const userRepository = connection.getRepository(UserEntity);
         const brandRepository = connection.getRepository(BrandEntity);
         const responseRepository = connection.getRepository(ResponseEntity);

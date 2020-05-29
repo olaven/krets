@@ -1,4 +1,4 @@
-import TypeormConnection from "../../../server/TypeormConnection";
+import DatabaseConnection from "../../../server/DatabaseConnection";
 import {BrandEntity} from "../../../server/entities/BrandEntity";
 
 
@@ -13,7 +13,7 @@ const getId = (url: string) => {
 export default async function brandHandler(request, response) {
 
     const id = getId(request.url);
-    const repository = (await TypeormConnection.getConnection()).getRepository(BrandEntity);
+    const repository = (await DatabaseConnection.get()).getRepository(BrandEntity);
 
     console.log("What am I querying for? ", id);
     const brand = await repository.createQueryBuilder("brand")

@@ -1,7 +1,7 @@
 import auth0 from "../../../auth/auth0";
 import {ResponseEntity} from "../../../server/entities/ResponseEntity"
 import {BrandEntity} from "../../../server/entities/BrandEntity";
-import TypeormConnection, {getPostgresConnection} from "../../../server/TypeormConnection";
+import DatabaseConnection, {getPostgresConnection} from "../../../server/DatabaseConnection";
 import {getRepository, Repository} from "typeorm";
 import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
 
@@ -9,7 +9,7 @@ import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
 export default auth0.requireAuthentication(async function brand (request, response) {
 
     const { user } = await auth0.getSession(request);
-    const repository = (await TypeormConnection.getConnection()).getRepository(BrandEntity);
+    const repository = (await DatabaseConnection.get()).getRepository(BrandEntity);
 
     if (request.method === "GET") {
 

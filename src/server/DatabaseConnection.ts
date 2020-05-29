@@ -1,9 +1,15 @@
 import {getConnectionOptions, createConnection, Connection} from "typeorm";
 
-export default class TypeormConnection {
+export default class DatabaseConnection {
 
     private static connection: Connection;
-    static async getConnection() {
+
+    /**
+     * Returns the connection object. 
+     * Instantiates a new connection
+     * if not already present.
+     */
+    static async get() {
 
       if (!this.connection) {
 
@@ -24,18 +30,6 @@ export default class TypeormConnection {
       return this.connection;
     };
 
-    /*static async connect() {
-
-        if (!this.connection) {
-
-            const connectionName = process.env.NODE_ENV;
-            const options = await getConnectionOptions(connectionName);
-
-            this.connection = await  createConnection(options);
-        }
-
-        return this.connection;
-    }*/
 
     static close() {
 

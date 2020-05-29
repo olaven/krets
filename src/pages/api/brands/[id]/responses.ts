@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import TypeormConnection from "../../../../server/TypeormConnection";
+import DatabaseConnection from "../../../../server/DatabaseConnection";
 import {ResponseEntity} from "../../../../server/entities/ResponseEntity";
 import {BrandEntity} from "../../../../server/entities/BrandEntity";
 
@@ -14,7 +14,7 @@ const getId = (url: string) => {
 
 export default async function responsesForBrandInURL(request: NextApiRequest, response: NextApiResponse) {
 
-    const connection = await TypeormConnection.getConnection();
+    const connection = await DatabaseConnection.get();
     const id = getId(request.url);
 
     const brandRepository = connection.getRepository(BrandEntity);
