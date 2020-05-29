@@ -33,9 +33,8 @@ const PageCreator = () => {
         const page = {
             id, name
         };
-
-        //TODO: Refactor to "Page" (not brand) in backend as well
-        const response = await fetch("/api/brands", {
+        
+        const response = await fetch("/api/pages", {
             method: "POST",
             body: JSON.stringify(page)
         });
@@ -49,7 +48,7 @@ const PageCreator = () => {
         } else {
 
             alert("Det oppsto en liten feil i maskineriet..");
-            console.error("Feil ved posting av brand: ", response);
+            console.error("Feil ved posting av ny side: ", response);
         }
     };
 

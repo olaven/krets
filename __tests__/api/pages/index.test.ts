@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, uid} from "../testutils";
-import handler from "../../../src/pages/api/brands";
+import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../testutils";
+import handler from "../../../src/pages/api/pages";
 import {Server} from "net";
 import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import * as faker from "faker";
@@ -10,7 +10,7 @@ import {UserEntity} from "../../../src/server/entities/UserEntity";
 
 jest.mock("../../../src/auth/auth0");
 
-describe("The brands endpoint", () => {
+describe("The pages endpoint", () => {
 
     let server: Server;
     let url: string;
@@ -20,7 +20,7 @@ describe("The brands endpoint", () => {
 
         await DatabaseConnection.connect();
         userRepository = (await DatabaseConnection.get()).getRepository(UserEntity);
-        [server, url] = await setupServer(handler, "/api/brands");
+        [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
@@ -41,7 +41,7 @@ describe("The brands endpoint", () => {
         expect(response.status).toEqual(200);
     });
 
-    it("Is possible to create brand if authenticated", async () => {
+    it("Is possible to create a page if authenticated", async () => {
 
         const userId = uid();
         await userRepository.save({
@@ -49,20 +49,20 @@ describe("The brands endpoint", () => {
         });
 
        const response = await postBrand({
-           id: "my-brand", name: "My Brand"
+           id: "my-page", name: "My Page"
        }, url, userId);
 
        expect(response.status).toEqual(201)
     });
 
-    it("/brands returns all brands belonging to given user", async () => {
+    it("/pages returns all pages belonging to given user", async () => {
 
         const n = 5;
         const user = await userRepository.save({
             id: uid()
         });
 
-        const before = await getBrands(url, user.id);
+        const before = await getPages(url, user.id);
 
         for (let i = 0; i < n; i++) {
 
@@ -71,7 +71,7 @@ describe("The brands endpoint", () => {
             }, url, user.id);
         }
 
-        const after = await getBrands(url, user.id);
+        const after = await getPages(url, user.id);
         //expect(before.length).toEqual(0);
         expect(after.length).toEqual(before.length + n);
     });

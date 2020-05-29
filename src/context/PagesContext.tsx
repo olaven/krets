@@ -8,7 +8,7 @@ const usePages = (uid: string) => {
 
   const fetchPages = async () => {
 
-    const response = await fetch("/api/brands");
+    const response = await fetch("/api/pages");
     if (response.status === 200) {
 
       const pages = await response.json();

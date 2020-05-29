@@ -15,7 +15,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
             .innerJoin("brand.owner", "owner")
             .where("owner.id = :id", {id: user.sub})
             .getMany();
-        /*const brands = await repository.find({
+        /*const pages = await repository.find({
             relations: ["owner"],
             where: {
                 owner: {

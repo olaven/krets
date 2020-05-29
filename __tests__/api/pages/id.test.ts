@@ -1,11 +1,11 @@
 import {afterAll, beforeAll, describe, expect, it} from "@jest/globals";
 import {postBrand, setupServer, teardownServer, uid} from "../testutils";
-import handler from "../../../src/pages/api/brands/[id]";
+import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
 import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import {BrandEntity} from "../../../src/server/entities/BrandEntity";
 
-describe("Endpoint for getting a specific brand", () => {
+describe("Endpoint for getting a specific page", () => {
 
 
     let server;
@@ -20,7 +20,7 @@ describe("Endpoint for getting a specific brand", () => {
         await DatabaseConnection.connect();
         brandRepository = (await DatabaseConnection.get()).getRepository(BrandEntity);
         //NOTE: URL does not include id - must be added in tests
-       [server, url] = await setupServer(handler, "/api/brands/")
+       [server, url] = await setupServer(handler, "/api/pages/")
     });
 
     afterAll(async () => {

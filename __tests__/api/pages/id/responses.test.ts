@@ -6,10 +6,10 @@
 import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {authenticatedFetch, getBrands, postBrand, setupServer, teardownServer, uid} from "../../testutils";
+import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../../testutils";
 import * as faker from "faker";
 import {Server} from "net";
-import handler from '../../../../src/pages/api/brands/[id]/responses';
+import handler from '../../../../src/pages/api/pages/[id]/responses';
 import DatabaseConnection from "../../../../src/server/DatabaseConnection";
 import {ResponseEntity} from "../../../../src/server/entities/ResponseEntity";
 import {BrandEntity} from "../../../../src/server/entities/BrandEntity";
@@ -29,7 +29,7 @@ describe("The endpoint for responses", () => {
     beforeAll(async () => {
 
         await DatabaseConnection.connect();
-        [server, url] = await setupServer(handler, "/api/brands");
+        [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {

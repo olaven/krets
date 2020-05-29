@@ -19,7 +19,7 @@ export const postBrand = (brand: {id: string, name: string}, url: string, userId
 
 export const uid = () => faker.random.uuid();
 
-export const getBrands = async (url: string, userId = uid()) => {
+export const getPages = async (url: string, userId = uid()) => {
 
     const response = await authenticatedFetch(userId, url);
     return response.json();
