@@ -23,7 +23,7 @@
     "react-qrcode-logo": "^2.2.1",
     "rebass": "^4.0.7",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "0.2.22"
+    "typeorm": "latest"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.8.3",

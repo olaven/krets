@@ -3,7 +3,7 @@ import {PagesContext, PagesContextProvider} from "../../context/PagesContext";
 
 const PageCreator = () => {
 
-
+    return <p>Lag din Krets-side:</p>
 };
 
 
@@ -11,12 +11,17 @@ export const PageList = () => {
 
     const {pages} = useContext(PagesContext);
 
-    return pages.map(page => <div>
-        page: {page};
-    </div>)
+    return <div>
+        Dine krets-sider:
+        {pages.map(page => <div>
+            {page}
+        </div>)}
+    </div>
+
 };
 
 export const PageSection = () => (<PagesContextProvider>
 
-    <p>Lag din Krets-side</p>
+    <PageCreator/>
+    <PageList/>
 </PagesContextProvider>);
