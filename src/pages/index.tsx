@@ -1,29 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Heading, Button, Link } from "rebass"
+import {AuthContext} from "../context/AuthContext";
 
 const HomePage = () => {
 
-    const [ user, setUser ] = useState<any>(null);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-
-            const res = await fetch('/api/auth/me');
-            if (res.ok) {
-
-                const user = await res.json();
-                setUser(user);
-            } else {
-
-                setUser(null);
-                console.error(res)
-            }
-
-        
-        };
-
-        fetchUser(); 
-    }, []);
+    const { user } = React.useContext(AuthContext);
 
 
     

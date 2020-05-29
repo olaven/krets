@@ -1,6 +1,7 @@
 //import '../styles.css'
 import Head from "next/head";
 import { ThemeProvider } from 'emotion-theming'
+import {AuthContext} from "../context/AuthContext";
 //import theme from '@rebass/preset'
 
 const theme = {
@@ -40,16 +41,16 @@ const theme = {
   radii: {
       default: 12,
     }   
-}
+};
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
-    return <>
+    return <AuthContext>
         <Head>
             <title>Krets.</title>
         </Head>
         <ThemeProvider theme={theme}>
                 <Component {...pageProps} />
         </ThemeProvider>
-    </>;
+    </AuthContext>;
 }
