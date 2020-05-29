@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Heading, Button, Link } from "rebass"
-import {UserContext, UserContextProvider} from "../context/UserContext";
+import React from "react";
+import {UserContext} from "../context/UserContext";
 import {PageSection} from "../components/PageSection/PageSection";
 import {IntroSection} from "../components/IntroSection/IntroSection";
 

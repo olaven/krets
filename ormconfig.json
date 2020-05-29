@@ -1,8 +1,5 @@
 [
   {
-    "name": "production"
-  },
-  {
     "name": "development",
     "type": "postgres",
     "host": "localhost",
@@ -16,7 +13,8 @@
     ],
     "migrations": [
       "./src/server/migrations/**.ts"
-    ]
+    ],
+    "dropSchema": true
   },
   {
     "name": "test",

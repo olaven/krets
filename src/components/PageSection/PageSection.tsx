@@ -16,7 +16,7 @@ export const PageList = () => {
     </div>)
 };
 
-export const PageSection = () => <PagesContextProvider>
+export const PageSection = () => (<PagesContextProvider>
 
-    Lag din Krets-side
-</PagesContextProvider>;
+    <p>Lag din Krets-side</p>
+</PagesContextProvider>);

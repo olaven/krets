@@ -9,14 +9,19 @@ export const Layout = (props) => {
 
     const authButton = <Button color={"secondary"}>
         {user?
-            <Link href="/api/auth/logout">Logg ut</Link>:
-            <Link href="/api/auth/login">Logg inn</Link>}
+            <Link color={"secondary"} href="/api/auth/logout">Logg ut</Link>:
+            <Link color={"secondary"} href="/api/auth/login">Logg inn</Link>}
     </Button>;
 
-    return <div>
+    return <Box
+        minWidth={"100vw"}
+        minHeight={"100vh"}
+        sx={{
+            m: 0,
+            px: 3,
+        }} backgroundColor={"secondary"}>
         <Flex px={2}
             color='primary'
-            bg='secondary'
             alignItems='center'>
                 <Text p={2} fontSize={7} fontWeight='bold'>Krets.</Text>
                 <Box mx='auto' />
@@ -26,5 +31,5 @@ export const Layout = (props) => {
         {/*<div>
             footer stuff
         </div>*/}
-    </div>
+    </Box>
 };

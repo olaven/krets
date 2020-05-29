@@ -1,9 +1,6 @@
 import auth0 from "../../../auth/auth0";
-import {ResponseEntity} from "../../../server/entities/ResponseEntity"
 import {BrandEntity} from "../../../server/entities/BrandEntity";
-import DatabaseConnection, {getPostgresConnection} from "../../../server/DatabaseConnection";
-import {getRepository, Repository} from "typeorm";
-import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
+import DatabaseConnection from "../../../server/DatabaseConnection";
 
 
 export default auth0.requireAuthentication(async function brand (request, response) {

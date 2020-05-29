@@ -16,6 +16,7 @@ describe("The brands endpoint", () => {
 
     beforeAll(async () => {
 
+        await DatabaseConnection.connect();
         [server, url] = await setupServer(handler, "/api/brands");
     });
 

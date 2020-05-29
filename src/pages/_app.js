@@ -11,8 +11,8 @@ const theme = {
     12, 14, 16, 20, 24, 32, 48, 64
   ],
   colors: {
-      background: 'black',
-      primary: 'tomato',
+      secondary: "#EEEDE8",
+      primary: '#DA5C46',
     },
   space: [
     0, 4, 8, 16, 32, 64, 128, 256
@@ -38,6 +38,7 @@ const theme = {
   variants: {
   },
   text: {
+
   },
   radii: {
       default: 12,

@@ -15,7 +15,7 @@ import {ResponseEntity} from "./ResponseEntity";
 export class BrandEntity {
 
     @PrimaryColumn()
-    id: string; //LOWECASE-without special chars/spaces version of name
+    id: string; //LOWECASE without special chars/spaces version of name
 
     @Column({
         length: 150

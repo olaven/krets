@@ -5,37 +5,28 @@ export default class DatabaseConnection {
     private static connection: Connection;
 
     /**
-     * Returns the connection object.
-     * Instantiates a new connection
-     * if not already present.
+     * Returns the correct
+     * connection based on nodeenv
      */
     static async get() {
 
-        console.log("Existing connection: ", this.connection);
-        if (!this.connection) {
-
-            await this.connect()
-        }
-
-        return this.connection;
+        return this.isDefaultConnection()?
+            getConnection():
+            getConnection(process.env.NODE_ENV);
     };
 
     static async connect() {
 
         try {
 
-            if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-
-                const connectionName = process.env.NODE_ENV;
-
-                const options = await getConnectionOptions(connectionName);
-                this.connection = await createConnection(options);
-            } else {
+            if (this.isDefaultConnection()) {
 
                 this.connection = await createConnection();
-            }
+            } else {
 
-            console.log("Lazily connected to database");
+                const options = await getConnectionOptions(process.env.NODE_ENV);
+                this.connection = await createConnection(options);
+            }
         } catch (error) {
 
             console.error("Error connecting to database", error);
@@ -49,6 +40,10 @@ export default class DatabaseConnection {
         return this.connection.close()
     }
 
+    private static isDefaultConnection() {
+
+        return !(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development");
+    }
 }
 
 export const getPostgresConnection = async () => {

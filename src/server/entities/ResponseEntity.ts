@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typ
 import {BrandEntity} from "./BrandEntity";
 
 @Entity()
-export class ResponseEntity extends BaseEntity {
+export class ResponseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

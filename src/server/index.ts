@@ -13,15 +13,17 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(async () => {
 
-    createServer((req, res) => {
+    await DatabaseConnection.connect();
+    console.log("Connected to DB");
+
+    await createServer((req, res) => {
 
         const parsedUrl = parse(req.url, true);
         handle(req, res, parsedUrl)
 
-    }).listen(port, () => {
+    }).listen(port);
 
-        console.log(`Listening on ${port} as ${process.env.NODE_ENV}`);
-    });
+    console.log(`Listening on ${port}`);
 });
 
 /*

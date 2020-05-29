@@ -3,7 +3,7 @@ import {Server} from "net";
 import DatabaseConnection from "../../../src/server/DatabaseConnection";
 import handler from "../../../src/pages/api/auth/callback";
 import {authenticatedFetch, setupServer, teardownServer} from "../testutils";
-import {expect} from "@jest/globals";
+import {expect, jest} from "@jest/globals";
 import * as faker from "faker";
 import {UserEntity} from "../../../src/server/entities/UserEntity";
 
@@ -16,7 +16,7 @@ describe("The callback endpoint", () => {
 
     beforeAll(async () => {
 
-        //await DatabaseConnection.getConn();
+        await DatabaseConnection.connect();
         [server, url] = await setupServer(handler, "/api/auth/callback");
     });
 

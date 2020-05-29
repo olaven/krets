@@ -17,6 +17,7 @@ describe("Endpoint for getting a specific brand", () => {
 
     beforeAll(async () => {
 
+        await DatabaseConnection.connect();
         brandRepository = (await DatabaseConnection.get()).getRepository(BrandEntity);
         //NOTE: URL does not include id - must be added in tests
        [server, url] = await setupServer(handler, "/api/brands/")

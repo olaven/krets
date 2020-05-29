@@ -5,7 +5,7 @@ import {UserContext} from "./UserContext";
 const usePages = (uid: string) => {
 
   const [ pages, setPages ] = useState([]);
-  
+
   const fetchPages = async () => {
 
     const response = await fetch("/api/brands");
