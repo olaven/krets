@@ -1,7 +1,8 @@
 //import '../styles.css'
 import Head from "next/head";
 import { ThemeProvider } from 'emotion-theming'
-import {AuthContext} from "../context/AuthContext";
+import {UserContextProvider} from "../context/UserContext";
+import {Layout} from "../components/layout";
 //import theme from '@rebass/preset'
 
 const theme = {
@@ -45,12 +46,14 @@ const theme = {
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
-    return <AuthContext>
+    return <UserContextProvider>
         <Head>
             <title>Krets.</title>
         </Head>
         <ThemeProvider theme={theme}>
+            <Layout>
                 <Component {...pageProps} />
+            </Layout>
         </ThemeProvider>
-    </AuthContext>;
+    </UserContextProvider>;
 }

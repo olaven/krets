@@ -1,11 +1,21 @@
 import * as React from "react";
-import {useEffect} from "react";
+import {createContext, useState} from "react";
 
-export const UserContext = React.createContext({});
+interface IUserContext {
+    user: {
+        sub: string,
+        name: string
+    },
+    updateUser: (user: any) => void
+}
 
-export const AuthContext = props => {
+export const UserContext = createContext<IUserContext>({
+    user: null, updateUser: () => {}
+});
 
-    const [user, setUser] = React.useState(null);
+export const UserContextProvider = props => {
+
+    const [user, setUser] = useState(null);
 
     const updateUser = async () => {
 
@@ -19,7 +29,6 @@ export const AuthContext = props => {
             setUser(null);
             console.error(res)
         }
-
 
     };
 

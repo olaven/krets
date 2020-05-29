@@ -2,6 +2,7 @@ import "reflect-metadata";
 
 import { createServer } from 'http'
 import next from 'next'
+import DatabaseConnection from "./DatabaseConnection";
 const { parse } = require('url');
 
 
@@ -19,8 +20,8 @@ app.prepare().then(async () => {
 
     }).listen(port, () => {
 
-        console.log(`Listening on ${port} as ${process.env.NODE_ENV}`)
-    })
+        console.log(`Listening on ${port} as ${process.env.NODE_ENV}`);
+    });
 });
 
 /*
