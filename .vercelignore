@@ -1,2 +1,2 @@
 #Production env vars set in now dashboard
-.env 
+ormconfig.json
