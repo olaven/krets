@@ -51,6 +51,7 @@ export const connect = async () => {
 
 
 export default class DatabaseConnection {
+
     static async get() {
 
         console.log("LET ME TRY TO CONNECT!");
@@ -62,6 +63,7 @@ export default class DatabaseConnection {
             console.log("Failed to connect..", error);
         }
     }
+
 }
 
 /*

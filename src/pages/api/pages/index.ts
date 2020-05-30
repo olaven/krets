@@ -1,17 +1,17 @@
 import auth0 from "../../../auth/auth0";
-import {BrandEntity} from "../../../database/entities/BrandEntity";
-import DatabaseConnection from "../../../database/DatabaseConnection";
+import {connect} from "../../../database/Database";
+import {repositories} from "../../../database/repository";
 
 
 export default auth0.requireAuthentication(async function brand (request, response) {
 
     const { user } = await auth0.getSession(request);
-    const repository = (await DatabaseConnection.get()).getRepository(BrandEntity);
+
+    const repository = await (await repositories((await connect()))).response;
 
     if (request.method === "GET") {
 
-
-        const brands = await repository.createQueryBuilder("brand")
+        const pages = await repository.createQueryBuilder("brand")
             .innerJoin("brand.owner", "owner")
             .where("owner.id = :id", {id: user.sub})
             .getMany();
@@ -26,16 +26,16 @@ export default auth0.requireAuthentication(async function brand (request, respon
 
         response
             .status(200)
-            .json(brands);
+            .json(pages);
     } else if (request.method === "POST") {
 
         //NOTE: automatically st brand owner
-        const brand = await request.body;
-        brand.owner = { id: user.sub}; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
+        const page = await request.body;
+        page.owner = { id: user.sub}; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
 
         try {
 
-            const result = await repository.save(brand);
+            const result = await repository.save(page);
 
             console.log("AFter save: ", result);
             response
@@ -43,7 +43,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
                 .json(result)
         } catch (error) {
 
-            console.log("PageId iwht error: ", brand);
+            console.log("PageId iwht error: ", page);
             //TODO: different depending on error
             console.error("Erorr here: ", error);
             throw error
