@@ -17,12 +17,12 @@ export default async function responsesForBrandInURL(request: NextApiRequest, re
 
     const id = getId(request.url);
 
-    const brandRepository = await repositores.page;
-    const brand = await brandRepository.createQueryBuilder("page")
+    const pageRepository = await repositores.page;
+    const page = await pageRepository.createQueryBuilder("page")
         .where("page.id = :id", { id })
         .getOne();
 
-    if (!brand) {
+    if (!page) {
 
         response
             .status(404)

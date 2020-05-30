@@ -2,7 +2,7 @@ import {useRouter} from 'next/router'
 import React, {useEffect, useState} from "react";
 import {ErrorLoadingPage} from "../components/Page/ErrorLoadingPage";
 import {LoadingPage} from "../components/Page/LoadingPage";
-import {FeedbackSection} from "../components/Page/FeedbackSection";
+import {ResponseSection} from "../components/Page/ResponseSection";
 import {Flex} from "rebass";
 
 
@@ -62,7 +62,7 @@ const PageId = () => {
         {loading?
             <LoadingPage/>:
             page?
-                <FeedbackSection page={page}/>:
+                <ResponseSection page={page}/>:
                 <ErrorLoadingPage/>
         }
     </Flex>
