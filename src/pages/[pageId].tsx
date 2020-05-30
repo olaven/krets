@@ -53,7 +53,7 @@ const usePage = (id: string) => {
 const PageId = () => {
 
     const router = useRouter();
-    const {pageId} = router.query;
+    const pageId = router.query.pageId as string;
 
     const [page, loading] = usePage(pageId);
 
