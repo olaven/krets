@@ -1,6 +1,8 @@
 //import '../styles.css'
 import Head from "next/head";
 import { ThemeProvider } from 'emotion-theming'
+import {UserContextProvider} from "../context/UserContext";
+import {Layout} from "../components/layout";
 //import theme from '@rebass/preset'
 
 const theme = {
@@ -9,8 +11,8 @@ const theme = {
     12, 14, 16, 20, 24, 32, 48, 64
   ],
   colors: {
-      background: 'black',
-      primary: 'tomato',
+      secondary: "#EEEDE8",
+      primary: '#DA5C46',
     },
   space: [
     0, 4, 8, 16, 32, 64, 128, 256
@@ -36,20 +38,23 @@ const theme = {
   variants: {
   },
   text: {
+
   },
   radii: {
       default: 12,
     }   
-}
+};
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
-    return <>
+    return <UserContextProvider>
         <Head>
             <title>Krets.</title>
         </Head>
         <ThemeProvider theme={theme}>
+            <Layout>
                 <Component {...pageProps} />
+            </Layout>
         </ThemeProvider>
-    </>;
+    </UserContextProvider>;
 }

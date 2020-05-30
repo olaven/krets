@@ -1,12 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import auth0 from '../../../auth/auth0';
-import DatabaseConnection from "../../../server/DatabaseConnection";
-import {UserEntity} from "../../../server/entities/UserEntity";
+import { repositories } from "../../../database/repository";
+import {connect} from "../../../database/Database";
 
 
 const createIfNotPresent = async (id: string) => {
 
-  const repository = (await DatabaseConnection.get()).getRepository(UserEntity);
+  const connection = await connect();
+  const repository = await (await repositories(connection)).user;
+
+  console.log("THis is repository: ", repository);
+
   const user = { id };
 
   const count = await repository.createQueryBuilder("user")

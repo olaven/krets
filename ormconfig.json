@@ -1,8 +1,5 @@
 [
   {
-    "name": "production"
-  },
-  {
     "name": "development",
     "type": "postgres",
     "host": "localhost",
@@ -12,11 +9,12 @@
     "synchronize": true,
     "logging": true,
     "entities": [
-      "./src/server/entities/**.ts"
+      "./src/database/entities/**.ts"
     ],
     "migrations": [
-      "./src/server/migrations/**.ts"
-    ]
+      "./src/database/migrations/**.ts"
+    ],
+    "dropSchema": true
   },
   {
     "name": "test",
@@ -27,10 +25,10 @@
     "database": "test",
     "synchronize": true,
     "entities": [
-      "./src/server/entities/**.ts"
+      "./src/database/entities/**.ts"
     ],
     "migrations": [
-      "./src/server/migrations/**.ts"
+      "./src/database/migrations/**.ts"
     ],
     "dropSchema": true
   }

@@ -8,7 +8,7 @@ import fetch from "isomorphic-unfetch";
 import * as faker from "faker";
 
 
-//TODO: Brand DTO?
+//TODO: PageId DTO?
 export const postBrand = (brand: {id: string, name: string}, url: string, userId: string = uid()) => authenticatedFetch(userId, url,{
     method: "POST",
     headers: {
@@ -19,7 +19,7 @@ export const postBrand = (brand: {id: string, name: string}, url: string, userId
 
 export const uid = () => faker.random.uuid();
 
-export const getBrands = async (url: string, userId = uid()) => {
+export const getPages = async (url: string, userId = uid()) => {
 
     const response = await authenticatedFetch(userId, url);
     return response.json();

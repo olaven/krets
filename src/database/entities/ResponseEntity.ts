@@ -1,8 +1,9 @@
+import "reflect-metadata"
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
-import {BrandEntity} from "./BrandEntity";
+import {PageEntity} from "./PageEntity"
 
 @Entity()
-export class ResponseEntity extends BaseEntity {
+export class ResponseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -19,8 +20,8 @@ export class ResponseEntity extends BaseEntity {
     emotion: 'sad' | 'neutral' | 'happy';
 
 
-    @ManyToOne(type => BrandEntity, brand => brand.responses, {
+    @ManyToOne(type => PageEntity, brand => brand.responses, {
         eager: true
     })
-    brand: BrandEntity;
+    brand: PageEntity;
 }

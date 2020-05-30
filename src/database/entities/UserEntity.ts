@@ -1,5 +1,6 @@
 import "reflect-metadata"
-import { PrimaryColumn, Entity, BaseEntity } from "typeorm";
+import {PrimaryColumn, Entity, BaseEntity, OneToMany} from "typeorm";
+import {PageEntity} from "./PageEntity";
 
 
 @Entity()
@@ -14,4 +15,8 @@ export class UserEntity extends BaseEntity {
         length: 500
     })
     id: string;
+
+    @OneToMany(type => PageEntity, (brand) => brand.owner)
+    brands: PageEntity[]
 }
+

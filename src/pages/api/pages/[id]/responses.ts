@@ -1,7 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import DatabaseConnection from "../../../../server/DatabaseConnection";
-import {ResponseEntity} from "../../../../server/entities/ResponseEntity";
-import {BrandEntity} from "../../../../server/entities/BrandEntity";
+import {connect} from "../../../../database/Database";
+import {repositories} from "../../../../database/repository";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -14,15 +13,16 @@ const getId = (url: string) => {
 
 export default async function responsesForBrandInURL(request: NextApiRequest, response: NextApiResponse) {
 
-    const connection = await DatabaseConnection.get();
+    const repositores = (await repositories((await connect())));
+
     const id = getId(request.url);
 
-    const brandRepository = connection.getRepository(BrandEntity);
-    const brand = await brandRepository.createQueryBuilder("brand")
-        .where("brand.id = :id", { id })
+    const pageRepository = await repositores.page;
+    const page = await pageRepository.createQueryBuilder("page")
+        .where("page.id = :id", { id })
         .getOne();
 
-    if (!brand) {
+    if (!page) {
 
         response
             .status(404)
@@ -31,7 +31,7 @@ export default async function responsesForBrandInURL(request: NextApiRequest, re
         return;
     }
 
-    const repository = connection.getRepository(ResponseEntity);
+    const repository = await repositores.response;
 
     const responses = await repository.createQueryBuilder("response")
         .where("response.brand.id = :id", { id })

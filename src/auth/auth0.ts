@@ -39,7 +39,7 @@ export default initAuth0({
     oidcClient: {
         // (Optional) Configure the timeout in milliseconds for HTTP requests to Auth0.
         httpTimeout: 2500,
-        // (Optional) Configure the clock tolerance in milliseconds, if the time on your server is running behind.
+        // (Optional) Configure the clock tolerance in milliseconds, if the time on your database is running behind.
         clockTolerance: 10000
     }
 });
