@@ -10,10 +10,10 @@ import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, ui
 import * as faker from "faker";
 import {Server} from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import DatabaseConnection from "../../../../src/server/DatabaseConnection";
-import {ResponseEntity} from "../../../../src/server/entities/ResponseEntity";
-import {BrandEntity} from "../../../../src/server/entities/BrandEntity";
-import {UserEntity} from "../../../../src/server/entities/UserEntity";
+import DatabaseConnection from "../../../../src/database/DatabaseConnection";
+import {ResponseEntity} from "../../../../src/database/entities/ResponseEntity";
+import {BrandEntity} from "../../../../src/database/entities/BrandEntity";
+import {UserEntity} from "../../../../src/database/entities/UserEntity";
 
 
 jest.mock("../../../../src/auth/auth0");

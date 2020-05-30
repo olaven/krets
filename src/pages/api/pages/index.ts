@@ -1,6 +1,6 @@
 import auth0 from "../../../auth/auth0";
-import {BrandEntity} from "../../../server/entities/BrandEntity";
-import DatabaseConnection from "../../../server/DatabaseConnection";
+import {BrandEntity} from "../../../database/entities/BrandEntity";
+import DatabaseConnection from "../../../database/DatabaseConnection";
 
 
 export default auth0.requireAuthentication(async function brand (request, response) {

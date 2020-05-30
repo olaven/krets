@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import auth0 from '../../../auth/auth0';
-import DatabaseConnection from "../../../server/DatabaseConnection";
-import {UserEntity} from "../../../server/entities/UserEntity";
+import DatabaseConnection from "../../../database/DatabaseConnection";
+import {UserEntity} from "../../../database/entities/UserEntity";
 
 
 const createIfNotPresent = async (id: string) => {

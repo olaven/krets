@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import {Server} from "net";
-import DatabaseConnection from "../../../src/server/DatabaseConnection";
+import DatabaseConnection from "../../../src/database/DatabaseConnection";
 import handler from "../../../src/pages/api/auth/callback";
 import {authenticatedFetch, setupServer, teardownServer} from "../testutils";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import * as faker from "faker";
-import {UserEntity} from "../../../src/server/entities/UserEntity";
+import {UserEntity} from "../../../src/database/entities/UserEntity";
 
 jest.mock("../../../src/auth/auth0");
 

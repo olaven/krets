@@ -4,9 +4,9 @@ import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/pages";
 import {Server} from "net";
-import DatabaseConnection from "../../../src/server/DatabaseConnection";
+import DatabaseConnection from "../../../src/database/DatabaseConnection";
 import * as faker from "faker";
-import {UserEntity} from "../../../src/server/entities/UserEntity";
+import {UserEntity} from "../../../src/database/entities/UserEntity";
 
 jest.mock("../../../src/auth/auth0");
 

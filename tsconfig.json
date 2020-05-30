@@ -9,16 +9,16 @@
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "experimentalDecorators": true,
     "module": "esnext",
     "outDir": "dist",
     "target": "esnext",
     "isolatedModules": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "noEmit": true
   },
   "exclude": [

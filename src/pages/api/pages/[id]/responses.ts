@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import DatabaseConnection from "../../../../server/DatabaseConnection";
-import {ResponseEntity} from "../../../../server/entities/ResponseEntity";
-import {BrandEntity} from "../../../../server/entities/BrandEntity";
+import DatabaseConnection from "../../../../database/DatabaseConnection";
+import {ResponseEntity} from "../../../../database/entities/ResponseEntity";
+import {BrandEntity} from "../../../../database/entities/BrandEntity";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505

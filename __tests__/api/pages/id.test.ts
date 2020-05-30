@@ -2,8 +2,8 @@ import {afterAll, beforeAll, describe, expect, it} from "@jest/globals";
 import {postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
-import DatabaseConnection from "../../../src/server/DatabaseConnection";
-import {BrandEntity} from "../../../src/server/entities/BrandEntity";
+import DatabaseConnection from "../../../src/database/DatabaseConnection";
+import {BrandEntity} from "../../../src/database/entities/BrandEntity";
 
 describe("Endpoint for getting a specific page", () => {
 

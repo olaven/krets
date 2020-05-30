@@ -1,5 +1,5 @@
-import DatabaseConnection from "../../../server/DatabaseConnection";
-import {BrandEntity} from "../../../server/entities/BrandEntity";
+import DatabaseConnection from "../../../database/DatabaseConnection";
+import {BrandEntity} from "../../../database/entities/BrandEntity";
 
 
 //TODO: placeholder because query does not work in jest test (node env) https://github.com/vercel/next.js/issues/13505
