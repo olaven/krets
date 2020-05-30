@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import {PrimaryColumn, Entity, BaseEntity, OneToMany} from "typeorm";
-import {BrandEntity} from "./BrandEntity";
+import {PageEntity} from "./PageEntity";
 
 
 @Entity()
@@ -16,6 +16,7 @@ export class UserEntity extends BaseEntity {
     })
     id: string;
 
-    @OneToMany(type => BrandEntity, (brand) => brand.owner)
-    brands: BrandEntity[]
+    @OneToMany(type => PageEntity, (brand) => brand.owner)
+    brands: PageEntity[]
 }
+

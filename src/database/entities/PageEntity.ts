@@ -1,18 +1,12 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    BaseEntity,
-    ManyToOne,
-    PrimaryColumn,
-    JoinColumn,
-    VersionColumn, OneToMany
-} from "typeorm";
-import {UserEntity} from "./UserEntity";
-import {ResponseEntity} from "./ResponseEntity";
+import "reflect-metadata"
+import { UserEntity } from "./UserEntity";
+import { ResponseEntity } from "./ResponseEntity";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn} from "typeorm"
+
+
 
 @Entity()
-export class BrandEntity {
+export class PageEntity {
 
     @PrimaryColumn()
     id: string; //LOWECASE without special chars/spaces version of name
@@ -25,11 +19,6 @@ export class BrandEntity {
     @ManyToOne(type => UserEntity, (user) => user.brands)
     owner: UserEntity;
 
-    @OneToMany(type => ResponseEntity, (response: ResponseEntity) => response.brand, {
-        //cascadeInsert: true,
-        //cascadeUpdate: true,
-        //cascadeRemove: true
-        cascade: true
-    })
+    @OneToMany(type => ResponseEntity, (response: ResponseEntity) => response.brand)
     responses: ResponseEntity[]
 }

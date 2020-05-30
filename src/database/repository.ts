@@ -1,14 +1,21 @@
-import {Connection} from "typeorm";
-import {UserEntity} from "./entities/UserEntity";
-import {BrandEntity} from "./entities/BrandEntity";
-import {ResponseEntity} from "./entities/ResponseEntity";
 
-const repository = (connection: Connection) => {
+import {Connection} from "typeorm";
+
+
+export const repositories = async (connection: Connection) => {
+
+    console.log("Connection: ", connection.isConnected)
+    const repository = async (entity: any) =>
+        connection.getRepository(entity);
+
+    const {UserEntity} = await import("./entities/UserEntity");
+    const {PageEntity} = await import("./entities/PageEntity");
+    const {ResponseEntity} = await import("./entities/ResponseEntity");
 
     if (!connection.isConnected) throw "Not connected when getting repository";
     return {
-        user: connection.getRepository(UserEntity),
-        page: connection.getRepository(BrandEntity),
-        response: connection.getRepository(ResponseEntity),
+        user: repository(UserEntity),
+        page: repository(PageEntity),
+        response: repository(ResponseEntity),
     }
 };

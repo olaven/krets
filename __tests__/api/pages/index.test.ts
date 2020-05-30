@@ -4,7 +4,7 @@ import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/pages";
 import {Server} from "net";
-import DatabaseConnection from "../../../src/database/DatabaseConnection";
+import Database from "../../../src/database/Database";
 import * as faker from "faker";
 import {UserEntity} from "../../../src/database/entities/UserEntity";
 
@@ -18,14 +18,14 @@ describe("The pages endpoint", () => {
 
     beforeAll(async () => {
 
-        await DatabaseConnection.connect();
-        userRepository = (await DatabaseConnection.get()).getRepository(UserEntity);
+        await Database.connect();
+        userRepository = (await Database.get()).getRepository(UserEntity);
         [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
 
-        await DatabaseConnection.close();
+        await Database.close();
         await teardownServer(server);
     });
 

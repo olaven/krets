@@ -10,9 +10,9 @@ import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, ui
 import * as faker from "faker";
 import {Server} from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import DatabaseConnection from "../../../../src/database/DatabaseConnection";
+import Database from "../../../../src/database/Database";
 import {ResponseEntity} from "../../../../src/database/entities/ResponseEntity";
-import {BrandEntity} from "../../../../src/database/entities/BrandEntity";
+import {PageEntity} from "../../../../src/database/entities/PageEntity";
 import {UserEntity} from "../../../../src/database/entities/UserEntity";
 
 
@@ -28,13 +28,13 @@ describe("The endpoint for responses", () => {
 
     beforeAll(async () => {
 
-        await DatabaseConnection.connect();
+        await Database.connect();
         [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
 
-        await DatabaseConnection.close();
+        await Database.close();
         await teardownServer(server);
     });
 
@@ -50,9 +50,9 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const connection = await DatabaseConnection.get();
+        const connection = await Database.get();
         const userRepository = connection.getRepository(UserEntity);
-        const brandRepository = connection.getRepository(BrandEntity);
+        const brandRepository = connection.getRepository(PageEntity);
         const responseRepository = connection.getRepository(ResponseEntity);
 
         const user = await userRepository.save({

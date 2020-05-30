@@ -1,15 +1,19 @@
-import {Connection, createConnection, getConnection, getConnectionManager, getConnectionOptions} from "typeorm";
+import "reflect-metadata"
+import {Connection, createConnection, getConnectionManager, getConnectionOptions} from "typeorm";
+
 
 
 //TODO: get from environment vars or something
 const ENVIRONMENT = process.env.NODE_ENV;
 const CONNECTION_ATTEMPT_INTERVAL = 100;
-const CONNECTION_TIMEOUT = 3; //3 seconds
-
+const CONNECTION_TIMEOUT = 3;
+//3 seconds
 //initialize database connection
-let isConnecting = false;
-let connection: Connection;
+let isConnecting = false, connection: Connection, hasInitialized = false;
 const initializeDatabase = async () => {
+
+    //if (hasInitialized) return;
+
     if (isConnecting) return;
     isConnecting = true;
 
@@ -26,6 +30,7 @@ const initializeDatabase = async () => {
 
     connection = newConnection;
     isConnecting = false;
+    hasInitialized = true;
 
     //log for debugging
     console.log(`Connection to database "${ENVIRONMENT}" initialized`);
@@ -33,10 +38,18 @@ const initializeDatabase = async () => {
 
 //run initialization on script execution.
 //for prod this will only happen once, but for dev this will happen every time this module is hot reloaded
-initializeDatabase();
+
 
 //wait for the connection to the database has been established
 export const connect = async () => {
+
+    const env = process.env.NODE_ENV;
+    const options = await getConnectionOptions(env);
+    const connection = await createConnection(options);
+    return connection;
+
+    /*
+    await initializeDatabase();
     let waiting = 0;
     while (!connection) {
         await new Promise((resolve) =>
@@ -46,11 +59,12 @@ export const connect = async () => {
         if (waiting > CONNECTION_TIMEOUT) break;
     }
     if (!connection) throw new Error("Database not intiialized");
-    return connection;
+    return connection;*/
 };
 
 
-export default class DatabaseConnection {
+//TODO: remove in favour of above connect function
+export default class Database {
 
     static async get() {
 
@@ -63,12 +77,11 @@ export default class DatabaseConnection {
             console.log("Failed to connect..", error);
         }
     }
-
 }
 
 /*
 
-export default class DatabaseConnection {
+export default class Database {
 
     private static connection: Connection;
 

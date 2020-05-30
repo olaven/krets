@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import {Server} from "net";
-import DatabaseConnection from "../../../src/database/DatabaseConnection";
+import Database from "../../../src/database/Database";
 import handler from "../../../src/pages/api/auth/callback";
 import {authenticatedFetch, setupServer, teardownServer} from "../testutils";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
@@ -16,19 +16,19 @@ describe("The callback endpoint", () => {
 
     beforeAll(async () => {
 
-        await DatabaseConnection.connect();
+        await Database.connect();
         [server, url] = await setupServer(handler, "/api/auth/callback");
     });
 
     afterAll(async () => {
 
-        await DatabaseConnection.close();
+        await Database.close();
         await teardownServer(server);
     });
 
     it("does create user if the user is new", async () => {
 
-        const repository = (await DatabaseConnection.get()).getRepository(UserEntity);
+        const repository = (await Database.get()).getRepository(UserEntity);
         const uid = faker.random.uuid();
 
         const before = await repository.count({where: {id: uid}});
@@ -41,7 +41,7 @@ describe("The callback endpoint", () => {
 
     it("does _not_ create if user already exists", async () => {
 
-        const repository = (await DatabaseConnection.get()).getRepository(UserEntity);
+        const repository = (await Database.get()).getRepository(UserEntity);
         const user = await repository.save({
             id: faker.random.uuid()
         });
