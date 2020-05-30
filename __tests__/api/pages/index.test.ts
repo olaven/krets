@@ -4,9 +4,9 @@ import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/pages";
 import {Server} from "net";
-import Database from "../../../src/database/Database";
 import * as faker from "faker";
 import {UserEntity} from "../../../src/database/entities/UserEntity";
+import {closeConnection, connect} from "../../../src/database/Database";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -18,14 +18,14 @@ describe("The pages endpoint", () => {
 
     beforeAll(async () => {
 
-        await Database.connect();
-        userRepository = (await Database.get()).getRepository(UserEntity);
+        const connection = await connect();
+        userRepository = connection.getRepository(UserEntity);
         [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
 
-        await Database.close();
+        await closeConnection();
         await teardownServer(server);
     });
 

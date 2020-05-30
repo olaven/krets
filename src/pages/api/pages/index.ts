@@ -7,12 +7,12 @@ export default auth0.requireAuthentication(async function brand (request, respon
 
     const { user } = await auth0.getSession(request);
 
-    const repository = await (await repositories((await connect()))).response;
+    const repository = await (await repositories((await connect()))).page;
 
     if (request.method === "GET") {
 
-        const pages = await repository.createQueryBuilder("brand")
-            .innerJoin("brand.owner", "owner")
+        const pages = await repository.createQueryBuilder("page")
+            .innerJoin("page.owner", "owner")
             .where("owner.id = :id", {id: user.sub})
             .getMany();
         /*const pages = await repository.find({

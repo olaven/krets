@@ -1,15 +1,15 @@
 import auth0 from '../../../auth/auth0';
-import Database from "../../../database/Database";
 import { repositories } from "../../../database/repository";
+import {connect} from "../../../database/Database";
 
 
 const createIfNotPresent = async (id: string) => {
 
-  const connection = await Database.get();
-  const repository = repositories(connection).user;
+  const connection = await connect();
+  const repository = await (await repositories(connection)).user;
 
   console.log("THis is repository: ", repository);
-  /*const repository = (await Database.get()).getRepository(UserEntity);
+
   const user = { id };
 
   const count = await repository.createQueryBuilder("user")
@@ -18,7 +18,7 @@ const createIfNotPresent = async (id: string) => {
 
   if (count <= 0) {
     await repository.save(user);
-  }*/
+  }
 };
 
 export default async function callback(req, res) {

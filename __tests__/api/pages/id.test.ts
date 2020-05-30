@@ -2,7 +2,7 @@ import {afterAll, beforeAll, describe, expect, it} from "@jest/globals";
 import {postBrand, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
-import Database from "../../../src/database/Database";
+import {closeConnection, connect} from "../../../src/database/Database";
 import {PageEntity} from "../../../src/database/entities/PageEntity";
 
 describe("Endpoint for getting a specific page", () => {
@@ -17,15 +17,15 @@ describe("Endpoint for getting a specific page", () => {
 
     beforeAll(async () => {
 
-        await Database.connect();
-        brandRepository = (await Database.get()).getRepository(PageEntity);
+        const connection = await connect();
+        brandRepository = connection.getRepository(PageEntity);
         //NOTE: URL does not include id - must be added in tests
        [server, url] = await setupServer(handler, "/api/pages/")
     });
 
     afterAll(async () => {
 
-        await Database.close();
+        await closeConnection();
         await teardownServer(server)
     });
 

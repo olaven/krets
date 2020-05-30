@@ -10,10 +10,11 @@ import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, ui
 import * as faker from "faker";
 import {Server} from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import Database from "../../../../src/database/Database";
 import {ResponseEntity} from "../../../../src/database/entities/ResponseEntity";
 import {PageEntity} from "../../../../src/database/entities/PageEntity";
 import {UserEntity} from "../../../../src/database/entities/UserEntity";
+import {closeConnection, connect} from "../../../../src/database/Database";
+import {Connection} from "typeorm";
 
 
 jest.mock("../../../../src/auth/auth0");
@@ -22,19 +23,20 @@ describe("The endpoint for responses", () => {
 
     let server: Server;
     let url: string;
+    let connection: Connection;
 
     const fullURL = (brandId: string) =>
         `${url}/${brandId}/responses`;
 
     beforeAll(async () => {
 
-        await Database.connect();
+        connection = await connect();
         [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
 
-        await Database.close();
+        await closeConnection();
         await teardownServer(server);
     });
 
@@ -50,7 +52,6 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const connection = await Database.get();
         const userRepository = connection.getRepository(UserEntity);
         const brandRepository = connection.getRepository(PageEntity);
         const responseRepository = connection.getRepository(ResponseEntity);
