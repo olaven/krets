@@ -43,7 +43,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
                 .json(result)
         } catch (error) {
 
-            console.log("Brand iwht error: ", brand);
+            console.log("PageId iwht error: ", brand);
             //TODO: different depending on error
             console.error("Erorr here: ", error);
             throw error

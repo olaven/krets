@@ -1,8 +1,9 @@
 import "reflect-metadata";
 
-import {createServer} from 'http'
-import next from 'next'
 import DatabaseConnection from "./DatabaseConnection";
+import { createServer } from "http";
+import next from "next";
+
 
 const {parse} = require('url');
 

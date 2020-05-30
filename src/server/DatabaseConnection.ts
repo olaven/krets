@@ -1,4 +1,4 @@
-import {getConnectionOptions, createConnection, Connection, getConnection, getConnectionManager} from "typeorm";
+import {Connection, createConnection, getConnection, getConnectionOptions} from "typeorm";
 
 export default class DatabaseConnection {
 

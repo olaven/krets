@@ -33,7 +33,7 @@ const PageCreator = () => {
         const page = {
             id, name
         };
-        
+
         const response = await fetch("/api/pages", {
             method: "POST",
             body: JSON.stringify(page)
