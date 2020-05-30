@@ -1,12 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {PagesContext, PagesContextProvider} from "../../../context/PagesContext";
-import {
-    Label,
-    Input,
-    Select,
-    Radio,
-    Checkbox,
-} from '@rebass/forms'
+import {Input} from '@rebass/forms'
 import {Box, Button, Flex, Heading, Text} from "rebass";
 
 const PageCreator = () => {
