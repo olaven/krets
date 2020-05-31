@@ -5,20 +5,17 @@ import {Box, Flex, Heading} from "rebass";
 
 export default () => {
 
-    const router = useRouter(); //TODO: should be id, not name
+    const router = useRouter();
     const {pageId} = router.query;
 
-
-    const value = `https://krets.app/${pageId}`;
-    console.log("value", value);
-
+    const pageLink = `https://krets.app/${pageId}`;
 
     return <Box m={"auto"} py={[4, 8, 16]}>
         <Box>
             <Heading color={"primary"}>Gi tilbakemelding!</Heading>
         </Box>
         <Box>
-            <QRCode value="https://krets.app/guros-kafe" enableCORS={false}/>
+            <QRCode value={pageLink} enableCORS={false}/>
         </Box>
 
     </Box>

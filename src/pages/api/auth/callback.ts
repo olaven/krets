@@ -30,8 +30,8 @@ export default async function callback(req, res) {
 
         console.log("THis is the user", user);
 
-
-        await createIfNotPresent(user.sub);
+        //TODO: move back
+        //await createIfNotPresent(user.sub);
 
         return {
           ...session,
