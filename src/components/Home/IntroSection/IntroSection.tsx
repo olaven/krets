@@ -1,12 +1,11 @@
 import {Button, Link} from "rebass";
 import React from "react";
+import {LoginButton} from "../../tiny/LoginButton";
 
 export const IntroSection = () => {
 
     return <div>
         Information about Krets innslag
-        <Button>
-            <Link color={"secondary"} href="/api/auth/login">Lag bruker!</Link>
-        </Button>
+        <LoginButton text={"Lag bruker!"}/>
     </div>
 };
