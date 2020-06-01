@@ -13,16 +13,16 @@ export const Layout = (props) => {
             <LoginButton/>;
 
     return <Box
+
         minWidth={"100vw"}
         minHeight={"100vh"}
         sx={{
             m: 0,
-            px: 3,
         }} backgroundColor={"secondary"}>
         <Flex px={2}
             color='primary'
             alignItems='center'>
-                <Text p={2} fontSize={7} fontWeight='bold'>Krets.</Text>
+                <Text p={[0, 1, 2]} fontSize={7} fontWeight='bold'>Krets.</Text>
                 <Box mx='auto' />
             {authButton}
         </Flex>

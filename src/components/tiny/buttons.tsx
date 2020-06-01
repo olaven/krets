@@ -8,23 +8,23 @@ export const LogoutButton = () => <Button>
 
 export const LoginButton = props => <Button>
     <Link color={"secondary"} href="/api/auth/login">
-        {props.text? props.text: "Logg inn!"}
+        {props.text ? props.text : "Logg inn!"}
     </Link>
 </Button>;
 
 
-export const ToAdmin = ({ id }) => <Box m={[0, 1, 2]}>
+const ListButton = (href: string, icon: string) => <Box>
     <Button>
-        <Link color={"secondary"} href={`/${id}/admin`}>
-            Admin
+        <Link color={"secondary"} href={href}>
+            <span className="material-icons">
+                {icon}
+            </span>
         </Link>
     </Button>
 </Box>;
 
-export const ToQR = ({ id }) => <Box m={[0, 1, 2]}>
-    <Button>
-        <Link color={"secondary"} href={`/${id}/code`}>
-            Del!
-        </Link>
-    </Button>
-</Box>;
+export const ToAdmin = ({id}) =>
+    ListButton(`/${id}/admin`, "admin_panel_settings");
+
+export const ToQR = ({id}) =>
+    ListButton(`/${id}/code`, "qr_code");

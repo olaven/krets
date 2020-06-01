@@ -9,6 +9,8 @@ export default function MyApp({Component, pageProps}) {
     return <UserContextProvider>
         <Head>
             <title>Krets.</title>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                  rel="stylesheet"/>
         </Head>
         <ThemeProvider theme={KretsTheme}>
             <Layout>

@@ -4,17 +4,13 @@ export const KretsTheme = {
         12, 14, 16, 20, 24, 32, 48, 64
     ],
     colors: {
-        secondary: "#FDFEFC",
+        secondary: "#FDFEFC ",
         primary: '#B4497C',
     },
     space: [
         4, 8, 16, 32, 64, 128, 256
     ],
-    fonts: {
-        body: 'system-ui, sans-serif',
-        heading: 'inherit',
-        monospace: 'Menlo, monospace',
-    },
+
     fontWeights: {
         body: 400,
         heading: 700,

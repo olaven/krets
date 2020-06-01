@@ -1,15 +1,17 @@
 import React from "react";
-import {Card, Flex, Heading} from "rebass";
+import {Box, Card, Flex, Heading} from "rebass";
 import {ToAdmin, ToQR} from "../../tiny/buttons";
 
-const PageCard = ({id, name, responses}) => <Card width={256}>
+const PageCard = ({id, name, responses}) => <Box width={[1, 1/2]}>
+    <Card width={256}>
 
-    <Flex py={[4, 16, 32]}>
-        <Heading width={1}>{name}</Heading>
-        <ToAdmin id={id}/>
-        <ToQR id={id}/>
-    </Flex>
-</Card>;
+        <Flex my={[0, 2, 3]}>
+            <Heading fontSize={[3, 4, 5]}>{name}</Heading>
+            <ToAdmin id={id}/>
+            <ToQR id={id}/>
+        </Flex>
+    </Card>
+</Box>;
 
 export const PageList = () => {
 
@@ -42,9 +44,11 @@ export const PageList = () => {
         },
     ];
 
-    return <ul>
-        Dine krets-sider:
-        {pages.map(page => <PageCard key={page.id} {...page}/>)}
-    </ul>
+    return <Box>
+        <Heading>Dine krets-sider:</Heading>
+        <Flex flexWrap={"wrap"}>
+            {pages.map(page => <PageCard key={page.id} {...page}/>)}
+        </Flex>
+    </Box>
 
 };
