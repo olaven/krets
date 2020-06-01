@@ -1,19 +1,13 @@
-import React, {useContext} from "react";
-import {PagesContext} from "../../../context/PagesContext";
-import {Box, Card, Flex, Heading, Link} from "rebass";
+import React from "react";
+import {Card, Flex, Heading} from "rebass";
 import {ToAdmin, ToQR} from "../../tiny/buttons";
-import responses from "../../../pages/api/pages/[id]/responses";
 
 const PageCard = ({id, name, responses}) => <Card width={256}>
 
-    <Heading>{name}</Heading>
-    <Flex>
-        <Box>
-            <ToAdmin id={id}/>
-        </Box>
-        <Box>
-            <ToQR id={id}/>
-        </Box>
+    <Flex py={[4, 16, 32]}>
+        <Heading width={1}>{name}</Heading>
+        <ToAdmin id={id}/>
+        <ToQR id={id}/>
     </Flex>
 </Card>;
 
@@ -50,7 +44,7 @@ export const PageList = () => {
 
     return <ul>
         Dine krets-sider:
-        {pages.map(page => <PageCard {...page}/>)}
+        {pages.map(page => <PageCard key={page.id} {...page}/>)}
     </ul>
 
 };

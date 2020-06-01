@@ -1,4 +1,4 @@
-import {Button, Link} from "rebass";
+import {Box, Button, Link} from "rebass";
 import React from "react";
 
 export const LogoutButton = () => <Button>
@@ -13,14 +13,18 @@ export const LoginButton = props => <Button>
 </Button>;
 
 
-export const ToAdmin = ({ id }) => <Button>
-    <Link color={"secondary"} href={`/${id}/admin`}>
-        Admin
-    </Link>
-</Button>;
+export const ToAdmin = ({ id }) => <Box m={[0, 1, 2]}>
+    <Button>
+        <Link color={"secondary"} href={`/${id}/admin`}>
+            Admin
+        </Link>
+    </Button>
+</Box>;
 
-export const ToQR = ({ id }) => <Button>
-    <Link color={"secondary"} href={`/${id}/code`}>
-        Del!
-    </Link>
-</Button>;
+export const ToQR = ({ id }) => <Box m={[0, 1, 2]}>
+    <Button>
+        <Link color={"secondary"} href={`/${id}/code`}>
+            Del!
+        </Link>
+    </Button>
+</Box>;
