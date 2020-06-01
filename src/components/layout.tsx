@@ -1,7 +1,7 @@
 import {UserContext, UserContextProvider} from "../context/UserContext";
 import React from "react";
 import {Box, Button, Flex, Link, Text} from "rebass";
-import {LoginButton, LogoutButton} from "./tiny/LoginButton";
+import { LoginButton, LogoutButton} from "./tiny/buttons";
 
 export const Layout = (props) => {
 

@@ -3,7 +3,7 @@ import React, {useContext} from "react";
 import {Box, Button, Link, Text} from "rebass";
 import {UserContext} from "../../context/UserContext";
 import {usePage} from "../../effects/usePage";
-import {LoginButton} from "../../components/tiny/LoginButton";
+import {Buttons} from "../../components/tiny/buttons";
 
 export default () => {
 
@@ -17,7 +17,7 @@ export default () => {
         return <Text>Laster...</Text>;
 
     if (!user)
-        return <LoginButton/>;
+        return <Buttons/>;
 
     if (user.sub !== page.owner.id)
         return <Box>

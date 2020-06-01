@@ -11,3 +11,16 @@ export const LoginButton = props => <Button>
         {props.text? props.text: "Logg inn!"}
     </Link>
 </Button>;
+
+
+export const ToAdmin = ({ id }) => <Button>
+    <Link color={"secondary"} href={`/${id}/admin`}>
+        Admin
+    </Link>
+</Button>;
+
+export const ToQR = ({ id }) => <Button>
+    <Link color={"secondary"} href={`/${id}/code`}>
+        Del!
+    </Link>
+</Button>;

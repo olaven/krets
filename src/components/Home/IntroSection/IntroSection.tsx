@@ -1,6 +1,5 @@
-import {Button, Link} from "rebass";
 import React from "react";
-import {LoginButton} from "../../tiny/LoginButton";
+import { LoginButton} from "../../tiny/buttons";
 
 export const IntroSection = () => {
 
