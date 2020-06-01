@@ -13,7 +13,7 @@ export const LoginButton = props => <Button>
 </Button>;
 
 
-const ListButton = (href: string, icon: string) => <Box>
+const ListButton = (href: string, icon: string) => <Box mx={[1, 2, 3]}>
     <Button>
         <Link color={"secondary"} href={href}>
             <span className="material-icons">

@@ -46,7 +46,7 @@ export const PageCreator = () => {
     };
 
     return <Flex py={[1, 2, 3]}>
-        <Box width={[1 / 4, 1 / 6, 0]}/>
+        <Box width={1/3}/>
         <Box
             as='form'
             onSubmit={e => e.preventDefault()}
@@ -62,7 +62,7 @@ export const PageCreator = () => {
             </Flex>
 
         </Box>
-        <Box width={1 / 4}/>
+        <Box width={1/3}/>
     </Flex>
 
 

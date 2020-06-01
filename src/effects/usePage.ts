@@ -16,8 +16,8 @@ export const usePage = (id: string) => {
 
 
                 setPage({
-                    id: "Guros Kafe!",
-                    name: "guros-kafe",
+                    id: "guros-kafe",
+                    name: "Guros Kafe!",
                     owner: {
                         id: "google-oauth2|103130415679943370506" //NOTE: id of my test account
                     },

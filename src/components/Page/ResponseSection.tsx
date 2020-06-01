@@ -1,5 +1,5 @@
 import Emoji from "react-emoji-render";
-import {Box, Button, Flex, Text} from "rebass"
+import {Box, Button, Flex, Heading, Text} from "rebass"
 import {Input} from '@rebass/forms'
 import React, {useState} from "react";
 
@@ -9,19 +9,19 @@ export const KretsEmoji = props => {
 
     const style = (emotion === type)?
         {
-
             fontSize: [32, 48, 64],
-            boxShadow: "3px 3px",
         }: {
             fontSize: [24, 32, 48],
         };
 
 
-    return <Box px={4} onClick={() => {setEmotion(type)}}>
-        <Text
-            {...style}>
+    return <Box  {...style} m={[1, 2, 3]} sx={{
+        boxShadow: "large",
+        textShadow: "large"
+    }} onClick={() => {setEmotion(type)}}>
+        <Button>
             <Emoji text={type}/>
-        </Text>
+        </Button>
     </Box>
 
 };
@@ -63,12 +63,13 @@ export const ResponseSection = props => {
 
     return <Box m={"auto"} py={[4, 8, 16]}>
 
+        <Heading py={[1, 2, 3]} color={"primary"}>Gi tilbakemelding til {page.name}</Heading>
         <Flex>
             <KretsEmoji type={":D"} emotion={emotion} setEmotion={setEmotion}/>
             <KretsEmoji type={":|"} emotion={emotion} setEmotion={setEmotion}/>
             <KretsEmoji type={":("} emotion={emotion} setEmotion={setEmotion}/>
         </Flex>
-        <Flex>
+        <Flex p={[1, 2, 3]}>
             <Input
                 placeholder='Valgfri tekst'
                 onChange={event => {setText(event.target.value)}}

@@ -7,7 +7,7 @@ export default () => {
 
     const router = useRouter();
     const {pageId} = router.query;
-
+    //TODO: use pagecontext to pull correct page 
     const pageLink = `https://krets.app/${pageId}`;
 
     return <Box m={"auto"} py={[4, 8, 16]}>
