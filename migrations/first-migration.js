@@ -56,15 +56,16 @@ exports.up = pgm => {
     pgm.createTable("responses_to_pages", {
         id: "id",
         pageId: {
+            type: "serial",
             references: "pages",
             notNull: true
         },
         responseId: {
+            type: "serial",
             references: "responses",
             notNull: true
         }
     });
-    pgm.createIndex('posts', 'userId')
 };
 
 exports.down = pgm => {};

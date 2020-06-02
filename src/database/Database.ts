@@ -21,7 +21,7 @@ export const fetchTest = () => {
 
     return withDatabase(async client => {
 
-        const result = await client.query("select * from response");
+        const result = await client.query("select * from responses");
 
         console.log("result from database response: ", result);
         return result;
