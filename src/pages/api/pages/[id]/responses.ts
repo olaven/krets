@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {connect} from "../../../../database/Database";
+import {connect, fetchTest} from "../../../../database/Database";
 import {repositories} from "../../../../database/repository";
 
 
@@ -13,7 +13,11 @@ const getId = (url: string) => {
 
 export default async function responsesForBrandInURL(request: NextApiRequest, response: NextApiResponse) {
 
-    const repositores = (await repositories((await connect())));
+    const responses = await fetchTest();
+    console.log("Got results: ", responses);
+    response.json(responses);
+
+    /*const repositores = (await repositories((await connect())));
 
     const id = getId(request.url);
 
@@ -38,5 +42,5 @@ export default async function responsesForBrandInURL(request: NextApiRequest, re
         .getMany();
 
     response
-        .json(responses);
+        .json(responses);*/
 }

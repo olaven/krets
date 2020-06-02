@@ -1,6 +1,37 @@
+import {Pool, PoolClient, QueryResult} from "pg";
+
+
+const pool = new Pool();
+pool.on('error', (err, client) => {
+    console.error('Unexpected error on idle client', err);
+    process.exit(-1)
+});
+
+
+export const withDatabase = async (action: (client: PoolClient) => Promise<QueryResult<any>>) => {
+
+    const client = await pool.connect();
+    const result = await action(client);
+    client.release();
+
+    return result;
+};
+
+export const fetchTest = () => {
+
+    return withDatabase(async client => {
+
+        const result = await client.query("select * from response");
+
+        console.log("result from database response: ", result);
+        return result;
+    })
+};
+
+/*
+
 import "reflect-metadata"
 import {Connection, createConnection, getConnection, getConnectionManager, getConnectionOptions} from "typeorm";
-
 
 //TODO: get from environment vars or something
 const ENVIRONMENT = process.env.NODE_ENV;
@@ -56,3 +87,4 @@ export const closeConnection = async () => {
     const connection = await getConnection(process.env.NODE_ENV);
     await connection.close();
 };
+*/
