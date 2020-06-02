@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {connect, fetchTest} from "../../../../database/Database";
-import {repositories} from "../../../../database/repository";
+import {connect, fetchTest} from "../../../../database/remove_typeorm/Database";
+import {repositories} from "../../../../database/remove_typeorm/repository";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505

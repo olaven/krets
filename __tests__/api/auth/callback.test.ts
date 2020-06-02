@@ -4,8 +4,8 @@ import handler from "../../../src/pages/api/auth/callback";
 import {authenticatedFetch, setupServer, teardownServer} from "../testutils";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import * as faker from "faker";
-import {UserEntity} from "../../../src/database/entities/UserEntity";
-import {closeConnection, connect} from "../../../src/database/Database";
+import {UserEntity} from "../../../src/database/remove_typeorm/entities/UserEntity";
+import {closeConnection, connect} from "../../../src/database/remove_typeorm/Database";
 import {Connection} from "typeorm";
 
 jest.mock("../../../src/auth/auth0");

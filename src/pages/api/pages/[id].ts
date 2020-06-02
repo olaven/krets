@@ -1,5 +1,5 @@
-import {connect} from "../../../database/Database";
-import {repositories} from "../../../database/repository";
+import {connect} from "../../../database/remove_typeorm/Database";
+import {repositories} from "../../../database/remove_typeorm/repository";
 
 
 //TODO: placeholder because query does not work in jest test (node env) https://github.com/vercel/next.js/issues/13505

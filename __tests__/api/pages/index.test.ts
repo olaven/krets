@@ -5,8 +5,8 @@ import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, ui
 import handler from "../../../src/pages/api/pages";
 import {Server} from "net";
 import * as faker from "faker";
-import {UserEntity} from "../../../src/database/entities/UserEntity";
-import {closeConnection, connect} from "../../../src/database/Database";
+import {UserEntity} from "../../../src/database/remove_typeorm/entities/UserEntity";
+import {closeConnection, connect} from "../../../src/database/remove_typeorm/Database";
 
 jest.mock("../../../src/auth/auth0");
 

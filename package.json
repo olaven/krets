@@ -10,7 +10,7 @@
     "dev": "yarn migrate up && NODE_ENV=development next",
     "build": "next build",
     "start": "yarn migrate up && next start",
-    "test": "NODE_ENV=test jest --runInBand ./__tests__ --testPathIgnorePatterns support/*",
+    "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns support/*",
     "migrate": "node-pg-migrate"
   },
   "dependencies": {

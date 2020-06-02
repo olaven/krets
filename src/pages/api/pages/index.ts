@@ -1,6 +1,6 @@
 import auth0 from "../../../auth/auth0";
-import {connect} from "../../../database/Database";
-import {repositories} from "../../../database/repository";
+import {connect} from "../../../database/remove_typeorm/Database";
+import {repositories} from "../../../database/remove_typeorm/repository";
 
 
 export default auth0.requireAuthentication(async function brand (request, response) {

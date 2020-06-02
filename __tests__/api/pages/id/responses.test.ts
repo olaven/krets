@@ -10,10 +10,10 @@ import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, ui
 import * as faker from "faker";
 import {Server} from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import {ResponseEntity} from "../../../../src/database/entities/ResponseEntity";
-import {PageEntity} from "../../../../src/database/entities/PageEntity";
-import {UserEntity} from "../../../../src/database/entities/UserEntity";
-import {closeConnection, connect} from "../../../../src/database/Database";
+import {ResponseEntity} from "../../../../src/database/remove_typeorm/entities/ResponseEntity";
+import {PageEntity} from "../../../../src/database/remove_typeorm/entities/PageEntity";
+import {UserEntity} from "../../../../src/database/remove_typeorm/entities/UserEntity";
+import {closeConnection, connect} from "../../../../src/database/remove_typeorm/Database";
 import {Connection} from "typeorm";
 
 
