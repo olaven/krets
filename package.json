@@ -8,7 +8,7 @@
   "license": "TODO",
   "scripts": {
     "dev": "yarn migrate up && NODE_ENV=development next",
-    "build": "yarn migrate up next build",
+    "build": "next build",
     "start": "yarn migrate up && next start",
     "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
     "migrate": "node-pg-migrate"
