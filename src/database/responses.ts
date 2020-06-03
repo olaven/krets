@@ -11,7 +11,7 @@ const getResponses = (pageId: string) => withDatabase(async client => {
         `, [
             pageId]);
 
-    
+
     return result.rows;
 });
 

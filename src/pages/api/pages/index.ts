@@ -25,12 +25,11 @@ export default auth0.requireAuthentication(async function brand (request, respon
 
         //NOTE: automatically st brand owner
         const page = await request.body;
-        page.owner = { id: user.sub}; // NOTE: seems like Typeorm translates brand.owner: User to .ownerID: string
+        page.owner_id = user.sub;
 
         try {
 
             const result = await pages.createPage(page);
-
 
             response
                 .status(201)
