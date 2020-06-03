@@ -27,7 +27,7 @@ const usePages = (uid: string) => {
     return [pages, refreshPages];
 };
 
-//TODO: proper types 
+//TODO: proper types
 export const PagesContext = createContext({} as any);
 
 export const PagesContextProvider = (props) => {

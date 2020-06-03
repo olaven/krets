@@ -47,6 +47,9 @@ export const ResponseSection = props => {
 
         const postResponse = await fetch(`/api/${page.id}/responses`, {
             method: "post",
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify(payload)
         });
 
