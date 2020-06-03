@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Box, Button, Flex, Heading, Text} from "rebass";
 import {Input} from "@rebass/forms"
+import {PagesContext} from "../../../context/PagesContext";
 
 export const PageCreator = () => {
 
+    const { refreshPages } = useContext(PagesContext);
     const [name, setName] = useState("");
     const [id, setId] = useState("");
 
@@ -12,7 +14,10 @@ export const PageCreator = () => {
         .replaceAll(" ", "-")
         .replaceAll(/(Ø|ø)/g, "o")
         .replaceAll(/(Æ|æ)/g, "ae")
-        .replaceAll(/(Å|å)/g, "aa"));
+        .replaceAll(/(Å|å)/g, "aa")
+        .replaceAll("?", "")
+        .replaceAll("!", "")
+    );
 
 
     useEffect(() => {
@@ -32,12 +37,10 @@ export const PageCreator = () => {
             body: JSON.stringify(page)
         });
 
-        if (response.status === 200) {
+        if (response.status === 201) {
 
-            //TODO: update list
             setName("");
-            alert("Laget din Krets-side! :-D")
-            //TODO: redirect?
+            refreshPages();
         } else {
 
             alert("Det oppsto en liten feil i maskineriet..");

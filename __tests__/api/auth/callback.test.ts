@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import {Server} from "net";
 import handler from "../../../src/pages/api/auth/callback";
 import {authenticatedFetch, setupServer, teardownServer} from "../testutils";

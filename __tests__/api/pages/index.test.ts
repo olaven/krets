@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
 import {authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid} from "../testutils";

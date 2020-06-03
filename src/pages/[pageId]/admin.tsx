@@ -19,7 +19,7 @@ export default () => {
     if (!user)
         return <LoginButton/>;
 
-    if (user.sub !== page.owner.id)
+    if (user.sub !== page.owner_id)
         return <Box>
             Denne siden eier du ikke..
         </Box>;
