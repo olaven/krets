@@ -2,20 +2,15 @@
  * @jest-environment jsdom
  */
 
-
-import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../../testutils";
+import {setupServer, teardownServer, uid} from "../../testutils";
 import * as faker from "faker";
 import {Server} from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import {ResponseEntity} from "../../../../src/database/entities/ResponseEntity";
-import {PageEntity} from "../../../../src/database/entities/PageEntity";
-import {UserEntity} from "../../../../src/database/entities/UserEntity";
-import {closeConnection, connect} from "../../../../src/database/Database";
-import {Connection} from "typeorm";
-
+import {users} from "../../../../src/database/users";
+import {pages} from "../../../../src/database/pages";
+import {responses} from "../../../../src/database/responses";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -23,20 +18,17 @@ describe("The endpoint for responses", () => {
 
     let server: Server;
     let url: string;
-    let connection: Connection;
 
     const fullURL = (brandId: string) =>
         `${url}/${brandId}/responses`;
 
     beforeAll(async () => {
 
-        connection = await connect();
         [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
 
-        await closeConnection();
         await teardownServer(server);
     });
 
@@ -52,41 +44,32 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const userRepository = connection.getRepository(UserEntity);
-        const brandRepository = connection.getRepository(PageEntity);
-        const responseRepository = connection.getRepository(ResponseEntity);
-
-        const user = await userRepository.save({
+        const user = await users.createUser({
             id: faker.random.uuid()
         });
 
-        const brand = await brandRepository.save({
-            id: faker.random.words(1),
+        const page = await pages.createPage({
+            id: faker.random.uuid(),
             name: faker.company.companyName(),
-            owner: {
-                id: user.id
-            }
+            owner_id: user.id
         });
 
+        await responses.createResponse({
+            text: "OK",
+            emotion: 'neutral',
+            page_id: page.id
+        });
 
+        await responses.createResponse({
+            text: "Good!",
+            emotion: 'happy',
+            page_id: page.id
+        });
 
-        await responseRepository.save([
-            {
-                text: "OK",
-                emotion: 'neutral',
-                brand
-            },
-            {
-                text: "Good!",
-                emotion: 'happy',
-                brand
-            }
-        ]);
+        const fetchResponse = await fetch(fullURL(page.id));
+        expect(fetchResponse.status).toEqual(200);
 
-        const response = await fetch(fullURL(brand.id));
-        expect(response.status).toEqual(200);
-
-        const responses = await response.json();
-        expect(responses.length).toEqual(2);
+        const receivedResponses = await fetchResponse.json();
+        expect(receivedResponses.length).toEqual(2);
     })
 });

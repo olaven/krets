@@ -1,23 +1,14 @@
 import auth0 from '../../../auth/auth0';
-import { repositories } from "../../../database/repository";
-import {connect} from "../../../database/Database";
+import {users} from "../../../database/users";
 
 
 const createIfNotPresent = async (id: string) => {
 
-  const connection = await connect();
-  const repository = await (await repositories(connection)).user;
+  const user = await users.getUser(id);
 
-  console.log("THis is repository: ", repository);
+  if (!user) {
 
-  const user = { id };
-
-  const count = await repository.createQueryBuilder("user")
-      .where("user.id = :id", {id})
-      .getCount();
-
-  if (count <= 0) {
-    await repository.save(user);
+    await users.createUser({id});
   }
 };
 
@@ -30,8 +21,7 @@ export default async function callback(req, res) {
 
         console.log("THis is the user", user);
 
-//TODO: move back
-//        await createIfNotPresent(user.sub);
+        await createIfNotPresent(user.sub);
 
         return {
           ...session,
