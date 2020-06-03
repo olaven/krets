@@ -10,7 +10,7 @@ pool.on('error', (err, client) => {
 
 
 
-export const withDatabase = async (action: (client: PoolClient) => Promise<QueryResult<any>>) => {
+export const withDatabase = async (action: (client: PoolClient) => Promise<any>) => {
 
     const client = await pool.connect();
     const result = await action(client);
