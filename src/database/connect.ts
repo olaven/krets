@@ -5,11 +5,11 @@ import path from "path";
 //TODO: keep config out of code (i.e not programattic check for test)
 
 path.join(__dirname, '..', 'config', 'dev', 'foobar.json');
-const config = process.env.NODE_ENV !== "test"?
+const config = process.env.NODE_ENV == "test"?
     {
         // this object will be passed to the TLSSocket constructor
         ssl: {
-            ca: fs.readFileSync(path.resolve("./ca-certificate.crt")),
+            ca: fs.readFileSync(path.resolve(__dirname, "ca-certificate.crt")),
             /*        key: fs.readFileSync('/path/to/client-key/postgresql.key').toString(),
                     cert: fs.readFileSync('/path/to/client-certificates/postgresql.crt').toString(),*/
         },
