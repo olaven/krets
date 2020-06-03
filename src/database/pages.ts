@@ -6,12 +6,25 @@ interface Page  {
     owner_id: string
 }
 
-const createPage = (page: Page) => withDatabase(async (client) => client.query(
-        "insert into pages(id, owner_id, name) values($1, $2, $3)",
-        [page.id, page.owner_id, page.name]));
+const createPage = (page: Page) => withDatabase(async (client) => {
+
+    const result = await client.query(
+        "insert into pages(id, owner_id, name) values($1, $2, $3) returning *",
+        [page.id, page.owner_id, page.name]);
+
+    return result.rows[0];
+});
 
 
+const getByOwner = (ownerId: string) => withDatabase(async client => {
 
+    const result = await client.query(
+        "select * from pages where owner_id = $1",
+        [ownerId]
+    );
+
+    return result.rows;
+});
 
 
 const getPage = (id: string) => withDatabase(async (client) => {
@@ -25,5 +38,6 @@ const getPage = (id: string) => withDatabase(async (client) => {
 
 export const pages = ({
     getPage,
+    getByOwner,
     createPage
 });

@@ -10,7 +10,7 @@
     "dev": "yarn migrate up && NODE_ENV=development next",
     "build": "next build",
     "start": "yarn migrate up && next start",
-    "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns __tests__/api/*",
+    "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns",
     "migrate": "node-pg-migrate"
   },
   "dependencies": {
@@ -27,9 +27,7 @@
     "react-dom": "^16.13.1",
     "react-emoji-render": "^1.2.4",
     "react-qrcode-logo": "^2.2.1",
-    "rebass": "^4.0.7",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "0.2.25"
+    "rebass": "^4.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

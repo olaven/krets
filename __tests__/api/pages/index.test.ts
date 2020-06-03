@@ -1,12 +1,11 @@
 import "reflect-metadata";
 import fetch from "isomorphic-unfetch";
 import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {authenticatedFetch, getPages, postBrand, setupServer, teardownServer, uid} from "../testutils";
+import {authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid} from "../testutils";
 import handler from "../../../src/pages/api/pages";
 import {Server} from "net";
 import * as faker from "faker";
-import {UserEntity} from "../../../src/database/remove_typeorm/entities/UserEntity";
-import {closeConnection, connect} from "../../../src/database/remove_typeorm/Database";
+import {users} from "../../../src/database/users";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -14,18 +13,14 @@ describe("The pages endpoint", () => {
 
     let server: Server;
     let url: string;
-    let userRepository;
 
     beforeAll(async () => {
 
-        const connection = await connect();
-        userRepository = connection.getRepository(UserEntity);
         [server, url] = await setupServer(handler, "/api/pages");
     });
 
     afterAll(async () => {
-
-        await closeConnection();
+        
         await teardownServer(server);
     });
 
@@ -44,12 +39,12 @@ describe("The pages endpoint", () => {
     it("Is possible to create a page if authenticated", async () => {
 
         const userId = uid();
-        await userRepository.save({
+        await users.createUser({
             id: userId
         });
 
-       const response = await postBrand({
-           id: "my-page", name: "My Page"
+       const response = await postPage({
+           id: faker.random.alphaNumeric(40), name: "My Page", owner_id: userId
        }, url, userId);
 
        expect(response.status).toEqual(201)
@@ -58,7 +53,7 @@ describe("The pages endpoint", () => {
     it("/pages returns all pages belonging to given user", async () => {
 
         const n = 5;
-        const user = await userRepository.save({
+        const user = await users.createUser({
             id: uid()
         });
 
@@ -66,8 +61,8 @@ describe("The pages endpoint", () => {
 
         for (let i = 0; i < n; i++) {
 
-            await postBrand({
-                id: faker.random.uuid(), name: faker.company.companyName()
+            await postPage({
+                id: faker.random.uuid(), name: faker.company.companyName(), owner_id: user.id
             }, url, user.id);
         }
 

@@ -6,12 +6,12 @@ const getResponses = (pageId: string) => withDatabase(async client => {
 
     const result =  await client
         .query(`
-            select * from responses inner join responses_to_pages
-            on responses.page_id = responses_to_pages.page_id
-            where responses.page_id = $1 
+            select distinct * from responses 
+            where page_id = $1
         `, [
             pageId]);
 
+    
     return result.rows;
 });
 

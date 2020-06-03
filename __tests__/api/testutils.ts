@@ -9,12 +9,12 @@ import * as faker from "faker";
 
 
 //TODO: PageId DTO?
-export const postBrand = (brand: {id: string, name: string}, url: string, userId: string = uid()) => authenticatedFetch(userId, url,{
+export const postPage = (page: {id: string, name: string, owner_id: string}, url: string, userId: string = uid()) => authenticatedFetch(userId, url,{
     method: "POST",
     headers: {
         "content-type": "application/json",
     },
-    body: JSON.stringify((brand))
+    body: JSON.stringify((page))
 });
 
 export const uid = () => faker.random.uuid();
@@ -44,7 +44,6 @@ export const authenticatedFetch = (userId: string, url: string, options: any = {
         },
     };
 
-    console.log("URL with options: ", url,  options.method);
 
     return fetch(url, mergedOptions);
 };

@@ -18,6 +18,19 @@ describe("User repository", () => {
         const user = {id: faker.random.uuid()};
         await expect(users.createUser(user)).resolves.toBeTruthy();
         await expect(users.createUser(user)).rejects.toBeTruthy();
+    });
+
+
+    test("can check wether user is present or not", async () => {
+
+        const id = faker.random.uuid();
+
+        const before = await users.userExists(id);
+        await users.createUser({ id });
+        const after = await users.userExists(id);
+
+        expect(before).toBeFalsy();
+        expect(after).toBeTruthy();
     })
 });
 ;
