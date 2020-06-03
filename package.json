@@ -9,9 +9,10 @@
   "scripts": {
     "dev": "yarn migrate up && NODE_ENV=development next",
     "build": "next build",
-    "start": "yarn migrate up && next start",
+    "start": "yarn migrate-up && next start",
     "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
-    "migrate": "node-pg-migrate"
+    "migrate": "node-pg-migrate",
+    "migrate-up": "node-pg-migrate up --no-reject-unauthorized"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",
