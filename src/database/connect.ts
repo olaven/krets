@@ -9,7 +9,7 @@ const config = process.env.NODE_ENV !== "test"?
     {
         // this object will be passed to the TLSSocket constructor
         ssl: {
-            ca: fs.readFileSync(path.join(__dirname, 'ca-certificate.crt')).toString(),
+            ca: fs.readFileSync(path.join(__dirname, './ca-certificate.crt')).toString(),
             /*        key: fs.readFileSync('/path/to/client-key/postgresql.key').toString(),
                     cert: fs.readFileSync('/path/to/client-certificates/postgresql.crt').toString(),*/
         },
