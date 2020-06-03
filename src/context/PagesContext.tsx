@@ -6,7 +6,7 @@ const usePages = (uid: string) => {
 
   const [ pages, setPages ] = useState([]);
 
-  const fetchPages = async () => {
+  const refreshPages = async () => {
 
     const response = await fetch("/api/pages");
     if (response.status === 200) {
@@ -20,9 +20,9 @@ const usePages = (uid: string) => {
     }
   };
 
-  useEffect(() => {fetchPages()}, [uid]);
+  useEffect(() => {refreshPages()}, [uid]);
 
-  return pages;
+  return [pages, refreshPages];
 };
 
 export const PagesContext = createContext({pages: []});
@@ -31,9 +31,9 @@ export const PagesContextProvider = (props) => {
   const { user } = useContext(UserContext);
   if (!user) throw "Should not see this if not logged in!";
 
-  const pages = usePages(user.sub);
+  const [pages, refreshPages] = usePages(user.sub);
 
-  return <PagesContext.Provider value={{pages}}>
+  return <PagesContext.Provider value={{pages, refreshPages}}>
       {props.children}
   </PagesContext.Provider>
 };

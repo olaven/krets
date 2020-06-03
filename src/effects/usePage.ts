@@ -8,21 +8,10 @@ export const usePage = (id: string) => {
     const fetchPage = async () => {
 
             const response = await fetch(`/api/pages/${id}`);
-            if (id === "guros-kafe"/*response.status === 200*/) {
+            if (response.status === 200) {
 
-                /*const page = await response.json();
-                setPage(page);*/
-                //TODO: add code bac when server works.
-
-
-                setPage({
-                    id: "guros-kafe",
-                    name: "Guros Kafe!",
-                    owner: {
-                        id: "google-oauth2|103130415679943370506" //NOTE: id of my test account
-                    },
-                    responses: [],
-                });
+                const page = await response.json();
+                setPage(page);
                 setLoading(false);
 
             } else {
