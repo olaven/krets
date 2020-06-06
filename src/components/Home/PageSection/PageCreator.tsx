@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Box, Button, Flex, Heading, Text} from "rebass";
 import {Input} from "@rebass/forms"
 import {PagesContext} from "../../../context/PagesContext";
+import { post } from "../../../http/methods";
 
 export const PageCreator = () => {
 
@@ -32,22 +33,16 @@ export const PageCreator = () => {
             id, name
         };
 
-        const response = await fetch("/api/pages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }, 
-            body: JSON.stringify(page)
-        });
-
-        if (response.status === 201) {
+        const [ status ] = await post(`/api/pages`, page); 
+        
+        if (status === 201) {
 
             setName("");
             refreshPages();
         } else {
 
             alert("Det oppsto en liten feil i maskineriet..");
-            console.error("Feil ved posting av ny side: ", response);
+            console.error("Feil ved posting av ny side: ", status);
         }
     };
 
