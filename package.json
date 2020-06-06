@@ -8,11 +8,10 @@
   "license": "TODO",
   "scripts": {
     "dev": "yarn migrate up && NODE_ENV=development next",
-    "build": "next build && yarn migrate up",
-    "start": "yarn migrate-up && next start",
+    "build": "next build && yarn migrate up --no-reject-unauthorized",
+    "start": "next start",
     "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
-    "migrate": "node-pg-migrate",
-    "migrate-up": "node-pg-migrate up --no-reject-unauthorized"
+    "migrate": "node-pg-migrate"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",
