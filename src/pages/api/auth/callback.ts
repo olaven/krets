@@ -19,7 +19,6 @@ export default async function callback(req, res) {
         
         const { user } = session;
 
-        console.log("THis is the user", user);
 
         await createIfNotPresent(user.sub);
 
@@ -34,7 +33,7 @@ export default async function callback(req, res) {
       }
     });
   } catch (error) {
-    console.error(error);
+
     res.status(error.status || 400).end(error.message);
   }
 }

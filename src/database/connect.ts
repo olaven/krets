@@ -1,13 +1,12 @@
-import {Pool, PoolClient, QueryResult} from "pg";
+import { Pool, PoolClient, QueryResult } from "pg";
 
 //TODO: should not check NODE_ENV programatically, but separate config from code 
-const config = process.env.NODE_ENV !== "test"?{
-
+const config = (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") ? {} : {
     ssl: {
         rejectUnauthorized: false,
         ca: process.env.SSH_DATABASE_CERTIFICATE,
     }
-}:{};
+};
 
 const pool = new Pool(config);
 

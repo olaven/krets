@@ -71,5 +71,44 @@ describe("The endpoint for responses", () => {
 
         const receivedResponses = await fetchResponse.json();
         expect(receivedResponses.length).toEqual(2);
+    }); 
+
+    it("is possible to create a response", async () => {
+
+        const user = await users.createUser({
+            id: faker.random.uuid() 
+        }); 
+
+        const page = await pages.createPage({
+            id: faker.random.uuid(),
+            name: faker.company.companyName(),
+            owner_id: user.id
+        });
+
+        const response = {
+            text: "OK",
+            emotion: 'neutral',
+            page_id: page.id
+        }; 
+
+        const fetchResponse = await fetch(fullURL(page.id), {
+            method: "post", 
+            headers: {
+                "Content-Type": "application/json", 
+            }, 
+            body: JSON.stringify(response)
+        }); 
+
+        // Correct response 
+        expect(fetchResponse.status).toEqual(201); 
+
+
+        const retrievedResponses = await (await fetch(fullURL(page.id))).json(); 
+        const hasCorrect = retrievedResponses.find(r => 
+            r.text === response.text &&
+            r.emotion === response.emotion && 
+            r.page_id === response.page_id)
+
+        expect(hasCorrect).toBeTruthy();
     })
 });

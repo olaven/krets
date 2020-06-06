@@ -10,7 +10,6 @@ export default auth0.requireAuthentication(async function brand (request, respon
 
         const pagesInDatabase = await pages.getByOwner(user.sub);
 
-        console.log("pages in database", pagesInDatabase);
         response
             .status(200)
             .json(pagesInDatabase);
