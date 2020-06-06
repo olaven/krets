@@ -12,7 +12,7 @@
     "start": "yarn migrate-up && next start",
     "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
     "migrate": "node-pg-migrate",
-    "migrate-up": "node-pg-migrate up --no-reject-unauthorized"
+    "migrate-up": "echo 'nothing'"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",
