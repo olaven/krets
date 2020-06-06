@@ -12,7 +12,7 @@
     "start": "yarn migrate-up && next start",
     "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
     "migrate": "node-pg-migrate",
-    "migrate-up": "echo 'nothing'"
+    "migrate-up": "node-pg-migrate up --no-reject-unauthorized"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",
@@ -22,7 +22,7 @@
     "emotion-theming": "^10.0.27",
     "next": "v9.4.4",
     "node-pg-migrate": "^5.0.1",
-    "pg": "7.12.1",
+    "pg": "8.2.1 ",
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
