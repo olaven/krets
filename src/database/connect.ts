@@ -13,7 +13,7 @@ const config = process.env.NODE_ENV !== "test"?{
 
     ssl: {
         rejectUnauthorized: false,
-        ca: fs.readFileSync(certPath, 'utf8'),
+        ca: process.env.SSH_DATABASE_CERTIFICATE,
   //      key: fs.readFileSync('/path/to/client-key/postgresql.key').toString(),
   //    cert: fs.readFileSync('/path/to/client-certificates/postgresql.crt').toString()
     }
