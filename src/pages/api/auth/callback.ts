@@ -1,5 +1,6 @@
 import auth0 from '../../../auth/auth0';
 import {users} from "../../../database/users";
+import { BAD_REQUEST } from '../../../http/codes';
 
 
 const createIfNotPresent = async (id: string) => {
@@ -34,6 +35,6 @@ export default async function callback(req, res) {
     });
   } catch (error) {
 
-    res.status(error.status || 400).end(error.message);
+    res.status(error.status || BAD_REQUEST).end(error.message);
   }
 }

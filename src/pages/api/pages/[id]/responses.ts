@@ -1,6 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {pages} from "../../../../database/pages";
 import {responses} from "../../../../database/responses";
+import { NOT_FOUND, OK, BAD_REQUEST, CREATED } from "../../../../http/codes";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -20,7 +21,7 @@ export default async function responseHandler(request: NextApiRequest, response:
         if (!page) {
     
             response
-                .status(404)
+                .status(NOT_FOUND)
                 .send("No brand found");
     
             return;
@@ -39,13 +40,13 @@ export default async function responseHandler(request: NextApiRequest, response:
 
             const createdResponse = responses.createResponse(responseFromUser); 
             response
-                .status(201)
+                .status(CREATED)
                 .json(createdResponse);
         } catch(error) {
 
             //TODO: 400 or 500 based on error 
             response
-                .status(400)
+                .status(BAD_REQUEST)
                 .send("Invalid response")
         }
     }

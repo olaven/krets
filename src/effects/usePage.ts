@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import { get } from "../http/methods";
 
 export const usePage = (id: string) => {
 
@@ -7,10 +8,9 @@ export const usePage = (id: string) => {
 
     const fetchPage = async () => {
 
-            const response = await fetch(`/api/pages/${id}`);
-            if (response.status === 200) {
+            const [status, page]= await get(`/api/pages/${id}`);
+            if (status === 200) {
 
-                const page = await response.json();
                 setPage(page);
                 setLoading(false);
 

@@ -3,6 +3,8 @@ import { Box, Button, Flex, Heading } from "rebass"
 import { Input } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
+import { get, post } from "../../http/methods";
+import { CREATED } from "../../http/codes";
 
 
 export const ResponseSection = props => {
@@ -20,19 +22,12 @@ export const ResponseSection = props => {
             return;
         }
 
-        const payload = {
+        const [status] = await post(`/api/pages/${page.id}/responses`, {
             emotion, text
-        };
-
-        const postResponse = await fetch(`/api/pages/${page.id}/responses`, {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
         });
+        
 
-        if (postResponse.status === 201) {
+        if (status === CREATED) {
 
             //TODO: replace input field with some thumbs-up/checkmark thing
             setPublished(true);

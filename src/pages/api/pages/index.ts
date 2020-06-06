@@ -1,5 +1,6 @@
 import auth0 from "../../../auth/auth0";
 import {pages} from "../../../database/pages";
+import { CREATED, OK } from "../../../http/codes";
 
 
 export default auth0.requireAuthentication(async function brand (request, response) {
@@ -11,7 +12,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
         const pagesInDatabase = await pages.getByOwner(user.sub);
 
         response
-            .status(200)
+            .status(OK)
             .json(pagesInDatabase);
     } else if (request.method === "POST") {
 
@@ -24,7 +25,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
             const result = await pages.createPage(page);
 
             response
-                .status(201)
+                .status(CREATED)
                 .json(result)
         } catch (error) {
 

@@ -1,5 +1,6 @@
 import * as React from "react";
 import {createContext, useState} from "react";
+import { get } from "../http/methods";
 
 interface IUserContext {
     user: {
@@ -19,15 +20,14 @@ export const UserContextProvider = props => {
 
     const updateUser = async () => {
 
-        const res = await fetch('/api/auth/me');
-        if (res.ok) {
+        const [ status, user ] = await get('/api/auth/me');
+        if (status === 200) {
 
-            const user = await res.json();
             setUser(user);
         } else {
 
             setUser(null);
-            console.error(res)
+            console.warn("Could not fetch user data", status);
         }
 
     };
