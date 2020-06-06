@@ -34,6 +34,9 @@ export const PageCreator = () => {
 
         const response = await fetch("/api/pages", {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
             body: JSON.stringify(page)
         });
 
