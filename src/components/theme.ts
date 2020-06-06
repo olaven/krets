@@ -6,6 +6,8 @@ export const KretsTheme = {
     colors: {
         secondary: "#FDFEFC ",
         primary: '#B4497C',
+        success: '#048243', 
+        failure: '#D5174E'
     },
     space: [
         4, 8, 16, 32, 64, 128, 256
