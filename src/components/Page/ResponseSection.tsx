@@ -4,6 +4,7 @@ import { Input } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
 import { get, post } from "../../http/methods";
+import { CREATED } from "../../http/codes";
 
 
 export const ResponseSection = props => {
@@ -26,7 +27,7 @@ export const ResponseSection = props => {
         });
         
 
-        if (status === 201) {
+        if (status === CREATED) {
 
             //TODO: replace input field with some thumbs-up/checkmark thing
             setPublished(true);

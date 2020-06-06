@@ -4,6 +4,7 @@ import {CallbackOptions} from "@auth0/nextjs-auth0/dist/handlers/callback";
 import {ProfileOptions} from "@auth0/nextjs-auth0/dist/handlers/profile";
 import {ISession} from "@auth0/nextjs-auth0/dist/session/session";
 import {IApiRoute} from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
+import { UNAUTHORIZED } from "../../http/codes";
 
 
 const getSession = async (req: NextApiRequest): Promise<ISession> => ({
@@ -58,7 +59,7 @@ export default ({
 
         if (!req.headers["x-mock-is-authenticated"]) {
 
-            res.status(401).json({
+            res.status(UNAUTHORIZED).json({
                 error: 'not_authenticated',
                 description: 'The user does not have an active session or is not authenticated'
             });

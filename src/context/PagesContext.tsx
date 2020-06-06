@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {UserContext} from "./UserContext";
 import { get } from "../http/methods";
+import { OK } from "../http/codes";
 
 
 const usePages = (uid: string) => {
@@ -10,7 +11,7 @@ const usePages = (uid: string) => {
     const refreshPages = async () => {
 
         const [ status, pages ] = await get("/api/pages");
-        if (status === 200) {
+        if (status === OK) {
 
             //TODO: pass type as generic to get when I have implemented shared DTO interfaces
             setPages(pages as any); 

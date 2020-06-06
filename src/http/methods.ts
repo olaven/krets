@@ -1,3 +1,5 @@
+import { CREATED, OK } from "./codes";
+
 export const post = async <T>(url: string, payload: T): Promise<[number, T?]> => {
 
     const response = await fetch(url, {
@@ -8,7 +10,7 @@ export const post = async <T>(url: string, payload: T): Promise<[number, T?]> =>
         body: JSON.stringify(payload)
     });
 
-    if (response.status === 201) {
+    if (response.status === CREATED) {
         const payload = await response.json();
         return [response.status, payload as T];
     }
@@ -19,7 +21,7 @@ export const post = async <T>(url: string, payload: T): Promise<[number, T?]> =>
 export const get = async <T>(url: string): Promise<[number, T?]> => {
 
     const response = await fetch(url);
-    if (response.status === 200) {
+    if (response.status === OK) {
 
         const payload = await response.json();
         return [response.status, payload as T];

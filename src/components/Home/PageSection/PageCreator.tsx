@@ -3,6 +3,8 @@ import {Box, Button, Flex, Heading, Text} from "rebass";
 import {Input} from "@rebass/forms"
 import {PagesContext} from "../../../context/PagesContext";
 import { post } from "../../../http/methods";
+import  { OK } from "../../../http/codes";
+
 
 export const PageCreator = () => {
 
@@ -35,7 +37,7 @@ export const PageCreator = () => {
 
         const [ status ] = await post(`/api/pages`, page); 
         
-        if (status === 201) {
+        if (status === OK) {
 
             setName("");
             refreshPages();

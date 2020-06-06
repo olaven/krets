@@ -3,6 +3,7 @@
 
 
 import {pages} from "../../../database/pages";
+import { NOT_FOUND } from "../../../http/codes";
 
 const getId = (url: string) => {
 
@@ -24,7 +25,7 @@ export default async function pageHandler(request, response) {
     } else {
 
         response
-            .status(404)
+            .status(NOT_FOUND)
             .send("Could not find this brand..");
     }
 
