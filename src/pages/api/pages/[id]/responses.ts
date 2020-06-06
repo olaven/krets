@@ -11,23 +11,42 @@ const getId = (url: string) => {
 
 };
 
-export default async function responsesForBrandInURL(request: NextApiRequest, response: NextApiResponse) {
+export default async function responseHandler(request: NextApiRequest, response: NextApiResponse) {
 
-
-    const id = getId(request.url);
-    const page = await pages.getPage(id);
-
-    if (!page) {
-
+    if (request.method === "GET") {
+        const id = getId(request.url);
+        const page = await pages.getPage(id);
+    
+        if (!page) {
+    
+            response
+                .status(404)
+                .send("No brand found");
+    
+            return;
+        }
+    
+        const responseResult = await responses.getResponses(id);
+    
         response
-            .status(404)
-            .send("No brand found");
+            .json(responseResult);
+    } else if (request.method === "POST") {
 
-        return;
+
+        const responseFromUser = request.body; 
+
+        try{
+
+            const createdResponse = responses.createResponse(responseFromUser); 
+            response
+                .status(201)
+                .json(createdResponse);
+        } catch(error) {
+
+            //TODO: 400 or 500 based on error 
+            response
+                .status(400)
+                .send("Invalid response")
+        }
     }
-
-    const responseResult = await responses.getResponses(id);
-
-    response
-        .json(responseResult);
 }

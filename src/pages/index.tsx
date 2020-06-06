@@ -8,7 +8,6 @@ const HomePage = () => {
 
     const { user } = React.useContext(UserContext);
 
-
     const responses = async () => {
 
         const response = await fetch("/api/pages/some-page/responses");
