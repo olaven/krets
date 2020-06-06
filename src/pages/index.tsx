@@ -21,10 +21,7 @@ const HomePage = () => {
     };
     return user?
         <PageSection/>:
-        <div>
-            <Button onClick={responses}>test fetch responses</Button>
-            <IntroSection/>
-        </div>
+        <IntroSection/>
 };
 
 export default HomePage
