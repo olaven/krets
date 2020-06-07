@@ -1,13 +1,11 @@
 import * as React from "react";
 import {createContext, useState} from "react";
 import { get } from "../http/methods";
+import { AuthModel } from "../models";
 
 interface IUserContext {
-    user: {
-        sub: string,
-        name: string
-    },
-    updateUser: (user: any) => void
+    user: AuthModel, 
+    updateUser: (user: AuthModel) => void
 }
 
 export const UserContext = createContext<IUserContext>({
@@ -16,11 +14,11 @@ export const UserContext = createContext<IUserContext>({
 
 export const UserContextProvider = props => {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<AuthModel | null>(null);
 
     const updateUser = async () => {
 
-        const [ status, user ] = await get('/api/auth/me');
+        const [ status, user ] = await get<AuthModel>('/api/auth/me');
         if (status === 200) {
 
             setUser(user);

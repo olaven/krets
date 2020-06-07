@@ -2,19 +2,19 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import {UserContext} from "./UserContext";
 import { get } from "../http/methods";
 import { OK } from "../http/codes";
+import { PageModel } from "../models";
 
 
 const usePages = (uid: string) => {
 
-    const [pages, setPages] = useState([]);
+    const [pages, setPages] = useState<PageModel[]>([]);
 
     const refreshPages = async () => {
 
-        const [ status, pages ] = await get("/api/pages");
+        const [ status, pages ] = await get<PageModel[]>("/api/pages");
         if (status === OK) {
 
-            //TODO: pass type as generic to get when I have implemented shared DTO interfaces
-            setPages(pages as any); 
+            setPages(pages); 
         } else {
 
             console.warn(`Received ${status} when fetching brands..`);

@@ -1,6 +1,7 @@
 import auth0 from "../../../auth/auth0";
 import {pages} from "../../../database/pages";
 import { CREATED, OK } from "../../../http/codes";
+import { PageModel } from "../../../models";
 
 
 export default auth0.requireAuthentication(async function brand (request, response) {
@@ -14,10 +15,11 @@ export default auth0.requireAuthentication(async function brand (request, respon
         response
             .status(OK)
             .json(pagesInDatabase);
+
     } else if (request.method === "POST") {
 
         //NOTE: automatically set page owner
-        const page = request.body;
+        const page = request.body as PageModel;
         page.owner_id = user.sub;
 
         try {
@@ -29,9 +31,7 @@ export default auth0.requireAuthentication(async function brand (request, respon
                 .json(result)
         } catch (error) {
 
-            console.log("PageId iwht error: ", page);
-            //TODO: different depending on error
-            console.error("Erorr here: ", error);
+            console.log("PageId iwht error: ", page, "error", error);
             throw error
         }
 
