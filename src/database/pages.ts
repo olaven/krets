@@ -1,12 +1,8 @@
 import {withDatabase} from "./connect";
+import { PageModel } from "../models";
 
-interface Page  {
-    id: string,
-    name: string,
-    owner_id: string
-}
 
-const createPage = (page: Page) => withDatabase(async (client) => {
+const createPage = (page: PageModel) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query(
         "insert into pages(id, owner_id, name) values($1, $2, $3) returning *",
@@ -16,18 +12,18 @@ const createPage = (page: Page) => withDatabase(async (client) => {
 });
 
 
-const getByOwner = (ownerId: string) => withDatabase(async client => {
+const getByOwner = (owner_id: string) => withDatabase<PageModel[]>(async client => {
 
     const result = await client.query(
         "select * from pages where owner_id = $1",
-        [ownerId]
+        [owner_id]
     );
 
     return result.rows;
 });
 
 
-const getPage = (id: string) => withDatabase(async (client) => {
+const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query("select * from pages where id = $1", [id]);
 

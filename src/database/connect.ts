@@ -17,7 +17,7 @@ pool.on('error', (err, client) => {
 
 
 
-export const withDatabase = async (action: (client: PoolClient) => Promise<any>) => {
+export const withDatabase = async <T> (action: (client: PoolClient) => Promise<T>) => {
 
     const client = await pool.connect();
     const result = await action(client);

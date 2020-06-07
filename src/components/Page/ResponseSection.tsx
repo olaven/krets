@@ -5,14 +5,16 @@ import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
 import { get, post } from "../../http/methods";
 import { CREATED } from "../../http/codes";
+import { ReseponseModel, Emotion } from "../../models";
 
 
 export const ResponseSection = props => {
 
     const { page } = props;
-    const [emotion, setEmotion] = useState(null);
+    const [emotion, setEmotion] = useState<Emotion>(null);
     const [text, setText] = useState("");
     const [published, setPublished] = useState(false);
+
 
     const postResponse = async () => {
 
@@ -24,7 +26,7 @@ export const ResponseSection = props => {
 
         const [status] = await post(`/api/pages/${page.id}/responses`, {
             emotion, text
-        });
+        } as ReseponseModel);
         
 
         if (status === CREATED) {
