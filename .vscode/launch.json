@@ -3,27 +3,14 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach",
-            "port": 9229,
-            "sourceMapPathOverrides": {
-                "webpack:///./*": "${workspaceRoot}/*"
-            }
-        },
-        {
-            "name": "Start",
-            "type": "node-terminal",
             "request": "launch",
-            "command": "yarn dev"
-        },
-    ],
-    "compounds": [
-        {
-            "name": "Compound",
-            "configurations": [
-                "Start",
-                "Attach"
-            ]
+            "name": "Next: Node",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": [
+                "dev"
+            ],
+            "port": 9229,
+            "console": "integratedTerminal"
         }
-    ]
+    ],
 }

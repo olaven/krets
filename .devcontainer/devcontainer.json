@@ -4,28 +4,14 @@
 	"service": "web",
 	"workspaceFolder": "/workspace",
 	"forwardPorts": [3000, 5432],
+	"postCreateCommand": "yarn install",
 
-
-	// Set *default* container specific settings.json values on container create.
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},
 
-	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dbaeumer.vscode-eslint", 
 		"ms-azuretools.vscode-docker"
 	],
-
-	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	//"runServices": ["web"],
-
-	// Uncomment the line below if you want to keep your containers running after VS Code shuts down.
-	// "shutdownAction": "none",
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	//"postCreateCommand": "yarn install",
-
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "node"
 }
