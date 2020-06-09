@@ -1,26 +1,29 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach",
-      "port": 9229,
-      "sourceMapPathOverrides": {
-        "webpack:///./*": "${workspaceRoot}/*"
-      }
-    }, 
-    {
-      "name": "Start",
-      "type": "pwa-node-terminal",
-      "request": "launch",
-      "command": "yarn dev"
-    },
-  ], 
-  "compounds": [
-    {
-      "name": "Compound",
-      "configurations": ["Attach", "Start"]
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "port": 9229,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${workspaceRoot}/*"
+            }
+        },
+        {
+            "name": "Start",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "yarn dev"
+        },
+    ],
+    "compounds": [
+        {
+            "name": "Compound",
+            "configurations": [
+                "Start",
+                "Attach"
+            ]
+        }
+    ]
 }
