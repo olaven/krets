@@ -9,6 +9,7 @@ module.exports = {
                 loader: 'ignore-loader'
             }
         );
+        config.devtool = 'eval-source-map';
         return config;
     }
 };

@@ -7,10 +7,10 @@
   "author": "olaven <olav@sundfoer.com>",
   "license": "TODO",
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' NODE_ENV=development next",
+    "dev": "NODE_ENV=development NODE_OPTIONS='--inspect' next",
     "build": "next build && yarn migrate up --no-reject-unauthorized",
     "start": "next start",
-    "test": "NODE_ENV=test && yarn migrate up && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
+    "test": "NODE_ENV=test && yarn migrate up -no-reject-unauthorized && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
     "migrate": "node-pg-migrate"
   },
   "dependencies": {

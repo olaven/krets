@@ -3,15 +3,16 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "web",
 	"workspaceFolder": "/workspace",
-	"forwardPorts": [3000, 5432],
+	"forwardPorts": [
+		3000,
+		5432
+	],
 	"postCreateCommand": "yarn install",
-
-	"settings": { 
+	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},
-
 	"extensions": [
-		"dbaeumer.vscode-eslint", 
-		"ms-azuretools.vscode-docker"
+		"dbaeumer.vscode-eslint",
+		"firefox-devtools.vscode-firefox-debug"
 	],
 }
