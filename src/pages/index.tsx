@@ -7,9 +7,14 @@ const IndexPage = () => {
 
     const { user } = React.useContext(UserContext);
 
-    return user ?
-        <PageSection /> :
-        <IntroSection />
+    if (user) {
+
+        return <PageSection />
+    } else {
+
+        return <IntroSection />
+    }
+
 };
 
 export default IndexPage
