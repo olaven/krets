@@ -27,7 +27,7 @@ describe("Database repository for pages", () => {
 
         const before = await responses.getResponses(page_id);
         await responses.createResponse({
-            emotion: "smile",
+            emotion: ':-)',
             text: "",
             page_id: page_id
         });
