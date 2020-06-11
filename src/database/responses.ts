@@ -1,10 +1,10 @@
-import {withDatabase} from "./connect";
+import { withDatabase } from "./connect";
 import { ReseponseModel } from "../models";
 
 
 const getResponses = (pageId: string) => withDatabase<ReseponseModel[]>(async client => {
 
-    const result =  await client
+    const result = await client
         .query(`
             select distinct * from responses 
             where page_id = $1
@@ -30,9 +30,9 @@ const createResponse = async (response: ReseponseModel) => withDatabase<Resepons
     await client.query(
         "insert into responses_to_pages(page_id, response_id) values($1, $2)",
         [response.page_id, responseId]
-    ); 
+    );
 
-    return result.rows[0]; 
+    return result.rows[0];
 });
 
 

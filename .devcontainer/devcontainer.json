@@ -1,5 +1,5 @@
 {
-	"name": "Krets development",
+	"name": "development",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "web",
 	"workspaceFolder": "/workspace",
