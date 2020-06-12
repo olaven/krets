@@ -20,7 +20,7 @@
     "@rebass/preset": "^4.0.5",
     "emotion-theming": "^10.0.27",
     "jest-fetch-mock": "^3.0.3",
-    "next": "v9.4.4",
+    "next": "9.4.5-canary.12",
     "node-pg-migrate": "^5.0.1",
     "pg": "8.2.1",
     "qrcode.react": "^1.0.0",
