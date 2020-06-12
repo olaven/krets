@@ -9,7 +9,7 @@ const IndexPage = () => {
 
     if (user) {
 
-        return <PageSection />
+        return <PageSection user={user} />
     } else {
 
         return <IntroSection />
