@@ -1,15 +1,20 @@
 import React from "react";
-import {UserContext} from "../context/UserContext";
-import {PageSection} from "../components/Home/PageSection/PageSection";
-import {IntroSection} from "../components/Home/IntroSection/IntroSection";
+import { UserContext } from "../context/UserContext";
+import { PageSection } from "../components/Home/PageSection/PageSection";
+import { IntroSection } from "../components/Home/IntroSection/IntroSection";
 
-const HomePage = () => {
+const IndexPage = () => {
 
     const { user } = React.useContext(UserContext);
 
-    return user?
-        <PageSection/>:
-        <IntroSection/>
+    if (user) {
+
+        return <PageSection user={user} />
+    } else {
+
+        return <IntroSection />
+    }
+
 };
 
-export default HomePage
+export default IndexPage

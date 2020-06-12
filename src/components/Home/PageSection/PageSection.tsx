@@ -1,12 +1,14 @@
 import React from "react";
-import {PagesContextProvider} from "../../../context/PagesContext";
-import {PageCreator} from "./PageCreator";
-import {PageList} from "./PageList";
+import { PagesContextProvider } from "../../../context/PagesContext";
+import { PageCreator } from "./PageCreator";
+import { PageList } from "./PageList";
 
 
-export const PageSection = () => (<PagesContextProvider>
+export const PageSection = props => {
 
-    <PageCreator/>
-    <PageList/>
-
-</PagesContextProvider>);
+    const { user } = props;
+    return <PagesContextProvider user={user}>
+        <PageCreator />
+        <PageList />
+    </PagesContextProvider>
+}

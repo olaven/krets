@@ -1,15 +1,15 @@
 import * as React from "react";
-import {createContext, useState} from "react";
+import { createContext, useState } from "react";
 import { get } from "../http/methods";
 import { AuthModel } from "../models";
 
 interface IUserContext {
-    user: AuthModel, 
+    user: AuthModel,
     updateUser: (user: AuthModel) => void
 }
 
 export const UserContext = createContext<IUserContext>({
-    user: null, updateUser: () => {}
+    user: null, updateUser: () => { }
 });
 
 export const UserContextProvider = props => {
@@ -18,7 +18,7 @@ export const UserContextProvider = props => {
 
     const updateUser = async () => {
 
-        const [ status, user ] = await get<AuthModel>('/api/auth/me');
+        const [status, user] = await get<AuthModel>('/api/auth/me');
         if (status === 200) {
 
             setUser(user);
@@ -30,10 +30,10 @@ export const UserContextProvider = props => {
 
     };
 
-    React.useEffect(() => {updateUser();}, []);
+    React.useEffect(() => { updateUser(); }, []);
 
 
-    return <UserContext.Provider value={{user, updateUser}}>
+    return <UserContext.Provider value={{ user, updateUser }}>
         {props.children}
     </UserContext.Provider>
 };

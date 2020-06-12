@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import { get } from "../http/methods";
 import { PageModel } from "../models";
 
-export const usePage = (id: string) => {
+export const usePage = (id: string): [PageModel, boolean] => {
 
     const [page, setPage] = useState<PageModel>(null);
     const [loading, setLoading] = useState(true);

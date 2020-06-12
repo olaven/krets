@@ -1,0 +1,19 @@
+{
+	"name": "development",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "web",
+	"workspaceFolder": "/workspace",
+	"forwardPorts": [
+		3000,
+		5432
+	],
+	"postCreateCommand": "yarn install",
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"firefox-devtools.vscode-firefox-debug",
+		"github.vscode-pull-request-github"
+	],
+}
