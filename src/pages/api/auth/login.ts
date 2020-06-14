@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import next, { NextApiRequest, NextApiResponse } from 'next'
 import auth0 from '../../../auth/auth0';
 import { BAD_REQUEST } from '../../../http/codes';
 
