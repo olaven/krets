@@ -1,8 +1,10 @@
 import { useContext } from "react"
 import { UserContext } from "../../context/UserContext";
 import { AdminPageContextProvider, AdminPageContext } from "../../context/AdminPageContext";
-import { Box } from "rebass";
+import { Box, Flex } from "rebass";
 import { LoginButton } from "../tiny/buttons";
+import { ResponseTextList } from "./ResponseTextList";
+import { MoodGraph } from "./MoodGraph";
 
 export const AdminPage = () => {
 
@@ -24,5 +26,12 @@ export const AdminPage = () => {
             Denne siden eier du ikke..
         </Box>;
 
-    return <div>hello, admin of {page.name}</div>
+    return <Flex>
+        <Box width={1 / 2}>
+            <MoodGraph />
+        </Box>
+        <Box width={1 / 2}>
+            <ResponseTextList />
+        </Box>
+    </Flex>
 }
