@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { get } from "../http/methods";
 import { PageModel } from "../models";
+import { OK } from "../http/codes";
 
 export const usePage = (id: string): [PageModel, boolean] => {
 
@@ -9,20 +10,21 @@ export const usePage = (id: string): [PageModel, boolean] => {
 
     const fetchPage = async () => {
 
-            const [status, page]= await get<PageModel>(`/api/pages/${id}`);
-            if (status === 200) {
+        const [status, page] = await get<PageModel>(`/api/pages/${id}`);
+        if (status === OK) {
 
-                setPage(page);
-                setLoading(false);
-
-            } else {
-
-                setPage(null);
-            }
-
+            setPage(page);
             setLoading(false);
+
+        } else {
+
+            console.warn(`Getting ${status} when fetching page ${id}`);
+            setPage(null);
         }
-    ;
+
+        setLoading(false);
+    }
+        ;
 
     useEffect(() => {
 
