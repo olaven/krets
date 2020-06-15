@@ -6,6 +6,9 @@
   "repository": "https://github.com/olaven/krets.git",
   "author": "olaven <olav@sundfoer.com>",
   "license": "TODO",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "dev": "yarn migrate up && NODE_ENV=development NODE_OPTIONS='--inspect' next",
     "build": "next build && yarn migrate up --no-reject-unauthorized",
