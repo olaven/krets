@@ -8,9 +8,8 @@ import { CREATED } from "../../http/codes";
 import { ReseponseModel, Emotion } from "../../models";
 
 
-export const ResponseSection = props => {
+export const ResponseSection = ({ page }) => {
 
-    const { page } = props;
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [text, setText] = useState("");
     const [published, setPublished] = useState(false);
@@ -25,13 +24,12 @@ export const ResponseSection = props => {
         }
 
         const [status] = await post(`/api/pages/${page.id}/responses`, {
-            emotion, text
+            emotion, text, page_id: page.id
         } as ReseponseModel);
-        
+
 
         if (status === CREATED) {
 
-            //TODO: replace input field with some thumbs-up/checkmark thing
             setPublished(true);
         } else {
 
@@ -41,7 +39,7 @@ export const ResponseSection = props => {
     };
 
     const form = published ?
-        <Heading p={[2, 3, 4]} fontSize={[ 5, 6, 7 ]} backgroundColor="success" color="secondary">Tusen takk! <Emoji text=":tada:"/></Heading>: 
+        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">Tusen takk! <Emoji text=":tada:" /></Heading> :
         <>
             <Heading py={[1, 2, 3]} color={"primary"}>Gi tilbakemelding til {page.name}</Heading>
             <Flex>
