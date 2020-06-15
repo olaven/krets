@@ -1,18 +1,26 @@
-import React, { createContext, useEffect, useState } from "react";
-import { get } from "../http/methods";
-import { OK } from "../http/codes";
-import { PageModel } from "../models";
+import React, { createContext } from "react";
+import { PageModel, ReseponseModel } from "../models";
 import { usePage } from "../effects/usePage";
+import { useResponses } from "../effects/useResponses";
 
 
-//TODO: proper types
-export const AdminPageContext = createContext<{ page: PageModel, loading: boolean }>({ page: null, loading: true });
+interface ContextInterface {
+    page: PageModel,
+    pageLoading: boolean,
+    responses: ReseponseModel[],
+    responsesLoading: boolean
+}
+const defaultValues: ContextInterface =
+    { page: null, pageLoading: true, responses: [], responsesLoading: true }
+
+export const AdminPageContext = createContext<ContextInterface>(defaultValues);
 
 export const AdminPageContextProvider = ({ pageId, children }) => {
 
-    const [page, loading] = usePage(pageId);
+    const [page, pageLoading] = usePage(pageId);
+    const [responses, responsesLoading] = useResponses(pageId);
 
-    return <AdminPageContext.Provider value={{ page, loading }}>
+    return <AdminPageContext.Provider value={{ page, pageLoading, responses, responsesLoading }}>
         {children}
     </AdminPageContext.Provider>
 };

@@ -9,9 +9,9 @@ import { MoodGraph } from "./MoodGraph";
 export const AdminPage = () => {
 
     const { user } = useContext(UserContext);
-    const { page, loading } = useContext(AdminPageContext);
+    const { page, pageLoading } = useContext(AdminPageContext);
 
-    if (loading) {
+    if (pageLoading) {
         return <Box>
             Laster side...
         </Box>
