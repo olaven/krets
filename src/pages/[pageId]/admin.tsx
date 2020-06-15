@@ -9,6 +9,7 @@ export default () => {
 
     const router = useRouter();
     const pageId = router.query.pageId as string; //NOTE: sometimes undefined figure out 
+    if (!pageId) return <div>waiting</div>
 
     return <AdminPageContextProvider pageId={pageId}>
         <AdminPage />
