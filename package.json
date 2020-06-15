@@ -9,6 +9,9 @@
   "engines": {
     "node": "12.x"
   },
+  "resolutions": {
+    "babel-loader": "8.0.6"
+  },
   "scripts": {
     "dev": "yarn migrate up && NODE_ENV=development NODE_OPTIONS='--inspect' next",
     "build": "next build && yarn migrate up --no-reject-unauthorized",
