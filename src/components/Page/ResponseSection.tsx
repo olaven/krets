@@ -43,9 +43,9 @@ export const ResponseSection = ({ page }) => {
         <>
             <Heading py={[1, 2, 3]} color={"primary"}>Gi tilbakemelding til {page.name}</Heading>
             <Flex>
-                <KretsEmoji type={":D"} emotion={emotion} setEmotion={setEmotion} />
-                <KretsEmoji type={":|"} emotion={emotion} setEmotion={setEmotion} />
-                <KretsEmoji type={":("} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
             </Flex>
             <Flex p={[1, 2, 3]}>
                 <Input
