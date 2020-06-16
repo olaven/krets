@@ -1,16 +1,17 @@
 import Head from "next/head";
-import {ThemeProvider} from 'emotion-theming'
-import {UserContextProvider} from "../context/UserContext";
-import {Layout} from "../components/layout";
-import {KretsTheme} from "../components/theme";
+import { ThemeProvider } from 'emotion-theming'
+import { UserContextProvider } from "../context/UserContext";
+import { Layout } from "../components/layout";
+import { KretsTheme } from "../components/theme";
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({Component, pageProps}) {
+export default function MyApp({ Component, pageProps }) {
     return <UserContextProvider>
         <Head>
             <title>Krets.</title>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-                  rel="stylesheet"/>
+                rel="stylesheet" />
+            <link rel="icon" href="logo.svg" sizes="any" type="image/svg+xml"></link>
         </Head>
         <ThemeProvider theme={KretsTheme}>
             <Layout>
