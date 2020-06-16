@@ -15,6 +15,7 @@ export const PagesContextProvider = ({ user, children }) => {
 
     const refreshPages = async () => {
 
+        console.log("refreshing pagse");
 
         const [status, pages] = await get<PageModel[]>("/api/pages");
         if (status === OK) {
@@ -26,7 +27,7 @@ export const PagesContextProvider = ({ user, children }) => {
         }
     }
 
-    useEffect(() => { refreshPages }, [user]);
+    useEffect(() => { refreshPages() }, [user]);
 
     return <PagesContext.Provider value={{ pages, refreshPages }}>
         {children}
