@@ -7,12 +7,7 @@ const config = (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev
         ca: process.env.SSH_DATABASE_CERTIFICATE,
     }
 };
-const pool = new Pool({
-    user: 'user',
-    database: 'data',
-    password: 'pass',
-    ...config
-})
+const pool = new Pool(config)
 
 pool.on('error', (err, client) => {
     console.error('Unexpected error on idle client', err);
