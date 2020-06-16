@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { UserContext } from "../../context/UserContext";
-import { AdminPageContextProvider, AdminPageContext } from "../../context/AdminPageContext";
+import { AdminPageContext } from "../../context/AdminPageContext";
 import { Box, Flex } from "rebass";
 import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
@@ -26,6 +26,7 @@ export const AdminPage = () => {
             Denne siden eier du ikke..
         </Box>;
 
+    console.log("render admin")
     return <Flex>
         <Box width={1 / 2}>
             <MoodGraph />

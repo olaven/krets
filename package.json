@@ -34,6 +34,7 @@
     "react-emoji-render": "^1.2.4",
     "react-qrcode-logo": "^2.2.1",
     "rebass": "^4.0.7",
+    "victory": "^34.3.11",
     "webpack": "^4.43.0"
   },
   "devDependencies": {
@@ -48,6 +49,7 @@
     "@types/react": "^16.9.35",
     "@types/rebass": "^4.0.6",
     "@types/test-listen": "^1.1.0",
+    "@types/victory": "^33.1.4",
     "babel-plugin-transform-typescript-metadata": "^0.3.0",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",

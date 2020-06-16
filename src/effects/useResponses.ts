@@ -26,13 +26,7 @@ export const useResponses = (pageId: string): [ReseponseModel[], boolean] => {
 
             setLoading(false);
         })()
-    })
-
-    useEffect(() => (async () => {
-
-
-
-    }), [pageId]);
+    }, [pageId])
 
     return [responses, loading];
 }
