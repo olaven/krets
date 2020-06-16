@@ -28,5 +28,8 @@ jobs:
         node-version: '12.x'
     - run: yarn 
     - run: yarn test
-      env: # NOT USED RN
+      env:
         PGHOST: localhost
+        PGUSER: user
+        PGPASSWORD: pass
+        PGDATABASE: data
