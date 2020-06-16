@@ -11,7 +11,9 @@ export const ResponseTextList = () => {
     if (!responses.length)
         return <div>Ingen responser enda. Del siden din (LINK HER)</div>
 
-    return responses.map(response => <li>
-        {response.text}
-    </li>)
+    return <div>{
+        responses.map(response => <li>
+            {response.text}
+        </li>)
+    }</div>
 }
