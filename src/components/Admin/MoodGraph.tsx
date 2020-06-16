@@ -2,6 +2,7 @@ import { VictoryLine, VictoryArea, VictoryAxis, VictoryChart, VictoryTheme } fro
 import { useContext } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
+import { date } from "faker";
 
 export const daysSince = (date) => {
 
@@ -33,55 +34,164 @@ export const MoodGraph = () => {
         {
             emotion: ":-)",
             text: "This was good",
-            page_id: "id",
+            page_id: "1",
             created_at: today.toString()
         },
         {
             emotion: ":-)",
             text: "This was good",
-            page_id: "id",
+            page_id: "2",
             created_at: today.toString()
         },
         {
             emotion: ":-|",
             text: "This was ok",
-            page_id: "id",
+            page_id: "3",
             created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 3))).toString()
         },
         {
             emotion: ":-(",
             text: "Not what I expected",
-            page_id: "id",
+            page_id: "4",
             created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 4))).toString()
         },
         {
             emotion: ":-)",
             text: "Not what I expected",
-            page_id: "id",
+            page_id: "5",
             created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 2))).toString()
         },
         {
             emotion: ":-)",
             text: "Not what I expected",
-            page_id: "id",
+            page_id: "6",
             created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 4))).toString()
         }
     ]);
 
+    const secondData = toChartCoordinates([
+        {
+            emotion: ":-)",
+            text: "This was good",
+            page_id: "7",
+            created_at: today.toString()
+        },
+        {
+            emotion: ":-(",
+            text: "This was good",
+            page_id: "8",
+            created_at: today.toString()
+        },
+        {
+            emotion: ":-|",
+            text: "This was ok",
+            page_id: "9",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 2))).toString()
+        },
+        {
+            emotion: ":-(",
+            text: "Not what I expected",
+            page_id: "10",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 1))).toString()
+        },
+        {
+            emotion: ":-|",
+            text: "Not what I expected",
+            page_id: "11",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 2))).toString()
+        },
+        {
+            emotion: ":-)",
+            text: "Not what I expected",
+            page_id: "12",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 3))).toString()
+        }
+    ]);
+
+    const thirdData = toChartCoordinates([
+        {
+            emotion: ":-)",
+            text: "This was good",
+            page_id: "13",
+            created_at: today.toString()
+        },
+        {
+            emotion: ":-(",
+            text: "This was good",
+            page_id: "14",
+            created_at: today.toString()
+        },
+        {
+            emotion: ":-|",
+            text: "This was ok",
+            page_id: "15",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 1))).toString()
+        },
+        {
+            emotion: ":-(",
+            text: "Not what I expected",
+            page_id: "16",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 1))).toString()
+        },
+        {
+            emotion: ":-|",
+            text: "Not what I expected",
+            page_id: "17",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 3))).toString()
+        },
+        {
+            emotion: ":-)",
+            text: "Not what I expected",
+            page_id: "18",
+            created_at: new Date(today.getTime() - (1000 * 60 * 60 * (24 * 0))).toString()
+        }
+    ]);
+
+
+    //TODO: test this 
+    const averageCoordinates = (current: ReseponseModel, all: ReseponseModel[]) => {
+
+        const until = all.splice(all.indexOf(current), all.length);
+        const sum = until
+            .map(response => emotionToNumeric(response.emotion))
+            .reduce((previous, current) => previous + current);
+        const average = sum / until.length
+
+        return {
+            x: daysSince(current.created_at),
+            y: average
+        }
+    }
+
     return <div>
-        <VictoryLine
-            data={responses}
-            animate={{
-                duration: 2000,
-                onLoad: { duration: 100 }
-            }}
-        />
-        <VictoryChart
-            theme={VictoryTheme.material}
-        >
-            <VictoryArea data={responses} />
-            <VictoryAxis />
-        </VictoryChart>
+        <div>
+            Samlet utvikling
+            <VictoryChart
+                theme={VictoryTheme.material}
+                animate={{
+                    duration: 2000,
+                    onLoad: { duration: 1000 }
+                }}
+            >
+                <VictoryArea data={responses} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+                <VictoryArea data={secondData} style={{ data: { fill: "tomato", opacity: 0.7 } }} />
+                <VictoryArea data={thirdData} style={{ data: { fill: "green", opacity: 0.7 } }} />
+            </VictoryChart>
+        </div>
+        <div>
+            Mottatt, Uke:
+            <VictoryChart
+                theme={VictoryTheme.material}
+                animate={{
+                    duration: 2000,
+                    onLoad: { duration: 1000 }
+                }}
+            >
+                <VictoryArea data={responses} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+                <VictoryArea data={secondData} style={{ data: { fill: "tomato", opacity: 0.7 } }} />
+                <VictoryArea data={thirdData} style={{ data: { fill: "green", opacity: 0.7 } }} />
+            </VictoryChart>
+        </div>
     </div>
 
 }
