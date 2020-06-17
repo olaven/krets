@@ -23,7 +23,9 @@ export const ResponseTextList = () => {
     </Card>
 
     return <Flex flexDirection={"column"} my={[1, 2, 3]}>{
-        responses.map(response =>
-            <ResponseCard key={response.id} response={response} />)
+        responses
+            .filter(response => response.text)
+            .map(response =>
+                <ResponseCard key={response.id} response={response} />)
     }</Flex>
 }
