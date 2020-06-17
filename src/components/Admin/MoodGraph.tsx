@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
 import { getegid } from "process";
-import { Text } from "rebass";
+import { Text, Flex, Box } from "rebass";
 
 
 export const daysSince = (datestring: string) => {
@@ -65,23 +65,19 @@ export const MoodGraph = () => {
     } */
 
 
-    return <div>
-        <div>
-            Samlet utvikling
-            <VictoryChart
-                theme={VictoryTheme.material}
-                animate={{
-                    duration: 2000,
-                    onLoad: { duration: 1000 }
-                }}
-            >
-                <VictoryArea
-                    /* dataComponent={<EmojiPoint />} */
-                    data={averageOverTime(responses)} style={{ data: { fill: "orange", opacity: 0.7 } }} />
-                <VictoryAxis />
-                <VictoryAxis />
-            </VictoryChart>
-        </div>
-    </div>
-
+    return <Box>
+        <VictoryChart
+            theme={VictoryTheme.material}
+            animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 }
+            }}
+        >
+            <VictoryArea
+                /* dataComponent={<EmojiPoint />} */
+                data={averageOverTime(responses)} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+            <VictoryAxis />
+            <VictoryAxis />
+        </VictoryChart>
+    </Box>
 }

@@ -1,5 +1,8 @@
+import { Card, Flex, Box, Text } from "rebass";
 import { AdminPageContext } from "../../context/AdminPageContext"
 import { useContext } from "react";
+import { ReseponseModel } from "../../models";
+import Emoji from "react-emoji-render";
 
 export const ResponseTextList = () => {
 
@@ -11,9 +14,16 @@ export const ResponseTextList = () => {
     if (!responses.length)
         return <div>Ingen responser enda. Del siden din (LINK HER)</div>
 
-    return <div>{
-        responses.map(response => <li key={response.id}>
-            {response.text}
-        </li>)
-    }</div>
+    const ResponseCard = ({ response }: { response: ReseponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
+        <Flex>
+            <Emoji text={response.emotion}></Emoji>
+            <Text fontSize={[1, 2, 3]}>{response.text}</Text>
+        </Flex>
+
+    </Card>
+
+    return <Flex flexDirection={"column"} my={[1, 2, 3]}>{
+        responses.map(response =>
+            <ResponseCard key={response.id} response={response} />)
+    }</Flex>
 }
