@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
-import { ToAdmin, ToQR } from "../../tiny/buttons";
+import { ToAdmin, ToQR, ToPage } from "../../tiny/buttons";
 import { borderStyle } from "styled-system";
 import { PagesContext } from "../../../context/PagesContext";
 
@@ -11,6 +11,7 @@ const PageCard = ({ id, name, responses }) => <Box m={[2, 3, 4]}>
         <Flex mb={[1, 2, 3]}>
             <ToAdmin id={id} />
             <ToQR id={id} />
+            <ToPage id={id} />
         </Flex>
     </Card>
 </Box>;
