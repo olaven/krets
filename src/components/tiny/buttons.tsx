@@ -6,15 +6,13 @@ export const LogoutButton = () => <Button backgroundColor={"secondary"}>
 </Button>;
 
 
-export const LoginButton = () => <Button>
-    <Link color={"secondary"} href="/api/auth/login">
+export const LoginButton = () => <Button backgroundColor={"secondary"}>
+    <Link color={"primary"} href="/api/auth/login">
         {"Logg inn"}
     </Link>
 </Button>;
 
-export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]} sx={{
-    borderBottom: "solid 1px grey",
-}}>
+export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
     <Box width={1 / 3}></Box>
     <Button
         m="auto" width={1 / 3}>
