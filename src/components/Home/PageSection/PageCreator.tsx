@@ -56,7 +56,7 @@ export const PageCreator = () => {
             onSubmit={e => e.preventDefault()}
             width={2 / 4}
         >
-            {name && <Text fontSize={3} width={1}>Din side: {`krets.app/${id}`}</Text>}
+            <Text fontSize={3} width={1}>Din side: {`krets.app/${id}`}</Text>
 
             <Flex>
                 <Input placeholder={"Lag ny side"} onChange={({ target: { value } }) => {

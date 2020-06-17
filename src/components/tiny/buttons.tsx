@@ -13,8 +13,8 @@ export const LoginButton = props => <Button>
 </Button>;
 
 
-const ListButton = (href: string, icon: string) => <Box mx={[1, 2, 3]}>
-    <Button>
+const ListButton = (href: string, icon: string) => <Box mx={[0, 1, 2]}>
+    <Button p={[0, 1, 2]}>
         <Link color={"secondary"} href={href}>
             <span className="material-icons">
                 {icon}
@@ -24,7 +24,7 @@ const ListButton = (href: string, icon: string) => <Box mx={[1, 2, 3]}>
 </Box>;
 
 export const ToAdmin = ({ id }) =>
-    ListButton(`/${id}/admin`, "admin_panel_settings");
+    ListButton(`/${id}/admin`, "analytics");
 
 export const ToQR = ({ id }) =>
     ListButton(`/${id}/code`, "qr_code");
