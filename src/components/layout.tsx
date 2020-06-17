@@ -1,16 +1,28 @@
-import {UserContext, UserContextProvider} from "../context/UserContext";
+import { UserContext, UserContextProvider } from "../context/UserContext";
 import React from "react";
-import {Box, Button, Flex, Link, Text} from "rebass";
-import { LoginButton, LogoutButton} from "./tiny/buttons";
+import { Box, Button, Flex, Link, Text, Image } from "rebass";
+import { LoginButton, LogoutButton } from "./tiny/buttons";
+
+const HeaderLogo = () => <Link href="/">
+    <Flex color='primary' my={[0, 1, 2]}>
+        <Image
+            src={"/logo.svg"}
+            sx={{
+                width: ['7.5%'],
+            }}
+        />
+        <Text p={[0, 1, 2]} fontSize={7}>Krets.</Text>
+    </Flex>
+</Link >
 
 export const Layout = (props) => {
 
     const { user } = React.useContext(UserContext);
 
 
-    const authButton = user?
-            <LogoutButton/>:
-            <LoginButton/>;
+    const authButton = user ?
+        <LogoutButton /> :
+        <LoginButton />;
 
     return <Box
 
@@ -22,8 +34,9 @@ export const Layout = (props) => {
         <Flex px={2}
             color='primary'
             alignItems='center'>
-                <Text p={[0, 1, 2]} fontSize={7} fontWeight='bold'>Krets.</Text>
-                <Box mx='auto' />
+
+            <HeaderLogo />
+            <Box mx='auto' />
             {authButton}
         </Flex>
         {props.children}

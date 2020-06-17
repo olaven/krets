@@ -5,8 +5,8 @@ export const KretsTheme = {
     ],
     colors: {
         secondary: "#FDFEFC ",
-        primary: '#B4497C',
-        success: '#048243', 
+        primary: "teal", //'#B4497C',
+        success: '#048243',
         failure: '#D5174E'
     },
     space: [
