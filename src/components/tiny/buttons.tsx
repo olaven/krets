@@ -1,8 +1,8 @@
 import { Box, Button, Link } from "rebass";
 import React from "react";
 
-export const LogoutButton = () => <Button>
-    <Link color={"secondary"} href="/api/auth/logout">Logg ut</Link>
+export const LogoutButton = () => <Button backgroundColor={"secondary"}>
+    <Link color={"primary"} href="/api/auth/logout">Logg ut</Link>
 </Button>;
 
 
@@ -13,8 +13,8 @@ export const LoginButton = props => <Button>
 </Button>;
 
 
-const ListButton = (href: string, icon: string) => <Box mx={[1, 2, 3]}>
-    <Button>
+const ListButton = (href: string, icon: string) => <Box mx={[0, 1, 2]}>
+    <Button p={[0, 1, 2]}>
         <Link color={"secondary"} href={href}>
             <span className="material-icons">
                 {icon}
@@ -24,7 +24,7 @@ const ListButton = (href: string, icon: string) => <Box mx={[1, 2, 3]}>
 </Box>;
 
 export const ToAdmin = ({ id }) =>
-    ListButton(`/${id}/admin`, "admin_panel_settings");
+    ListButton(`/${id}/admin`, "analytics");
 
 export const ToQR = ({ id }) =>
     ListButton(`/${id}/code`, "qr_code");

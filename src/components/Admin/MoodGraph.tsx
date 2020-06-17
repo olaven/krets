@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
 import { getegid } from "process";
+import { Text, Flex, Box } from "rebass";
 
 
 export const daysSince = (datestring: string) => {
@@ -27,11 +28,12 @@ const averageUntil = (response: ReseponseModel, responses: ReseponseModel[]) => 
         .sort((a, b) => new Date(a.created_at) < new Date(b.created_at) ? -1 : 1)
         .filter(({ created_at }) => new Date(created_at).getTime() <= date.getTime())
 
-    const sum = relevant.length === 1 ?
-        emotionToNumeric(relevant[0].emotion) :
-        relevant
-            .map(({ emotion }) => emotionToNumeric(emotion))
-            .reduce((a, b) => a + b)
+    const sum = relevant.length === 0 ?
+        0 : relevant.length === 1 ?
+            emotionToNumeric(relevant[0].emotion) :
+            relevant
+                .map(({ emotion }) => emotionToNumeric(emotion))
+                .reduce((a, b) => a + b)
 
     return ({
         y: sum / relevant.length,
@@ -62,27 +64,20 @@ export const MoodGraph = () => {
         </text>
     } */
 
-    if (responses.length <= 1) {
 
-        return <div>Motta mer respons for å vise graf.</div>
-    }
-    return <div>
-        <div>
-            Samlet utvikling
-            <VictoryChart
-                theme={VictoryTheme.material}
-                animate={{
-                    duration: 2000,
-                    onLoad: { duration: 1000 }
-                }}
-            >
-                <VictoryArea
-                    /* dataComponent={<EmojiPoint />} */
-                    data={averageOverTime(responses)} style={{ data: { fill: "orange", opacity: 0.7 } }} />
-                <VictoryAxis />
-                <VictoryAxis />
-            </VictoryChart>
-        </div>
-    </div>
-
+    return <Box>
+        <VictoryChart
+            theme={VictoryTheme.material}
+            animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 }
+            }}
+        >
+            <VictoryArea
+                /* dataComponent={<EmojiPoint />} */
+                data={averageOverTime(responses)} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+            <VictoryAxis />
+            <VictoryAxis />
+        </VictoryChart>
+    </Box>
 }

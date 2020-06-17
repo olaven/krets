@@ -6,15 +6,22 @@ import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
 import { MoodGraph } from "./MoodGraph";
 
+const AdminBox = ({ children }) => <Box
+    width={[1, 1 / 2]}
+    p={[1, 2, 3]}
+>
+    {children}
+</Box>
+
 export const AdminPage = () => {
 
     const { user } = useContext(UserContext);
     const { page, pageLoading } = useContext(AdminPageContext);
 
     if (pageLoading) {
-        return <Box>
+        return <AdminBox>
             Laster side...
-        </Box>
+        </AdminBox>
     }
 
     if (!user) {
@@ -22,17 +29,16 @@ export const AdminPage = () => {
     }
 
     if (page && user.sub !== page.owner_id)
-        return <Box>
+        return <AdminBox>
             Denne siden eier du ikke..
-        </Box>;
+        </AdminBox>;
 
-    console.log("render admin")
-    return <Flex>
-        <Box width={1 / 2}>
+    return <Flex flexWrap="wrap">
+        <AdminBox>
             <MoodGraph />
-        </Box>
-        <Box width={1 / 2}>
+        </AdminBox>
+        <AdminBox>
             <ResponseTextList />
-        </Box>
+        </AdminBox>
     </Flex>
 }
