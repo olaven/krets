@@ -37,7 +37,10 @@ const ListButton = (href: string, icon: string) => <Box mx={[0, 1, 2]}>
 </Box>;
 
 export const ToAdmin = ({ id }) =>
-    ListButton(`/${id}/admin`, "analytics");
+    ListButton(`/${id}/admin`, "trending_up");
 
 export const ToQR = ({ id }) =>
     ListButton(`/${id}/code`, "qr_code");
+
+export const ToPage = ({ id }) =>
+    ListButton(`/${id}`, "reply")
