@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/olaven/krets.git",
   "author": "olaven <olav@sundfoer.com>",
-  "license": "TODO",
+  "license": "AFL-3.0",
   "engines": {
     "node": "12.x"
   },
