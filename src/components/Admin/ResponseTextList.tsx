@@ -12,7 +12,7 @@ export const ResponseTextList = () => {
         return <div>laster responser..</div>
 
     if (!responses.length)
-        return <div>Ingen responser enda. Del siden din (LINK HER)</div>
+        return <div>Ingen responser enda.</div>
 
     const ResponseCard = ({ response }: { response: ReseponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
         <Flex>

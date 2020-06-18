@@ -1,7 +1,7 @@
 import { Box, Button, Link, Flex, Text } from "rebass";
 import React from "react";
 
-export const LogoutButton = () => <Button backgroundColor={"secondary"}>
+export const LogoutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
     <Link color={"primary"} href="/api/auth/logout">Logg ut</Link>
 </Button>;
 
