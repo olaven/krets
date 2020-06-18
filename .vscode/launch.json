@@ -1,13 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-    /* {
-      "type": "firefox",
-      "request": "launch",
-      "name": "Launch Firefox",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
-    }, */
     {
       "type": "node",
       "request": "attach",
@@ -21,19 +14,5 @@
       ],
       "sourceMaps": true
     }
-    /* {
-      "type": "node",
-      "request": "launch",
-      "name": "Test",
-      "runtimeExecutable": "yarn",
-      "runtimeArgs": [
-        "test"
-      ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "port": 9229,
-      "console": "integratedTerminal"
-    } */
   ]
 }
