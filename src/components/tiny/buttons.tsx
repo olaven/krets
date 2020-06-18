@@ -15,6 +15,10 @@ export const LoginButton = () => <Button backgroundColor={"secondary"}>
 export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
     <Box width={1 / 3}></Box>
     <Button
+        sx={{
+            boxShadow: '0px 10px 32px rgba(0, 0, 0, .5)'
+        }}
+
         m="auto" width={1 / 3}>
         <Link color={"secondary"} href="/api/auth/login">
             {<Text fontSize={[2, 3, 4]}>

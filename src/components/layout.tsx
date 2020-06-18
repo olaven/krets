@@ -4,14 +4,14 @@ import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { LoginButton, LogoutButton } from "./tiny/buttons";
 
 const HeaderLogo = () => <Link href="/">
-    <Flex color='primary' my={[0, 1, 2]}>
+    <Flex color='primary' my={[0, 1, 2]} width={[1, 1 / 2, 1 / 2]}>
         <Image
             src={"/logo.svg"}
             sx={{
                 width: ['7.5%'],
             }}
         />
-        <Text p={[0, 1, 2]} fontSize={7}>Krets.</Text>
+        {/* <Text p={[0, 1, 2]} fontSize={7}>Krets.</Text> */}
     </Flex>
 </Link >
 
