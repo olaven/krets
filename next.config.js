@@ -9,7 +9,15 @@ module.exports = {
                 loader: 'ignore-loader'
             } */
         );
-        //config.devtool = 'eval-source-map';
+
+
+        config.output = config.output || {};
+        config.output.devtoolModuleFilenameTemplate = function (info) {
+            return "file:///" + encodeURI(info.absoluteResourcePath);
+        }
+
+
+        config.devtool = 'eval-source-map';
         return config;
     }
 };
