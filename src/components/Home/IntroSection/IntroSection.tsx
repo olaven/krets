@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, Box, Text, Image } from "rebass";
 import { LoginButton, GetStartedButton } from "../../tiny/buttons";
+import { intro } from "../../../text";
 
 export const IntroSection = () => {
 
@@ -34,15 +35,15 @@ export const IntroSection = () => {
     return <Flex width={1} flexWrap="wrap">
         <GetStartedButton />
         <IntroTextBox>
-            Du oppretter kjapt en side på Krets.
+            {intro.create}
         </IntroTextBox>
         <IntroImageBox source="/creation.png" />
         <IntroImageBox source="/feedback.png" />
         <IntroTextBox>
-            Ditt publikum/kunder/tilhørere/seere besøker din side, med link eller QR-kode
+            {intro.visiting}
         </IntroTextBox>
         <IntroTextBox>
-            Du får innsikt!
+            {intro.insight}
         </IntroTextBox>
         <IntroImageBox source="/insight.png" />
     </Flex>
