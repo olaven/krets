@@ -20,8 +20,6 @@ export const IntroSection = () => {
         width={width}>
         <section style={{
             display: "flex",
-            width: "50%",
-            height: "150%",
             margin: "auto",
             alignItems: "center",
             justifyContent: "center",
