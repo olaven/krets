@@ -1,4 +1,4 @@
-import { Box, Button, Link } from "rebass";
+import { Box, Button, Link, Flex, Text } from "rebass";
 import React from "react";
 
 export const LogoutButton = () => <Button backgroundColor={"secondary"}>
@@ -6,11 +6,24 @@ export const LogoutButton = () => <Button backgroundColor={"secondary"}>
 </Button>;
 
 
-export const LoginButton = props => <Button>
-    <Link color={"secondary"} href="/api/auth/login">
-        {props.text ? props.text : "Logg inn"}
+export const LoginButton = () => <Button backgroundColor={"secondary"}>
+    <Link color={"primary"} href="/api/auth/login">
+        {"Logg inn"}
     </Link>
 </Button>;
+
+export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
+    <Box width={1 / 3}></Box>
+    <Button
+        m="auto" width={1 / 3}>
+        <Link color={"secondary"} href="/api/auth/login">
+            {<Text fontSize={[2, 3, 4]}>
+                Kom i gang!
+            </Text>}
+        </Link>
+    </Button>
+    <Box width={1 / 3}></Box>
+</Flex>
 
 
 const ListButton = (href: string, icon: string) => <Box mx={[0, 1, 2]}>

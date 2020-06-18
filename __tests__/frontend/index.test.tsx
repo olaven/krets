@@ -24,7 +24,7 @@ describe("The home page", () => {
     it("Shows intro section when no user is present", () => {
 
         const wrapper = mount(<IndexPage />);
-        expect(wrapper.text()).toContain('Information'); //TODO: have som global (wiht translation) text store
+        expect(wrapper.text()).toContain('Du oppretter kjapt en side på Krets'); //TODO: have som global (wiht translation) text store
     });
 
     function stubFetch(

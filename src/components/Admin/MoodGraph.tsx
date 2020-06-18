@@ -5,16 +5,6 @@ import { ReseponseModel, Emotion } from "../../models";
 import { getegid } from "process";
 import { Text, Flex, Box } from "rebass";
 
-
-export const daysSince = (datestring: string) => {
-
-    const date = new Date(datestring);
-    console.log(date);
-    const ONE_DAY = 1000 * 60 * 60 * 24;
-    const differenceMs = Math.abs(date.getTime() - Date.now());
-    return Math.round(differenceMs / ONE_DAY);
-}
-
 const emotionToNumeric = (emotion: Emotion) => ({
     ":-)": 2,
     ":-|": 1,
@@ -37,7 +27,7 @@ const averageUntil = (response: ReseponseModel, responses: ReseponseModel[]) => 
 
     return ({
         y: sum / relevant.length,
-        x: -1 * daysSince(response.created_at)
+        x: new Date(response.created_at).getTime() * -1
     })
 }
 
@@ -65,6 +55,8 @@ export const MoodGraph = () => {
     } */
 
 
+    const coordinates = averageOverTime(responses);
+    console.log(coordinates)
     return <Box>
         <VictoryChart
             theme={VictoryTheme.material}
@@ -75,7 +67,7 @@ export const MoodGraph = () => {
         >
             <VictoryArea
                 /* dataComponent={<EmojiPoint />} */
-                data={averageOverTime(responses)} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+                data={coordinates} style={{ data: { fill: "orange", opacity: 0.7 } }} />
             <VictoryAxis />
             <VictoryAxis />
         </VictoryChart>
