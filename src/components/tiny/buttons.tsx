@@ -1,28 +1,31 @@
 import { Box, Button, Link, Flex, Text } from "rebass";
 import React from "react";
 
-export const LogoutButton = () => <Button backgroundColor={"secondary"}>
+export const LogoutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
     <Link color={"primary"} href="/api/auth/logout">Logg ut</Link>
 </Button>;
 
 
-export const LoginButton = () => <Button backgroundColor={"secondary"}>
+export const LoginButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
     <Link color={"primary"} href="/api/auth/login">
         {"Logg inn"}
     </Link>
 </Button>;
 
 export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
-    <Box width={1 / 3}></Box>
+    <Box width={[0, 0, 1 / 3]}></Box>
     <Button
-        m="auto" width={1 / 3}>
+        sx={{
+            boxShadow: '0px 10px 32px rgba(0, 0, 0, .5)'
+        }}
+        m="auto" width={[1 / 2, 1 / 2, 1 / 3]}>
         <Link color={"secondary"} href="/api/auth/login">
             {<Text fontSize={[2, 3, 4]}>
                 Kom i gang!
             </Text>}
         </Link>
     </Button>
-    <Box width={1 / 3}></Box>
+    <Box width={[0, 0, 1 / 3]}></Box>
 </Flex>
 
 

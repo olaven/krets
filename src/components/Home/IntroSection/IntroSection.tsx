@@ -18,10 +18,18 @@ export const IntroSection = () => {
 
     const IntroTextBox = ({ children, width = null }) => <IntroBox
         width={width}>
-        <Text fontSize={[3, 4, 5]}>
-            {children}
-        </Text>
-    </IntroBox>
+        <section style={{
+            display: "flex",
+            margin: "auto",
+            alignItems: "center",
+            justifyContent: "center",
+        }}>
+            <Text fontSize={[3, 4, 5]} textAlign="center">
+                {children}
+            </Text>
+        </section>
+
+    </IntroBox >
 
     return <Flex width={1} flexWrap="wrap">
         <GetStartedButton />

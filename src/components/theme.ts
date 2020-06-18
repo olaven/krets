@@ -3,6 +3,12 @@ export const KretsTheme = {
     fontSizes: [
         12, 14, 16, 20, 24, 32, 48, 64
     ],
+    fonts: {
+
+        body: 'Open Sans, sans-serif',
+        heading: 'inherit',
+        monospace: 'inherit',
+    },
     colors: {
         secondary: "#FDFEFC ",
         primary: "teal", //'#B4497C',
