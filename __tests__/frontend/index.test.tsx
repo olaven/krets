@@ -24,7 +24,7 @@ describe("The home page", () => {
     it("Shows intro section when no user is present", () => {
 
         const wrapper = mount(<IndexPage />);
-        expect(wrapper.text()).toContain('Du oppretter kjapt en side på Krets'); //TODO: have som global (wiht translation) text store
+        expect(wrapper.text()).toContain('Creating a page on Krets is fast!'); //TODO: have som global (wiht translation) text store
     });
 
     function stubFetch(
@@ -38,8 +38,6 @@ describe("The home page", () => {
         //define fetch method at global level, as it is not available on NodeJS
         //@ts-ignore
         global.fetch = (url, init) => {
-
-            console.log("INSIDE ANDREA MOCK");
 
             //crash if the predicate is not satisfied
             if (predicate !== null) {
