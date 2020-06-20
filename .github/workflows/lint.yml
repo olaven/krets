@@ -1,4 +1,4 @@
-aname: Lint Code Base
+name: Lint Code Base
 
 on:
   push:
