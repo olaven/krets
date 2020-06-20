@@ -11,7 +11,24 @@ export const intro = new LocalizedStrings({
         visiting: "Ditt publikum besøker din side, med link eller QR-kode",
         insight: "Få innsikt!"
     }
-})
+});
+
+export const response = new LocalizedStrings({
+    en: {
+        header: "Give feedback to",
+        placeholder: "Optional text",
+        button: "Send",
+        chooseSmiley: "You have to choose a smiley 😃",
+        error: "Oh no! Something wrong happened 😧" 
+    },
+    no: {
+        header: "Gi tilbakemelding til",
+        placeholder: "Valgfri tekst",
+        button: "Send",
+        chooseSmiley: "Velg en smiley 😃",
+        error: "Auda, her skjedde det en feil 😧" 
+    }
+});
 
 export const text = new LocalizedStrings({
     en: {
