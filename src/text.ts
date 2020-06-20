@@ -1,6 +1,9 @@
 import LocalizedStrings from "react-localization";
 
-export const intro = new LocalizedStrings({
+const strings = (config: {en: any, no: any}) => 
+    new LocalizedStrings(config);
+
+export const intro = strings({
     en: {
         create: "Creating a page on Krets is fast!",
         visiting: "Your audience visits your site, with a link or a QR-code",
@@ -13,7 +16,7 @@ export const intro = new LocalizedStrings({
     }
 });
 
-export const response = new LocalizedStrings({
+export const response = strings({
     en: {
         header: "Give feedback to",
         placeholder: "Optional text",
@@ -30,7 +33,7 @@ export const response = new LocalizedStrings({
     }
 });
 
-export const page = new LocalizedStrings({
+export const page = strings({
     en: {
         header: "Scan to give feedback to",
         loading: "(Loading...)"
@@ -41,11 +44,15 @@ export const page = new LocalizedStrings({
     }
 })
 
-export const text = new LocalizedStrings({
+export const buttons = strings({
     en: {
-        frictionless: "frictionless feedback",
-    },
+        logout: "Log out", 
+        login: "Log in", 
+        getStarted: "Get started!",
+    }, 
     no: {
-        frictionless: "friksjonsfri tilbakemelding"
+        login: "Logg ut",
+        login: "Logg inn",
+        getStarted: "Kom i gang!",
     }
-});
+})
