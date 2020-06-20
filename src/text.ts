@@ -79,4 +79,32 @@ export const pageCreator = strings({
         button: "Lag side", 
         error: "An error occured😐"
     }
+}); 
+
+export const adminPage = strings({
+    en: {
+        loading: "Loading admin page...", 
+        notOwning: "You do not own this page."
+    }, 
+    no: {
+        loading: "Laster adminside...",
+        notOwning: "Denne siden eier du ikke."
+    }
+}); 
+
+//NOTE: nothing yet 
+export const moodGraph = strings({
+    en: {}, 
+    no: {}
+}); 
+
+export const responseList = strings({
+    en: {
+        loading: "Loading responses..", 
+        noResponses: "No responses yet"
+    }, 
+    no: {
+        loading: "Laster responser..", 
+        noResponses: "Ingen responser enda"
+    }
 })
