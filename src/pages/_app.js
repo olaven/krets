@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from "next/head"; //CI should replace this with '' and remove ';'
 import { ThemeProvider } from 'emotion-theming'
 import { UserContextProvider } from '../context/UserContext'
 import { Layout } from '../components/layout'
