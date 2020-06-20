@@ -3,6 +3,7 @@ import { QRCode } from "react-qrcode-logo";
 import React from "react";
 import { Box, Flex, Heading } from "rebass";
 import { usePage } from "../../effects/usePage";
+import * as text from "../../text"
 
 export default () => {
 
@@ -13,8 +14,8 @@ export default () => {
     const [page, _] = usePage(pageId as string);
 
     const headingText = page ?
-        `Gi tilbakemelding til ${page.name}`:
-        `(Laster..)`;
+        `${text.page.header} ${page.name}`:
+        text.page.loading;
 
 
     return <Box m={"auto"} py={[4, 8, 16]}>
