@@ -5,6 +5,7 @@ import { Box, Flex } from "rebass";
 import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
 import { MoodGraph } from "./MoodGraph";
+import * as text from "../../text"
 
 const AdminBox = ({ children }) => <Box
     width={[1, 1 / 2]}
@@ -20,7 +21,7 @@ export const AdminPage = () => {
 
     if (pageLoading) {
         return <AdminBox>
-            Laster side...
+            {text.adminPage.loading}
         </AdminBox>
     }
 
@@ -30,7 +31,7 @@ export const AdminPage = () => {
 
     if (page && user.sub !== page.owner_id)
         return <AdminBox>
-            Denne siden eier du ikke..
+            {text.adminPage.notOwning}
         </AdminBox>;
 
     return <Flex flexWrap="wrap">

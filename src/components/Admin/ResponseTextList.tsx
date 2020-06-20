@@ -3,16 +3,17 @@ import { AdminPageContext } from "../../context/AdminPageContext"
 import { useContext } from "react";
 import { ReseponseModel } from "../../models";
 import Emoji from "react-emoji-render";
+import * as text from "../../text";
 
 export const ResponseTextList = () => {
 
     const { responses, responsesLoading } = useContext(AdminPageContext);
 
     if (responsesLoading || !responses)
-        return <div>laster responser..</div>
+        return <div>{text.responseList.loading}</div>
 
     if (!responses.length)
-        return <div>Ingen responser enda.</div>
+        return <div>{text.responseList.noResponses}</div>
 
     const ResponseCard = ({ response }: { response: ReseponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
         <Flex>
