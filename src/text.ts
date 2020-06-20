@@ -30,6 +30,17 @@ export const response = new LocalizedStrings({
     }
 });
 
+export const page = new LocalizedStrings({
+    en: {
+        header: "Scan to give feedback to",
+        loading: "(Loading...)"
+    },
+    no: {
+        header: "Scan og gi tilbakemelding til",
+        loading: "(Laster...)"
+    }
+})
+
 export const text = new LocalizedStrings({
     en: {
         frictionless: "frictionless feedback",
