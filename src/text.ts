@@ -55,4 +55,28 @@ export const buttons = strings({
         login: "Logg inn",
         getStarted: "Kom i gang!",
     }
+});
+
+export const myPages = strings({
+    en: {
+        header: "My Krets-pages:"
+    }, 
+    no: {
+        header: "Mine Krets-sider:"
+    }
+}); 
+
+export const pageCreator = strings({
+    en: {
+        preview: "Your page:",
+        placeholder: "Enter the page name", 
+        button: "Create page",
+        error: "An error occured😐"
+    }, 
+    no: {
+        preview: "Din side:",
+        placeholder: "Sidens navn", 
+        button: "Lag side", 
+        error: "An error occured😐"
+    }
 })
