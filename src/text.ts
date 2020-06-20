@@ -51,7 +51,7 @@ export const buttons = strings({
         getStarted: "Get started!",
     }, 
     no: {
-        login: "Logg ut",
+        logout: "Logg ut",
         login: "Logg inn",
         getStarted: "Kom i gang!",
     }
