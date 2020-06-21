@@ -16,7 +16,7 @@
     "dev": "yarn migrate up && NODE_ENV=development NODE_OPTIONS='--inspect' next",
     "build": "next build && yarn migrate up --no-reject-unauthorized",
     "start": "next start",
-    "test": "yarn migrate up && NODE_ENV=test && jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
+    "test": "yarn migrate up && NODE_ENV=test && NODE_OPTIONS='--inspect' jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
     "migrate": "node-pg-migrate"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "@rebass/preset": "^4.0.5",
     "emotion-theming": "^10.0.27",
     "next": "9.4.4",
+    "next-server": "^9.0.5",
     "node-pg-migrate": "^5.0.1",
     "pg": "8.2.1",
     "qrcode.react": "^1.0.0",
@@ -42,9 +43,11 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@testing-library/react": "^10.3.0",
     "@types/enzyme": "^3.10.5",
     "@types/faker": "^4.1.12",
     "@types/jest": "^25.2.3",
+    "@types/next-server": "^9.0.0",
     "@types/node": "^14.0.5",
     "@types/node-pg-migrate": "^2.3.1",
     "@types/react": "^16.9.35",
