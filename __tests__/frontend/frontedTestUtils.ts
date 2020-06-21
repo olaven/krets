@@ -9,7 +9,6 @@ export const mockRouter = (pageId: string) => {
     }));
 }
 
-//TODO: use in index.test.tsx as well (shared)
 export const mockGet = <T extends unknown>(payload: T) => {
 
     global.fetch = jest.fn(() => {
@@ -19,6 +18,7 @@ export const mockGet = <T extends unknown>(payload: T) => {
         } as Response);
     });
 }
+
 
 
 describe("test test ", () => {
