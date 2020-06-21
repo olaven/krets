@@ -27,40 +27,7 @@ describe("The home page", () => {
         expect(wrapper.text()).toContain('Creating a page on Krets is fast!'); //TODO: have som global (wiht translation) text store
     });
 
-    function stubFetch(
-        // http status to return, eg 200
-        status,
-        //the json payload
-        payload,
-        // a function that checks if the inputs in "fetch(url, init)" are valid
-        predicate) {
-
-        //define fetch method at global level, as it is not available on NodeJS
-        //@ts-ignore
-        global.fetch = (url, init) => {
-
-            //crash if the predicate is not satisfied
-            if (predicate !== null) {
-                predicate(url, init);
-            }
-
-            return new Promise((resolve, reject) => {
-
-                const httpResponse = {
-                    status: status,
-                    json: () => {
-                        return new Promise(
-                            (res, rej) => {
-                                res(payload);
-                            }
-                        );
-                    }
-                };
-
-                resolve(httpResponse);
-            });
-        };
-    }
+    
     it("Shows pages when user _is_ present", async () => {
 
         const mockUser: AuthModel = {
