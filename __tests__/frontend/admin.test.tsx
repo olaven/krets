@@ -72,7 +72,7 @@ describe("Mood graph", () => {
 
         it("Returns Y coordinate with average", () => {
 
-            const n = faker.random.number(10);
+            const n = faker.random.number(10) + 1;
 
             const responses = fakeResponses(n);
             const sum = (responses
