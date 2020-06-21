@@ -1,15 +1,15 @@
 import http from 'http'
 import listen from 'test-listen'
-import {apiResolver} from 'next/dist/next-server/server/api-utils'
-import {Server} from "net";
-import {NextApiHandler} from "next";
-import {describe, expect, it, test} from "@jest/globals";
+import { apiResolver } from 'next/dist/next-server/server/api-utils'
+import { Server } from "net";
+import { NextApiHandler } from "next";
+import { describe, expect, it, test } from "@jest/globals";
 import fetch from "isomorphic-unfetch";
 import * as faker from "faker";
 
 
 //TODO: PageId DTO?
-export const postPage = (page: {id: string, name: string, owner_id: string}, url: string, userId: string = uid()) => authenticatedFetch(userId, url,{
+export const postPage = (page: { id: string, name: string, owner_id: string }, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
     method: "POST",
     headers: {
         "content-type": "application/json",
@@ -33,7 +33,7 @@ export const getPages = async (url: string, userId = uid()) => {
  * @param url
  * @param options
  */
-export const authenticatedFetch = (userId: string, url: string, options: any = {headers: {}}) => {
+export const authenticatedFetch = (userId: string, url: string, options: any = { headers: {} }) => {
 
 
     const mergedOptions = {
@@ -63,6 +63,7 @@ export const teardownServer = async (server: Server) => {
     await server.close();
 };
 
+//TODO: REMove this (and counterpart in frontendtestutils)
 describe("test test ", () => {
 
     test("something", () => {

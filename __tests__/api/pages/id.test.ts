@@ -1,9 +1,9 @@
-import {afterAll, beforeAll, describe, expect, it} from "@jest/globals";
-import {setupServer, teardownServer, uid} from "../testutils";
+import { afterAll, beforeAll, describe, expect, it } from "@jest/globals";
+import { setupServer, teardownServer, uid } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
-import {pages} from "../../../src/database/pages";
-import {users} from "../../../src/database/users";
+import { pages } from "../../../src/database/pages";
+import { users } from "../../../src/database/users";
 
 describe("Endpoint for getting a specific page", () => {
 
@@ -17,7 +17,7 @@ describe("Endpoint for getting a specific page", () => {
     beforeAll(async () => {
 
         //NOTE: URL does not include id - must be added in tests
-       [server, url] = await setupServer(handler, "/api/pages/")
+        [server, url] = await setupServer(handler, "/api/pages/")
     });
 
     afterAll(async () => {
