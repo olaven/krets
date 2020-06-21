@@ -1,17 +1,16 @@
-import { VictoryLine, VictoryArea, VictoryAxis, VictoryChart, VictoryTheme } from "victory";
+import { VictoryArea, VictoryAxis, VictoryChart, VictoryTheme } from "victory";
 import { useContext } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
-import { getegid } from "process";
-import { Text, Flex, Box } from "rebass";
+import { Box } from "rebass";
 
-const emotionToNumeric = (emotion: Emotion) => ({
+export const emotionToNumeric = (emotion: Emotion) => ({
     ":-)": 2,
     ":-|": 1,
     ":-(": 0,
 }[emotion])
 
-const averageUntil = (response: ReseponseModel, responses: ReseponseModel[]) => {
+export const averageUntil = (response: ReseponseModel, responses: ReseponseModel[]) => {
 
     const date = new Date(response.created_at);
     const relevant = responses
