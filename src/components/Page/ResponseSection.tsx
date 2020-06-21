@@ -6,7 +6,7 @@ import { KretsEmoji } from "../tiny/emoji";
 import { get, post } from "../../http/methods";
 import { CREATED } from "../../http/codes";
 import { ReseponseModel, Emotion } from "../../models";
-import { response } from "../../text";
+import * as uiText from "../../text";
 
 export const ResponseSection = ({ page }) => {
 
@@ -19,7 +19,7 @@ export const ResponseSection = ({ page }) => {
 
         if (!emotion) {
 
-            alert(response.chooseSmiley);
+            alert(uiText.response.chooseSmiley);
             return;
         }
 
@@ -33,15 +33,15 @@ export const ResponseSection = ({ page }) => {
             setPublished(true);
         } else {
 
-            alert(response.error);
+            alert(uiText.response.error);
             console.warn(postResponse);
         }
     };
 
     const form = published ?
-        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">Tusen takk! <Emoji text=":tada:" /></Heading> :
+        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
         <>
-            <Heading py={[1, 2, 3]} color={"primary"}>{response.header} {page.name}</Heading>
+            <Heading py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
             <Flex>
                 <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
@@ -49,10 +49,10 @@ export const ResponseSection = ({ page }) => {
             </Flex>
             <Flex p={[1, 2, 3]}>
                 <Input
-                    placeholder={response.placeholder}
+                    placeholder={uiText.response.placeholder}
                     onChange={event => { setText(event.target.value) }}
                 />
-                <Button m={1} px={3} onClick={postResponse}>{response.button}</Button>
+                <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
             </Flex>
         </>
 

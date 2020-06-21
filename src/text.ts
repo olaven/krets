@@ -22,14 +22,16 @@ export const response = strings({
         placeholder: "Optional text",
         button: "Send",
         chooseSmiley: "You have to choose a smiley 😃",
-        error: "Oh no! Something wrong happened 😧" 
+        error: "Oh no! Something wrong happened 😧", 
+        thanks: "Thank you!",
     },
     no: {
         header: "Gi tilbakemelding til",
         placeholder: "Valgfri tekst",
         button: "Send",
         chooseSmiley: "Velg en smiley 😃",
-        error: "Auda, her skjedde det en feil 😧" 
+        error: "Auda, her skjedde det en feil 😧" , 
+        thanks: "Tusen takk!",
     }
 });
 

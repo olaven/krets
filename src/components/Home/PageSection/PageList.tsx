@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
 import { ToAdmin, ToQR, ToPage } from "../../tiny/buttons";
-import { borderStyle } from "styled-system";
 import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
 
