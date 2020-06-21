@@ -25,6 +25,5 @@ export default () => {
                 <QRCode value={pageLink} enableCORS={false} />
             </Box>
         </Flex>
-
     </Box>
 }
