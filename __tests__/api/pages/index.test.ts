@@ -1,10 +1,10 @@
 import fetch from "isomorphic-unfetch";
-import {afterAll, beforeAll, describe, expect, it, jest} from "@jest/globals";
-import {authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid} from "../testutils";
+import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
+import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages";
-import {Server} from "net";
+import { Server } from "net";
 import * as faker from "faker";
-import {users} from "../../../src/database/users";
+import { users } from "../../../src/database/users";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -19,7 +19,7 @@ describe("The pages endpoint", () => {
     });
 
     afterAll(async () => {
-        
+
         await teardownServer(server);
     });
 
@@ -42,11 +42,11 @@ describe("The pages endpoint", () => {
             id: userId
         });
 
-       const response = await postPage({
-           id: faker.random.alphaNumeric(40), name: "My Page", owner_id: userId
-       }, url, userId);
+        const response = await postPage({
+            id: faker.random.alphaNumeric(40), name: "My Page", owner_id: userId
+        }, url, userId);
 
-       expect(response.status).toEqual(201)
+        expect(response.status).toEqual(201)
     });
 
     it("/pages returns all pages belonging to given user", async () => {
