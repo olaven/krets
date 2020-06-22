@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import fetch from "isomorphic-unfetch";
+import fetch from "node-fetch"
 import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
 import { setupServer, teardownServer, uid } from "../../apiTestUtils";
 import * as faker from "faker";
