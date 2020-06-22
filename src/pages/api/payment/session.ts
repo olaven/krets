@@ -1,7 +1,11 @@
-import * as s from "stripe"; 
-const stripe = s("MY_API_KEY") 
+import * as s from "stripe";
+import { NextApiResponse, NextApiRequest } from "next";
+import Stripe from "stripe";
+const stripe = new Stripe("API KEY", {
+    apiVersion: '2020-03-02',
+});
 
-export default = async (request, response) => {
+export default async function (request: NextApiRequest, response: NextApiResponse) {
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
