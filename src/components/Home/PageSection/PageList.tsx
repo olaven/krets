@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
 import { ToAdmin, ToQR, ToPage } from "../../tiny/buttons";
-import { borderStyle } from "styled-system";
 import { PagesContext } from "../../../context/PagesContext";
+import * as text from "../../../text"
 
 const PageCard = ({ id, name, responses }) => <Box m={[2, 3, 4]}>
     <Card sx={{ borderTopStyle: "solid", borderColor: "primary", borderWidth: "1px" }}>
@@ -23,7 +23,7 @@ export const PageList = () => {
     return <Flex flexWrap={"wrap"} mt={[2, 3, 4]}>
         <Box width={1 / 4}></Box>
         <Box width={2 / 4}>
-            <Heading color={"primary"} textAlign={"center"}>Mine krets-sider:</Heading>
+            <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
             {pages.map(page => <PageCard key={page.id} {...page} />)}
         </Box>
         <Box width={1 / 4}></Box>
