@@ -15,10 +15,27 @@ export const ResponseTextList = () => {
     if (!responses.length)
         return <div>{text.responseList.noResponses}</div>
 
+    const formatDate = (dateString: string) => {
+
+        const date = new Date(dateString);
+
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+
+        const currentYear = new Date().getFullYear();
+        return `${day}/${month}${
+            currentYear !== year ?
+                `/${year}` : ``
+            }`
+    }
+
+
     const ResponseCard = ({ response }: { response: ReseponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
         <Flex>
             <Emoji text={response.emotion}></Emoji>
-            <Text fontSize={[1, 2, 3]}>{response.text}</Text>
+            <Text opacity={0.5} fontSize={[1, 2, 3]}>{formatDate(response.created_at)}</Text>
+            <Text fontSize={[1, 2, 3]}> {response.text}</Text>
         </Flex>
 
     </Card>
