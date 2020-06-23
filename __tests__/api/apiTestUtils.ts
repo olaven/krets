@@ -5,7 +5,7 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import { describe, expect, it, test } from "@jest/globals";
 import * as faker from "faker";
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 
 
 //TODO: PageId DTO?

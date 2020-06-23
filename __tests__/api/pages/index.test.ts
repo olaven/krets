@@ -1,10 +1,11 @@
-import fetch from "node-fetch"
+
 import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
 import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages";
+import { users } from "../../../src/database/users";
 import { Server } from "net";
 import * as faker from "faker";
-import { users } from "../../../src/database/users";
+import fetch from "cross-fetch";
 
 jest.mock("../../../src/auth/auth0");
 
