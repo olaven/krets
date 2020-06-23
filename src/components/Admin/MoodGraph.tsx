@@ -1,4 +1,4 @@
-import { VictoryArea, VictoryAxis, VictoryChart, VictoryTheme } from "victory";
+import { VictoryArea, VictoryAxis, VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryPolarAxis } from "victory";
 import { useContext } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
@@ -24,9 +24,11 @@ export const averageUntil = (response: ReseponseModel, responses: ReseponseModel
                 .map(({ emotion }) => emotionToNumeric(emotion))
                 .reduce((a, b) => a + b)
 
+    const average = sum / relevant.length;
     return ({
-        y: sum / relevant.length,
-        x: new Date(response.created_at).getTime() * -1
+        y: average,
+        x: new Date(response.created_at),
+        fill: "yellow"
     })
 }
 
@@ -67,8 +69,11 @@ export const MoodGraph = () => {
             <VictoryArea
                 /* dataComponent={<EmojiPoint />} */
                 data={coordinates} style={{ data: { fill: "orange", opacity: 0.7 } }} />
-            <VictoryAxis />
-            <VictoryAxis />
+            <VictoryLine
+                style={{ data: { stroke: "blue", strokeWidth: 5 } }}
+                data={coordinates}
+            />
+
         </VictoryChart>
     </Box>
 }
