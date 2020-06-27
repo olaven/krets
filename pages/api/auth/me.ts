@@ -1,6 +1,6 @@
-import auth0 from "../../../auth0"
+import auth0 from '../../../auth/auth0';
 
-export default auth0.requireAuthentication(async function me(request, response) {
+export default auth0.requireAuthentication(async function me (request, response) {
 
     try {
         await auth0.handleProfile(request, response, {

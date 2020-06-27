@@ -1,29 +1,20 @@
-// <3 
-import { useState, useEffect } from "react";
+import React from "react";
+import { UserContext } from "../context/UserContext";
+import { PageSection } from "../components/Home/PageSection/PageSection";
+import { IntroSection } from "../components/Home/IntroSection/IntroSection";
 
-const Index = () => {
+const IndexPage = () => {
 
-    const [user, setUser] = useState(null);
+    const { user } = React.useContext(UserContext);
 
-    const fetchUser = async () => {
+    if (user) {
 
-        const response = await fetch("/api/auth/me");
-        console.log(response);
-        if (response.status === 200) {
+        return <PageSection user={user} />
+    } else {
 
-            const user = await response.json();
-            setUser(user);
-        }
-
+        return <IntroSection />
     }
-    useEffect(() => { fetchUser() }, []);
 
-    return <>
-        <a href="/api/auth/login">login</a>
-        {user && <div>
-            Logged in as: {user.name}
-        </div>}
-    </>
-}
+};
 
-export default Index; 
+export default IndexPage

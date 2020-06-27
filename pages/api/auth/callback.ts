@@ -1,24 +1,40 @@
-import auth0 from "../../../auth0";
+import auth0 from '../../../auth/auth0';
+import {users} from "../../../database/users";
+import { BAD_REQUEST } from '../../../http/codes';
+
+
+const createIfNotPresent = async (id: string) => {
+
+  const user = await users.getUser(id);
+
+  if (!user) {
+
+    await users.createUser({id});
+  }
+};
 
 export default async function callback(req, res) {
-    try {
-        await auth0.handleCallback(req, res, {
-            onUserLoaded: async (req, res, session, state) => {
+  try {
+    await auth0.handleCallback(req, res, {
+      onUserLoaded: async (req, res, session, state) => {
+        
+        const { user } = session;
 
-                const { user } = session;
 
-                return {
-                    ...session,
-                    user: {
-                        ...session.user,
-                        age: 20
-                    },
-                    redirectTo: "/"
-                };
-            }
-        });
-    } catch (error) {
+        await createIfNotPresent(user.sub);
 
-        res.status(error.status || 400).end(error.message);
-    }
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            age: 20
+          }, 
+          redirectTo: "/"
+        };
+      }
+    });
+  } catch (error) {
+
+    res.status(error.status || BAD_REQUEST).end(error.message);
+  }
 }
