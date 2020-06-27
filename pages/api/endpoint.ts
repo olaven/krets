@@ -1,4 +1,3 @@
-import { response } from "../../text";
 
 async function getTodo() {
 
