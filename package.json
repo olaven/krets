@@ -24,13 +24,12 @@
     "react-localization": "^1.0.15",
     "react-qrcode-logo": "^2.2.1",
     "rebass": "^4.0.7",
-    "victory": "^34.3.12"
-  },
-  "devDependencies": {
+    "victory": "^34.3.12",
     "@rebass/forms": "^4.0.6",
     "@types/react": "^16.9.41",
     "dotenv": "^8.2.0",
     "node-pg-migrate": "^5.2.0",
     "typescript": "^3.9.5"
-  }
+  },
+  "devDependencies": {}
 }
