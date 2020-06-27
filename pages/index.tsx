@@ -1,13 +1,29 @@
-export default function () {
+// <3 
+import { useState, useEffect } from "react";
 
-    const fetchTodo = async () => {
+const Index = () => {
 
-        const response = await fetch("/api/endpoint");
-        const todo = await response.json();
-        console.log(response, todo);
+    const [user, setUser] = useState(null);
+
+    const fetchUser = async () => {
+
+        const response = await fetch("/api/auth/me");
+        console.log(response);
+        if (response.status === 200) {
+
+            const user = await response.json();
+            setUser(user);
+        }
+
     }
+    useEffect(() => { fetchUser() }, []);
 
-    return <button onClick={fetchTodo}>
-        fetch todo
-    </button>
+    return <>
+        <a href="/api/auth/login">login</a>
+        {user && <div>
+            Logged in as: {user.name}
+        </div>}
+    </>
 }
+
+export default Index; 

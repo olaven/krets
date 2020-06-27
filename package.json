@@ -6,30 +6,19 @@
   "author": "olaven <olav@sundfoer.com>",
   "license": "AFL-3.0",
   "scripts": {
-    "dev": "yarn migrate up && NODE_ENV=development NODE_OPTIONS='--inspect' next",
-    "build": "next build && yarn migrate up --no-reject-unauthorized",
-    "start": "next start",
-    "test": "yarn migrate up && NODE_ENV=test && NODE_OPTIONS='--inspect' jest --runInBand ./__tests__ --testPathIgnorePatterns --forceExit --detectOpenHandles",
-    "migrate": "node-pg-migrate"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.13.0",
-    "@emotion/core": "^10.0.28",
-    "emotion-theming": "^10.0.27",
     "next": "^9.4.4",
-    "pg": "^8.2.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-emoji-render": "^1.2.4",
-    "react-localization": "^1.0.15",
-    "react-qrcode-logo": "^2.2.1",
-    "rebass": "^4.0.7",
-    "victory": "^34.3.12",
-    "@rebass/forms": "^4.0.6",
-    "@types/react": "^16.9.41",
-    "dotenv": "^8.2.0",
-    "node-pg-migrate": "^5.2.0",
-    "typescript": "^3.9.5"
+    "react-dom": "^16.13.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "@types/react": "^16.9.38",
+    "typescript": "^3.9.5"
+  }
 }
