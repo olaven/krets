@@ -1,20 +1,13 @@
-import React from "react";
-import { UserContext } from "../context/UserContext";
-import { PageSection } from "../components/Home/PageSection/PageSection";
-import { IntroSection } from "../components/Home/IntroSection/IntroSection";
+export default function () {
 
-const IndexPage = () => {
+    const fetchTodo = async () => {
 
-    const { user } = React.useContext(UserContext);
-
-    if (user) {
-
-        return <PageSection user={user} />
-    } else {
-
-        return <IntroSection />
+        const response = await fetch("/api/endpoint");
+        const todo = await response.json();
+        console.log(response, todo);
     }
 
-};
-
-export default IndexPage
+    return <button onClick={fetchTodo}>
+        fetch todo
+    </button>
+}
