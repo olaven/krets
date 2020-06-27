@@ -1,5 +1,5 @@
 # Krets 
-</br></br> redeploy
+</br></br>
 <img width="200" alt="Logo" src="./public/logo.svg">
 
 ## Useful links

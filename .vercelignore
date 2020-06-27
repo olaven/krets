@@ -1,5 +1,0 @@
-#Production env vars set in now dashboard
-.vscode/*
-.github/*
-.next/*
-__tests__/*
