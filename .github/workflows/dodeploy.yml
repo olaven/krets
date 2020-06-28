@@ -48,7 +48,7 @@ jobs:
     - name: Deploy package to digitalocean
       uses: appleboy/ssh-action@master
       env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
+          GITHUB_USERNAME: ${{ secrets.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         host: ${{ secrets.DO_DROPLET_HOST }}
@@ -56,8 +56,9 @@ jobs:
         password: ${{ secrets.DO_DROPLET_PASSWORD }}
         port: ${{ secrets.DO_DROPLET_PORT }}
         envs: GITHUB_USERNAME,GITHUB_TOKEN,GITHUB_REPOSITORY
-        script: |
+        script: | # pass envs here
           docker stop $(docker ps -a -q)
           docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
           docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/image:latest
-          docker run -dit -p 80:80 docker.pkg.github.com/$GITHUB_REPOSITORY/image:latest
+          docker run -dit -p 80:80 docker.pkg.github.com/$GITHUB_REPOSITORY/image:latest 
+          
