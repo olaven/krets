@@ -22,20 +22,20 @@ jobs:
     - name: Publish to Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AUTH0_DOMAIN: ${{  secrets.AUTH0_DOMAIN  }}
-          AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }}
-          AUTH0_CLIENT_SECRET: ${{  secrets.AUTH0_CLIENT_SECRET  }}
-          REDIRECT_URI: ${{  secrets.REDIRECT_URI  }}
-          POST_LOGOUT_REDIRECT_URI: ${{  secrets.POST_LOGOUT_REDIRECT_URI  }}
-          SESSION_COOKIE_SECRET: ${{  secrets.SESSION_COOKIE_SECRET  }}
-          PGHOST: ${{  secrets.PGHOST  }}
-          PGUSER: ${{  secrets.PGUSER  }}
-          PGPASSWORD: ${{  secrets.PGPASSWORD  }}
-          PGDATABASE: ${{  secrets.PGDATABASE  }}
-          PGSSLMODE: ${{  secrets.PGSSLMODE  }}
-          SSH_DATABASE_CERTIFICATE: ${{  secrets.SSH_DATABASE_CERTIFICATE  }}
+        GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        AUTH0_DOMAIN: ${{  secrets.AUTH0_DOMAIN  }}
+        AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }}
+        AUTH0_CLIENT_SECRET: ${{  secrets.AUTH0_CLIENT_SECRET  }}
+        REDIRECT_URI: ${{  secrets.REDIRECT_URI  }}
+        POST_LOGOUT_REDIRECT_URI: ${{  secrets.POST_LOGOUT_REDIRECT_URI  }}
+        SESSION_COOKIE_SECRET: ${{  secrets.SESSION_COOKIE_SECRET  }}
+        PGHOST: ${{  secrets.PGHOST  }}
+        PGUSER: ${{  secrets.PGUSER  }}
+        PGPASSWORD: ${{  secrets.PGPASSWORD  }}
+        PGDATABASE: ${{  secrets.PGDATABASE  }}
+        PGSSLMODE: ${{  secrets.PGSSLMODE  }}
+        SSH_DATABASE_CERTIFICATE: ${{  secrets.SSH_DATABASE_CERTIFICATE  }}
       with:
         name: olaven/krets/image #${{ secrets.GITHUB_REPOSITORY }}/image
         registry: docker.pkg.github.com
