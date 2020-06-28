@@ -25,7 +25,7 @@ jobs:
         GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         AUTH0_DOMAIN: ${{  secrets.AUTH0_DOMAIN  }}
-        AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }}
+        AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }} # remove auth0 here ? 
         AUTH0_CLIENT_SECRET: ${{  secrets.AUTH0_CLIENT_SECRET  }}
         REDIRECT_URI: ${{  secrets.REDIRECT_URI  }}
         POST_LOGOUT_REDIRECT_URI: ${{  secrets.POST_LOGOUT_REDIRECT_URI  }}
@@ -50,15 +50,41 @@ jobs:
       env:
           GITHUB_USERNAME: ${{ secrets.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTH0_DOMAIN: ${{  secrets.AUTH0_DOMAIN  }}
+          AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }}
+          AUTH0_CLIENT_SECRET: ${{  secrets.AUTH0_CLIENT_SECRET  }}
+          REDIRECT_URI: ${{  secrets.REDIRECT_URI  }}
+          POST_LOGOUT_REDIRECT_URI: ${{  secrets.POST_LOGOUT_REDIRECT_URI  }}
+          SESSION_COOKIE_SECRET: ${{  secrets.SESSION_COOKIE_SECRET  }}
+          PGHOST: ${{  secrets.PGHOST  }}
+          PGUSER: ${{  secrets.PGUSER  }}
+          PGPORT: ${{  secrets.PGPORT  }}
+          PGPASSWORD: ${{  secrets.PGPASSWORD  }}
+          PGDATABASE: ${{  secrets.PGDATABASE  }}
+          PGSSLMODE: ${{  secrets.PGSSLMODE  }}
       with:
         host: ${{ secrets.DO_DROPLET_HOST }}
         username: ${{ secrets.DO_DROPLET_USERNAME }}
         password: ${{ secrets.DO_DROPLET_PASSWORD }}
         port: ${{ secrets.DO_DROPLET_PORT }}
-        envs: GITHUB_USERNAME,GITHUB_TOKEN,GITHUB_REPOSITORY
+        envs: GITHUB_USERNAME,GITHUB_TOKEN,AUTH0_DOMAIN,AUTH0_CLIENT_ID,AUTH0_CLIENT_SECRET,REDIRECT_URI,POST_LOGOUT_REDIRECT_URI,SESSION_COOKIE_SECRET,PGHOST,PGUSER,PGPORT,PGPASSWORD,PGDATABASE,PGSSLMODE,SSH_DATABASE_CERTIFICATE
         script: | # pass envs here
           docker stop $(docker ps -a -q)
-          docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+          docker login docker.pkg.github.com --username $GITHUB_USERNAME --password $GITHUB_TOKEN
           docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/image:latest
-          docker run -dit -p 80:80 docker.pkg.github.com/$GITHUB_REPOSITORY/image:latest 
+          docker run -dit \ 
+            -p 80:80 docker.pkg.github.com/$GITHUB_REPOSITORY/image:latest \
+              -e AUTH0_DOMAIN \
+              -e AUTH0_CLIENT_ID \
+              -e AUTH0_CLIENT_SECRET \
+              -e REDIRECT_URI \
+              -e POST_LOGOUT_REDIRECT_URI \
+              -e SESSION_COOKIE_SECRET \
+              -e PGHOST \
+              -e PGUSER \
+              -e PGPORT \
+              -e PGPASSWORD \
+              -e PGDATABASE \
+              -e PGSSLMODE \
+              -e SSH_DATABASE_CERTIFICATE 
           
