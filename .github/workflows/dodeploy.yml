@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - master
+      - test-digitalocean-droplet
 
 jobs:
   build:
@@ -35,10 +36,10 @@ jobs:
           GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
+        host: ${{ secrets.DO_DROPLET_HOST }}
+        username: ${{ secrets.DO_DROPLET_USERNAME }}
+        password: ${{ secrets.DO_DROPLET_PASSWORD }}
+        port: ${{ secrets.DO_DROPLET_PORT }}
         envs: GITHUB_USERNAME, GITHUB_TOKEN
         script: |
           docker stop $(docker ps -a -q)
