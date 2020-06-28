@@ -1,0 +1,23 @@
+FROM node:12.17.0
+
+ARG AUTH0_DOMAIN
+ARG AUTH0_CLIENT_ID
+ARG AUTH0_CLIENT_SECRET
+ARG REDIRECT_URI
+ARG POST_LOGOUT_REDIRECT_URI
+ARG SESSION_COOKIE_SECRET
+
+ARG PGHOST
+ARG PGUSER
+ARG PGPASSWORD
+ARG PGDATABASE
+
+
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN yarn cache clean && yarn --update-checksums
+COPY . ./
+RUN yarn && yarn build
+CMD [ "yarn", "start" ]
+
+
