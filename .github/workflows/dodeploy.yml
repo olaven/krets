@@ -43,6 +43,8 @@ jobs:
           PGUSER: ${{  secrets.PGUSER  }}
           PGPASSWORD: ${{  secrets.PGPASSWORD  }}
           PGDATABASE: ${{  secrets.PGDATABASE  }}
+          PGSSLMODE: ${{  secrets.PGSSLMODE  }}
+          SSH_DATABASE_CERTIFICATE: ${{  secrets.SSH_DATABASE_CERTIFICATE  }}
           # add env variables through secrets here?
       with:
         host: ${{ secrets.DO_DROPLET_HOST }}
