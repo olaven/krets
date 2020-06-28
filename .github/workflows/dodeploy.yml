@@ -22,9 +22,9 @@ jobs:
     - name: Publish to Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: ${{ secrets.GITHUB_REPOSITORY }}/krets
+        name: olaven/krets/image #${{ secrets.GITHUB_REPOSITORY }}/image
         registry: docker.pkg.github.com
-        username: ${{ github.actor }} # ${{ secrets.DOCKER_USERNAME }}
+        username: ${{ github.actor }} 
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Dockerfile
         tags: latest
@@ -43,5 +43,5 @@ jobs:
         script: |
           docker stop $(docker ps -a -q)
           docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
-          docker pull docker.pkg.github.com/${{ secrets.GITHUB_REPOSITORY }}/krets:latest
-          docker run -dit -p 80:80 docker.pkg.github.com/${{ secrets.GITHUB_USERNAME }}/krets:latest
+          docker pull docker.pkg.github.com/${{ secrets.GITHUB_REPOSITORY }}/image:latest
+          docker run -dit -p 80:80 docker.pkg.github.com/${{ secrets.GITHUB_USERNAME }}/image:latest
