@@ -45,13 +45,12 @@ jobs:
           PGDATABASE: ${{  secrets.PGDATABASE  }}
           PGSSLMODE: ${{  secrets.PGSSLMODE  }}
           SSH_DATABASE_CERTIFICATE: ${{  secrets.SSH_DATABASE_CERTIFICATE  }}
-          # add env variables through secrets here?
       with:
         host: ${{ secrets.DO_DROPLET_HOST }}
         username: ${{ secrets.DO_DROPLET_USERNAME }}
         password: ${{ secrets.DO_DROPLET_PASSWORD }}
         port: ${{ secrets.DO_DROPLET_PORT }}
-        envs: GITHUB_USERNAME, GITHUB_TOKEN
+        envs: GITHUB_USERNAME, GITHUB_TOKEN, AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI, SESSION_COOKIE_SECRET, PGHOST, PGUSER, PGPASSWORD, PGDATABASE, PGSSLMODE, SSH_DATABASE_CERTIFICATE
         script: |
           docker stop $(docker ps -a -q)
           docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
