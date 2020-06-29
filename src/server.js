@@ -1,5 +1,5 @@
 // server.ts
-const { createServer } = require('http')
+const { createServer } = require('https')
 const { parse } = require('url')
 const next = require('next')
 
@@ -7,6 +7,11 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const httpsOptions = dev ? {} : {
+    key: fs.readFileSync(process.env.HTTPS_CONTAINER_PRIVKEY),
+    cert: fs.readFileSync(process.env.HTTPS_CONTAINER_FULLCHAIN),
+    ca: fs.readFileSync(process.env.HTTPS_CONTAINER_CHAIN)
+};
 
 app.prepare().then(() => {
     createServer(httpsOptions, (req, res) => {
