@@ -4,7 +4,7 @@ on:
   push:
     branches: 
       - master
-      - test-digitalocean-droplet
+      - use-ssl # remove after getting SSL to work 
 
 jobs:
   build:
