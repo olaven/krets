@@ -10,6 +10,7 @@ const handle = app.getRequestHandler()
 
 //TODO: remove this line 
 
+console.log("HER ER JEG");
 console.log({ HTTPS_CONTAINER_PRIVKEY, HTTPS_CONTAINER_FULLCHAIN, HTTPS_CONTAINER_CHAIN } = process.env);
 
 const httpsOptions = dev ? {} : {
