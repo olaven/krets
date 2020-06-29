@@ -1,10 +1,10 @@
 import auth0 from "../../../auth/auth0";
-import {pages} from "../../../database/pages";
+import { pages } from "../../../database/pages";
 import { CREATED, OK } from "../../../http/codes";
 import { PageModel } from "../../../models";
 
 
-export default auth0.requireAuthentication(async function brand (request, response) {
+export default auth0.requireAuthentication(async function brand(request, response) {
 
     const { user } = await auth0.getSession(request);
 

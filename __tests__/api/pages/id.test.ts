@@ -4,6 +4,7 @@ import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
 import { pages } from "../../../src/database/pages";
 import { users } from "../../../src/database/users";
+import fetch from "cross-fetch";
 
 describe("Endpoint for getting a specific page", () => {
 

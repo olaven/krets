@@ -4,8 +4,8 @@ import { apiResolver } from 'next/dist/next-server/server/api-utils'
 import { Server } from "net";
 import { NextApiHandler } from "next";
 import { describe, expect, it, test } from "@jest/globals";
-import fetch from "isomorphic-unfetch";
 import * as faker from "faker";
+import fetch from "cross-fetch";
 
 
 //TODO: PageId DTO?

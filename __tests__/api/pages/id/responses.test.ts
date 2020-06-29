@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import fetch from "isomorphic-unfetch";
 import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
 import { setupServer, teardownServer, uid } from "../../apiTestUtils";
 import * as faker from "faker";
@@ -11,6 +10,7 @@ import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users } from "../../../../src/database/users";
 import { pages } from "../../../../src/database/pages";
 import { responses } from "../../../../src/database/responses";
+import fetch from "cross-fetch";
 
 jest.mock("../../../../src/auth/auth0");
 
