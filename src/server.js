@@ -8,6 +8,10 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+//TODO: remove this line 
+
+console.log({ HTTPS_CONTAINER_PRIVKEY, HTTPS_CONTAINER_FULLCHAIN, HTTPS_CONTAINER_CHAIN } = process.env);
+
 const httpsOptions = dev ? {} : {
     key: readFileSync(process.env.HTTPS_CONTAINER_PRIVKEY),
     cert: readFileSync(process.env.HTTPS_CONTAINER_FULLCHAIN),
