@@ -70,7 +70,7 @@ jobs:
         envs: GITHUB_USERNAME,GITHUB_TOKEN,AUTH0_DOMAIN,AUTH0_CLIENT_ID,AUTH0_CLIENT_SECRET,REDIRECT_URI,POST_LOGOUT_REDIRECT_URI,SESSION_COOKIE_SECRET,PGHOST,PGUSER,PGPORT,PGPASSWORD,PGDATABASE,PGSSLMODE,SSH_DATABASE_CERTIFICATE
         script: | 
           docker stop $(docker ps -a -q)
-          docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+          echo "$GITHUB_TOKEN" | docker login -u "$GITHUB_USERNAME" --password-stdin
           docker pull docker.pkg.github.com/olaven/krets/image:latest
           docker run -dit -p 80:80 docker.pkg.github.com/olaven/krets/image:latest \
             -e AUTH0_DOMAIN \
