@@ -1,8 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
-import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
 import { setupServer, teardownServer, uid } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
@@ -56,13 +51,13 @@ describe("The endpoint for responses", () => {
 
         await responses.createResponse({
             text: "OK",
-            emotion: 'neutral',
+            emotion: ':-|',
             page_id: page.id
         });
 
         await responses.createResponse({
             text: "Good!",
-            emotion: 'happy',
+            emotion: ':-)',
             page_id: page.id
         });
 
