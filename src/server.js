@@ -1,4 +1,5 @@
 // server.ts
+const { readFileSync } = require("fs");
 const { createServer } = require('https')
 const { parse } = require('url')
 const next = require('next')
@@ -8,9 +9,9 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const httpsOptions = dev ? {} : {
-    key: fs.readFileSync(process.env.HTTPS_CONTAINER_PRIVKEY),
-    cert: fs.readFileSync(process.env.HTTPS_CONTAINER_FULLCHAIN),
-    ca: fs.readFileSync(process.env.HTTPS_CONTAINER_CHAIN)
+    key: readFileSync(process.env.HTTPS_CONTAINER_PRIVKEY),
+    cert: readFileSync(process.env.HTTPS_CONTAINER_FULLCHAIN),
+    ca: readFileSync(process.env.HTTPS_CONTAINER_CHAIN)
 };
 
 app.prepare().then(() => {
