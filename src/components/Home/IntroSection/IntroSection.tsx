@@ -37,14 +37,14 @@ export const IntroSection = () => {
         <IntroTextBox>
             {intro.create}
         </IntroTextBox>
-        <IntroImageBox source="/creation.png" />
-        <IntroImageBox source="/feedback.png" />
+        <IntroImageBox source="/creation.svg" />
+        <IntroImageBox source="/feedback.svg" />
         <IntroTextBox>
             {intro.visiting}
         </IntroTextBox>
         <IntroTextBox>
             {intro.insight}
         </IntroTextBox>
-        <IntroImageBox source="/insight.png" />
+        <IntroImageBox source="/insight.svg" />
     </Flex>
 };
