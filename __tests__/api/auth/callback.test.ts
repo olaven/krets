@@ -1,7 +1,6 @@
 import { Server } from "net";
 import handler from "../../../src/pages/api/auth/callback";
 import { authenticatedFetch, setupServer, teardownServer } from "../apiTestUtils";
-import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
 import * as faker from "faker";
 import { users } from "../../../src/database/users";
 

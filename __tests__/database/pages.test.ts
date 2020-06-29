@@ -1,7 +1,6 @@
-import { describe } from "@jest/globals";
-import { pages } from "../../database/pages";
+import { pages } from "../../src/database/pages";
 import * as faker from "faker";
-import { users } from "../../database/users";
+import { users } from "../../src/database/users";
 
 describe("Database endpoint for pages", () => {
 
