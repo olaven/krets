@@ -10,13 +10,12 @@ const handle = app.getRequestHandler()
 
 //TODO: remove this line 
 
-console.log("HER ER JEG");
-console.log({ HTTPS_CONTAINER_PRIVKEY, HTTPS_CONTAINER_FULLCHAIN, HTTPS_CONTAINER_CHAIN } = process.env);
+console.log("env here:", process.env);
 
 const httpsOptions = dev ? {} : {
-    key: readFileSync(process.env.HTTPS_CONTAINER_PRIVKEY),
-    cert: readFileSync(process.env.HTTPS_CONTAINER_FULLCHAIN),
-    ca: readFileSync(process.env.HTTPS_CONTAINER_CHAIN)
+    key: readFileSync(process.env.SSL_PRIVKEY),
+    cert: readFileSync(process.env.SSL_FULLCHAIN),
+    ca: readFileSync(process.env.SLL_CHAIN)
 };
 
 app.prepare().then(() => {
