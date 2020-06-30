@@ -13,9 +13,9 @@ const handle = app.getRequestHandler()
 console.log("env here:", process.env);
 
 const httpsOptions = dev ? {} : {
-    key: process.env.SSL_PRIVKEY, // readFileSync(process.env.SSL_PRIVKEY),
-    cert: process.env.SSL_FULLCHAIN, // readFileSync(process.env.SSL_FULLCHAIN),
-    ca: process.env.SLL_CHAI, // readFileSync(process.env.SLL_CHAIN)
+    key: process.env.SSL_PRIVKEY.replace(/\\n/gm, '\n'), // readFileSync(process.env.SSL_PRIVKEY),
+    cert: process.env.SSL_FULLCHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SSL_FULLCHAIN),
+    ca: process.env.SLL_CHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SLL_CHAIN)
 };
 
 app.prepare().then(() => {
