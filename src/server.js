@@ -1,5 +1,5 @@
 // server.ts
-const { readFileSync } = require("fs");
+//const { readFileSync } = require("fs");
 const { createServer } = require('https')
 const { parse } = require('url')
 const next = require('next')
@@ -15,7 +15,7 @@ console.log("env here:", process.env);
 const httpsOptions = dev ? {} : {
     key: process.env.SSL_PRIVKEY.replace(/\\n/gm, '\n'), // readFileSync(process.env.SSL_PRIVKEY),
     cert: process.env.SSL_FULLCHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SSL_FULLCHAIN),
-    ca: process.env.SLL_CHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SLL_CHAIN)
+    ca: process.env.SSL_CHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SLL_CHAIN)
 };
 
 app.prepare().then(() => {
