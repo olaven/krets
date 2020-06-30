@@ -27,33 +27,33 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Dockerfile
         tags: latest 
-     - name: Deploy package to digitalocean
-       uses: appleboy/ssh-action@master
-       env:
-         GITHUB_USERNAME: ${{ github.actor }}
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         AUTH0_DOMAIN: ${{  secrets.AUTH0_DOMAIN  }}
-         AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }}
-         AUTH0_CLIENT_SECRET: ${{  secrets.AUTH0_CLIENT_SECRET  }}
-         REDIRECT_URI: ${{  secrets.REDIRECT_URI  }}
-         POST_LOGOUT_REDIRECT_URI: ${{  secrets.POST_LOGOUT_REDIRECT_URI  }}
-         SESSION_COOKIE_SECRET: ${{  secrets.SESSION_COOKIE_SECRET  }}
-         PGHOST: ${{  secrets.PGHOST  }}
-         PGUSER: ${{  secrets.PGUSER  }}
-         PGPORT: ${{  secrets.PGPORT  }}
-         PGPASSWORD: ${{  secrets.PGPASSWORD  }}
-         PGDATABASE: ${{  secrets.PGDATABASE  }}
-         PGSSLMODE: ${{  secrets.PGSSLMODE  }}
+    - name: Deploy package to digitalocean
+      uses: appleboy/ssh-action@master
+      env:
+        GITHUB_USERNAME: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        AUTH0_DOMAIN: ${{  secrets.AUTH0_DOMAIN  }}
+        AUTH0_CLIENT_ID: ${{  secrets.AUTH0_CLIENT_ID  }}
+        AUTH0_CLIENT_SECRET: ${{  secrets.AUTH0_CLIENT_SECRET  }}
+        REDIRECT_URI: ${{  secrets.REDIRECT_URI  }}
+        POST_LOGOUT_REDIRECT_URI: ${{  secrets.POST_LOGOUT_REDIRECT_URI  }}
+        SESSION_COOKIE_SECRET: ${{  secrets.SESSION_COOKIE_SECRET  }}
+        PGHOST: ${{  secrets.PGHOST  }}
+        PGUSER: ${{  secrets.PGUSER  }}
+        PGPORT: ${{  secrets.PGPORT  }}
+        PGPASSWORD: ${{  secrets.PGPASSWORD  }}
+        PGDATABASE: ${{  secrets.PGDATABASE  }}
+        PGSSLMODE: ${{  secrets.PGSSLMODE  }}
     #     HTTPS_SERVER_PRIVKEY: ${{ secrets.HTTPS_SERVER_PRIVKEY }} #paths on server (should rename server path secrets to something more readable)
     #     HTTPS_SERVER_FULLCHAIN: ${{ secrets.HTTPS_SERVER_FULLCHAIN }}
     #     HTTPS_SERVER_CHAIN: ${{ secrets.HTTPS_SERVER_CHAIN }}
-       with:
-         host: ${{ secrets.DO_DROPLET_HOST }}
-         username: ${{ secrets.DO_DROPLET_USERNAME }}
-         password: ${{ secrets.DO_DROPLET_PASSWORD }}
-         port: ${{ secrets.DO_DROPLET_PORT }}
-         envs: GITHUB_USERNAME,GITHUB_TOKEN,AUTH0_DOMAIN,AUTH0_CLIENT_ID,AUTH0_CLIENT_SECRET,REDIRECT_URI,POST_LOGOUT_REDIRECT_URI,SESSION_COOKIE_SECRET,PGHOST,PGUSER,PGPORT,PGPASSWORD,PGDATABASE,PGSSLMODE,SSH_DATABASE_CERTIFICATE #,HTTPS_SERVER_PRIVKEY,HTTPS_SERVER_FULLCHAIN,HTTPS_SERVER_CHAIN
-         script: |
+      with:
+        host: ${{ secrets.DO_DROPLET_HOST }}
+        username: ${{ secrets.DO_DROPLET_USERNAME }}
+        password: ${{ secrets.DO_DROPLET_PASSWORD }}
+        port: ${{ secrets.DO_DROPLET_PORT }}
+        envs: GITHUB_USERNAME,GITHUB_TOKEN,AUTH0_DOMAIN,AUTH0_CLIENT_ID,AUTH0_CLIENT_SECRET,REDIRECT_URI,POST_LOGOUT_REDIRECT_URI,SESSION_COOKIE_SECRET,PGHOST,PGUSER,PGPORT,PGPASSWORD,PGDATABASE,PGSSLMODE,SSH_DATABASE_CERTIFICATE #,HTTPS_SERVER_PRIVKEY,HTTPS_SERVER_FULLCHAIN,HTTPS_SERVER_CHAIN
+        script: |
           export GITHUB_USERNAME=$GITHUB_USERNAME
           export GITHUB_TOKEN=$GITHUB_TOKEN
           export AUTH0_DOMAIN=$AUTH0_DOMAIN
