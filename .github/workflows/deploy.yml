@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.18'
-    - name: Publish to Github Packages Registry
+    - name: Publish image Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       env: 
         GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Dockerfile
         tags: latest 
-    - name: Deploy package to digitalocean
+    - name: Pull image and restart on Digitalocean
       uses: appleboy/ssh-action@master
       env:
         GITHUB_USERNAME: ${{ github.actor }}
@@ -69,6 +69,7 @@ jobs:
           export PGDATABASE=$PGDATABASE
           export PGSSLMODE=$PGSSLMODE
           cd /home/olaven/node_project
+          echo $GITHUB_TOKEN | docker login --username $GITHUB_USERNAME --password-stdin docker.pkg.github.com
           docker-compose pull nodejs 
           docker-compose up --force-recreate nodejs 
 

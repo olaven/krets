@@ -11,17 +11,17 @@ const handle = app.getRequestHandler()
 //TODO: remove this line 
 
 console.log("env here:", process.env);
-
+/* 
 const httpsOptions = dev ? {} : {
     key: process.env.SSL_PRIVKEY.replace(/\\n/gm, '\n').replace(/\r/gm, ""), // readFileSync(process.env.SSL_PRIVKEY),
     cert: process.env.SSL_FULLCHAIN.replace(/\\n/gm, '\n').replace(/\r/gm, ""), // readFileSync(process.env.SSL_FULLCHAIN),
     //ca: process.env.SSL_CHAIN.replace(/\\n/gm, '\n').replace(/\r/gm, ""), // readFileSync(process.env.SLL_CHAIN)
-};
+}; */
 
-console.log("httpsoptions: ", httpsOptions);
+//console.log("httpsoptions: ", httpsOptions);
 
 app.prepare().then(() => {
-    createServer(httpsOptions, (req, res) => {
+    createServer((req, res) => {
         // Be sure to pass `true` as the second argument to `url.parse`.
         // This tells it to parse the query portion of the URL.
         const parsedUrl = parse(req.url, true)
