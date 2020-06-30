@@ -71,7 +71,7 @@ jobs:
           cd /home/olaven/node_project
           echo $GITHUB_TOKEN | docker login --username $GITHUB_USERNAME --password-stdin docker.pkg.github.com
           docker-compose pull nodejs 
-          docker-compose up --force-recreate nodejs 
+          docker-compose up -d --force-recreate nodejs 
 
     #     script: |  # reading key values from paths 
     #       export SSL_PRIVKEY=$(cat $HTTPS_SERVER_PRIVKEY) 
