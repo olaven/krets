@@ -14,9 +14,9 @@ console.log("env here:", process.env);
 
 
 const httpsOptions = dev ? {} : {
-    key: process.env.SSL_PRIVKEY.replace(/\\n/gm, '\n'), // readFileSync(process.env.SSL_PRIVKEY),
-    cert: process.env.SSL_FULLCHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SSL_FULLCHAIN),
-    ca: process.env.SSL_CHAIN.replace(/\\n/gm, '\n'), // readFileSync(process.env.SLL_CHAIN)
+    key: process.env.SSL_PRIVKEY.replace(/\\n/gm, '\n').replace(/\r/gm, ""), // readFileSync(process.env.SSL_PRIVKEY),
+    cert: process.env.SSL_FULLCHAIN.replace(/\\n/gm, '\n').replace(/\r/gm, ""), // readFileSync(process.env.SSL_FULLCHAIN),
+    ca: process.env.SSL_CHAIN.replace(/\\n/gm, '\n').replace(/\r/gm, ""), // readFileSync(process.env.SLL_CHAIN)
 };
 
 console.log("httpsoptions: ", httpsOptions);
