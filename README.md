@@ -1,6 +1,6 @@
 # Krets 
 </br></br>
-force redeploy
+
 <img width="200" alt="Logo" src="./public/logo.svg">
 
 ## Useful links

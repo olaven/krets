@@ -16,12 +16,12 @@ export const PageCreator = () => {
 
     const nameToId = (name: string) => encodeURI(name
         .toLowerCase()
-        .replaceAll(" ", "-")
-        .replaceAll(/(Ø|ø)/g, "o")
-        .replaceAll(/(Æ|æ)/g, "ae")
-        .replaceAll(/(Å|å)/g, "aa")
-        .replaceAll("?", "")
-        .replaceAll("!", "")
+        .replace(/" "/g, "-")
+        .replace(/(Ø|ø)/g, "o")
+        .replace(/(Æ|æ)/g, "ae")
+        .replace(/(Å|å)/g, "aa")
+        .replace("?", "")
+        .replace("!", "")
     );
 
 
