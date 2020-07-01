@@ -4,17 +4,16 @@ on:
   push:
     branches: 
       - master
-      - use-ssl # remove after getting SSL to work 
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    
+    
     - uses: actions/checkout@v1
-    - name: Use Node.js 12.18
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.18'
+
+    
     - name: Publish image Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       env: 
@@ -27,6 +26,8 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Dockerfile
         tags: latest 
+
+    
     - name: Pull image and restart on Digitalocean
       uses: appleboy/ssh-action@master
       env:
@@ -69,13 +70,4 @@ jobs:
           echo $GITHUB_TOKEN | docker login docker.pkg.github.com --username $GITHUB_USERNAME --password-stdin
           docker-compose pull nodejs 
           docker-compose up -d --force-recreate nodejs 
-
-    #     script: |  # reading key values from paths 
-    #       export SSL_PRIVKEY=$(cat $HTTPS_SERVER_PRIVKEY) 
-    #       export SSL_FULLCHAIN=$(cat $HTTPS_SERVER_FULLCHAIN)
-    #       export SSL_CHAIN=$(cat $HTTPS_SERVER_CHAIN)
-    #       docker stop $(docker ps -a -q)
-    #       echo $GITHUB_TOKEN | docker login --username $GITHUB_USERNAME --password-stdin docker.pkg.github.com
-    #       docker pull docker.pkg.github.com/olaven/krets/image:latest
-    #       docker run -dit -p 80:3000 docker.pkg.github.com/olaven/krets/image:latest -e SSL_PRIVKEY -e SSL_FULLCHAIN -e SSL_CHAIN
           
