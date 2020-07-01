@@ -14,6 +14,7 @@
 	"extensions": [
 		"dbaeumer.vscode-eslint",
 		"firefox-devtools.vscode-firefox-debug",
-		"github.vscode-pull-request-github"
+		"github.vscode-pull-request-github",
+		"orta.vscode-jest"
 	],
 }

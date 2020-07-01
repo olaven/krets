@@ -7,22 +7,21 @@ import { OK, CREATED } from "../../../http/codes";
 import * as text from "../../../text"
 
 
+export const nameToId = (name: string) => name
+    .toLowerCase()
+    .replace(/(Ø|ø)/g, "oe")
+    .replace(/(Æ|æ)/g, "ae")
+    .replace(/(Å|å)/g, "aa")
+    .replace("?", "")
+    .replace("!", "")
+    .replace(/[^a-zA-Z0-9s|]/g, "-")
+
+
 export const PageCreator = () => {
 
     const { refreshPages } = useContext(PagesContext);
     const [name, setName] = useState("");
     const [id, setId] = useState("");
-
-
-    const nameToId = (name: string) => encodeURI(name
-        .toLowerCase()
-        .replace(/" "/g, "-")
-        .replace(/(Ø|ø)/g, "o")
-        .replace(/(Æ|æ)/g, "ae")
-        .replace(/(Å|å)/g, "aa")
-        .replace("?", "")
-        .replace("!", "")
-    );
 
 
     useEffect(() => {
@@ -60,7 +59,7 @@ export const PageCreator = () => {
             <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
 
             <Flex>
-                <Input placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
+                <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
                     setName(value)
                 }} />
                 <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage}>
