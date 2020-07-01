@@ -38,26 +38,8 @@ const averageOverTime = (responses: ReseponseModel[]) => responses
 export const MoodGraph = () => {
 
     const { responses, responsesLoading } = useContext(AdminPageContext);
-
-    /* const EmojiPoint = (props) => {
-
-        console.log("inside emojipoint with ", props);
-        const y = props.y;
-        const getEmoji = () => {
-            if (y >= 1.8) return "😁";
-            if (y >= 1.5) return "😊";
-            if (y >= 0.8) return "😐";
-            else return "😞";
-        }
-
-        return <text>
-            {getEmoji()}
-        </text>
-    } */
-
-
     const coordinates = averageOverTime(responses);
-    console.log(coordinates)
+
     return <Box>
         <VictoryChart
             theme={VictoryTheme.material}
@@ -69,10 +51,6 @@ export const MoodGraph = () => {
             <VictoryArea
                 /* dataComponent={<EmojiPoint />} */
                 data={coordinates} style={{ data: { fill: "orange", opacity: 0.7 } }} />
-            <VictoryLine
-                style={{ data: { stroke: "blue", strokeWidth: 5 } }}
-                data={coordinates}
-            />
 
         </VictoryChart>
     </Box>
