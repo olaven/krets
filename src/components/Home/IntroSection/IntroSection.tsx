@@ -25,7 +25,7 @@ export const IntroSection = () => {
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <Text fontSize={[3, 4, 5]} textAlign="center">
+            <Text my={[1, 2, 3]} fontSize={[3, 4, 5]} textAlign="center">
                 {children}
             </Text>
         </section>
