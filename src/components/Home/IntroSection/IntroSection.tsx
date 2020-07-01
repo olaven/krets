@@ -32,8 +32,27 @@ export const IntroSection = () => {
 
     </IntroBox >
 
+    //TODO: remove when warning is no longer appropriate (ready to take customers)
+    const DisclaimerBox = () => <Box
+        width={1}
+        height={[150, 300, 300]}
+        p={4}>
+        <section style={{
+            display: "flex",
+            margin: "auto",
+            alignItems: "center",
+            justifyContent: "center",
+        }}>
+            <Text fontSize={[0, 1, 2]} textAlign="center">
+                {intro.earlyVersionDisclaimer}
+            </Text>
+        </section>
+    </Box>
+
+
     return <Flex width={1} flexWrap="wrap">
         <GetStartedButton />
+        <DisclaimerBox />
         <IntroTextBox>
             {intro.create}
         </IntroTextBox>
