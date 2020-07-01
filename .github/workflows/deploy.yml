@@ -21,7 +21,7 @@ jobs:
         GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: olaven/krets/image #${{ secrets.GITHUB_REPOSITORY }}/image
+        name: ${{ secrets.GITHUB_REPOSITORY }}/image
         registry: docker.pkg.github.com
         username: ${{ github.actor }} 
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -44,9 +44,6 @@ jobs:
         PGPASSWORD: ${{  secrets.PGPASSWORD  }}
         PGDATABASE: ${{  secrets.PGDATABASE  }}
         PGSSLMODE: ${{  secrets.PGSSLMODE  }}
-    #     HTTPS_SERVER_PRIVKEY: ${{ secrets.HTTPS_SERVER_PRIVKEY }} #paths on server (should rename server path secrets to something more readable)
-    #     HTTPS_SERVER_FULLCHAIN: ${{ secrets.HTTPS_SERVER_FULLCHAIN }}
-    #     HTTPS_SERVER_CHAIN: ${{ secrets.HTTPS_SERVER_CHAIN }}
       with:
         host: ${{ secrets.DO_DROPLET_HOST }}
         username: ${{ secrets.DO_DROPLET_USERNAME }}
