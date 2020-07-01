@@ -1,5 +1,5 @@
 import { Box, Button, Link, Flex, Text } from "rebass";
-import React from "react";
+import React from "react"
 import * as text from "../../text"
 
 export const LogoutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
