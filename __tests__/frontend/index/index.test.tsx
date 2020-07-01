@@ -3,14 +3,14 @@
  */
 
 import React from "react";
-import IndexPage from "../../src/pages/index"
+import IndexPage from "../../../src/pages/index"
 import { waitFor, render } from "@testing-library/react"
-import { AuthModel } from "../../src/models";
+import { AuthModel } from "../../../src/models";
 import * as faker from "faker";
 import '@testing-library/jest-dom/extend-expect'
-import { UserContext, UserContextProvider } from "../../src/context/UserContext";
-import { PagesContextProvider } from "../../src/context/PagesContext";
-import * as text from "../../src/text"
+import { UserContext, UserContextProvider } from "../../../src/context/UserContext";
+import { PagesContextProvider } from "../../../src/context/PagesContext";
+import * as text from "../../../src/text"
 import { mockGet } from "./frontedTestUtils";
 import { stringify } from "querystring";
 
