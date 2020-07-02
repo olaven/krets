@@ -3,6 +3,7 @@ import { Box, Card, Flex, Heading } from "rebass";
 import { ToAdmin, ToQR, ToPage } from "../../tiny/buttons";
 import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
+import { HelpContext } from "../../../context/HelpContext";
 
 const PageCard = ({ id, name }) => <Box>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
@@ -19,13 +20,16 @@ const PageCard = ({ id, name }) => <Box>
 export const PageList = () => {
 
     const { pages } = useContext(PagesContext);
+    const { Tooltip } = useContext(HelpContext);
 
-    return <Flex>
-        <Box width={[0, 0, 1 / 4]}></Box>
-        <Box width={[1, 1, 2 / 4]}>
-            <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
-            {pages.map(page => <PageCard key={page.id} {...page} />)}
-        </Box>
-        <Box width={[0, 0, 1 / 4]}></Box>
-    </Flex>
+    return <Tooltip content={text.tooltips.pageList}>
+        <Flex>
+            <Box width={[0, 0, 1 / 4]}></Box>
+            <Box width={[1, 1, 2 / 4]}>
+                <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
+                {pages.map(page => <PageCard key={page.id} {...page} />)}
+            </Box>
+            <Box width={[0, 0, 1 / 4]}></Box>
+        </Flex>
+    </Tooltip>
 };

@@ -34,6 +34,7 @@ export const PageCreator = () => {
     }, [name]);
 
 
+    //TODO: this function should not be part of UI logic 
     const postPage = async () => {
 
         const page = {
@@ -56,11 +57,8 @@ export const PageCreator = () => {
     return <Flex py={[1, 2, 3]}>
 
         <Box width={1 / 3} />
-        <Box
-            as='form'
-            onSubmit={e => e.preventDefault()}
-            width={2 / 4}
-        >
+        <Box as='form' onSubmit={e => e.preventDefault()} width={2 / 4}>
+
             <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
 
             <Flex>
@@ -69,11 +67,11 @@ export const PageCreator = () => {
                         setName(value)
                     }} />
                 </Tooltip>
-                <Tippy>
+                <Tooltip content={text.tooltips.pageCreatorButton}>
                     <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage}>
                         {text.pageCreator.button}
                     </Button>
-                </Tippy>
+                </Tooltip>
             </Flex>
 
         </Box>

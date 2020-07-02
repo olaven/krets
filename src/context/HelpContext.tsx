@@ -1,25 +1,30 @@
 import React, { createContext, ReactElement, useState } from "react";
-import { Box } from "victory";
+import * as text from "../text";
 import { Button } from "rebass";
 import Tippy from "@tippyjs/react";
 
 
-interface ContextInterface {
-    //    visible: boolean,
+interface IHelpContext {
+    /**
+     * Button triggering context-wide
+     * `Tooltip`-visibility
+     */
     HelpButton: () => ReactElement,
+    /**
+     * Tooltip to be wrapped around other 
+     * elements. 
+     */
     Tooltip: ({ content, children }) => ReactElement
 }
-const defaultValues: ContextInterface =
-    { /* visible: false, */ HelpButton: null, Tooltip: null };
+const defaultValues: IHelpContext =
+    { HelpButton: null, Tooltip: null };
 
-export const HelpContext = createContext<ContextInterface>(defaultValues);
+export const HelpContext = createContext<IHelpContext>(defaultValues);
 
 /**
- * Provides an interface to control tootips. 
- * A `HelpButton` is returned if `predicate` is true. 
- * `HelpButton` toggles `visible`, which may be used to show help 
- * accross components. 
- * @param predicate deciding wether button should be visible
+ * Provides an interface to control Tooltips. 
+ * @param predicate deciding wether `HelpButton` should be visible or not
+ * @returns {IHelpContext}
  */
 export const HelpContextProvider = ({ predicate, children }) => {
 
@@ -33,11 +38,11 @@ export const HelpContextProvider = ({ predicate, children }) => {
 
     const HelpButton = () => predicate() ?
         visible ?
-            <Button onClick={() => { setVisible(false) }}>
-                Skjoenner
-                </Button> :
-            <Button onClick={() => { setVisible(true) }}>
-                Vis hjelp
+            <Button onClick={() => { setVisible(false) }} backgroundColor="attention">
+                {text.tooltips.understoodButton}
+            </Button> :
+            <Button onClick={() => { setVisible(true) }} backgroundColor="attention">
+                {text.tooltips.showHelpButton}
             </Button> :
         null
 
