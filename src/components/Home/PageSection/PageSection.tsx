@@ -11,7 +11,7 @@ const PageSectionContent = () => {
     const { HelpButton } = useContext(HelpContext);
 
     return <>
-        <HelpButton />
+        <HelpButton margin="auto" width={[1, 1, 1 / 4]} />
         <PageCreator />
         <PageList />
     </>
