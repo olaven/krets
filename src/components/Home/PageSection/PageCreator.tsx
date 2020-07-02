@@ -8,7 +8,6 @@ import * as text from "../../../text"
 import Tippy from "@tippyjs/react";
 import { HelpContext } from "../../../context/HelpContext";
 
-
 export const nameToId = (name: string) => name
     .toLowerCase()
     .replace(/(Ø|ø)/g, "oe")
