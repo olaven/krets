@@ -3,9 +3,10 @@ import { ThemeProvider } from 'emotion-theming'
 import { UserContextProvider } from '../context/UserContext'
 import { Layout } from '../components/layout'
 import { KretsTheme } from '../components/theme'
+import 'tippy.js/dist/tippy.css';
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp ({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return <UserContextProvider>
     <Head>
       <title>Krets.</title>
@@ -21,5 +22,5 @@ export default function MyApp ({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>
-         </UserContextProvider>
+  </UserContextProvider>
 }
