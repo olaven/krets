@@ -52,12 +52,18 @@ export const buttons = strings({
     en: {
         logout: "Log out",
         login: "Log in",
-        getStarted: "Get started!"
+        getStarted: "Get started!",
+        toAdmin: "Received feedback",
+        toQR: "My QR-code",
+        toPage: "My feeedback page"
     },
     no: {
         logout: "Logg ut",
         login: "Logg inn",
-        getStarted: "Kom i gang!"
+        getStarted: "Kom i gang!",
+        toAdmin: "Mottatte tilbakemeldinger",
+        toQR: "Min QR-kode",
+        toPage: "Min tilbakemeldingsside"
     }
 });
 

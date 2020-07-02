@@ -42,10 +42,10 @@ const ListButton = (href: string, text: string) => <Box mx={[0, 1, 2]}>
 </Box>;
 
 export const ToAdmin = ({ id }) =>
-    ListButton(`/${id}/admin`, "Mine tilbakemeldinger" /* "trending_up" */);
+    ListButton(`/${id}/admin`, text.buttons.toAdmin /* "trending_up" */);
 
 export const ToQR = ({ id }) =>
-    ListButton(`/${id}/code`, "QR-kode" /* "qr_code" */);
+    ListButton(`/${id}/code`, text.buttons.toQR /* "qr_code" */);
 
 export const ToPage = ({ id }) =>
-    ListButton(`/${id}`, "Tilbakemeldingsside" /* "reply" */);
+    ListButton(`/${id}`, text.buttons.toPage /* "reply" */);
