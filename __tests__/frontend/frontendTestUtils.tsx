@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import { PageModel } from '../../src/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
+import { HelpContext, HelpContextProvider } from '../../src/context/HelpContext';
 
 
 export const renderWithPagesContext = (
@@ -13,7 +14,9 @@ export const renderWithPagesContext = (
     value={{
         pages, refreshPages
     }}>
-    {Component}
+    <HelpContextProvider predicate={() => pages.length === 0}>
+        {Component}
+    </HelpContextProvider>
 </PagesContext.Provider>);
 
 
