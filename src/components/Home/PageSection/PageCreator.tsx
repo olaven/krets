@@ -6,7 +6,6 @@ import { post } from "../../../http/methods";
 import { OK, CREATED } from "../../../http/codes";
 import * as text from "../../../text"
 
-
 export const nameToId = (name: string) => name
     .toLowerCase()
     .replace(/(Ø|ø)/g, "oe")
