@@ -67,6 +67,17 @@ export const buttons = strings({
     }
 });
 
+export const tooltips = strings({
+    en: {
+        pageCreatorInput: "Enter a name related to the thing you want to get feedback on!",
+        pageCreatorButton: "Create your page!"
+    },
+    no: {
+        pageCreatorInput: "Lag en Krets-side som representerer det du vil ha tilbakemelding på!",
+        pageCreatorButton: "Klikk her for å lage siden"
+    }
+})
+
 export const myPages = strings({
     en: {
         header: "My Krets-pages:"

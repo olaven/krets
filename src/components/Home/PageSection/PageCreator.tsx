@@ -22,7 +22,7 @@ export const nameToId = (name: string) => name
 export const PageCreator = () => {
 
     const { refreshPages } = useContext(PagesContext);
-    const { visible } = useContext(HelpContext);
+    const { Tooltip } = useContext(HelpContext);
 
     const [name, setName] = useState("");
     const [id, setId] = useState("");
@@ -54,9 +54,8 @@ export const PageCreator = () => {
     };
 
     return <Flex py={[1, 2, 3]}>
-        <Tippy content={"TOOLTIP HEIHEI"} visible={visible}>
-            <Box width={1 / 3} />
-        </Tippy>
+
+        <Box width={1 / 3} />
         <Box
             as='form'
             onSubmit={e => e.preventDefault()}
@@ -65,12 +64,16 @@ export const PageCreator = () => {
             <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
 
             <Flex>
-                <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
-                    setName(value)
-                }} />
-                <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage}>
-                    {text.pageCreator.button}
-                </Button>
+                <Tooltip content={text.tooltips.pageCreatorInput}>
+                    <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
+                        setName(value)
+                    }} />
+                </Tooltip>
+                <Tippy>
+                    <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage}>
+                        {text.pageCreator.button}
+                    </Button>
+                </Tippy>
             </Flex>
 
         </Box>
