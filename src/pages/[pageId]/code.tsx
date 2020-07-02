@@ -20,9 +20,15 @@ export default () => {
 
     return <Box m={"auto"} py={[4, 8, 16]}>
         <Flex m={"auto"}>
-            <Box m={"auto"} style={{ textAlign: "center" }}>
-                <Heading m="auto" color={"primary"}>{headingText}</Heading>
-                <QRCode value={pageLink} enableCORS={false} />
+            <Box
+                m={"auto"}
+                p={[1, 2, 3]}
+                style={{ textAlign: "center" }}
+                sx={{
+                    bg: "primary",
+                }}>
+                <QRCode value={pageLink} enableCORS={false} size={350} fgColor={'teal'} />
+                <Heading my={[0, 1, 2]} m="auto" color={"secondary"}>{headingText}</Heading>
             </Box>
         </Flex>
     </Box>

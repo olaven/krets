@@ -39,11 +39,11 @@ export const response = strings({
 
 export const page = strings({
     en: {
-        header: "Scan to give feedback to",
+        header: "Give feedback to",
         loading: "(Loading...)"
     },
     no: {
-        header: "Scan og gi tilbakemelding til",
+        header: "Gi tilbakemelding til",
         loading: "(Laster...)"
     }
 })
