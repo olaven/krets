@@ -19,7 +19,7 @@ export const Explanation = () => {
 
     const [wantsHelp, setWantsHelp] = useState(false);
 
-    return <Box>
+    return <Box aria-label="explanation-section">
         {wantsHelp ?
             <ExplanationContent onClick={() => { setWantsHelp(false) }} /> :
             <ExplanationButton onClick={() => { setWantsHelp(true) }} />}

@@ -5,9 +5,10 @@
 import React from "react";
 import { waitFor, render, fireEvent, findByText } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
-import { PagesContext } from "../../../src/context/PagesContext";
-import * as text from "../../../src/text"
-import { PageCreator, nameToId } from "../../../src/components/Home/PageSection/PageCreator";
+import { PagesContext } from "../../../../src/context/PagesContext";
+import * as text from "../../../../src/text"
+import { PageCreator, nameToId } from "../../../../src/components/Home/PageSection/PageCreator";
+import { launch } from "./utils";
 
 describe("The nameToId function", () => {
 
@@ -63,21 +64,10 @@ describe("The nameToId function", () => {
 
 describe("The page creator component", () => {
 
-    const refreshPagesMock = jest.fn(async () => {
-
-        // intentionally blank. 
-    });
-    const launch = () => render(
-        <PagesContext.Provider value={{
-            refreshPages: refreshPagesMock
-        }}>
-            <PageCreator />
-        </PagesContext.Provider>
-    );
 
     it("Does render", () => {
 
-        const { findByText } = launch();
+        const { findByText } = launch(<PageCreator />);
 
 
         waitFor(() => {
@@ -89,7 +79,7 @@ describe("The page creator component", () => {
     it("Updates preview on input", () => {
 
         const value = "some new value"
-        const { getByLabelText, getByText } = launch();
+        const { getByLabelText, getByText } = launch(<PageCreator />);
 
         waitFor(() => {
 
