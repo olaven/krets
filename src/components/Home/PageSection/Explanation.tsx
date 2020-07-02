@@ -5,11 +5,14 @@ import { Box, Button } from "rebass";
 
 const ExplanationContent = ({ onClick }) => <Box>
     Hjelpen staar her!
-    <Button onClick={onClick}>Skjønner!</Button>
+    <Button onClick={onClick} id="help-understood-button">
+        Skjønner!
+    </Button>
 </Box>
 
-const ExplanationButton = ({ onClick }) => <Button onClick={onClick}>
-    Vis meg hvordan Krets funker!
+const ExplanationButton = ({ onClick }) =>
+    <Button onClick={onClick} id="get-help-button">
+        Vis meg hvordan Krets funker!
 </Button>
 
 export const Explanation = () => {

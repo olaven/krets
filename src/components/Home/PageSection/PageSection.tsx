@@ -5,12 +5,9 @@ import { PageList } from "./PageList";
 import { Explanation } from "./Explanation";
 
 
-export const PageSection = props => {
-
-    const { user } = props;
-    return <PagesContextProvider user={user}>
+export const PageSection = ({ user }) =>
+    <PagesContextProvider user={user}>
         <Explanation />
         <PageCreator />
         <PageList />
     </PagesContextProvider>
-}

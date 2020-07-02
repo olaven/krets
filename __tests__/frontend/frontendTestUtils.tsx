@@ -1,4 +1,22 @@
 import * as nextRouter from 'next/router';
+import { ReactElement } from 'react';
+import { PageModel } from '../../src/models';
+import { PagesContext } from "../../src/context/PagesContext";
+import { render } from '@testing-library/react';
+
+
+export const renderWithPagesContext = (
+    Component: ReactElement,
+    pages: PageModel[] = [],
+    refreshPages = jest.fn(async () => { })
+) => render(<PagesContext.Provider
+    value={{
+        pages, refreshPages
+    }}>
+    {Component}
+</PagesContext.Provider>);
+
+
 
 export const mockRouter = (pageId: string) => {
     //@ts-ignore
@@ -18,13 +36,3 @@ export const mockGet = <T extends unknown>(payload: T) => {
         } as Response);
     });
 }
-
-
-
-describe("test test ", () => {
-
-    test("something", () => {
-
-        expect(2).toEqual(2);
-    })
-});

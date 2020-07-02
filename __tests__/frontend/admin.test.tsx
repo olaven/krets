@@ -11,7 +11,7 @@ import { ReseponseModel } from "../../src/models";
 import * as text from "../../src/text"
 import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
-import { mockGet, mockRouter } from "./frontedTestUtils";
+import { mockGet, mockRouter } from "./frontendTestUtils";
 import { AdminPageContext } from "../../src/context/AdminPageContext";
 import { UserContext } from "../../src/context/UserContext";
 

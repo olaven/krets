@@ -4,16 +4,21 @@
 
 import React from "react";
 import faker from "faker";
-import { waitFor } from "@testing-library/react"
+import { waitFor, fireEvent, getByLabelText } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
 import { Explanation } from "../../../../src/components/Home/PageSection/Explanation"
-import { launch } from "./utils";
+import { renderWithPagesContext } from "../../frontendTestUtils";
 
 describe("The Explanation Component", () => {
 
+    //TODO: Replace this after localizing 
+    const helpContentText = "Hjelpen staar her!"
+    const helpButtonText = "Vis meg hvordan Krets funker!";
+    const helpUnderstoodButtonText = "Skjønner!";
+
     it("Renders when there are no pages", () => {
 
-        const { getByLabelText } = launch(<Explanation />);
+        const { getByLabelText } = renderWithPagesContext(<Explanation />);
         waitFor(() => {
 
             expect(getByLabelText("explanation-section")).toBeInTheDocument();
@@ -22,12 +27,27 @@ describe("The Explanation Component", () => {
 
     it("Does not render when there are pages", () => {
 
-        const { getByLabelText } = launch(<Explanation />, [
+        const { getByLabelText } = renderWithPagesContext(<Explanation />, [
             { id: "my-page", name: "My Page", owner_id: faker.random.uuid() }
         ]);
         waitFor(() => {
 
             expect(getByLabelText("explanation-section")).not.toBeInTheDocument();
         });
+    });
+
+    it("Shows help after clicking button", () => {
+
+        const { getByText } = renderWithPagesContext(< Explanation />);
+        waitFor(() => {
+            expect(getByText(helpContentText)).not.toBeInTheDocument();
+        });
+
+        fireEvent.click(getByText(helpButtonText));
+
+        waitFor(() => {
+
+            expect(getByText(helpContentText)).toBeInTheDocument();
+        })
     });
 });

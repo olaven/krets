@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { PagesContext } from "../../../../src/context/PagesContext";
 import * as text from "../../../../src/text"
 import { PageCreator, nameToId } from "../../../../src/components/Home/PageSection/PageCreator";
-import { launch } from "./utils";
+import { renderWithPagesContext } from "../../frontendTestUtils";
 
 describe("The nameToId function", () => {
 
@@ -67,7 +67,7 @@ describe("The page creator component", () => {
 
     it("Does render", () => {
 
-        const { findByText } = launch(<PageCreator />);
+        const { findByText } = renderWithPagesContext(<PageCreator />);
 
 
         waitFor(() => {
@@ -79,7 +79,7 @@ describe("The page creator component", () => {
     it("Updates preview on input", () => {
 
         const value = "some new value"
-        const { getByLabelText, getByText } = launch(<PageCreator />);
+        const { getByLabelText, getByText } = renderWithPagesContext(<PageCreator />);
 
         waitFor(() => {
 
