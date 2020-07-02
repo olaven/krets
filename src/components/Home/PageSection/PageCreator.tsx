@@ -5,6 +5,8 @@ import { PagesContext } from "../../../context/PagesContext";
 import { post } from "../../../http/methods";
 import { OK, CREATED } from "../../../http/codes";
 import * as text from "../../../text"
+import Tippy from "@tippyjs/react";
+import { HelpContext } from "../../../context/HelpContext";
 
 
 export const nameToId = (name: string) => name
@@ -20,6 +22,8 @@ export const nameToId = (name: string) => name
 export const PageCreator = () => {
 
     const { refreshPages } = useContext(PagesContext);
+    const { visible } = useContext(HelpContext);
+
     const [name, setName] = useState("");
     const [id, setId] = useState("");
 
@@ -50,7 +54,9 @@ export const PageCreator = () => {
     };
 
     return <Flex py={[1, 2, 3]}>
-        <Box width={1 / 3} />
+        <Tippy content={"TOOLTIP HEIHEI"} visible={visible}>
+            <Box width={1 / 3} />
+        </Tippy>
         <Box
             as='form'
             onSubmit={e => e.preventDefault()}
