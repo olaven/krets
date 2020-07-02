@@ -1,6 +1,7 @@
 import { PagesContext } from "../../../context/PagesContext"
 import { useContext, useState } from "react";
 import { Box, Button, Text, Heading } from "rebass";
+import Tippy from '@tippyjs/react';
 import * as text from "../../../text"
 
 
@@ -29,10 +30,12 @@ const ExplanationContent = ({ onClick }) => <Box>
     </Button>
 </Box>
 
-const ExplanationButton = ({ onClick }) =>
-    <Button onClick={onClick} id="get-help-button">
+const ExplanationButton = ({ onClick }) => <Tippy content="Litt hjelp som tekst" visible={true}>
+<Button onClick={onClick} id="get-help-button">
         Vis meg hvordan Krets funker!
 </Button>
+</Tippy>
+    
 
 export const Explanation = () => {
 

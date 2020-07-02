@@ -16,6 +16,7 @@
     "@auth0/nextjs-auth0": "^0.13.0",
     "@emotion/core": "^10.0.28",
     "@rebass/forms": "^4.0.6",
+    "@tippyjs/react": "^4.0.5",
     "emotion-theming": "^10.0.27",
     "next": "^9.4.4",
     "node-pg-migrate": "^5.2.0",
