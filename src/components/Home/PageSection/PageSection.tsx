@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { PagesContextProvider, PagesContext } from "../../../context/PagesContext";
 import { PageCreator } from "./PageCreator";
 import { PageList } from "./PageList";
-import { Explanation } from "./Explanation";
 import { HelpContextProvider, HelpContext } from "../../../context/HelpContext";
 
 
