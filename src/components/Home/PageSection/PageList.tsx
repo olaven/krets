@@ -4,7 +4,7 @@ import { ToAdmin, ToQR, ToPage } from "../../tiny/buttons";
 import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
 
-const PageCard = ({ id, name, responses }) => <Box m={[2, 3, 4]}>
+const PageCard = ({ id, name, responses }) => <Box>
     <Card sx={{ borderTopStyle: "solid", borderColor: "primary", borderWidth: "1px" }}>
 
         <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{name}</Heading>
