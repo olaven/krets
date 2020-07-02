@@ -1,8 +1,7 @@
 
 //TODO: placeholder because query does not work in jest test (node env) https://github.com/vercel/next.js/issues/13505
 
-
-import {pages} from "../../../database/pages";
+import { pages } from "../../../database/pages";
 import { NOT_FOUND } from "../../../http/codes";
 
 const getId = (url: string) => {
