@@ -67,6 +67,23 @@ export const buttons = strings({
     }
 });
 
+export const tooltips = strings({
+    en: {
+        showHelpButton: "Show help",
+        understoodButton: "Understood!",
+        pageCreatorInput: "Enter a name related to the thing you want to get feedback on.",
+        pageCreatorButton: "Create your page!",
+        pageList: "The pages you create show up here"
+    },
+    no: {
+        showHelpButton: "Vis hjelp",
+        understoodButton: "Skjønner!",
+        pageCreatorInput: "Lag en Krets-side som representerer det du vil ha tilbakemelding på!",
+        pageCreatorButton: "Klikk her for å lage siden",
+        pageList: "Sidene du lager dukker opp her"
+    }
+})
+
 export const myPages = strings({
     en: {
         header: "My Krets-pages:"

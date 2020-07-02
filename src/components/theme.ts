@@ -13,7 +13,8 @@ export const KretsTheme = {
         secondary: "#FDFEFC ",
         primary: "teal", //'#B4497C',
         success: '#048243',
-        failure: '#D5174E'
+        failure: '#D5174E',
+        attention: 'orange',
     },
     space: [
         4, 8, 16, 32, 64, 128, 256

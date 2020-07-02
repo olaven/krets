@@ -11,7 +11,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { UserContext, UserContextProvider } from "../../../src/context/UserContext";
 import { PagesContextProvider } from "../../../src/context/PagesContext";
 import * as text from "../../../src/text"
-import { mockGet } from "./frontedTestUtils";
+import { mockGet } from "./frontendTestUtils";
 import { stringify } from "querystring";
 
 describe("The home page", () => {

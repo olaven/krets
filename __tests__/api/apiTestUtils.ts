@@ -61,12 +61,3 @@ export const teardownServer = async (server: Server) => {
 
     await server.close();
 };
-
-//TODO: REMove this (and counterpart in frontendtestutils)
-describe("test test ", () => {
-
-    test("something", () => {
-
-        expect(2).toEqual(2);
-    })
-});

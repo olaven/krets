@@ -2,7 +2,7 @@ import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 
 export default class extends Document {
-  render () {
+  render() {
     return <html>
       <Head>
         {/* <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap" rel="stylesheet"/> */}
@@ -16,6 +16,6 @@ export default class extends Document {
         <Main />
         <NextScript />
       </body>
-           </html>
+    </html>
   }
 }

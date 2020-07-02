@@ -5,7 +5,12 @@ import { PageModel } from "../models";
 
 
 //TODO: proper types
-export const PagesContext = createContext({} as any);
+export const PagesContext = createContext<{
+    pages: PageModel[],
+    refreshPages: () => Promise<any>
+}>({
+    pages: [], refreshPages: async () => { }
+});
 
 export const PagesContextProvider = ({ user, children }) => {
 
