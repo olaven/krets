@@ -14,7 +14,13 @@ describe("The Explanation Component", () => {
     //TODO: Replace this after localizing 
     const helpContentText = "Hjelpen staar her!"
     const helpButtonText = "Vis meg hvordan Krets funker!";
-    const helpUnderstoodButtonText = "Skjønner!";
+    const understoodButtonText = "Skjønner!";;
+
+    waitFor(() => {
+
+        expect(getByText(helpContentText)).not.toBeInTheDocument();
+        expect(getByText(helpButtonText)).toBeInTheDocument();
+    });
 
     it("Renders when there are no pages", () => {
 
@@ -48,6 +54,24 @@ describe("The Explanation Component", () => {
         waitFor(() => {
 
             expect(getByText(helpContentText)).toBeInTheDocument();
-        })
+        });
     });
+
+    it("Closes when the user clicks appropriate button", () => {
+
+        const { getByText } = renderWithPagesContext(<Explanation />);
+
+        fireEvent.click(getByText(helpButtonText))
+        waitFor(() => {
+            expect(getByText(helpContentText)).toBeInTheDocument();
+        });
+
+        fireEvent.click(getByText(understoodButtonText));
+
+        waitFor(() => {
+
+            expect(getByText(helpContentText)).not.toBeInTheDocument();
+            expect(getByText(helpButtonText)).toBeInTheDocument();
+        });
+    })
 });
