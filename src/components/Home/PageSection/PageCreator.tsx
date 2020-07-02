@@ -7,7 +7,6 @@ import { OK, CREATED } from "../../../http/codes";
 import * as text from "../../../text"
 import { HelpContext } from "../../../context/HelpContext";
 
-
 export const nameToId = (name: string) => name
     .toLowerCase()
     .replace(/(Ø|ø)/g, "oe")
