@@ -44,14 +44,20 @@ export const HelpContextProvider = ({ predicate, children }) => {
         {text}
     </Button >
 
-    const HelpButton = (props) => predicate() ? <Box {...props}>
+    //NOTE: questionable gain by turning this into an HOF instead of just passing it as props.. I should reconsider this.
+    const modifyVisibility = (visible: boolean) =>
+        () => {
+            setVisible(visible)
+        }
+
+    const HelpButton = (props: any) => predicate() ? <Box {...props}>
         {visible ?
             <ButtonBase
                 text={text.tooltips.understoodButton}
-                onClick={() => { setVisible(false) }} /> :
+                onClick={modifyVisibility(false)} /> :
             <ButtonBase
                 text={text.tooltips.showHelpButton}
-                onClick={() => { setVisible(true) }} />
+                onClick={modifyVisibility(true)} />
         }
     </Box> : null
 

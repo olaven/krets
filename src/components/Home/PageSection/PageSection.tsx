@@ -2,31 +2,21 @@ import React, { useContext } from "react";
 import { PagesContextProvider, PagesContext } from "../../../context/PagesContext";
 import { PageCreator } from "./PageCreator";
 import { PageList } from "./PageList";
-import { HelpContextProvider, HelpContext } from "../../../context/HelpContext";
+import { HelpContextProvider } from "../../../context/HelpContext";
 
 
-const PageSectionContent = () => {
+const activateTooltipIfPagecount = (amount: number) =>
+    () => {
 
-    const { HelpButton } = useContext(HelpContext);
+        const { pages } = useContext(PagesContext);
+        return pages.length === amount;
+    }
 
-    return <>
-        <HelpButton margin="auto" width={[1, 1, 1 / 4]} />
+export const PageSection = ({ user }) => <PagesContextProvider user={user}>
+    <HelpContextProvider predicate={activateTooltipIfPagecount(0)}>
         <PageCreator />
+    </HelpContextProvider>
+    <HelpContextProvider predicate={activateTooltipIfPagecount(1)}>
         <PageList />
-    </>
-}
-
-
-export const PageSection = ({ user }) => {
-
-    return <PagesContextProvider user={user}>
-        <HelpContextProvider predicate={() => {
-
-            const { pages } = useContext(PagesContext)
-            return pages.length === 0;
-        }}>
-            <PageSectionContent />
-        </HelpContextProvider>
-    </PagesContextProvider>
-
-}
+    </HelpContextProvider>
+</PagesContextProvider>; 

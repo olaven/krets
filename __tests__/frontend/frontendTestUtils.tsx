@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { PageModel } from '../../src/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
-import { HelpContext, HelpContextProvider } from '../../src/context/HelpContext';
+import { HelpContextProvider } from '../../src/context/HelpContext';
 
 
 export const renderWithPagesContext = (
