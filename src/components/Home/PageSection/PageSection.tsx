@@ -12,7 +12,7 @@ import { PageList } from "./PageList";
 /**
  * A wrapper around `TooltipHelpProvider` customized for `PageSection`
  */
-const PageTooltipProvider = ({ pageCount, children }) => <TooltipHelpProvider
+export const PageTooltipProvider = ({ pageCount, children }) => <TooltipHelpProvider
     predicate={() => {
 
         const { pages } = useContext(PagesContext);

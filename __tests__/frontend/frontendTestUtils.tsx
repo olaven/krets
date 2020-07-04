@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { PageModel } from '../../src/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
-import { HelpContextProvider } from '../../src/context/HelpContext';
+import { PageTooltipProvider } from '../../src/components/Home/PageSection/PageSection';
 
 
 export const renderWithPagesContext = (
@@ -14,9 +14,9 @@ export const renderWithPagesContext = (
     value={{
         pages, refreshPages
     }}>
-    <HelpContextProvider predicate={() => pages.length === 0}>
+    <PageTooltipProvider pageCount={0}>
         {Component}
-    </HelpContextProvider>
+    </PageTooltipProvider>
 </PagesContext.Provider>);
 
 
