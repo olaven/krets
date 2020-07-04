@@ -28,6 +28,7 @@
     "react-qrcode-logo": "^2.2.1",
     "rebass": "^4.0.7",
     "tippy.js": "^6.2.3",
+    "tooltip-help-react": "^0.0.1",
     "typescript": "^3.9.5",
     "victory": "^34.3.12"
   },

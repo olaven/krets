@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createContext, useState } from "react";
 import { get } from "../http/methods";
 import { AuthModel } from "../models";
