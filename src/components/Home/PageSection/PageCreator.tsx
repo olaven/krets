@@ -5,7 +5,7 @@ import { PagesContext } from "../../../context/PagesContext";
 import { post } from "../../../http/methods";
 import { OK, CREATED } from "../../../http/codes";
 import * as text from "../../../text"
-import { HelpContext } from "../../../context/HelpContext";
+import { TooltipHelp } from "tooltip-help-react";
 
 export const nameToId = (name: string) => name
     .toLowerCase()
@@ -20,7 +20,7 @@ export const nameToId = (name: string) => name
 export const PageCreator = () => {
 
     const { refreshPages } = useContext(PagesContext);
-    const { Tooltip, HelpButton } = useContext(HelpContext);
+    const { Tooltip, HelpButton } = useContext(TooltipHelp);
 
     const [name, setName] = useState("");
     const [id, setId] = useState("");

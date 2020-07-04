@@ -3,11 +3,11 @@ import { ToAdmin, ToQR, ToPage } from "../../tiny/buttons";
 import React, { useContext } from "react";
 import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
-import { HelpContext } from "../../../context/HelpContext";
+import { TooltipHelp } from "tooltip-help-react";
 
 const PageCard = ({ id, name }) => {
 
-    const { Tooltip } = useContext(HelpContext);
+    const { Tooltip } = useContext(TooltipHelp);
 
     return <Box>
         <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
@@ -26,7 +26,8 @@ const PageCard = ({ id, name }) => {
 export const PageList = () => {
 
     const { pages } = useContext(PagesContext);
-    const { Tooltip, HelpButton } = useContext(HelpContext);
+    const { Tooltip, HelpButton } = useContext(TooltipHelp)
+    console.log(HelpButton)
 
     return <>
         <Flex>
@@ -35,7 +36,6 @@ export const PageList = () => {
                 <Tooltip content={text.tooltips.pageList}>
                     <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
                 </Tooltip>
-
                 <HelpButton />
                 {pages.map(page => <PageCard key={page.id} {...page} />)}
             </Box>

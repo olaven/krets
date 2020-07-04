@@ -8677,6 +8677,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+tooltip-help-react@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/tooltip-help-react/-/tooltip-help-react-0.0.1.tgz#a8635625b5cc4043e7070e77750b2cb87c9ad35f"
+  integrity sha512-6yFjTdxQe6vJ4rKla84YQ30jzIKcYvNdImb9W4u+I2Qx8Aw4ewGt5LPp9mFglQiu2Q/apOBwIxkAORhEMuNriw==
+
 tough-cookie@^2.3.3, tough-cookie@~2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.5.0.tgz#cd9fb2a0aa1d5a12b473bd9fb96fa3dcff65ade2"

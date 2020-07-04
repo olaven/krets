@@ -22,11 +22,6 @@ const defaultValues: IHelpContext =
 
 export const HelpContext = createContext<IHelpContext>(defaultValues);
 
-/**
- * Provides an interface to control Tooltips. 
- * @param predicate deciding wether `HelpButton` should be visible or not
- * @returns {IHelpContext}
- */
 export const HelpContextProvider = ({ predicate, children }) => {
 
     const [visible, setVisible] = useState(false);
