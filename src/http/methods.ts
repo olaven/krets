@@ -18,7 +18,7 @@ export const post = async <T>(url: string, payload: T): Promise<[number, T?]> =>
     return [response.status]
 }
 
-export const get = async <T>(url: string): Promise<[number, T?]> => {
+export const get = async <T>(url: string): Promise<[number, T]> => {
 
     const response = await fetch(url);
     if (response.status === OK) {
