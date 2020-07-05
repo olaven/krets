@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { get } from "../http/methods";
 import { PageModel } from "../models";
 import { OK } from "../http/codes";
+import { getPage } from "../http/fetchers";
 
 export const usePage = (id: string): [PageModel, boolean] => {
 
@@ -10,7 +11,7 @@ export const usePage = (id: string): [PageModel, boolean] => {
 
     const fetchPage = async () => {
 
-        const [status, page] = await get<PageModel>(`/api/pages/${id}`);
+        const [status, page] = await getPage(id);
         if (status === OK) {
 
             setPage(page);

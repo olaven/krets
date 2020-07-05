@@ -28,7 +28,6 @@ export const averageUntil = (response: ReseponseModel, responses: ReseponseModel
     return ({
         y: average,
         x: new Date(response.created_at),
-        fill: "yellow"
     })
 }
 
@@ -49,9 +48,7 @@ export const MoodGraph = () => {
             }}
         >
             <VictoryArea
-                /* dataComponent={<EmojiPoint />} */
                 data={coordinates} style={{ data: { fill: "orange", opacity: 0.7 } }} />
-
         </VictoryChart>
     </Box>
 }

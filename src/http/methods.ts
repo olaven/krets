@@ -29,3 +29,9 @@ export const get = async <T>(url: string): Promise<[number, T?]> => {
 
     return [response.status];
 }
+
+export const stripStatus = async <T>(result: Promise<[number, T]>) => {
+
+    const [_, payload] = await result;
+    return payload;
+}

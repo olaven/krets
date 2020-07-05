@@ -6,6 +6,7 @@ import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
 import { MoodGraph } from "./MoodGraph";
 import * as text from "../../text"
+import { CompareContextProvider, CompareContext } from "../../context/CompareContext";
 
 const AdminBox = ({ children }) => <Box
     width={[1, 1 / 2]}
@@ -18,6 +19,7 @@ export const AdminPage = () => {
 
     const { user } = useContext(UserContext);
     const { page, pageLoading } = useContext(AdminPageContext);
+    const { setSelected } = useContext(CompareContext);
 
     if (pageLoading) {
         return <AdminBox>
@@ -35,6 +37,9 @@ export const AdminPage = () => {
         </AdminBox>;
 
     return <Flex flexWrap="wrap">
+        <button onClick={() => {
+            setSelected([page.id]);
+        }}>set selected to this</button>
         <AdminBox>
             <MoodGraph />
         </AdminBox>
