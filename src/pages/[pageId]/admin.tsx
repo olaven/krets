@@ -11,7 +11,8 @@ export default () => {
     const pageId = router.query.pageId as string; //NOTE: sometimes undefined figure out 
     if (!pageId) return <div>waiting</div>
 
-    return <AdminPageContextProvider pageId={pageId}>
+    //TOOD multiple + some way to select pages
+    return <AdminPageContextProvider pageIds={[pageId]}>
         <AdminPage />
     </AdminPageContextProvider>
 };

@@ -14,12 +14,12 @@ const AdminBox = ({ children }) => <Box
     {children}
 </Box>
 
-export const AdminPage = () => {
+export const AdminPage = async () => {
 
     const { user } = useContext(UserContext);
-    const { page, pageLoading } = useContext(AdminPageContext);
+    const { awaitingAdminInfo, loading } = useContext(AdminPageContext);
 
-    if (pageLoading) {
+    if (loading) {
         return <AdminBox>
             {text.adminPage.loading}
         </AdminBox>
@@ -29,7 +29,8 @@ export const AdminPage = () => {
         return <LoginButton />
     }
 
-    if (page && user.sub !== page.owner_id)
+
+    if ((await awaitingAdminInfo[0]) && user.sub !== (await awaitingAdminInfo[0]).page.owner_id)
         return <AdminBox>
             {text.adminPage.notOwning}
         </AdminBox>;
