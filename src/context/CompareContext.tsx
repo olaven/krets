@@ -4,7 +4,7 @@ import { stripStatus } from "../http/methods";
 import { getResponses, getPage } from "../http/fetchers";
 
 
-type PageInformation = {
+export type PageInformation = {
     page: PageModel,
     responses: ReseponseModel[]
 }
