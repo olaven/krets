@@ -4,44 +4,43 @@ import { stripStatus } from "../http/methods";
 import { getResponses, getPage } from "../http/fetchers";
 
 
+type PageInformation = {
+    page: PageModel,
+    responses: ReseponseModel[]
+}
+
 interface ContextInterface {
     setSelected: React.Dispatch<SetStateAction<string[]>>,
-    pages: PageModel[],
-    responses: ReseponseModel[]
+    pageInformations: PageInformation[]
 }
 
 
 export const CompareContext = createContext<ContextInterface>({
     setSelected: () => { },
-    pages: [],
-    responses: []
+    pageInformations: []
 });
 
 export const CompareContextProvider = ({ children }) => {
 
     const [selected, setSelected] = useState<string[]>([]);
-    const [responses, setResponses] = useState<ReseponseModel[]>()
-    const [pages, setPages] = useState<PageModel[]>()
+    const [pageInformations, setPageInformations] = useState<PageInformation[]>([]);
 
     useEffect(() => {
         (async () => {
 
-            const data = selected.map(id => ({
+            const pageInformations = await Promise.all(selected.map(async id => ({
 
-                responses: stripStatus(getResponses(id)),
-                page: stripStatus(getPage(id))
-            }));
+                responses: await stripStatus(getResponses(id)),
+                page: await stripStatus(getPage(id))
+            })));
 
-            const pages = await Promise.all(data.map(({ page }) => page))
-            const responses = (await Promise.all(data.map(({ responses }) => responses))).flat()
-
-            setPages(pages);
-            setResponses(responses);
+            setPageInformations(pageInformations)
+            console.log(pageInformations);
         })()
     }, [selected.length]);
 
 
-    return <CompareContext.Provider value={{ setSelected, pages, responses }}>
+    return <CompareContext.Provider value={{ setSelected, pageInformations }}>
         {children}
     </CompareContext.Provider>
 };
