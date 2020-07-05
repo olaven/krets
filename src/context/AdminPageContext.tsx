@@ -1,49 +1,43 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useContext, Dispatch } from "react";
 import { PageModel, ReseponseModel } from "../models";
 import { usePage } from "../effects/usePage";
 import { useResponses } from "../effects/useResponses";
 import PageId from "../pages/[pageId]";
 import { get } from "../http/methods";
+import { PagesContext } from "./PagesContext";
 
 
-type AwaitingAdminInfo = {
-    fetchedPage: Promise<[number, PageModel?]>,
-    fetchedResponses: Promise<[number, ReseponseModel[]?]>
+type PageInfo = {
+    page: Promise<PageModel>,
+    responses: Promise<ReseponseModel>
 }[]
 
 interface ContextInterface {
-    awaitingAdminInfo: AwaitingAdminInfo,
+    pagesInfo: PageInfo[],
     loading: boolean,
+    setSelectedPages: Dispatch<string[]>
 }
 
 
-export const AdminPageContext = createContext<ContextInterface>({ awaitingAdminInfo: [], loading: true });
+export const AdminPageContext = createContext<ContextInterface>({ pagesInfo: [], loading: true, setSelectedPages: () => { } });
 
+export const AdminPageContextProvider = ({ children }: { pageIds: string[], children: any }) => {
 
-export const AdminPageContextProvider = ({ pageIds, children }: { pageIds: string[], children: any }) => {
-
-    const [awaitingAdminInfo, setAwaitingAdminInfo] = useState<AwaitingAdminInfo>([]);
+    const [selectedPages, setSelectedPages] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
-
+    const [pagesInfo, setPagesInfo] = useState<PageInfo[]>([]);
 
     useEffect(() => {
 
         setLoading(true);
-        const awaitingAdminInfo = pageIds
-            .map(id => {
 
-                //NOTE: somehow generalize fetch, as aving string url mutliple places is no fun in the long run..
-                const fetchedPage = get<PageModel>(`/api/pages/${id}`);
-                const fetchedResponses = get<ReseponseModel[]>(`/api/pages/${id}/responses`);
+        // load here 
+        //TODO actually fetch and populat `pagesInfo`. 
 
-                return { fetchedPage, fetchedResponses }
-            });
-
-        setAwaitingAdminInfo(awaitingAdminInfo);
         setLoading(false);
-    }, [pageIds.length]);
+    }, [selectedPages.length]);
 
-    return <AdminPageContext.Provider value={{ awaitingAdminInfo, loading }}>
+    return <AdminPageContext.Provider value={{ pagesInfo, loading, setSelectedPages }}>
         {children}
     </AdminPageContext.Provider>
 };
