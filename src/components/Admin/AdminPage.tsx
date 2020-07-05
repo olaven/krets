@@ -37,9 +37,6 @@ export const AdminPage = () => {
         </AdminBox>;
 
     return <Flex flexWrap="wrap">
-        <button onClick={() => {
-            setSelected([page.id]);
-        }}>set selected to this</button>
         <AdminBox>
             <MoodGraph />
         </AdminBox>

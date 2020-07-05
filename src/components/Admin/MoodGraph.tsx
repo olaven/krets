@@ -1,8 +1,9 @@
 import { VictoryArea, VictoryAxis, VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryPolarAxis } from "victory";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
 import { Box } from "rebass";
+import { CompareContext } from "../../context/CompareContext";
 
 export const emotionToNumeric = (emotion: Emotion) => ({
     ":-)": 2,
@@ -36,8 +37,20 @@ const averageOverTime = (responses: ReseponseModel[]) => responses
 
 export const MoodGraph = () => {
 
-    const { responses, responsesLoading } = useContext(AdminPageContext);
-    const coordinates = averageOverTime(responses);
+    const { page } = useContext(AdminPageContext);
+    const { pageInformations, setSelected } = useContext(CompareContext);
+
+    useEffect(() => {
+        setSelected([page.id]);
+    }, [])
+
+    const extractedCoordinates = pageInformations
+        .map(({ responses }) => responses)
+        .map(averageOverTime)
+
+    const renderArea = () => extractedCoordinates.map(coordinate => <VictoryArea
+        data={coordinate} style={{ data: { fill: "blue", opacity: 0.5 } }}
+    />);
 
     return <Box>
         <VictoryChart
@@ -47,8 +60,7 @@ export const MoodGraph = () => {
                 onLoad: { duration: 1000 }
             }}
         >
-            <VictoryArea
-                data={coordinates} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+            {renderArea()}
         </VictoryChart>
     </Box>
 }
