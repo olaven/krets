@@ -29,10 +29,3 @@ export const get = async <T>(url: string): Promise<[number, T?]> => {
 
     return [response.status];
 }
-
-
-export const ignoreStatus = async<T>(callresult: Promise<[number, T?]>): Promise<T> => {
-
-    const [status, payload] = await callresult
-    return payload!
-}

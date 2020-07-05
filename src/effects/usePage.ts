@@ -23,7 +23,8 @@ export const usePage = (id: string): [PageModel, boolean] => {
         }
 
         setLoading(false);
-    };
+    }
+        ;
 
     useEffect(() => {
 
