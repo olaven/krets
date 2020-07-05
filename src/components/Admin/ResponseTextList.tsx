@@ -1,35 +1,42 @@
 import { Card, Flex, Box, Text } from "rebass";
 import { AdminPageContext } from "../../context/AdminPageContext"
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ReseponseModel } from "../../models";
 import Emoji from "react-emoji-render";
 import * as text from "../../text";
 
+
+const formatDate = (dateString: string) => {
+
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+
+    const currentYear = new Date().getFullYear();
+    return `${day}/${month}${
+        currentYear !== year ?
+            `/${year}` : ``
+        }`
+}
+
+
 export const ResponseTextList = () => {
 
-    const { responses, responsesLoading } = useContext(AdminPageContext);
+    const { loading, pagesInfo } = useContext(AdminPageContext)
+    const [responses, setResponses] = useState<ReseponseModel[]>([]);
 
-    if (responsesLoading || !responses)
-        return <div>{text.responseList.loading}</div>
+    if (loading)
+        return <div>{text.responseList.loading}</div>;
 
-    if (!responses.length)
-        return <div>{text.responseList.noResponses}</div>
+    if (responses.length === 0)
+        return <div>{text.responseList.noResponses}</div>;
 
-    const formatDate = (dateString: string) => {
+    useEffect(() => {
 
-        const date = new Date(dateString);
 
-        const day = date.getDate();
-        const month = date.getMonth();
-        const year = date.getFullYear();
-
-        const currentYear = new Date().getFullYear();
-        return `${day}/${month}${
-            currentYear !== year ?
-                `/${year}` : ``
-            }`
-    }
-
+    }, [loading]);
 
     const ResponseCard = ({ response }: { response: ReseponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
         <Flex>
@@ -41,8 +48,8 @@ export const ResponseTextList = () => {
     </Card>
 
     return <Flex flexDirection={"column"} my={[1, 2, 3]}>{
-        responses
-            .filter(response => response.text)
+        pagesInfo
+            .map(info => info.responses)
             .map(response =>
                 <ResponseCard key={response.id} response={response} />)
     }</Flex>
