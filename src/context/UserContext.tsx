@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { get } from "../http/methods";
 import { AuthModel } from "../models";
 
@@ -29,7 +29,7 @@ export const UserContextProvider = props => {
 
     };
 
-    React.useEffect(() => { updateUser(); }, []);
+    useEffect(() => { updateUser(); }, []);
 
 
     return <UserContext.Provider value={{ user, updateUser }}>
