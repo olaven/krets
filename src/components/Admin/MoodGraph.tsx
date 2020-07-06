@@ -4,6 +4,7 @@ import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
 import { Box, Heading } from "rebass";
 import { CompareContext } from "../../context/CompareContext";
+import * as text from "../../text"
 
 export const emotionToNumeric = (emotion: Emotion) => ({
     ":-)": 2,
@@ -82,13 +83,13 @@ export const MoodGraph = () => {
                 data={coordinates}
                 style={{ data: { fill: "orange", opacity: 0.7 } }} />
             <VictoryAxis
-                label="Side"
+                label={text.moodGraph.xLabel}
                 style={{
                     axisLabel: { padding: 30 }
                 }}
             />
             <VictoryAxis dependentAxis
-                label="Gjennomsnittlig score"
+                label={text.moodGraph.yLabel}
                 style={{
                     axisLabel: { padding: 40 }
                 }}

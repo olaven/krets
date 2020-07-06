@@ -132,8 +132,14 @@ export const compareSelect = strings({
 
 //NOTE: nothing yet 
 export const moodGraph = strings({
-    en: {},
-    no: {}
+    en: {
+        yLabel: "Average score",
+        xLabel: "Page"
+    },
+    no: {
+        yLabel: "Gjennomsnitlig score",
+        xLabel: "Side"
+    }
 });
 
 export const responseList = strings({
