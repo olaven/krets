@@ -5,7 +5,7 @@ import { pages } from "../../../src/database/pages";
 import { users } from "../../../src/database/users";
 import fetch from "cross-fetch";
 
-describe("Endpoint for getting a specific page", () => {
+describe("Endpoints for specific page", () => {
 
 
     let server;
@@ -13,6 +13,23 @@ describe("Endpoint for getting a specific page", () => {
 
     const fullUrl = (brandId) =>
         `${url}${brandId}`;
+
+
+    const createUser = (id = uid()) =>
+        users.createUser({ id });
+
+    const createPage = async (ownerId: string) => {
+
+        const id = uid();
+        const page = {
+            id: uid(),
+            owner_id: ownerId,
+            name: faker.company.companyName()
+        };
+
+        await pages.createPage(page)
+        return page;
+    }
 
     beforeAll(async () => {
 
@@ -25,30 +42,57 @@ describe("Endpoint for getting a specific page", () => {
         await teardownServer(server)
     });
 
-    it("Returns 200 if page exists", async () => {
 
-        const user = await users.createUser({
-            id: faker.random.uuid()
+    describe("GET requests on specific page", () => {
+        it("Returns 200 if page exists", async () => {
+
+            const user = await createUser();
+            const page = await createPage(user.id);
+
+            const full = fullUrl(page.id);
+
+            const getResponse = await fetch(full);
+            expect(getResponse.status).toEqual(200);
         });
-        const page = {
-            id: uid(),
-            owner_id: user.id,
-            name: faker.company.companyName()
-        };
-        const result = pages.createPage(page);
 
-        const full = fullUrl(page.id);
+        it("Returns 404 if page does not exists", async () => {
 
-        const getResponse = await fetch(full);
-        expect(getResponse.status).toEqual(200);
-    });
+            //NOTE: generating new id instead of using one attached to a page
+            const url = fullUrl(uid());
+            const getResponse = await fetch(url);
+            expect(getResponse.status).toEqual(404);
+        });
 
-    it("Returns 404 if page does not exists", async () => {
+        it("Returns 400 if method is not supported", async () => {
 
-        //NOTE: generating new id instead of using one attached to a page
-        const url = fullUrl(uid());
-        console.log("URL: ", url);
-        const getResponse = await fetch(url);
-        expect(getResponse.status).toEqual(404);
-    });
+            const { id } = await createUser()
+            const page = await createPage(id);
+            const statusFromFetch = async (method: string) => {
+
+                const { status } = await fetch(fullUrl(page.id), { method })
+                return status;
+            }
+
+            const postStatus = await statusFromFetch("POST");
+            const patchtStatus = await statusFromFetch("PATCH");
+            const deleteStatus = await statusFromFetch("DELETE");
+
+            expect(postStatus).toEqual(400);
+            expect(patchtStatus).toEqual(400);
+            expect(deleteStatus).toEqual(400);
+        });
+    })
+
+    describe("Endpoint for updating specific page", () => {
+
+        test("Returns 400 if no data is provided", async () => {
+
+            const user = await createUser();
+            const page = await createPage(user.id);
+
+            const response = await fetch(fullUrl(page.id), { method: "PUT" });
+            expect(response.status).toEqual(400);
+        });
+    })
 });
+
