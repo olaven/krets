@@ -30,11 +30,11 @@ export const mockRouter = (pageId: string) => {
     }));
 }
 
-export const mockGet = <T extends unknown>(payload: T) => {
+export const mockFetch = <T extends unknown>(payload: T, status = 200) => {
 
     global.fetch = jest.fn(() => {
         return Promise.resolve({
-            status: 200,
+            status,
             json: () => Promise.resolve(payload)
         } as Response);
     });

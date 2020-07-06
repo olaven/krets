@@ -3,12 +3,12 @@
  */
 
 import React from "react";
-import { waitFor, render, fireEvent, findByText } from "@testing-library/react"
+import { waitFor, render, fireEvent, findByText, getByText } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
 import { PagesContext } from "../../../../src/context/PagesContext";
 import * as text from "../../../../src/text"
 import { PageCreator, nameToId } from "../../../../src/components/Home/PageSection/PageCreator";
-import { renderWithPagesContext } from "../../frontendTestUtils";
+import { renderWithPagesContext, mockFetch } from "../../frontendTestUtils";
 
 describe("The nameToId function", () => {
 
@@ -94,4 +94,26 @@ describe("The page creator component", () => {
             expect(getByText(nameToId(value))).toBeInTheDocument();
         });
     });
+
+    it("Removes name in input on succesful creation", () => {
+
+        const { getByLabelText, getByText } = renderWithPagesContext(<PageCreator />);
+
+        const name = "Name of my page";
+        const input = getByLabelText("pagename-input");
+        const button = getByLabelText("create-button");
+
+        fireEvent.change(input, { target: { value: name } })
+        waitFor(() => {
+
+            expect(getByText(name)).toBeInTheDocument()
+        });
+
+        mockFetch({}, 201);
+        fireEvent.click(button);
+        waitFor(() => {
+
+            expect(getByText(name)).not.toBeInTheDocument();
+        })
+    })
 });

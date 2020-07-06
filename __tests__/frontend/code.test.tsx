@@ -8,12 +8,12 @@ import { waitFor, render } from "@testing-library/react"
 import { PageModel } from "../../src/models";
 import * as text from "../../src/text"
 import '@testing-library/jest-dom/extend-expect'
-import { mockGet, mockRouter } from "./frontendTestUtils"
+import { mockFetch, mockRouter } from "./frontendTestUtils"
 
 describe("The QR/code page", () => {
 
     //NOT relevant, not waiting for result 
-    mockGet({})
+    mockFetch({})
 
     it("'loading' while waiting for page", async () => {
 
@@ -31,7 +31,7 @@ describe("The QR/code page", () => {
         }
 
         mockRouter(mockPage.id);
-        mockGet(mockPage);
+        mockFetch(mockPage);
 
         const { getByText } = render(<CodePage />);
         await waitFor(() => {
