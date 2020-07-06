@@ -53,7 +53,7 @@ export const MoodGraph = () => {
     const { pageInformations, setSelected } = useContext(CompareContext);
 
     useEffect(() => {
-        setSelected([page.id, "andreside", "tredjeside"]);
+        setSelected([page.id]);
     }, [])
 
     /* const extractedCoordinates = pageInformations

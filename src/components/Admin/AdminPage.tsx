@@ -7,19 +7,20 @@ import { ResponseTextList } from "./ResponseTextList";
 import { MoodGraph } from "./MoodGraph";
 import * as text from "../../text"
 import { CompareContextProvider, CompareContext } from "../../context/CompareContext";
+import { CompareSelect } from "./CompareSelect";
 
-const AdminBox = ({ children }) => <Box
-    width={[1, 1 / 2]}
+const AdminBox = props => <Box
+    width={props.width ? props.width : [1, 1 / 2]}
     p={[1, 2, 3]}
 >
-    {children}
+    {props.children}
 </Box>
 
 export const AdminPage = () => {
 
     const { user } = useContext(UserContext);
     const { page, pageLoading } = useContext(AdminPageContext);
-    const { setSelected } = useContext(CompareContext);
+    const { selected, setsSelected } = useContext(CompareContext);
 
     if (pageLoading) {
         return <AdminBox>
@@ -37,6 +38,9 @@ export const AdminPage = () => {
         </AdminBox>;
 
     return <Flex flexWrap="wrap">
+        <AdminBox width={1}>
+            <CompareSelect />
+        </AdminBox>
         <AdminBox>
             <MoodGraph />
         </AdminBox>

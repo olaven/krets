@@ -27,7 +27,7 @@ export const get = async <T>(url: string): Promise<[number, T]> => {
         return [response.status, payload as T];
     }
 
-    return [response.status];
+    return [response.status, {} as T];
 }
 
 export const stripStatus = async <T>(result: Promise<[number, T]>) => {
