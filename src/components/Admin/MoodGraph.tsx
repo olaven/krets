@@ -1,4 +1,4 @@
-import { VictoryArea, VictoryAxis, VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryPolarAxis, VictoryBar } from "victory";
+import { VictoryArea, VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from "victory"
 import { useContext, useEffect } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
@@ -61,22 +61,39 @@ export const MoodGraph = () => {
         .map(averageOverTime) */
 
 
+
     const coordinates = pageInformations
         .map(({ page, responses }) => ({
             x: page.name,
-            y: responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b)
+            y: responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
         }));
 
 
-
-    return <Box>
+    return coordinates && <Box>
         <VictoryChart
-            name="Name of Chart"
             theme={VictoryTheme.material}
+            animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 }
+            }}
+            domainPadding={{ x: 15 }}
         >
             <VictoryBar
                 data={coordinates}
-            />);
+                style={{ data: { fill: "orange", opacity: 0.7 } }} />
+            <VictoryAxis
+                label="Side"
+                style={{
+                    axisLabel: { padding: 30 }
+                }}
+            />
+            <VictoryAxis dependentAxis
+                label="Gjennomsnittlig score"
+                style={{
+                    axisLabel: { padding: 40 }
+                }}
+            />
+
         </VictoryChart>
     </Box>
 }
