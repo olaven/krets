@@ -65,10 +65,10 @@ export const PageCreator = () => {
                     <Tooltip content={text.tooltips.pageCreatorInput}>
                         <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
                             setName(value)
-                        }} />
+                        }} value={name} />
                     </Tooltip>
                     <Tooltip content={text.tooltips.pageCreatorButton}>
-                        <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage}>
+                        <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage} aria-label={"create-button"}>
                             {text.pageCreator.button}
                         </Button>
                     </Tooltip>
