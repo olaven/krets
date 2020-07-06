@@ -2,7 +2,7 @@ import { VictoryArea, VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from
 import { useContext, useEffect } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
-import { Box } from "rebass";
+import { Box, Heading } from "rebass";
 import { CompareContext } from "../../context/CompareContext";
 
 export const emotionToNumeric = (emotion: Emotion) => ({

@@ -27,7 +27,6 @@ export const PageList = () => {
 
     const { pages } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp)
-    console.log(HelpButton)
 
     return <>
         <Flex>

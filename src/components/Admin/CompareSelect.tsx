@@ -4,6 +4,8 @@ import { AdminPageContext } from "../../context/AdminPageContext";
 import { CompareContext } from "../../context/CompareContext";
 import { PagesContext } from "../../context/PagesContext";
 import { Option } from "react-multi-select-component/dist/lib/interfaces";
+import { Heading } from "rebass";
+import * as text from "../../text";
 
 export const CompareSelect = () => {
 
@@ -33,10 +35,13 @@ export const CompareSelect = () => {
         value: id
     }));
 
-    return <MultiSelect
-        labelledBy={"Velg"}
-        options={options}
-        value={selectedLabel}
-        onChange={setSelectedLabel}
-    />
+    return <>
+        <Heading>{text.compareSelect.heading}</Heading>
+        <MultiSelect
+            labelledBy={text.compareSelect.choose}
+            options={options}
+            value={selectedLabel}
+            onChange={setSelectedLabel}
+        />
+    </>
 }

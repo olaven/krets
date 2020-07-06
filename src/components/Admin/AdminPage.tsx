@@ -20,7 +20,6 @@ export const AdminPage = () => {
 
     const { user } = useContext(UserContext);
     const { page, pageLoading } = useContext(AdminPageContext);
-    const { selected, setsSelected } = useContext(CompareContext);
 
     if (pageLoading) {
         return <AdminBox>
