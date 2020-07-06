@@ -25,6 +25,7 @@
     "react-dom": "^16.13.1",
     "react-emoji-render": "^1.2.4",
     "react-localization": "^1.0.15",
+    "react-multi-select-component": "^2.0.12",
     "react-qrcode-logo": "^2.2.1",
     "rebass": "^4.0.7",
     "tippy.js": "^6.2.3",

@@ -6,13 +6,26 @@ import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
 import { MoodGraph } from "./MoodGraph";
 import * as text from "../../text"
+import { CompareSelect } from "./CompareSelect";
 
-const AdminBox = ({ children }) => <Box
-    width={[1, 1 / 2]}
+const AdminBox = props => <Box
+    width={props.width ? props.width : [1, 1 / 2]}
     p={[1, 2, 3]}
 >
-    {children}
+    {props.children}
 </Box>
+
+const AdminContent = () => <Flex flexWrap="wrap">
+    <AdminBox width={1}>
+        <CompareSelect />
+    </AdminBox>
+    <AdminBox>
+        <MoodGraph />
+    </AdminBox>
+    <AdminBox>
+        <ResponseTextList />
+    </AdminBox>
+</Flex>
 
 export const AdminPage = () => {
 
@@ -34,12 +47,5 @@ export const AdminPage = () => {
             {text.adminPage.notOwning}
         </AdminBox>;
 
-    return <Flex flexWrap="wrap">
-        <AdminBox>
-            <MoodGraph />
-        </AdminBox>
-        <AdminBox>
-            <ResponseTextList />
-        </AdminBox>
-    </Flex>
+    return <AdminContent />
 }

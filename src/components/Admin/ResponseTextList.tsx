@@ -9,6 +9,7 @@ export const ResponseTextList = () => {
 
     const { responses, responsesLoading } = useContext(AdminPageContext);
 
+
     if (responsesLoading || !responses)
         return <div>{text.responseList.loading}</div>
 

@@ -119,10 +119,27 @@ export const adminPage = strings({
     }
 });
 
+export const compareSelect = strings({
+    en: {
+        heading: "Compare pages",
+        choose: "Choose pages"
+    },
+    no: {
+        heading: "Sammenlign sider",
+        choose: "Velg sider"
+    }
+})
+
 //NOTE: nothing yet 
 export const moodGraph = strings({
-    en: {},
-    no: {}
+    en: {
+        yLabel: "Average score",
+        xLabel: "Page"
+    },
+    no: {
+        yLabel: "Gjennomsnitlig score",
+        xLabel: "Side"
+    }
 });
 
 export const responseList = strings({

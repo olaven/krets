@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { ReseponseModel } from "../models"
-import { get } from "../http/methods";
 import { OK } from "../http/codes";
+import { getResponses } from "../http/fetchers";
 
 
 //NOTE: Response fetching in this file is a common pattern. Should have common, fitting abstraction
@@ -14,7 +14,7 @@ export const useResponses = (pageId: string): [ReseponseModel[], boolean] => {
     useEffect(() => {
         (async () => {
 
-            const [status, responses] = await get<ReseponseModel[]>(`/api/pages/${pageId}/responses`);
+            const [status, responses] = await getResponses(pageId)
             if (status === OK) {
 
                 setResponses(responses);

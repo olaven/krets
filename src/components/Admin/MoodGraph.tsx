@@ -1,8 +1,10 @@
-import { VictoryArea, VictoryAxis, VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryPolarAxis } from "victory";
-import { useContext } from "react";
+import { VictoryArea, VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from "victory"
+import { useContext, useEffect, useState } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { ReseponseModel, Emotion } from "../../models";
-import { Box } from "rebass";
+import { Box, Heading } from "rebass";
+import { CompareContext, PageInformation } from "../../context/CompareContext";
+import * as text from "../../text"
 
 export const emotionToNumeric = (emotion: Emotion) => ({
     ":-)": 2,
@@ -10,48 +12,56 @@ export const emotionToNumeric = (emotion: Emotion) => ({
     ":-(": 0,
 }[emotion])
 
-export const averageUntil = (response: ReseponseModel, responses: ReseponseModel[]) => {
+const pageInformationsToCoordinates = (pageInformations: PageInformation[]) => pageInformations
+    .map(({ page, responses }) => ({
+        x: page.name,
+        y: responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
+    }));
 
-    const date = new Date(response.created_at);
-    const relevant = responses
-        .sort((a, b) => new Date(a.created_at) < new Date(b.created_at) ? -1 : 1)
-        .filter(({ created_at }) => new Date(created_at).getTime() <= date.getTime())
+const Graph = ({ coordinates }) => <Box>
+    <VictoryChart
+        theme={VictoryTheme.material}
+        animate={{
+            duration: 2000,
+            onLoad: { duration: 1000 }
+        }}
+        domainPadding={{ x: 15 }}
+    >
+        <VictoryBar
+            data={coordinates}
+            style={{ data: { fill: "orange", opacity: 0.7 } }} />
+        <VictoryAxis
+            label={text.moodGraph.xLabel}
+            style={{
+                axisLabel: { padding: 30 }
+            }}
+        />
+        <VictoryAxis dependentAxis
+            label={text.moodGraph.yLabel}
+            style={{
+                axisLabel: { padding: 40 }
+            }}
+        />
 
-    const sum = relevant.length === 0 ?
-        0 : relevant.length === 1 ?
-            emotionToNumeric(relevant[0].emotion) :
-            relevant
-                .map(({ emotion }) => emotionToNumeric(emotion))
-                .reduce((a, b) => a + b)
-
-    const average = sum / relevant.length;
-    return ({
-        y: average,
-        x: new Date(response.created_at),
-        fill: "yellow"
-    })
-}
-
-const averageOverTime = (responses: ReseponseModel[]) => responses
-    .map(response => averageUntil(response, responses));
+    </VictoryChart>
+</Box>
 
 export const MoodGraph = () => {
 
-    const { responses, responsesLoading } = useContext(AdminPageContext);
-    const coordinates = averageOverTime(responses);
+    const { page } = useContext(AdminPageContext);
+    const { pageInformations, setSelected } = useContext(CompareContext);
+    const [coordinates, setCoordinates] = useState<{ x: string, y: number }[]>([])
 
-    return <Box>
-        <VictoryChart
-            theme={VictoryTheme.material}
-            animate={{
-                duration: 2000,
-                onLoad: { duration: 1000 }
-            }}
-        >
-            <VictoryArea
-                /* dataComponent={<EmojiPoint />} */
-                data={coordinates} style={{ data: { fill: "orange", opacity: 0.7 } }} />
+    useEffect(() => {
+        setSelected([page.id]);
+    }, [])
 
-        </VictoryChart>
-    </Box>
+    useEffect(() => {
+
+        const coordinates = pageInformationsToCoordinates(pageInformations);
+        setCoordinates(coordinates);
+    }, [pageInformations.length])
+
+
+    return coordinates && <Graph coordinates={coordinates} />
 }

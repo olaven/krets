@@ -4,7 +4,7 @@
 
 import React from "react";
 import { AdminPage } from "../../src/components/Admin/AdminPage"
-import { averageUntil, emotionToNumeric } from "../../src/components/Admin/MoodGraph"
+import {/*  averageUntil, */ emotionToNumeric } from "../../src/components/Admin/MoodGraph"
 import { ResponseTextList } from "../../src/components/Admin/ResponseTextList";
 import { waitFor, render } from "@testing-library/react"
 import { ReseponseModel } from "../../src/models";
@@ -67,36 +67,36 @@ describe("Admin page", () => {
 });
 
 describe("Mood graph", () => {
-
-    describe("Calculation of coordinates", () => {
-
-        it("Returns Y coordinate with average", () => {
-
-            const n = faker.random.number(10) + 1;
-
-            const responses = fakeResponses(n);
-            const sum = (responses
-                .map(({ emotion }) => emotion)
-                .map(emotionToNumeric)
-                .reduce((a, b) => a + b))
-
-            const result = averageUntil(responses[responses.length - 1], responses);
-
-            expect(result.y).toEqual(sum / responses.length);
+    /*  //NOTE: commented out as using dates in graphs is currently not done anymore. 
+        describe("Calculation of coordinates", () => {
+    
+            it("Returns Y coordinate with average", () => {
+    
+                const n = faker.random.number(10) + 1;
+    
+                const responses = fakeResponses(n);
+                const sum = (responses
+                    .map(({ emotion }) => emotion)
+                    .map(emotionToNumeric)
+                    .reduce((a, b) => a + b))
+    
+                const result = averageUntil(responses[responses.length - 1], responses);
+    
+                expect(result.y).toEqual(sum / responses.length);
+            });
+    
+            it("Average is just the one if there's just one", () => {
+    
+                const responses = fakeResponses(1);
+                const [response] = responses;
+    
+                const result = averageUntil(response, responses)
+    
+                expect(responses.length).toEqual(1);
+                expect(emotionToNumeric(response.emotion)).toEqual(result.y);
+            });
         });
-
-        it("Average is just the one if there's just one", () => {
-
-            const responses = fakeResponses(1);
-            const [response] = responses;
-
-            const result = averageUntil(response, responses)
-
-            expect(responses.length).toEqual(1);
-            expect(emotionToNumeric(response.emotion)).toEqual(result.y);
-        });
-    });
-
+     */
     describe("The function converting Emotion to numeric value", () => {
 
         it("values happy face over neutral face", () => {

@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { get } from "../http/methods";
+import { getPages } from "../http/fetchers";
 import { OK } from "../http/codes";
 import { PageModel } from "../models";
 
@@ -20,7 +20,7 @@ export const PagesContextProvider = ({ user, children }) => {
 
     const refreshPages = async () => {
 
-        const [status, pages] = await get<PageModel[]>("/api/pages");
+        const [status, pages] = await getPages()
         if (status === OK) {
 
             setPages(pages)
