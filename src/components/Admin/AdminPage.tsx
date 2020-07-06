@@ -6,7 +6,6 @@ import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
 import { MoodGraph } from "./MoodGraph";
 import * as text from "../../text"
-import { CompareContextProvider, CompareContext } from "../../context/CompareContext";
 import { CompareSelect } from "./CompareSelect";
 
 const AdminBox = props => <Box
@@ -15,6 +14,18 @@ const AdminBox = props => <Box
 >
     {props.children}
 </Box>
+
+const AdminContent = () => <Flex flexWrap="wrap">
+    <AdminBox width={1}>
+        <CompareSelect />
+    </AdminBox>
+    <AdminBox>
+        <MoodGraph />
+    </AdminBox>
+    <AdminBox>
+        <ResponseTextList />
+    </AdminBox>
+</Flex>
 
 export const AdminPage = () => {
 
@@ -36,15 +47,5 @@ export const AdminPage = () => {
             {text.adminPage.notOwning}
         </AdminBox>;
 
-    return <Flex flexWrap="wrap">
-        <AdminBox width={1}>
-            <CompareSelect />
-        </AdminBox>
-        <AdminBox>
-            <MoodGraph />
-        </AdminBox>
-        <AdminBox>
-            <ResponseTextList />
-        </AdminBox>
-    </Flex>
+    return <AdminContent />
 }

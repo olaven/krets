@@ -7,6 +7,16 @@ import { Option } from "react-multi-select-component/dist/lib/interfaces";
 import { Heading } from "rebass";
 import * as text from "../../text";
 
+const SelectContent = ({ options, selectedLabel, setSelectedLabel }) => <>
+    <Heading>{text.compareSelect.heading}</Heading>
+    <MultiSelect
+        labelledBy={text.compareSelect.choose}
+        options={options}
+        value={selectedLabel}
+        onChange={setSelectedLabel}
+    />
+</>
+
 export const CompareSelect = () => {
 
     const { page } = useContext(AdminPageContext);
@@ -35,13 +45,8 @@ export const CompareSelect = () => {
         value: id
     }));
 
-    return <>
-        <Heading>{text.compareSelect.heading}</Heading>
-        <MultiSelect
-            labelledBy={text.compareSelect.choose}
-            options={options}
-            value={selectedLabel}
-            onChange={setSelectedLabel}
-        />
-    </>
+    return <SelectContent
+        options={options}
+        selectedLabel={selectedLabel}
+        setSelectedLabel={setSelectedLabel} />
 }
