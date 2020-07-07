@@ -29,6 +29,30 @@ const getId = (url: string) => {
     return id;
 };
 
+const del = async (request: NextApiRequest, response: NextApiResponse) => {
+
+    const id = getId(request.url);
+    const { user } = await auth0.getSession(request);
+
+    if (!user) {
+
+        response
+            .status(UNAUTHORIZED)
+            .send("Not authenticated");
+        return;
+    }
+
+    const page = await pages.getPage(id);
+    if (page.owner_id !== user.sub) {
+
+        response
+            .status(FORBIDDEN)
+            .send("Forbidden");
+    }
+
+    pages.deletePage(page);
+}
+
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 

@@ -2,14 +2,23 @@ import { pages } from "../../src/database/pages";
 import * as faker from "faker";
 import { users } from "../../src/database/users";
 import { UserModel } from "../../src/models";
+import { responses } from "../../src/database/responses";
 
-describe("Database endpoint for pages", () => {
+describe("Database interface for pages", () => {
 
     const createUser = async (): Promise<UserModel> => users.createUser({
         id: faker.random.uuid() as string
     });
 
-    test("Can create page", async () => {
+    const createPage = (ownerId: string) =>
+        pages.createPage({
+            owner_id: ownerId,
+            name: faker.company.companyName(),
+            id: faker.random.uuid()
+        })
+
+
+    it("Can create page", async () => {
 
         const owner = await createUser();
 
@@ -28,7 +37,7 @@ describe("Database endpoint for pages", () => {
         expect(after).toBeTruthy;
     });
 
-    test("Can update page", async () => {
+    it("Can update page", async () => {
 
         const originalName = faker.company.companyName();
         const updatedName = faker.company.companyName();
@@ -52,5 +61,41 @@ describe("Database endpoint for pages", () => {
         const after = await pages.getPage(page.id);
 
         expect(after.name).toEqual(updatedName);
-    })
+    });
+
+    it("Can delete pages", async () => {
+
+
+        const owner = await createUser();
+        const page = await createPage(owner.id);
+
+        const retrievedBefore = await pages.getPage(page.id);
+        expect(retrievedBefore.name).toEqual(page.name);
+
+        await pages.deletePage(page.id);
+
+        const retrievedAfter = await pages.getPage(page.id);
+        expect(retrievedAfter).toBeNull();
+    });
+
+    it("Deletes responses along with page", async () => {
+
+        const owner = await createUser();
+        const page = await createPage(owner.id);
+
+        await responses.createResponse({
+            emotion: ":-(",
+            text: faker.lorem.sentence(),
+            page_id: page.id
+        });
+
+
+        const responsesBefore = await responses.getResponses(page.id);
+        expect(responsesBefore.length).toEqual(1);
+
+        await pages.deletePage(page.id);
+
+        const responsesAfter = await responses.getResponses(page.id);
+        expect(responsesAfter.length).toEqual(0);
+    });
 });

@@ -26,5 +26,5 @@ export const withDatabase = async <T>(action: (client: PoolClient) => Promise<T>
 
 export const firstRow = <T>(result: QueryResult<T>) =>
     result.rowCount > 0 ?
-        result[0] :
+        result.rows[0] :
         null
