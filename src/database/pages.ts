@@ -1,4 +1,4 @@
-import {withDatabase} from "./connect";
+import { withDatabase } from "./connect";
 import { PageModel } from "../models";
 
 
@@ -31,9 +31,15 @@ const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
     else return null;
 });
 
+const updatePage = async (page: PageModel) => {
+
+    const result = await client.query("update pages set name = $1 where id = $2", [page.name, page.id]);
+}
+
 
 export const pages = ({
     getPage,
     getByOwner,
-    createPage
+    createPage,
+    updatePage
 });
