@@ -155,7 +155,7 @@ describe("Endpoints for specific page", () => {
 
             const { status } = await deleteFetch(page.id, owner.id);
             expect(status).toEqual(204);
-        })
+        });
     });
 });
 

@@ -1,5 +1,20 @@
 import { CREATED, OK, NO_CONTENT } from "./codes";
 
+export const del = async <T>(url: string): Promise<[number, T?]> => {
+
+    const response = await fetch(url, {
+        method: "DELETE",
+    });
+
+    if (response.status === OK) {
+
+        const payload = await response.json() as T;
+        return [response.status, payload];
+    }
+
+    return [response.status];
+}
+
 export const put = async <T>(url: string, payload: T): Promise<[number, T?]> => {
 
     const response = await fetch(url, {
