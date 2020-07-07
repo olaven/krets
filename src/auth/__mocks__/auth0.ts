@@ -6,18 +6,21 @@ import { ISession } from "@auth0/nextjs-auth0/dist/session/session";
 import { IApiRoute } from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
 import { UNAUTHORIZED } from "../../http/codes";
 
+const getSession = async (req: NextApiRequest): Promise<ISession> => {
 
-const getSession = async (req: NextApiRequest): Promise<ISession> => ({
-    accessToken: undefined,
-    accessTokenExpiresAt: 0,
-    accessTokenScope: undefined,
-    createdAt: 0,
-    idToken: undefined,
-    refreshToken: undefined,
-    user: {
-        sub: req.headers["x-mock-is-authenticated"]
-    }
-});
+    console.log("request in mocked getsession: ", req.headers);
+    return ({
+        accessToken: undefined,
+        accessTokenExpiresAt: 0,
+        accessTokenScope: undefined,
+        createdAt: 0,
+        idToken: undefined,
+        refreshToken: undefined,
+        user: {
+            sub: req.headers["x-mock-is-authenticated"]
+        }
+    })
+};
 
 export default ({
     handleLogin: (req: NextApiRequest, res: NextApiResponse, options?: LoginOptions) => {

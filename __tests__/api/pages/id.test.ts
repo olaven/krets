@@ -1,9 +1,13 @@
-import { setupServer, teardownServer, uid } from "../apiTestUtils";
+import { setupServer, teardownServer, uid, authenticatedFetch } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
 import { pages } from "../../../src/database/pages";
 import { users } from "../../../src/database/users";
 import fetch from "cross-fetch";
+import PageId from "../../../src/pages/[pageId]";
+
+
+jest.mock("../../../src/auth/auth0");
 
 describe("Endpoints for specific page", () => {
 
@@ -85,13 +89,38 @@ describe("Endpoints for specific page", () => {
 
     describe("Endpoint for updating specific page", () => {
 
-        test("Returns 400 if no data is provided", async () => {
+        const putFetch = (userId: string, pageId: string, payload: any) =>
+            authenticatedFetch(
+                userId,
+                fullUrl(pageId),
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                }
+            );
+
+
+        it("Returns 403 if user does not own the page", async () => {
+
+            const owner = await createUser();
+            const other = await createUser();
+
+            const page = await createPage(owner.id);
+
+            const { status } = await putFetch(other.id, page.id, page)
+            expect(status).toEqual(403);
+        });
+
+        it("Returns 204 on succesful update", async () => {
 
             const user = await createUser();
             const page = await createPage(user.id);
 
-            const response = await fetch(fullUrl(page.id), { method: "PUT" });
-            expect(response.status).toEqual(400);
+            const { status } = await putFetch(user.id, page.id, page);
+            expect(status).toEqual(204);
         });
     })
 });

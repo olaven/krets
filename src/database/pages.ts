@@ -31,10 +31,13 @@ const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
     else return null;
 });
 
-const updatePage = async (page: PageModel) => {
+const updatePage = async (page: PageModel) => withDatabase<PageModel>(async client => {
 
     const result = await client.query("update pages set name = $1 where id = $2", [page.name, page.id]);
-}
+    return result.rowCount > 0 ?
+        result.rows[0] :
+        null
+});
 
 
 export const pages = ({
