@@ -1,4 +1,4 @@
-import { withDatabase } from "./connect";
+import { withDatabase, firstRow } from "./connect";
 import { PageModel } from "../models";
 
 
@@ -26,17 +26,19 @@ const getByOwner = (owner_id: string) => withDatabase<PageModel[]>(async client 
 const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query("select * from pages where id = $1", [id]);
-
-    if (result.rowCount > 0) return result.rows[0];
-    else return null;
+    return firstRow(result);
 });
 
 const updatePage = async (page: PageModel) => withDatabase<PageModel>(async client => {
 
     const result = await client.query("update pages set name = $1 where id = $2", [page.name, page.id]);
-    return result.rowCount > 0 ?
-        result.rows[0] :
-        null
+    return firstRow(result);
+});
+
+const deletePage = async (id: string) => withDatabase<PageModel>(async client => {
+
+    const result = await client.query("delete from pages where id = $1", [id]);
+    return firstRow(result);
 });
 
 
@@ -44,5 +46,6 @@ export const pages = ({
     getPage,
     getByOwner,
     createPage,
-    updatePage
+    updatePage,
+    deletePage
 });
