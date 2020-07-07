@@ -121,6 +121,21 @@ export const adminPage = strings({
     }
 });
 
+export const settings = strings({
+    en: {
+        heading: "Settings page for",
+        loading: "Loading settings page..",
+        changeNameButton: "Change name",
+        changeNameError: "Something wrong happened when updating the name..",
+    },
+    no: {
+        heading: "Instillinger for",
+        loading: "Laster instillinger..",
+        changeNameButton: "Endre navn",
+        changeNameError: "Det skjedde en feil med oppdatering av navn..",
+    }
+})
+
 export const compareSelect = strings({
     en: {
         heading: "Compare pages",
