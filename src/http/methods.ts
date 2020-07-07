@@ -1,4 +1,28 @@
-import { CREATED, OK } from "./codes";
+import { CREATED, OK, NO_CONTENT } from "./codes";
+
+export const put = async <T>(url: string, payload: T): Promise<[number, T?]> => {
+
+    const response = await fetch(url, {
+        method: "put",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    /*
+    * NOTE: 
+    * 204 NO_CONTENT is a perfectly valid response to PUT, but does not contain a body. 
+    * 204 NO_CONTENT is handled the same way as all status codes other than 200 OK and 201 CREATED
+    */
+    if (response.status === OK || response.status === CREATED) {
+
+        const payload = await response.json();
+        return [response.status, payload as T];
+    }
+
+    return [response.status];
+}
 
 export const post = async <T>(url: string, payload: T): Promise<[number, T?]> => {
 

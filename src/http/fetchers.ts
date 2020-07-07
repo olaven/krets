@@ -1,5 +1,8 @@
-import { get } from "./methods";
+import { get, put } from "./methods";
 import { PageModel, ReseponseModel } from "../models";
+
+export const putPage = (page: PageModel) =>
+    put<PageModel>(`/api/pages/${page.id}`, page);
 
 export const getPage = (id: string) =>
     get<PageModel>(`/api/pages/${id}`);
