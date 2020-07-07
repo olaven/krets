@@ -55,7 +55,8 @@ export const buttons = strings({
         getStarted: "Get started!",
         toAdmin: "Received feedback",
         toQR: "My QR-code",
-        toPage: "Give feedback"
+        toPage: "Give feedback",
+        toSettings: "Settings",
     },
     no: {
         logout: "Logg ut",
@@ -63,7 +64,8 @@ export const buttons = strings({
         getStarted: "Kom i gang!",
         toAdmin: "Mottatte tilbakemeldinger",
         toQR: "Min QR-kode",
-        toPage: "Gi tilbakemelding"
+        toPage: "Gi tilbakemelding",
+        toSettings: "Instillinger",
     }
 });
 

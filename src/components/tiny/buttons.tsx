@@ -42,10 +42,13 @@ const ListButton = (href: string, text: string) => <Box mx={0}>
 </Box>;
 
 export const ToAdmin = ({ id }) =>
-    ListButton(`/${id}/admin`, text.buttons.toAdmin /* "trending_up" */);
+    ListButton(`/${id}/admin`, text.buttons.toAdmin);
 
 export const ToQR = ({ id }) =>
-    ListButton(`/${id}/code`, text.buttons.toQR /* "qr_code" */);
+    ListButton(`/${id}/code`, text.buttons.toQR);
 
 export const ToPage = ({ id }) =>
-    ListButton(`/${id}`, text.buttons.toPage /* "reply" */);
+    ListButton(`/${id}`, text.buttons.toPage);
+
+export const ToSettings = ({ id }) =>
+    ListButton(`/${id}/settings`, text.buttons.toSettings); 
