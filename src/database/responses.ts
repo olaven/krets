@@ -24,14 +24,6 @@ const createResponse = async (response: ReseponseModel) => withDatabase<Resepons
     );
 
     if (result.rowCount !== 1) throw "error inserting response..";
-
-    const responseId = result.rows[0].id;
-
-    await client.query(
-        "insert into responses_to_pages(page_id, response_id) values($1, $2)",
-        [response.page_id, responseId]
-    );
-
     return result.rows[0];
 });
 

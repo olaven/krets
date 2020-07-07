@@ -55,7 +55,8 @@ export const buttons = strings({
         getStarted: "Get started!",
         toAdmin: "Received feedback",
         toQR: "My QR-code",
-        toPage: "Give feedback"
+        toPage: "Give feedback",
+        toSettings: "Settings",
     },
     no: {
         logout: "Logg ut",
@@ -63,7 +64,8 @@ export const buttons = strings({
         getStarted: "Kom i gang!",
         toAdmin: "Mottatte tilbakemeldinger",
         toQR: "Min QR-kode",
-        toPage: "Gi tilbakemelding"
+        toPage: "Gi tilbakemelding",
+        toSettings: "Instillinger",
     }
 });
 
@@ -118,6 +120,31 @@ export const adminPage = strings({
         notOwning: "Denne siden eier du ikke."
     }
 });
+
+export const settings = strings({
+    en: {
+        heading: "Settings page for",
+        loading: "Loading settings page..",
+        changeNameButton: "Change name",
+        changeNameError: "Something wrong happened when updating the name..",
+        deletePageButton: "Delete page.",
+        deleteWarning: "Are you sure? This permanently deletes this page, including all responses. Deletion cannot be undone.",
+        deleteConfirmation: "I am sure about this.",
+        deleteCancelation: "Don't delete.",
+        deleteError: "An error occured when deleting.."
+    },
+    no: {
+        heading: "Instillinger for",
+        loading: "Laster instillinger..",
+        changeNameButton: "Endre navn",
+        changeNameError: "Det skjedde en feil med oppdatering av navn..",
+        deleteButton: "Slett side.",
+        deleteWarning: "Er du sikker? Siden og alle responser slettes permanent. Du kan ikke gjøre om dette.",
+        deleteConfirmation: "Jeg er helt sikker.",
+        deleteCancelation: "Ikke slett.",
+        deleteError: "En feil oppsto med slettingen.."
+    }
+})
 
 export const compareSelect = strings({
     en: {
