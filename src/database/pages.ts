@@ -1,5 +1,6 @@
 import { withDatabase, firstRow } from "./connect";
 import { PageModel } from "../models";
+import PageId from "../pages/[pageId]";
 
 
 const createPage = (page: PageModel) => withDatabase<PageModel>(async (client) => {
@@ -35,8 +36,14 @@ const updatePage = async (page: PageModel) => withDatabase<PageModel>(async clie
     return firstRow(result);
 });
 
+/**
+ * DANGER: will delete responses as well! 
+ * @param id id of page
+ */
 const deletePage = async (id: string) => withDatabase<PageModel>(async client => {
 
+
+    await client.query(`delete from responses where page_id = $1`, [id]);
     const result = await client.query("delete from pages where id = $1", [id]);
     return firstRow(result);
 });

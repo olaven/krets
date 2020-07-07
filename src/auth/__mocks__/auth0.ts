@@ -8,7 +8,6 @@ import { UNAUTHORIZED } from "../../http/codes";
 
 const getSession = async (req: NextApiRequest): Promise<ISession> => {
 
-    console.log("request in mocked getsession: ", req.headers);
     return ({
         accessToken: undefined,
         accessTokenExpiresAt: 0,
