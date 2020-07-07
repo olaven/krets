@@ -79,11 +79,9 @@ describe("Endpoints for specific page", () => {
 
             const postStatus = await statusFromFetch("POST");
             const patchtStatus = await statusFromFetch("PATCH");
-            const deleteStatus = await statusFromFetch("DELETE");
 
             expect(postStatus).toEqual(400);
             expect(patchtStatus).toEqual(400);
-            expect(deleteStatus).toEqual(400);
         });
     })
 
@@ -122,6 +120,42 @@ describe("Endpoints for specific page", () => {
             const { status } = await putFetch(user.id, page.id, page);
             expect(status).toEqual(204);
         });
-    })
+    });
+
+    describe("The deletion endpoint", () => {
+
+        const deleteFetch = (pageId: string, userId: string) =>
+            authenticatedFetch(userId, fullUrl(pageId), { method: "DELETE" });
+
+        it("Returns 401 if user is not authenticated", async () => {
+
+            const owner = await createUser();
+            const page = await createPage(owner.id);
+
+            //NOTE: no user information passed 
+            const { status } = await fetch(fullUrl(page.id), { method: "DELETE" });
+            expect(status).toEqual(401);
+        });
+
+        it("Returnd 403 if user does not own the page", async () => {
+
+            const owner = await createUser();
+            const other = await createUser();
+
+            const page = await createPage(owner.id);
+
+            const { status } = await deleteFetch(page.id, other.id);
+            expect(status).toEqual(403);
+        });
+
+        it("Returns 204 on successful deletion", async () => {
+
+            const owner = await createUser();
+            const page = await createPage(owner.id);
+
+            const { status } = await deleteFetch(page.id, owner.id);
+            expect(status).toEqual(204);
+        })
+    });
 });
 

@@ -1,11 +1,10 @@
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/pages";
-import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN } from "../../../http/codes";
+import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "../../../http/codes";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models";
 
 export default function pageHandler(request: NextApiRequest, response: NextApiResponse) {
-
 
     const { method } = request;
     if (method === "GET") {
@@ -14,6 +13,9 @@ export default function pageHandler(request: NextApiRequest, response: NextApiRe
     } else if (method === "PUT") {
 
         put(request, response);
+    } else if (method === "DELETE") {
+
+        del(request, response);
     } else {
 
         response
@@ -34,7 +36,7 @@ const del = async (request: NextApiRequest, response: NextApiResponse) => {
     const id = getId(request.url);
     const { user } = await auth0.getSession(request);
 
-    if (!user) {
+    if (!user.sub) {
 
         response
             .status(UNAUTHORIZED)
@@ -48,9 +50,13 @@ const del = async (request: NextApiRequest, response: NextApiResponse) => {
         response
             .status(FORBIDDEN)
             .send("Forbidden");
+        return;
     }
 
-    pages.deletePage(page);
+    pages.deletePage(page.id);
+    response
+        .status(NO_CONTENT)
+        .send("NO CONTENT");
 }
 
 
