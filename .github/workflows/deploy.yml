@@ -15,18 +15,18 @@ jobs:
     - uses: actions/checkout@v1
 
     
-    - name: Publish image Github Packages Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      env: 
-        GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        name: ${{ github.repository }}/image
-        registry: docker.pkg.github.com
-        username: ${{ github.actor }} 
-        password: ${{ secrets.GITHUB_TOKEN }}
-        dockerfile: Dockerfile
-        tags: latest 
+#    - name: Publish image Github Packages Registry
+      #uses: elgohr/Publish-Docker-Github-Action@master
+      #env: 
+        #GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
+        #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #with:
+        #name: ${{ github.repository }}/image
+        #registry: docker.pkg.github.com
+        #username: ${{ github.actor }} 
+        #password: ${{ secrets.GITHUB_TOKEN }}
+        #dockerfile: Dockerfile
+        #tags: latest 
 
     
     - name: Pull image and restart on Digitalocean
