@@ -1,0 +1,46 @@
+version: '3'
+services:
+  nodejs:
+    build: ./app
+    environment:
+      - AUTH0_DOMAIN
+      - AUTH0_CLIENT_ID
+      - AUTH0_CLIENT_SECRET
+      - REDIRECT_URI
+      - POST_LOGOUT_REDIRECT_URI
+      - SESSION_COOKIE_SECRET
+      - PGHOST
+      - PGUSER
+      - PGPORT
+      - PGPASSWORD
+      - PGDATABASE
+      - PGSSLMODE
+  webserver:
+    build: ./nginx-conf
+    volumes: 
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+    ports:
+      - 80:80
+      - 443:443
+    depends_on: 
+      - nodejs 
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+        #depends_on:
+            #  - webserver
+    command: certonly --email olav@sundfoer.com --standalone --agree-tos --no-eff-email --keep-until-expiring -d krets.app -d www.krets.app
+volumes:
+  certbot-etc:
+  certbot-var:
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/olaven/node_project/dhparam/
+      o: bind
