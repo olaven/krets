@@ -33,8 +33,8 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-        #depends_on:
-            #  - webserver
+    #depends_on:
+    #    - webserver
     command: certonly --email olav@sundfoer.com --standalone --agree-tos --no-eff-email --keep-until-expiring -d krets.app -d www.krets.app
 volumes:
   certbot-etc:

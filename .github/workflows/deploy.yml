@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - master
+      - serverconfig-in-git
 
 jobs:
   build:
@@ -66,8 +67,12 @@ jobs:
           export PGPASSWORD=$PGPASSWORD
           export PGDATABASE=$PGDATABASE
           export PGSSLMODE=$PGSSLMODE
-          cd /home/olaven/node_project
-          echo $GITHUB_TOKEN | docker login docker.pkg.github.com --username $GITHUB_USERNAME --password-stdin
-          docker-compose pull nodejs 
-          docker-compose up -d --force-recreate nodejs 
+          cd /home/olaven/krets
+          git pull 
+          docker-compose build nodejs  
+          docker-compse up -d --force-recreate nodejs 
+#          cd /home/olaven/node_project
+#          echo $GITHUB_TOKEN | docker login docker.pkg.github.com --username $GITHUB_USERNAME --password-stdin
+#          docker-compose pull nodejs 
+#          docker-compose up -d --force-recreate nodejs 
           
