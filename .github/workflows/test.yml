@@ -26,9 +26,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: cd app
     - run: yarn 
+      working-directory: ./app
     - run: yarn test
+      working-directory: ./app
       env:
         PGHOST: localhost
         PGUSER: user
