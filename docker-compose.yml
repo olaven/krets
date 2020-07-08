@@ -42,5 +42,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/olaven/krets/server/
+      device: /home/olaven/krets/dhparam/
       o: bind
