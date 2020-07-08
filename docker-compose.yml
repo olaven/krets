@@ -16,7 +16,7 @@ services:
       - PGDATABASE
       - PGSSLMODE
   webserver:
-    build: ./nginx-conf
+    build: ./server
     volumes: 
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
