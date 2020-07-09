@@ -32,8 +32,8 @@ services:
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt # --staging has to be removed when it seems to work 
-    command: certonly certbot/certbot certonly --standalone --keep-until-expiring -d krets.app --email olav@sundfoer.com --agree-tos
+      - certbot-var:/var/lib/letsencrypt 
+    command: certonly --standalone --keep-until-expiring -d krets.app --email olav@sundfoer.com --agree-tos
 volumes:
   certbot-etc:
   certbot-var:
