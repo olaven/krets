@@ -32,10 +32,8 @@ services:
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-    #depends_on:
-    #    - webserver
-    command: certonly --email olav@sundfoer.com --standalone --agree-tos --no-eff-email --keep-until-expiring -d krets.app -d www.krets.app
+      - certbot-var:/var/lib/letsencrypt # --staging has to be removed when it seems to work 
+    command: certonly --email olav@sundfoer.com --staging --standalone --agree-tos --no-eff-email --keep-until-expiring -d krets.app -d www.krets.app
 volumes:
   certbot-etc:
   certbot-var:
