@@ -1,45 +1,76 @@
-version: '3'
+# version: '3'
+# services:
+#   nodejs:
+#     build: ./app
+#     environment:
+#       - AUTH0_DOMAIN
+#       - AUTH0_CLIENT_ID
+#       - AUTH0_CLIENT_SECRET
+#       - REDIRECT_URI
+#       - POST_LOGOUT_REDIRECT_URI
+#       - SESSION_COOKIE_SECRET
+#       - PGHOST
+#       - PGUSER
+#       - PGPORT
+#       - PGPASSWORD
+#       - PGDATABASE
+#       - PGSSLMODE
+#   webserver:
+#     build: ./server
+#     volumes: 
+#       - certbot-etc:/etc/letsencrypt
+#       - certbot-var:/var/lib/letsencrypt
+#       - dhparam:/etc/ssl/certs
+#     ports:
+#       - 80:80
+#       - 443:443
+#     depends_on: 
+#       - nodejs 
+#       - certbot
+#   certbot:
+#     image: certbot/certbot
+#     container_name: certbot
+#     volumes:
+#       - certbot-etc:/etc/letsencrypt
+#       - certbot-var:/var/lib/letsencrypt 
+#     command: certonly --standalone --keep-until-expiring -d krets.app --email olav@sundfoer.com --agree-tos
+# volumes:
+#   certbot-etc:
+#   certbot-var:
+#   dhparam:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/olaven/krets/dhparam/
+#       o: bind
+# version: '3'
 services:
-  nodejs:
-    build: ./app
-    environment:
-      - AUTH0_DOMAIN
-      - AUTH0_CLIENT_ID
-      - AUTH0_CLIENT_SECRET
-      - REDIRECT_URI
-      - POST_LOGOUT_REDIRECT_URI
-      - SESSION_COOKIE_SECRET
-      - PGHOST
-      - PGUSER
-      - PGPORT
-      - PGPASSWORD
-      - PGDATABASE
-      - PGSSLMODE
-  webserver:
-    build: ./server
-    volumes: 
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - dhparam:/etc/ssl/certs
-    ports:
-      - 80:80
-      - 443:443
-    depends_on: 
-      - nodejs 
-      - certbot
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt 
-    command: certonly --standalone --keep-until-expiring -d krets.app --email olav@sundfoer.com --agree-tos
+   nodejs:
+     build: ./app
+     environment:
+       - AUTH0_DOMAIN
+       - AUTH0_CLIENT_ID
+       - AUTH0_CLIENT_SECRET
+       - REDIRECT_URI
+       - POST_LOGOUT_REDIRECT_URI
+       - SESSION_COOKIE_SECRET
+       - PGHOST
+       - PGUSER
+       - PGPORT
+       - PGPASSWORD
+       - PGDATABASE
+       - PGSSLMODE
+
+    webserver:
+        restart: unless-stopped
+        image: staticfloat/nginx-certbot
+        ports:
+            - 80:80/tcp
+            - 443:443/tcp
+        environment:
+            CERTBOT_EMAIL: olav@sundfoer.com
+        volumes:
+          - ./server/nginx.conf:/etc/nginx/user.conf.d:ro
+          - letsencrypt:/etc/letsencrypt
 volumes:
-  certbot-etc:
-  certbot-var:
-  dhparam:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/olaven/krets/dhparam/
-      o: bind
+    letsencrypt:
