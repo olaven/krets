@@ -43,34 +43,34 @@
 #       type: none
 #       device: /home/olaven/krets/dhparam/
 #       o: bind
-# version: '3'
+version: '3'
 services:
-   nodejs:
-     build: ./app
-     environment:
-       - AUTH0_DOMAIN
-       - AUTH0_CLIENT_ID
-       - AUTH0_CLIENT_SECRET
-       - REDIRECT_URI
-       - POST_LOGOUT_REDIRECT_URI
-       - SESSION_COOKIE_SECRET
-       - PGHOST
-       - PGUSER
-       - PGPORT
-       - PGPASSWORD
-       - PGDATABASE
-       - PGSSLMODE
+  nodejs:
+    build: ./app
+    environment:
+      - AUTH0_DOMAIN
+      - AUTH0_CLIENT_ID
+      - AUTH0_CLIENT_SECRET
+      - REDIRECT_URI
+      - POST_LOGOUT_REDIRECT_URI
+      - SESSION_COOKIE_SECRET
+      - PGHOST
+      - PGUSER
+      - PGPORT
+      - PGPASSWORD
+      - PGDATABASE
+      - PGSSLMODE
 
-    webserver:
-        restart: unless-stopped
-        image: staticfloat/nginx-certbot
-        ports:
-            - 80:80/tcp
-            - 443:443/tcp
-        environment:
-            CERTBOT_EMAIL: olav@sundfoer.com
-        volumes:
-          - ./server/nginx.conf:/etc/nginx/user.conf.d:ro
-          - letsencrypt:/etc/letsencrypt
+  webserver:
+    restart: unless-stopped
+    image: staticfloat/nginx-certbot
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+    environment:
+      CERTBOT_EMAIL: olav@sundfoer.com
+    volumes:
+      - ./server/nginx.conf:/etc/nginx/user.conf.d:ro
+      - letsencrypt:/etc/letsencrypt
 volumes:
     letsencrypt:
