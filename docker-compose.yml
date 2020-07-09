@@ -33,7 +33,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt # --staging has to be removed when it seems to work 
-    command: certonly --email olav@sundfoer.com --staging --standalone --agree-tos --no-eff-email --keep-until-expiring -d krets.app -d www.krets.app
+    command: certonly certbot/certbot certonly --staging --standalone --keep-until-expiring -d krets.app --email olav@sundfoer.com --agree-tos
 volumes:
   certbot-etc:
   certbot-var:
