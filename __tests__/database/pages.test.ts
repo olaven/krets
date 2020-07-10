@@ -1,22 +1,11 @@
 import { pages } from "../../src/database/pages";
 import * as faker from "faker";
 import { users } from "../../src/database/users";
-import { UserModel } from "../../src/models";
+import { UserModel, CategoryModel } from "../../src/models";
 import { responses } from "../../src/database/responses";
+import { categories } from "../../src/database/categories"; import { createUser, createPage } from "./databaseTestUtils";
 
 describe("Database interface for pages", () => {
-
-    const createUser = async (): Promise<UserModel> => users.createUser({
-        id: faker.random.uuid() as string
-    });
-
-    const createPage = (ownerId: string) =>
-        pages.createPage({
-            owner_id: ownerId,
-            name: faker.company.companyName(),
-            id: faker.random.uuid()
-        })
-
 
     it("Can create page", async () => {
 
@@ -26,7 +15,8 @@ describe("Database interface for pages", () => {
         const page = {
             owner_id: owner.id,
             name: "Amazing cafe!",
-            id: id
+            id: id,
+            category_id: null
         };
 
         const before = await pages.getPage(id);
@@ -47,7 +37,8 @@ describe("Database interface for pages", () => {
         const page = {
             owner_id: owner.id,
             name: originalName,
-            id: faker.random.uuid()
+            id: faker.random.uuid(),
+            category_id: null
         }
 
         await pages.createPage(page);
@@ -98,4 +89,22 @@ describe("Database interface for pages", () => {
         const responsesAfter = await responses.getResponses(page.id);
         expect(responsesAfter.length).toEqual(0);
     });
+
+    it("Can set category", async () => {
+
+        const user = await createUser();
+        const persistedCategory = await categories.createCategory({ name: "category name" });
+
+        const page = {
+            owner_id: user.id,
+            name: "page name",
+            id: faker.random.uuid(),
+            category_id: persistedCategory.id
+        }
+
+        await pages.createPage(page);
+
+        const retrievedPage = await pages.getPage(page.id);
+        expect(retrievedPage.category_id).toEqual(persistedCategory.id);
+    })
 });

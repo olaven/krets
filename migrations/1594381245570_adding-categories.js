@@ -6,8 +6,13 @@ exports.up = pgm => {
 
     pgm.createTable('categories', {
         id: {
-            type: 'varchar(800)',
+            type: 'serial',
             primaryKey: true
+        },
+        owner_id: {
+            type: 'varchar(500)',
+            notNull: true,
+            references: '"users"'
         },
         created_at: {
             type: 'timestamp',
@@ -22,8 +27,9 @@ exports.up = pgm => {
 
     pgm.addColumns('pages', {
         category_id: {
-            type: 'varchar(800)',
+            type: "serial",
             references: 'categories',
+            notNull: false,
         },
     })
 };

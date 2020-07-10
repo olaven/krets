@@ -10,6 +10,7 @@ describe("Database repository for pages", () => {
 
         const result = await responses.getResponses(faker.random.uuid());
         expect(result).toEqual([]);
+        deploy
     });
 
     test("Can create response", async () => {
@@ -19,7 +20,8 @@ describe("Database repository for pages", () => {
         const page = {
             owner_id: user.id,
             name: "Amazing cafe!",
-            id: page_id
+            id: page_id,
+            category_id: null
         };
 
         await users.createUser(user);

@@ -28,7 +28,8 @@ describe("Endpoints for specific page", () => {
         const page = {
             id: uid(),
             owner_id: ownerId,
-            name: faker.company.companyName()
+            name: faker.company.companyName(),
+            category_id: null,
         };
 
         await pages.createPage(page)

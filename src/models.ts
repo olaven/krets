@@ -13,7 +13,15 @@ export interface PageModel {
     id: string,
     name: string,
     owner_id: string,
-    created_at?: string
+    created_at?: string,
+    category_id: string | null
+}
+
+export interface CategoryModel {
+    id?: string,
+    name: string
+    owner_id: string,
+    created_at?: string,
 }
 
 //From DB 
