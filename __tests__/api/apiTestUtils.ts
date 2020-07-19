@@ -5,16 +5,32 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
+import { PageModel } from '../../src/models';
 
 
-//TODO: PageId DTO?
-export const postPage = (page: { id: string, name: string, owner_id: string }, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
+export const randomPage = (ownerId: string): PageModel => ({
+    id: uid(),
+    owner_id: ownerId,
+    name: faker.company.companyName(),
+    category_id: null
+});
+
+export const postPage = (page: PageModel, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
     method: "POST",
     headers: {
         "content-type": "application/json",
     },
     body: JSON.stringify((page))
 });
+
+export const putPage = (page: PageModel, userId: string) => authenticatedFetch(userId, `/api/pages/${page.id}`, {
+    method: "PUT",
+    headers: {
+        "content-type": "application/json",
+        body: JSON.stringify(page)
+    }
+})
+
 
 export const uid = () => faker.random.uuid();
 

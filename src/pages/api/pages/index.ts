@@ -37,13 +37,6 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
     }
 }
 
-const put = (request: NextApiRequest, response: NextApiResponse) => {
-
-    response
-        .status(NOT_IMPLEMENTED)
-        .send("")
-}
-
 export default auth0.requireAuthentication(async function brand(request, response) {
 
     const { user } = await auth0.getSession(request);
@@ -55,9 +48,6 @@ export default auth0.requireAuthentication(async function brand(request, respons
     } else if (request.method === "POST") {
 
         await post(request, response);
-    } else if (request.method === "PUT") {
-
-        await put(request, response);
     }
 });
 

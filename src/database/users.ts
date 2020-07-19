@@ -1,4 +1,5 @@
-import {withDatabase} from "./connect";
+import { withDatabase } from "./connect";
+import { UserModel } from "../models";
 
 const getUser = (id: string) => withDatabase(async client => {
 
@@ -6,18 +7,18 @@ const getUser = (id: string) => withDatabase(async client => {
    return result.rows[0];
 });
 
-const createUser = (user: {id: string}) => withDatabase(async client => {
+const createUser = (user: { id: string }) => withDatabase<UserModel>(async client => {
 
 
    const result = await client.query("insert into users(id) values($1) RETURNING *", [user.id]);
    return result.rows[0];
 });
 
-const userExists = (id: string) => withDatabase(async client => {
+const userExists = (id: string) => withDatabase<boolean>(async client => {
 
    const result = await client.query(
-       "select count(*) from users where id = $1",
-       [id]);
+      "select count(*) from users where id = $1",
+      [id]);
 
    return result.rows[0].count == 1;
 });
