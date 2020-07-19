@@ -1,10 +1,8 @@
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/pages";
-import { CREATED, OK } from "../../../http/codes";
+import { CREATED, OK, NOT_IMPLEMENTED } from "../../../http/codes";
 import { PageModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ISession } from "@auth0/nextjs-auth0/dist/session/session";
-import { post } from "../../../http/methods";
 
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -37,8 +35,13 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
         console.log("PageId iwht error: ", page, "error", error);
         throw error
     }
+}
 
+const put = (request: NextApiRequest, response: NextApiResponse) => {
 
+    response
+        .status(NOT_IMPLEMENTED)
+        .send("")
 }
 
 export default auth0.requireAuthentication(async function brand(request, response) {
@@ -52,6 +55,9 @@ export default auth0.requireAuthentication(async function brand(request, respons
     } else if (request.method === "POST") {
 
         await post(request, response);
+    } else if (request.method === "PUT") {
+
+        await put(request, response);
     }
 });
 
