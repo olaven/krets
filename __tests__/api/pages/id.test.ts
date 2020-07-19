@@ -1,10 +1,12 @@
-import { setupServer, teardownServer, uid, authenticatedFetch } from "../apiTestUtils";
+import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
 import { pages } from "../../../src/database/pages";
 import { users } from "../../../src/database/users";
 import fetch from "cross-fetch";
 import PageId from "../../../src/pages/[pageId]";
+import { categories } from "../../../src/database/categories";
+import { createConfigItem } from "@babel/core";
 
 
 jest.mock("../../../src/auth/auth0");
@@ -22,19 +24,25 @@ describe("Endpoints for specific page", () => {
     const createUser = (id = uid()) =>
         users.createUser({ id });
 
-    const createPage = async (ownerId: string) => {
+    const createPage = async (ownerId: string, categoryId: string = null) => {
 
         const id = uid();
         const page = {
             id: uid(),
             owner_id: ownerId,
             name: faker.company.companyName(),
-            category_id: null,
+            category_id: categoryId,
         };
 
         await pages.createPage(page)
         return page;
     }
+
+    const createCategory = (ownerId: string) =>
+        categories.createCategory({
+            name: faker.lorem.word(),
+            owner_id: ownerId
+        })
 
     beforeAll(async () => {
 
@@ -120,6 +128,50 @@ describe("Endpoints for specific page", () => {
 
             const { status } = await putFetch(user.id, page.id, page);
             expect(status).toEqual(204);
+        });
+
+        it("Returns 404 if the page does not exist", async () => {
+
+            const user = await createUser();
+            const page = randomPage(user.id); //NOTE: never persisted
+
+            const { status } = await putFetch(user.id, page.id, page);
+            expect(status).toEqual(404);
+        });
+
+        it("Returns 204 on succesful category update", async () => {
+
+            const user = await createUser();
+            const page = await createPage(user.id);
+            const category = await createCategory(user.id);
+
+            page.category_id = category.id;
+
+            const pageBeforeUpdate = await pages.getPage(page.id);
+            await putFetch(user.id, page.id, page);
+            const pageAfterUpdate = await pages.getPage(page.id);
+
+            expect(pageBeforeUpdate.category_id).toBeNull();
+            expect(pageAfterUpdate.category_id).toEqual(category.id);
+        });
+
+        //NOTE: should perhaps be 404
+        it("Returns 400 if category does not exist", async () => {
+
+            const user = await createUser();
+            const page = await createPage(user.id);
+
+
+            //NOTE: category id does not exist (may fail due to randomness, but very unlikely)
+            page.category_id = faker.random.number({ min: 3000, max: 10000 }).toString()
+
+            const pageBeforeUpdate = await pages.getPage(page.id);
+            const { status } = await putFetch(user.id, page.id, page);
+            const pageAfterUpdate = await pages.getPage(page.id);
+
+            expect(status).toEqual(400);
+            expect(pageBeforeUpdate.category_id).toBeNull();
+            expect(pageAfterUpdate.category_id).toBeNull();
         });
     });
 
