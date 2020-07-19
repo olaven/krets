@@ -93,7 +93,7 @@ describe("Database interface for pages", () => {
     it("Can set category", async () => {
 
         const user = await createUser();
-        const persistedCategory = await categories.createCategory({ name: "category name" });
+        const persistedCategory = await categories.createCategory({ name: "category name", owner_id: user.id });
 
         const page = {
             owner_id: user.id,
@@ -106,5 +106,6 @@ describe("Database interface for pages", () => {
 
         const retrievedPage = await pages.getPage(page.id);
         expect(retrievedPage.category_id).toEqual(persistedCategory.id);
+
     })
 });

@@ -10,7 +10,6 @@ describe("Database repository for pages", () => {
 
         const result = await responses.getResponses(faker.random.uuid());
         expect(result).toEqual([]);
-        deploy
     });
 
     test("Can create response", async () => {

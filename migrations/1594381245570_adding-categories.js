@@ -27,11 +27,11 @@ exports.up = pgm => {
 
     pgm.addColumns('pages', {
         category_id: {
-            type: "serial",
-            references: 'categories',
-            notNull: false,
+            type: 'integer',
+            references: '"categories" (id)',
+            notNull: false
         },
-    })
+    }, { ifNotExists: true });
 };
 
 exports.down = pgm => { };
