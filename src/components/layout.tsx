@@ -21,7 +21,6 @@ export const Layout = (props) => {
 
     const { user } = React.useContext(UserContext);
 
-
     const authButton = user ?
         <LogoutButton /> :
         <LoginButton />;

@@ -1,6 +1,5 @@
 import { withDatabase, firstRow } from "./connect";
 import { PageModel } from "../models";
-import PageId from "../pages/[pageId]";
 
 
 const createPage = (page: PageModel) => withDatabase<PageModel>(async (client) => {
