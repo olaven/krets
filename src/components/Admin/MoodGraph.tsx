@@ -15,7 +15,7 @@ export const emotionToNumeric = (emotion: Emotion) => ({
 const pageInformationsToCoordinates = (pageInformations: PageInformation[]) => pageInformations
     .map(({ page, responses }) => ({
         x: page.name,
-        y: responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
+        y: responses.length === 0 ? [] : responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
     }));
 
 const Graph = ({ coordinates }) => <Box>
