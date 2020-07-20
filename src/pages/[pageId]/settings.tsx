@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import { Box, Button, Heading, Text, Flex } from "rebass";
-import { Input } from "@rebass/forms"
+import { Input, Select, Label } from "@rebass/forms"
 import { putPage, deletePage } from "../../http/fetchers";
 import { useState, useContext } from "react";
 import { NO_CONTENT } from "../../http/codes";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
-import config from "../../auth/config";
 
 const UpdateName = () => {
 
@@ -71,6 +70,28 @@ export const DeletePage = () => {
     </Box>
 }
 
+//TODO: actually pull categories (from context etc.)
+const UpdateCategory = () => {
+
+    const { page } = useContext(SettingsContext);
+    const options = [
+        { value: "first_id", name: "My First Category" },
+        { value: "second_id", name: "My Second Category" },
+        { value: "third_id", name: "My Third Category" },
+        { value: "fourth_id", name: "My Fourth Category" },
+    ]
+
+    return <Box>
+        <Label htmlFor='category'>Kategori</Label>
+        <Select
+            id='category'
+            name='category'>
+            {options.map(({ value, name }) => <option value={value}>{name}</option>)}
+        </Select>
+        her skal jeg oppdatere kategori for {page.name}
+    </Box>
+}
+
 export const SettingsContent = () => {
 
     const { pageLoading, page } = useContext(SettingsContext);
@@ -82,6 +103,7 @@ export const SettingsContent = () => {
                 {text.settings.heading} {page.name}
             </Heading>
             <UpdateName />
+            <UpdateCategory />
             <DeletePage />
         </Box>
 }
