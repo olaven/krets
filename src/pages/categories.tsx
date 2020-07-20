@@ -3,9 +3,13 @@ import { TooltipHelpProvider } from "tooltip-help-react"
 import * as text from "../text";
 import Tippy from "@tippyjs/react";
 import { CategoryCreator } from "../components/Category/categoryCreator";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 
 export default () => {
+
+    const { user } = useContext(UserContext);
 
     const CategoriesTooltipProvider = ({ children }) => <TooltipHelpProvider
         predicate={() => true}
@@ -20,6 +24,12 @@ export default () => {
     >
         {children}
     </TooltipHelpProvider>
+
+    if (!user) {
+        return <>
+            Denne siden er ikke tilgjengelig uten bruker
+        </>
+    }
 
     return <CategoriesTooltipProvider>
         <CategoryCreator />

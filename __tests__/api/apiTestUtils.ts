@@ -5,7 +5,7 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { PageModel } from '../../src/models';
+import { PageModel, CategoryModel } from '../../src/models';
 
 
 export const randomPage = (ownerId: string): PageModel => ({
@@ -29,8 +29,13 @@ export const putPage = (page: PageModel, userId: string) => authenticatedFetch(u
         "content-type": "application/json",
         body: JSON.stringify(page)
     }
-})
+});
 
+export const getCategories = async (userId: string) => {
+
+    const response = await authenticatedFetch(userId, "`api/categories`");
+    return response.json();
+};
 
 export const uid = () => faker.random.uuid();
 

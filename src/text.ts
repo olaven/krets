@@ -113,7 +113,7 @@ export const pageCreator = strings({
 
 export const categoryCreator = strings({
     en: {
-        placeholder: "Enter the page name",
+        placeholder: "Enter the category name",
         button: "Create page",
         error: "An error occured😐"
     },

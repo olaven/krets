@@ -25,11 +25,11 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
 
     try {
 
-        const result = await pages.createPage(page);
+        const persisted = await pages.createPage(page);
 
         response
             .status(CREATED)
-            .json(result)
+            .json(persisted)
     } catch (error) {
 
         console.log("PageId iwht error: ", page, "error", error);

@@ -3,17 +3,25 @@ import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { Input } from "@rebass/forms";
 import { TooltipHelp } from "tooltip-help-react";
 import * as text from "../../text"
+import { CategoryModel } from "../../models";
+import { UserContext } from "../../context/UserContext";
 
 
 export const CategoryCreator = () => {
 
     const [name, setName] = useState("");
+    const { user } = useContext(UserContext);
     const { HelpButton, Tooltip } = useContext(TooltipHelp)
 
     const onCreateCategory = () => {
 
 
-        // alert(text.pageCreator.error);
+        const category: CategoryModel = {
+            name,
+            owner_id: user.sub
+        };
+
+        //TODO call api
     }
 
     return <>

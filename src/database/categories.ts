@@ -1,7 +1,15 @@
 import { CategoryModel } from "../models";
 import { withDatabase } from "./connect";
 
+const getByOwner = (ownerId: string) => withDatabase<CategoryModel[]>(async client => {
 
+    const result = await client.query(
+        "select * from categories where owner_id = $1",
+        [ownerId]
+    );
+
+    return result.rows;
+});
 
 const createCategory = (category: CategoryModel) => withDatabase<CategoryModel>(async client => {
 
@@ -14,5 +22,5 @@ const createCategory = (category: CategoryModel) => withDatabase<CategoryModel>(
 });
 
 export const categories = {
-    createCategory
+    createCategory, getByOwner
 }
