@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import { NO_CONTENT } from "../../http/codes";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
+import { TooltipHelp } from "tooltip-help-react";
 
 const UpdateName = () => {
 
@@ -27,10 +28,11 @@ const UpdateName = () => {
     }
 
     return <Flex>
-        <Input value={name} onChange={(event) => { setName(event.target.value) }}></Input>
+        <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
         <Button onClick={updateName}>{text.settings.changeNameButton}</Button>
     </Flex>
 }
+
 
 export const DeletePage = () => {
 

@@ -1,8 +1,8 @@
-import { VictoryArea, VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from "victory"
+import { VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from "victory"
 import { useContext, useEffect, useState } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
-import { ReseponseModel, Emotion } from "../../models";
-import { Box, Heading } from "rebass";
+import { Emotion } from "../../models";
+import { Box } from "rebass";
 import { CompareContext, PageInformation } from "../../context/CompareContext";
 import * as text from "../../text"
 

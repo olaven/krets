@@ -106,9 +106,24 @@ export const pageCreator = strings({
         preview: "Din side:",
         placeholder: "Sidens navn",
         button: "Lag side",
-        error: "An error occured😐"
+        error: "En feil oppsto😐"
     }
 });
+
+
+export const categoryCreator = strings({
+    en: {
+        placeholder: "Enter the page name",
+        button: "Create page",
+        error: "An error occured😐"
+    },
+    no: {
+        placeholder: "Kategoriens navn",
+        button: "Lag kategori",
+        error: "En feil oppsto😐"
+    }
+});
+
 
 export const adminPage = strings({
     en: {
@@ -139,7 +154,7 @@ export const settings = strings({
         changeNameButton: "Endre navn",
         changeNameError: "Det skjedde en feil med oppdatering av navn..",
         deleteButton: "Slett side.",
-        deleteWarning: "Er du sikker? Siden og alle responser slettes permanent. Du kan ikke gjøre om dette.",
+        deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",
         deleteConfirmation: "Jeg er helt sikker.",
         deleteCancelation: "Ikke slett.",
         deleteError: "En feil oppsto med slettingen.."
