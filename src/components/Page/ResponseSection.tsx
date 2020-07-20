@@ -3,10 +3,10 @@ import { Box, Button, Flex, Heading } from "rebass"
 import { Input } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
-import { get, post } from "../../http/methods";
 import { CREATED } from "../../http/codes";
-import { ReseponseModel, Emotion } from "../../models";
+import { Emotion } from "../../models";
 import * as uiText from "../../text";
+import { postResponse } from "../../http/fetchers";
 
 export const ResponseSection = ({ page }) => {
 
@@ -15,7 +15,7 @@ export const ResponseSection = ({ page }) => {
     const [published, setPublished] = useState(false);
 
 
-    const postResponse = async () => {
+    const submitResponse = async () => {
 
         if (!emotion) {
 
@@ -23,9 +23,9 @@ export const ResponseSection = ({ page }) => {
             return;
         }
 
-        const [status] = await post(`/api/pages/${page.id}/responses`, {
+        const [status] = await postResponse({
             emotion, text, page_id: page.id
-        } as ReseponseModel);
+        });
 
 
         if (status === CREATED) {
@@ -34,7 +34,6 @@ export const ResponseSection = ({ page }) => {
         } else {
 
             alert(uiText.response.error);
-            console.warn(postResponse);
         }
     };
 
@@ -52,7 +51,7 @@ export const ResponseSection = ({ page }) => {
                     placeholder={uiText.response.placeholder}
                     onChange={event => { setText(event.target.value) }}
                 />
-                <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
+                <Button m={1} px={3} onClick={submitResponse}>{uiText.response.button}</Button>
             </Flex>
         </>
 
