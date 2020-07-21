@@ -1,5 +1,6 @@
 import { UserContext, UserContextProvider } from "../context/UserContext";
 import React from "react";
+import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { LoginButton, LogoutButton } from "./tiny/buttons";
 
@@ -16,15 +17,31 @@ const HeaderLogo = () =>
         {/* <Text p={[0, 1, 2]} fontSize={7}>Krets.</Text> */}
     </Flex>
 
+/**
+ * Shows the authbutton unless on 
+ * specified pages (code / feedback)
+ */
+const AuthButton = () => {
+
+    const router = useRouter();
+    const { user } = React.useContext(UserContext);
+
+    if ([
+        "/[pageId]", "/[pageId]/code"
+    ].includes(router.pathname)) {
+        return null;
+    }
+
+    console.log(router.pathname);
+
+    return user ?
+        <LogoutButton /> :
+        <LoginButton />;
+}
 
 export const Layout = (props) => {
 
-    const { user } = React.useContext(UserContext);
 
-
-    const authButton = user ?
-        <LogoutButton /> :
-        <LoginButton />;
 
     return <Box
 
@@ -39,7 +56,7 @@ export const Layout = (props) => {
             alignItems='center'>
 
             <HeaderLogo />
-            {authButton}
+            <AuthButton />
         </Flex>
         {props.children}
         {/*<div>
