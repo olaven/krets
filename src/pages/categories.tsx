@@ -5,6 +5,8 @@ import Tippy from "@tippyjs/react";
 import { CategoryCreator } from "../components/Category/categoryCreator";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { CategoriesContextProvider } from "../context/CategoriesContext";
+import { CategoryList } from "../components/Category/categoryList";
 
 
 export default () => {
@@ -31,7 +33,10 @@ export default () => {
         </>
     }
 
-    return <CategoriesTooltipProvider>
-        <CategoryCreator />
-    </CategoriesTooltipProvider >
+    return <CategoriesContextProvider user={user}>
+        <CategoriesTooltipProvider>
+            <CategoryCreator />
+            <CategoryList />
+        </CategoriesTooltipProvider >
+    </CategoriesContextProvider>
 };

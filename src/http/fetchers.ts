@@ -1,5 +1,5 @@
 import { get, put, post, del } from "./methods";
-import { PageModel, ReseponseModel } from "../models";
+import { PageModel, ReseponseModel, CategoryModel } from "../models";
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
@@ -18,3 +18,9 @@ export const getResponses = (pageId: string) =>
 
 export const postResponse = (response: ReseponseModel) =>
     post<ReseponseModel>(`/api/pages/${response.page_id}/responses`, response);
+
+export const getCategories = () =>
+    get<CategoryModel[]>("/api/categories");
+
+export const postCategory = (category: CategoryModel) =>
+    post<CategoryModel>("/api/categories", category);
