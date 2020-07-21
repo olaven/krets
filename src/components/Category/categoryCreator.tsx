@@ -5,6 +5,8 @@ import { TooltipHelp } from "tooltip-help-react";
 import * as text from "../../text"
 import { CategoryModel } from "../../models";
 import { UserContext } from "../../context/UserContext";
+import { postCategory } from "../../http/fetchers";
+import { CREATED } from "../../http/codes";
 
 
 export const CategoryCreator = () => {
@@ -13,15 +15,23 @@ export const CategoryCreator = () => {
     const { user } = useContext(UserContext);
     const { HelpButton, Tooltip } = useContext(TooltipHelp)
 
-    const onCreateCategory = () => {
-
+    const onCreateCategory = async () => {
 
         const category: CategoryModel = {
             name,
             owner_id: user.sub
         };
 
-        //TODO call api
+        const [status] = await postCategory(category);
+        if (status === CREATED) {
+
+            console.log("JIPPI :D");
+            //TODO: visuell + oppdatering 
+        } else {
+
+            console.error(`Received ${status} when posting category.`);
+            alert("Ups, en feil oppsto") //TODO: localize / prettify 
+        }
     }
 
     return <>

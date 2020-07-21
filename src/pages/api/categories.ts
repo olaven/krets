@@ -19,7 +19,7 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
 const post = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
-    const category = request.body() as CategoryModel;
+    const category = request.body as CategoryModel;
 
     if (category.owner_id !== user.sub) {
 
