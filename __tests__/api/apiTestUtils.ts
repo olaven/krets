@@ -19,7 +19,7 @@ export const randomPage = (ownerId: string): PageModel => ({
 export const postPage = (page: PageModel, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
     method: "POST",
     headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
     },
     body: JSON.stringify((page))
 });
@@ -35,12 +35,17 @@ export const putPage = (page: PageModel, userId: string) => authenticatedFetch(u
 export const getCategories = async (userId: string, url: string) => {
 
     const response = await authenticatedFetch(userId, url);
-
-    if (response.status !== 200) throw `wrong status ${response.status}`;
-    const repsonses = await response.json();
-
-    return repsonses;
+    const categories = await response.json();
+    return categories;
 };
+
+export const postCategory = async (userId: string, url: string, category: CategoryModel) => authenticatedFetch(userId, url, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(category)
+});
 
 export const uid = () => faker.random.uuid();
 

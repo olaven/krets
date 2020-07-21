@@ -10,7 +10,7 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
     const { user } = await auth0.getSession(request);
     const ownedByUser = await categories.getByOwner(user.sub);
 
-
+    console.log("API RETURNING: ", ownedByUser, "WITH LENGHT", ownedByUser.length);
     response
         .status(OK)
         .send(ownedByUser);
