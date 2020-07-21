@@ -13,7 +13,7 @@ MyApp.getInitialProps = async (context) => {
   }
 }
 
-const TawkToEmbedding = ({ source }) => <script dangerouslySetInnerHTML={{
+const TawkToEmbedding = ({ source }) => <script type="application/javascript" dangerouslySetInnerHTML={{
   __html: `
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
   (function(){
