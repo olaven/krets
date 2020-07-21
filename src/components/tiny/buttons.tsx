@@ -30,16 +30,17 @@ export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
 </Flex>
 
 
-const ListButton = (href: string, text: string) => <Box mx={0}>
-    <Button p={[0, 1, 2]}>
-        <Link color={"secondary"} href={href}>
-            {/* <span className="material-icons">
+const ListButton = (href: string, text: string) =>
+    <Box m={[0, 1, 2]} width={[1, 1 / 5]}>
+        <Button width={1}>
+            <Link color={"secondary"} href={href}>
+                {/* <span className="material-icons">
                 {icon}
             </span> */}
-            {text}
-        </Link>
-    </Button>
-</Box>;
+                {text}
+            </Link>
+        </Button>
+    </Box>;
 
 export const ToAdmin = ({ id }) =>
     ListButton(`/${id}/admin`, text.buttons.toAdmin);
