@@ -34,9 +34,6 @@ const ListButton = (href: string, text: string) =>
     <Box m={[0, 1, 2]} width={[1, 1 / 5]}>
         <Button width={1}>
             <Link color={"secondary"} href={href}>
-                {/* <span className="material-icons">
-                {icon}
-            </span> */}
                 {text}
             </Link>
         </Button>
