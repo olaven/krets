@@ -34,10 +34,6 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
     <Head>
 
       <title>Krets.</title>
-      <link
-        href='https://fonts.googleapis.com/icon?family=Material+Icons'
-        rel='stylesheet'
-      />
       <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800' rel='stylesheet' />
       <link rel='icon' href='logo.svg' sizes='any' type='image/svg+xml' />
 
