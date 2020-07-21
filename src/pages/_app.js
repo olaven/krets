@@ -13,12 +13,26 @@ MyApp.getInitialProps = async (context) => {
   }
 }
 
+const TawkToEmbedding = ({ source }) => <script dangerouslySetInnerHTML={{
+  __html: `
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='${source}';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+` }} ></script>
+
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
 
-  console.log(TAWKTO_EMBED_SOURCE);
   return <UserContextProvider>
     <Head>
+
       <title>Krets.</title>
       <link
         href='https://fonts.googleapis.com/icon?family=Material+Icons'
@@ -27,22 +41,7 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
       <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800' rel='stylesheet' />
       <link rel='icon' href='logo.svg' sizes='any' type='image/svg+xml' />
 
-      {/* START - add tawk.to chat  */}
-      <script dangerouslySetInnerHTML={{
-        __html: `
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-          
-          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-          s1.async=true;
-          s1.src='${TAWKTO_EMBED_SOURCE}';
-          s1.charset='UTF-8';
-          s1.setAttribute('crossorigin','*');
-          s0.parentNode.insertBefore(s1,s0);
-        })();
-      ` }} ></script>
-      {/* END - add tawk.to chat  */}
-
+      <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} />
 
     </Head>
     <ThemeProvider theme={KretsTheme}>
