@@ -8,8 +8,9 @@ import { categories } from "../../database/categories";
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
-
     const ownedByUser = await categories.getByOwner(user.sub);
+
+
     response
         .status(OK)
         .send(ownedByUser);

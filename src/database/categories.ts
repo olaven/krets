@@ -13,7 +13,6 @@ const getByOwner = (ownerId: string) => withDatabase<CategoryModel[]>(async clie
 
 const createCategory = (category: CategoryModel) => withDatabase<CategoryModel>(async client => {
 
-    //TODO: test 
     const result = await client.query(
         "insert into categories(owner_id, name) values($1, $2) returning *",
         [category.owner_id, category.name]);

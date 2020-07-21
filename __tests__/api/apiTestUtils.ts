@@ -6,6 +6,7 @@ import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
 import { PageModel, CategoryModel } from '../../src/models';
+import { responses } from '../../src/database/responses';
 
 
 export const randomPage = (ownerId: string): PageModel => ({
@@ -31,10 +32,14 @@ export const putPage = (page: PageModel, userId: string) => authenticatedFetch(u
     }
 });
 
-export const getCategories = async (userId: string) => {
+export const getCategories = async (userId: string, url: string) => {
 
-    const response = await authenticatedFetch(userId, "`api/categories`");
-    return response.json();
+    const response = await authenticatedFetch(userId, url);
+
+    if (response.status !== 200) throw `wrong status ${response.status}`;
+    const repsonses = await response.json();
+
+    return repsonses;
 };
 
 export const uid = () => faker.random.uuid();

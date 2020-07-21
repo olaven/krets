@@ -1,15 +1,15 @@
 
-import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage } from "apiTestUtils";
+import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage } from "./apiTestUtils";
 import handler from "../../src/pages/api/pages";
 import faker from "faker";
-import { users } from "../../src/database/users";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { createUser } from "../database/databaseTestUtils";
 import { getCategories } from "./apiTestUtils";
-import { getPage } from "../../src/http/fetchers";
+import { CategoryModel } from "../../src/models";
+import { categories } from "../../src/database/categories";
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../src/auth/auth0");
 
 describe("The categories endpoint", () => {
 
@@ -26,12 +26,17 @@ describe("The categories endpoint", () => {
         await teardownServer(server);
     });
 
+    const randomCategory = (ownerId: string): CategoryModel => ({
+        name: faker.company.companyName(),
+        owner_id: ownerId,
+    });
+
     describe("Endpoint for getting categories by owner", () => {
 
 
         it("Returns 401 if the user is not authenticated", async () => {
 
-            const response = await fetch(`/api/categories`);
+            const response = await fetch(url);
             expect(response.status)
                 .toEqual(401);
         });
@@ -39,7 +44,7 @@ describe("The categories endpoint", () => {
         it("Returns status code OK", async () => {
 
             const user = await createUser();
-            const response = await authenticatedFetch(user.id, `/api/categories`);
+            const response = await authenticatedFetch(user.id, url);
 
             expect(response.status)
                 .toEqual(200)
@@ -48,34 +53,30 @@ describe("The categories endpoint", () => {
         it("Returns an array", async () => {
 
             const user = await createUser();
-            const categories = await getCategories(user.id);
+            const categories = await getCategories(user.id, url);
 
             //NOTE: user is just created, and has no categories 
             expect(categories).toEqual([]);
         });
 
-        it("Returns categories", async () => {
+        it("Returns category objects", async () => {
 
             const user = await createUser();
-            const n = faker.random.number(8);
+            const n = faker.random.number(8) + 2;
 
-            const allPersisted = [];
+            const persisted: CategoryModel[] = [];
             for (let i = 0; i < n; i++) {
 
-                const category = createCategory(); // GET THIS 
-                postCategory(category);
-                allPersisted.push(category);
+                const category = await categories.createCategory(randomCategory(user.id))
+                expect(category.owner_id).toEqual(user.id);//trying to find mistake 
+                persisted.push(category);
             }
 
-            const fromApi = await getCategories(user.id);
-            for (let i = 0; i < n; i++) {
+            const retrieved = await getCategories(user.id, url);
 
-                const retrieved = fromApi[i];
-                const persisted = allPersisted[i];
-
-                //TODO see that retrieved is in perssited. 
-                expect(false).toBeTruthy();
-            }
+            expect(persisted.length).toEqual(n);
+            expect(retrieved.length).toEqual(n);
+            expect(retrieved).toEqual(persisted)
         });
     });
 });
