@@ -2,7 +2,7 @@
 
 exports.shorthands = undefined;
 
-const categoriesTable = {
+const categoriesTable = (pgm) => ({
     id: {
         type: 'serial',
         primaryKey: true
@@ -21,20 +21,20 @@ const categoriesTable = {
         type: 'varchar(800)',
         notNull: true
     },
-};
+});
 
-const categoryColumn = {
+const categoryColumn = (pgm) => ({
     category_id: {
         type: 'integer',
         references: '"categories" (id)',
         notNull: false
     },
-}
+})
 
 exports.up = pgm => {
 
-    pgm.createTable('categories', categoriesTable, { ifNotExists: true });
-    pgm.addColumns('pages', categoryColumn, { ifNotExists: true });
+    pgm.createTable('categories', categoriesTable(pgm), { ifNotExists: true });
+    pgm.addColumns('pages', categoryColumn(pgm), { ifNotExists: true });
 };
 
 exports.down = pgm => { };
