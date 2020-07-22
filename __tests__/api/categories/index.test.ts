@@ -1,15 +1,14 @@
 
-import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage, postCategory, getCategories } from "./apiTestUtils";
-import handler from "../../src/pages/api/pages";
+import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage, postCategory, authenticatedGet } from "../apiTestUtils";
+import handler from "../../../src/pages/api/categories/index";
 import faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { createUser } from "../database/databaseTestUtils";
-import { CategoryModel } from "../../src/models";
-import { categories } from "../../src/database/categories";
+import { createUser } from "../../database/databaseTestUtils";
+import { CategoryModel } from "../../../src/models";
 
 
-jest.mock("../../src/auth/auth0");
+jest.mock("../../../src/auth/auth0");
 
 describe("The categories endpoint", () => {
 
@@ -53,7 +52,7 @@ describe("The categories endpoint", () => {
         it("Returns an array", async () => {
 
             const user = await createUser();
-            const categories = await getCategories(user.id, url);
+            const categories = await authenticatedGet(user.id, url);
 
             //NOTE: user is just created, and has no categories 
             expect(categories).toEqual([]);
@@ -72,7 +71,7 @@ describe("The categories endpoint", () => {
                 persisted.push(category);
             }
 
-            const retrieved = await getCategories(user.id, url);
+            const retrieved = await authenticatedGet(user.id, url);
 
             expect(persisted.length).toEqual(n);
             expect(retrieved.length).toEqual(n);

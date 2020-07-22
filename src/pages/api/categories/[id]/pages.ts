@@ -3,6 +3,7 @@ import auth0 from "../../../../../auth0";
 import { pages } from "../../../../../src/database/pages"
 import { OK } from "../../../../http/codes";
 
+
 export default auth0.requireAuthentication(async (request, response) => {
 
     const { user } = await auth0.getSession(request);
@@ -12,4 +13,4 @@ export default auth0.requireAuthentication(async (request, response) => {
     response
         .status(OK)
         .send(retrieved);
-}); 
+});  

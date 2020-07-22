@@ -6,7 +6,6 @@ import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
 import { PageModel, CategoryModel } from '../../src/models';
-import { responses } from '../../src/database/responses';
 
 
 export const randomPage = (ownerId: string): PageModel => ({
@@ -32,11 +31,11 @@ export const putPage = (page: PageModel, userId: string) => authenticatedFetch(u
     }
 });
 
-export const getCategories = async (userId: string, url: string) => {
+export const authenticatedGet = async (userId: string, url: string) => {
 
     const response = await authenticatedFetch(userId, url);
-    const categories = await response.json();
-    return categories;
+    const body = await response.json();
+    return body;
 };
 
 export const postCategory = async (userId: string, url: string, category: CategoryModel) => authenticatedFetch(userId, url, {
@@ -46,6 +45,7 @@ export const postCategory = async (userId: string, url: string, category: Catego
     },
     body: JSON.stringify(category)
 });
+
 
 export const uid = () => faker.random.uuid();
 
@@ -63,7 +63,7 @@ export const getPages = async (url: string, userId = uid()) => {
  * @param url
  * @param options
  */
-export const authenticatedFetch = (userId: string, url: string, options: any = { headers: {} }) => {
+export const authenticatedFetch = (userId: string, url: string, options: any = {}) => {
 
 
     const mergedOptions = {
