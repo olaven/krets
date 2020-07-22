@@ -56,8 +56,8 @@ export const PageCreator = () => {
         <HelpButton />
         <Flex py={[1, 2, 3]}>
 
-            <Box width={1 / 3} />
-            <Box as='form' onSubmit={e => e.preventDefault()} width={2 / 4}>
+            <Box width={[0, 1 / 3]} />
+            <Box as='form' onSubmit={e => e.preventDefault()} width={[1, 1 / 3]}>
 
                 <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
 
@@ -75,7 +75,7 @@ export const PageCreator = () => {
                 </Flex>
 
             </Box>
-            <Box width={1 / 3} />
+            <Box width={[0, 1 / 3]} />
         </Flex>
     </>
 
