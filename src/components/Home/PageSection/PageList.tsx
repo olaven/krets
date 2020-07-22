@@ -5,24 +5,19 @@ import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
 import { TooltipHelp } from "tooltip-help-react";
 
-const PageCard = ({ id, name }) => {
+const PageCard = ({ id, name }) =>
+    <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
 
-    const { Tooltip } = useContext(TooltipHelp);
+        <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{name}</Heading>
+        <Flex flexWrap={"wrap"}>
+            {/* FIXME: Tooltips added here has wrong position */}
+            <ToAdmin id={id} />
+            <ToQR id={id} />
+            <ToPage id={id} />
+            <ToSettings id={id} />
+        </Flex>
+    </Card>;
 
-    return <Box>
-        <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
-
-            <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{name}</Heading>
-            <Flex mb={[1, 2, 3]} flexWrap={"wrap"}>
-                {/* FIXME: Tooltips added here has wrong position */}
-                <ToAdmin id={id} />
-                <ToQR id={id} />
-                <ToPage id={id} />
-                <ToSettings id={id} />
-            </Flex>
-        </Card>
-    </Box>;
-}
 
 export const PageList = () => {
 
