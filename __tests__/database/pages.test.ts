@@ -109,17 +109,41 @@ describe("Database interface for pages", () => {
         expect(retrievedPage.category_id).toEqual(persistedCategory.id);
     });
 
-    it("Can get pages by category and owner", async () => {
 
-        const owner = await createUser();
-        const category = await createCategory(owner.id);
+    describe("Getting pages by owner and category", () => {
 
-        const persisted = await Promise.all(
-            new Array(4)
-                .map(() => createPage(owner.id, category.id))
-        );
+        it("Can returns pages", async () => {
 
-        const retrieved = await pages.getByOwnerAndCategory(owner.id, category.id);
-        expect(retrieved).toEqual(persisted);
+            const owner = await createUser();
+            const category = await createCategory(owner.id);
+
+            const persisted = [];
+            for (let i = 0; i < 4; i++) {
+
+                const page = await createPage(owner.id, category.id);
+                persisted.push(page);
+            }
+
+            const retrieved = await pages.getByOwnerAndCategory(owner.id, category.id);
+            expect(retrieved).toEqual(persisted);
+        });
+
+
+        it("Does not return pages with other owners or categories", async () => {
+
+            const owner = await createUser();
+            const other = await createUser();
+            const ownerCategory = await createCategory(owner.id);
+            const otherCategory = await createCategory(other.id);
+
+            const ownerPage = await createPage(owner.id, ownerCategory.id);
+            const otherPage = await createPage(other.id, otherCategory.id);
+
+            const retrieved = await pages.getByOwnerAndCategory(owner.id, ownerCategory.id);
+
+            expect(retrieved.length).toEqual(1);
+            expect(retrieved[0]).toEqual(ownerPage);
+            expect(retrieved[0]).not.toEqual(otherPage);
+        });
     });
 });
