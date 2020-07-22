@@ -1,5 +1,5 @@
-import { Button } from "rebass";
-import { TooltipHelpProvider } from "tooltip-help-react"
+import { Button, Heading } from "rebass";
+import { TooltipHelp, TooltipHelpProvider } from "tooltip-help-react"
 import * as text from "../text";
 import Tippy from "@tippyjs/react";
 import { CategoryCreator } from "../components/Category/categoryCreator";
@@ -23,10 +23,19 @@ const CategoriesTooltipProvider = ({ children }) => <TooltipHelpProvider
     {children}
 </TooltipHelpProvider>
 
+
+const CategoriesContent = () => {
+
+    return <>
+        <Heading color={"primary"} textAlign={"center"} fontSize={[4, 5, 6]}>Kategorier</Heading>
+        <CategoryCreator />
+        <CategoryList />
+    </>
+}
+
 export default () => {
 
     const { user } = useContext(UserContext);
-
     if (!user) {
         return <>
             Denne siden er ikke tilgjengelig uten bruker
@@ -35,8 +44,7 @@ export default () => {
 
     return <CategoriesContextProvider user={user}>
         <CategoriesTooltipProvider>
-            <CategoryCreator />
-            <CategoryList />
+            <CategoriesContent />
         </CategoriesTooltipProvider >
     </CategoriesContextProvider>
 };

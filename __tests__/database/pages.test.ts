@@ -3,7 +3,8 @@ import * as faker from "faker";
 import { users } from "../../src/database/users";
 import { UserModel, CategoryModel } from "../../src/models";
 import { responses } from "../../src/database/responses";
-import { categories } from "../../src/database/categories"; import { createUser, createPage } from "./databaseTestUtils";
+import { categories } from "../../src/database/categories"; import { createUser, createPage, createCategory } from "./databaseTestUtils";
+import { createConfigItem } from "@babel/core";
 
 describe("Database interface for pages", () => {
 
@@ -106,6 +107,19 @@ describe("Database interface for pages", () => {
 
         const retrievedPage = await pages.getPage(page.id);
         expect(retrievedPage.category_id).toEqual(persistedCategory.id);
+    });
 
-    })
+    it("Can get pages by category and owner", async () => {
+
+        const owner = await createUser();
+        const category = await createCategory(owner.id);
+
+        const persisted = await Promise.all(
+            new Array(4)
+                .map(() => createPage(owner.id, category.id))
+        );
+
+        const retrieved = await pages.getByOwnerAndCategory(owner.id, category.id);
+        expect(retrieved).toEqual(persisted);
+    });
 });

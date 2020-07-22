@@ -12,17 +12,40 @@ const createPage = (page: PageModel) => withDatabase<PageModel>(async (client) =
 });
 
 
-const getByOwner = (owner_id: string) => withDatabase<PageModel[]>(async client => {
+const getByOwner = (ownerId: string) => withDatabase<PageModel[]>(async client => {
 
     const result = await client.query(
         "select * from pages where owner_id = $1",
-        [owner_id]
+        [ownerId]
     );
 
     return result.rows;
 });
 
+const getByOwnerAndCategory = (ownerId: string, categoryId: string) => withDatabase<PageModel[]>(async client => {
 
+    const result = await client.query(
+        `select * from pages where owner_id = $1 and category_id = $2`,
+        [ownerId, categoryId]
+    );
+
+    return result.rows;
+});
+
+/* 
+TODO: implement this idea for `rows` and `firstRow`, with the API demonstrated below. 
+Not implemented now, as it does not belong to the current task I am working on.
+
+const rows = <T>(query: string, values = []) => withDatabase<T>(async client => {
+
+    const result = await client.query(query, values);
+    return result.rows;
+});
+
+//made as test for `rows`
+const getPageTest = (id: string) =>
+    rows("select * from pages where id = $1", [id]);
+ */
 const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query("select * from pages where id = $1", [id]);
@@ -51,6 +74,7 @@ const deletePage = async (id: string) => withDatabase<PageModel>(async client =>
 export const pages = ({
     getPage,
     getByOwner,
+    getByOwnerAndCategory,
     createPage,
     updatePage,
     deletePage

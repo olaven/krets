@@ -1,19 +1,19 @@
 import React, { useState, useContext } from "react";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { Input } from "@rebass/forms";
-import { TooltipHelp } from "tooltip-help-react";
 import * as text from "../../text"
 import { CategoryModel } from "../../models";
 import { UserContext } from "../../context/UserContext";
 import { postCategory } from "../../http/fetchers";
 import { CREATED } from "../../http/codes";
+import { CategoriesContext } from "../../context/CategoriesContext";
 
 
 export const CategoryCreator = () => {
 
     const [name, setName] = useState("");
     const { user } = useContext(UserContext);
-    const { HelpButton, Tooltip } = useContext(TooltipHelp)
+    const { refreshCategories } = useContext(CategoriesContext);
 
     const onCreateCategory = async () => {
 
@@ -25,8 +25,8 @@ export const CategoryCreator = () => {
         const [status] = await postCategory(category);
         if (status === CREATED) {
 
-            console.log("JIPPI :D");
-            //TODO: visuell + oppdatering 
+            refreshCategories();
+            setName("");
         } else {
 
             console.error(`Received ${status} when posting category.`);
@@ -35,9 +35,9 @@ export const CategoryCreator = () => {
     }
 
     return <>
-        <Box width={1 / 4} m="auto">
+        {/* <Box width={1 / 4} m="auto">
             <HelpButton />
-        </Box>
+        </Box> */}
         <Flex py={[1, 2, 3]}>
             <Box width={1 / 3} />
             <Box as='form' onSubmit={e => e.preventDefault()} width={2 / 4}>
