@@ -9,23 +9,23 @@ import { CategoriesContextProvider } from "../context/CategoriesContext";
 import { CategoryList } from "../components/Category/categoryList";
 
 
+const CategoriesTooltipProvider = ({ children }) => <TooltipHelpProvider
+    predicate={() => true}
+    renderButton={(visible) => <Button
+        width={1}
+        backgroundColor="attention" >
+        {visible ? text.tooltips.understoodButton : text.tooltips.helpButton}
+    </Button >}
+    renderTooltip={(visible, children, content) => <Tippy visible={visible} content={content}>
+        {children}
+    </Tippy>}
+>
+    {children}
+</TooltipHelpProvider>
+
 export default () => {
 
     const { user } = useContext(UserContext);
-
-    const CategoriesTooltipProvider = ({ children }) => <TooltipHelpProvider
-        predicate={() => true}
-        renderButton={(visible) => <Button
-            width={1}
-            backgroundColor="attention" >
-            {visible ? text.tooltips.understoodButton : text.tooltips.helpButton}
-        </Button >}
-        renderTooltip={(visible, children, content) => <Tippy visible={visible} content={content}>
-            {children}
-        </Tippy>}
-    >
-        {children}
-    </TooltipHelpProvider>
 
     if (!user) {
         return <>
