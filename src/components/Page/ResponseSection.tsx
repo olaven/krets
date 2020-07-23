@@ -8,6 +8,15 @@ import { CREATED } from "../../http/codes";
 import { ReseponseModel, Emotion } from "../../models";
 import * as uiText from "../../text";
 
+
+const TextInput = ({ setText, postResponse }) => <Flex p={[1, 2, 3]}>
+    <Input
+        placeholder={uiText.response.placeholder}
+        onChange={event => { setText(event.target.value) }}
+    />
+    <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
+</Flex>
+
 export const ResponseSection = ({ page }) => {
 
     const [emotion, setEmotion] = useState<Emotion>(null);
@@ -47,13 +56,7 @@ export const ResponseSection = ({ page }) => {
                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
                 <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
             </Flex>
-            <Flex p={[1, 2, 3]}>
-                <Input
-                    placeholder={uiText.response.placeholder}
-                    onChange={event => { setText(event.target.value) }}
-                />
-                <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
-            </Flex>
+            {emotion && <TextInput setText={setText} postResponse={postResponse} />}
         </>
 
     return <Box m={"auto"} py={[4, 8, 16]}>
