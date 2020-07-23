@@ -9,9 +9,15 @@ import { ReseponseModel, Emotion } from "../../models";
 import * as uiText from "../../text";
 
 
-const TextInput = ({ setText, postResponse }) => <Flex p={[1, 2, 3]}>
+const getPlaceholder = (emotion: Emotion) => ({
+    ":-)": uiText.response.placeholder.happy,
+    ":-|": uiText.response.placeholder.neutral,
+    ":-(": uiText.response.placeholder.sad,
+}[emotion])
+
+const TextInput = ({ setText, postResponse, emotion }) => <Flex p={[1, 2, 3]}>
     <Input
-        placeholder={uiText.response.placeholder}
+        placeholder={getPlaceholder(emotion)}
         onChange={event => { setText(event.target.value) }}
     />
     <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
@@ -56,7 +62,7 @@ export const ResponseSection = ({ page }) => {
                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
                 <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
             </Flex>
-            {emotion && <TextInput setText={setText} postResponse={postResponse} />}
+            {emotion && <TextInput setText={setText} postResponse={postResponse} emotion={emotion} />}
         </>
 
     return <Box m={"auto"} py={[4, 8, 16]}>

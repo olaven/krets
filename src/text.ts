@@ -21,7 +21,11 @@ export const intro = strings({
 export const response = strings({
     en: {
         header: "Give feedback to",
-        placeholder: "Optional text",
+        placeholder: {
+            happy: "What did you like?",
+            neutral: "What should've been different?",
+            sad: "What did you dislike?"
+        },
         button: "Send",
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
@@ -29,7 +33,11 @@ export const response = strings({
     },
     no: {
         header: "Gi tilbakemelding til",
-        placeholder: "Valgfri tekst",
+        placeholder: {
+            happy: "Hva likte du?",
+            neutral: "Hva burde vært annerledes?",
+            sad: "Hva mislikte du?"
+        },
         button: "Send",
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
