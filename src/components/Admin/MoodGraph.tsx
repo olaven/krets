@@ -12,10 +12,15 @@ export const emotionToNumeric = (emotion: Emotion) => ({
     ":-(": 0,
 }[emotion])
 
+const responsesToCoordinates = (responses: ReseponseModel[]) =>
+    responses.length === 0 ?
+        [] :
+        responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
+
 const pageInformationsToCoordinates = (pageInformations: PageInformation[]) => pageInformations
     .map(({ page, responses }) => ({
         x: page.name,
-        y: responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
+        y: responsesToCoordinates(responses)
     }));
 
 const Graph = ({ coordinates }) => <Box>
