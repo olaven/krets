@@ -1,5 +1,5 @@
 
-import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage, postCategory, authenticatedGet } from "../apiTestUtils";
+import { authenticatedFetch, setupServer, teardownServer, postCategory, authenticatedGet } from "../apiTestUtils";
 import handler from "../../../src/pages/api/categories/index";
 import faker from "faker";
 import { Server } from "net";

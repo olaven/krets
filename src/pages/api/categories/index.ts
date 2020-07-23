@@ -1,9 +1,8 @@
-import auth0 from "../../auth/auth0";
-import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "../../http/codes";
-import { CategoryModel } from "../../models";
+import auth0 from "../../../auth/auth0";
+import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "../../../http/codes";
+import { CategoryModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
-import { categories } from "../../database/categories";
-import { useRouter } from "next/router";
+import { categories } from "../../../database/categories";
 
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {

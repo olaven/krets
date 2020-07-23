@@ -53,7 +53,7 @@ describe("The pages by categories endpoint", () => {
             const { status } = await authenticatedFetch(user.id, url(category.id));
 
             expect(status)
-                .toEqual(200)
+                .toEqual(200);
         });
         it("Returns array of pages", async () => {
 

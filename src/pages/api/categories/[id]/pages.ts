@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import auth0 from "../../../../../auth0";
+import auth0 from "../../../../auth/auth0";
 import { pages } from "../../../../../src/database/pages"
 import { OK } from "../../../../http/codes";
 

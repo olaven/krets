@@ -65,7 +65,6 @@ export const getPages = async (url: string, userId = uid()) => {
  */
 export const authenticatedFetch = (userId: string, url: string, options: any = {}) => {
 
-
     const mergedOptions = {
         ...options,
         headers: {
@@ -73,7 +72,6 @@ export const authenticatedFetch = (userId: string, url: string, options: any = {
             ...options.headers
         },
     };
-
 
     return fetch(url, mergedOptions);
 };
