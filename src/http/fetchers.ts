@@ -1,4 +1,4 @@
-import { get, put, del } from "./methods";
+import { get, put, del } from "node-kall";
 import { PageModel, ReseponseModel } from "../models";
 
 export const putPage = (page: PageModel) =>
