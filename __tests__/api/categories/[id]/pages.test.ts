@@ -67,8 +67,7 @@ describe("The pages by categories endpoint", () => {
                 persisted.push(page);
             }
 
-            const pages = await authenticatedGet(user.id, url(category.id));
-
+            const pages = await authenticatedGet<PageModel[]>(user.id, url(category.id));
             expect(pages).toEqual(persisted);
         });
 
@@ -84,7 +83,7 @@ describe("The pages by categories endpoint", () => {
                 persisted.push(page);
             }
 
-            const pages = await authenticatedGet(user.id, url(category.id));
+            const pages = await authenticatedGet<PageModel[]>(user.id, url(category.id));
 
             pages.forEach(page => {
 

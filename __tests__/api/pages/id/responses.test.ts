@@ -77,7 +77,8 @@ describe("The endpoint for responses", () => {
         const page = await pages.createPage({
             id: faker.random.uuid(),
             name: faker.company.companyName(),
-            owner_id: user.id
+            owner_id: user.id,
+            category_id: null
         });
 
         const response = {

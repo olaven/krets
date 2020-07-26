@@ -31,11 +31,12 @@ export const putPage = (page: PageModel, userId: string) => authenticatedFetch(u
     }
 });
 
-export const authenticatedGet = async (userId: string, url: string) => {
+export const authenticatedGet = async <T>(userId: string, url: string) => {
 
     const response = await authenticatedFetch(userId, url);
+    expect(response.status).toEqual(200);
     const body = await response.json();
-    return body;
+    return body as T;
 };
 
 export const postCategory = async (userId: string, url: string, category: CategoryModel) => authenticatedFetch(userId, url, {
