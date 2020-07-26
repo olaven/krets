@@ -55,7 +55,7 @@ export const MoodGraph = () => {
 
     const { page } = useContext(AdminPageContext);
     const { pageInformations, setSelected } = useContext(CompareContext);
-    const [coordinates, setCoordinates] = useState<{ x: string, y: number }[]>([])
+    const [coordinates, setCoordinates] = useState<any[]>([]) //TODO: Type once format is more permanent
 
     useEffect(() => {
         setSelected([page.id]);
