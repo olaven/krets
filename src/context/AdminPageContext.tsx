@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { PageModel, ReseponseModel } from "../models";
+import { PageModel, ResponseModel } from "../models";
 import { usePage } from "../effects/usePage";
 import { useResponses } from "../effects/useResponses";
 
@@ -7,7 +7,7 @@ import { useResponses } from "../effects/useResponses";
 interface ContextInterface {
     page: PageModel,
     pageLoading: boolean,
-    responses: ReseponseModel[],
+    responses: ResponseModel[],
     responsesLoading: boolean
 }
 const defaultValues: ContextInterface =

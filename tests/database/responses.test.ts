@@ -1,5 +1,6 @@
-import { responses } from "../../src/database/responses";
 import * as faker from "faker";
+import { responses } from "../../src/database/responses";
+import { randomResponse, randomUser, randomPage } from "./databaseTestUtils";
 import { users } from "../../src/database/users";
 import { pages } from "../../src/database/pages";
 
@@ -35,5 +36,20 @@ describe("Database repository for pages", () => {
 
         expect(before.length).toEqual(0);
         expect(after.length).toEqual(1);
+    });
+
+    test("Can create response with contact details", async () => {
+
+        const user = await users.createUser(randomUser());
+        const page = await pages.createPage(randomPage(user.id));
+        const contact_details = "mail@example.com";
+
+        await responses.createResponse(randomResponse(page.id, ":-)", contact_details));
+
+        const retrieved = await responses.getResponses(page.id);
+        expect(retrieved.length).toEqual(1);
+
+        const [response] = retrieved;
+        expect(response.contact_details).toEqual(contact_details)
     });
 });

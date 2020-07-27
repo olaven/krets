@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
-import { ReseponseModel } from "../models"
+import { ResponseModel } from "../models"
 import { OK } from "node-kall";
 import { getResponses } from "../fetchers";
 
 
 //NOTE: Response fetching in this file is a common pattern. Should have common, fitting abstraction
 
-export const useResponses = (pageId: string): [ReseponseModel[], boolean] => {
+export const useResponses = (pageId: string): [ResponseModel[], boolean] => {
 
-    const [responses, setResponses] = useState<ReseponseModel[]>([]);
+    const [responses, setResponses] = useState<ResponseModel[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

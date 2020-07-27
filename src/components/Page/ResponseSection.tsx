@@ -1,12 +1,12 @@
 import Emoji from "react-emoji-render";
 import { Box, Button, Flex, Heading } from "rebass"
-import { Input } from '@rebass/forms'
+import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
-import { get, post } from "node-kall";
 import { CREATED } from "node-kall";
-import { ReseponseModel, Emotion } from "../../models";
+import { Emotion } from "../../models";
 import * as uiText from "../../text";
+import { postResponse } from "../../fetchers";
 
 
 const getPlaceholder = (emotion: Emotion) => ({
@@ -15,33 +15,89 @@ const getPlaceholder = (emotion: Emotion) => ({
     ":-(": uiText.response.placeholder.sad,
 }[emotion])
 
-const TextInput = ({ setText, postResponse, emotion }) => <Flex p={[1, 2, 3]}>
+const TextInput = ({ setText, onPostResponse, emotion }) => <Flex p={[1, 2, 3]}>
     <Input
+        aria-label="response-text-input"
         placeholder={getPlaceholder(emotion)}
         onChange={event => { setText(event.target.value) }}
     />
-    <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
+    <Button
+        aria-label="response-button-input"
+        m={1}
+        px={3}
+        onClick={onPostResponse}>
+        {uiText.response.button}
+    </Button>
 </Flex>
+
+const ContactInput = ({ checked, setChecked, setContactDetails }) => <Flex p={[1, 2, 3]}>
+    <Label width={[]} p={2} fontSize={[1]}>
+        <Checkbox
+            aria-label="response-checkbox-input"
+            onChange={() => { setChecked(!checked) }}
+            checked={checked}
+        />
+        {uiText.response.contactCheckbox}
+    </Label>
+    {checked &&
+        <Input
+            aria-label="response-contact-input"
+            placeholder={uiText.response.contactPlaceholder}
+            onChange={event => {
+                setContactDetails(event.target.value
+                    .trim()
+                    .toLowerCase())
+            }}
+        />
+    }
+</Flex>
+
+
+const ResponseSectionForm = ({ page, published, emotion, setEmotion, setText, checked, setChecked, setContactDetails, onPostResponse }) =>
+    published ?
+        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
+        <>
+            <Heading aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
+            <Flex>
+                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
+            </Flex>
+            {emotion && <>
+                <TextInput
+                    setText={setText}
+                    onPostResponse={onPostResponse}
+                    emotion={emotion} />
+                <ContactInput
+                    checked={checked}
+                    setChecked={setChecked}
+                    setContactDetails={setContactDetails} />
+            </>}
+        </>
 
 export const ResponseSection = ({ page }) => {
 
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [text, setText] = useState("");
+    const [checked, setChecked] = useState(false);
+    const [contactDetails, setContactDetails] = useState("");
     const [published, setPublished] = useState(false);
 
 
-    const postResponse = async () => {
+    const onPostResponse = async () => {
 
+        //NOTE:impossible with current implementation, as button is hidden if no emotion is selected
         if (!emotion) {
-
             alert(uiText.response.chooseSmiley);
             return;
         }
 
-        const [status] = await post(`/api/pages/${page.id}/responses`, {
-            emotion, text, page_id: page.id
-        } as ReseponseModel);
-
+        const [status] = await postResponse({
+            emotion,
+            text,
+            page_id: page.id,
+            contact_details: contactDetails ? contactDetails : null
+        });
 
         if (status === CREATED) {
 
@@ -49,23 +105,21 @@ export const ResponseSection = ({ page }) => {
         } else {
 
             alert(uiText.response.error);
-            console.warn(postResponse);
         }
     };
 
-    const form = published ?
-        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
-        <>
-            <Heading py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
-            <Flex>
-                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
-                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
-                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
-            </Flex>
-            {emotion && <TextInput setText={setText} postResponse={postResponse} emotion={emotion} />}
-        </>
-
+    /* TODO: Find a better way to split up functions than this. It introduces way too many prop-layers */
     return <Box m={"auto"} py={[4, 8, 16]}>
-        {form}
+        <ResponseSectionForm
+            page={page}
+            published={published}
+            emotion={emotion}
+            setEmotion={setEmotion}
+            setText={setText}
+            checked={checked}
+            setChecked={setChecked}
+            setContactDetails={setContactDetails}
+            onPostResponse={onPostResponse}
+        />
     </Box>;
 };
