@@ -30,6 +30,8 @@ export const response = strings({
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
+        contactCheckbox: "I want to give further feedback",
+        contactPlaceholder: "Enter your email or phone number",
     },
     no: {
         header: "Gi tilbakemelding til",
@@ -42,6 +44,8 @@ export const response = strings({
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
+        contactCheckbox: "Jeg vil gi mer tilbakemelding",
+        contactPlaceholder: "Din epost eller ditt telefonnummer",
     }
 });
 

@@ -3,10 +3,10 @@ import { Box, Button, Flex, Heading } from "rebass"
 import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
-import { get, post } from "node-kall";
 import { CREATED } from "node-kall";
 import { ResponseModel, Emotion } from "../../models";
 import * as uiText from "../../text";
+import { postResponse } from "../../fetchers";
 
 
 const getPlaceholder = (emotion: Emotion) => ({
@@ -15,22 +15,46 @@ const getPlaceholder = (emotion: Emotion) => ({
     ":-(": uiText.response.placeholder.sad,
 }[emotion])
 
-const TextInput = ({ setText, postResponse, emotion }) => <Flex p={[1, 2, 3]}>
+const TextInput = ({ setText, onPostResponse, emotion }) => <Flex p={[1, 2, 3]}>
     <Input
         placeholder={getPlaceholder(emotion)}
         onChange={event => { setText(event.target.value) }}
     />
-    <Button m={1} px={3} onClick={postResponse}>{uiText.response.button}</Button>
+    <Button m={1} px={3} onClick={onPostResponse}>{uiText.response.button}</Button>
 </Flex>
+
+const ContactInput = ({ checked, setChecked, setContactDetails }) => <>
+    <Label width={[]} p={2}>
+        <Checkbox
+            onChange={() => { setChecked(!checked) }}
+            checked={checked}
+        />
+        {uiText.response.contactCheckbox}
+    </Label>
+    {checked &&
+        <Input
+            placeholder={uiText.response.contactPlaceholder}
+            onChange={event => {
+                setContactDetails(event.target.value
+                    .trim()
+                    .toLowerCase())
+            }}
+        />
+    }
+</>
 
 export const ResponseSection = ({ page }) => {
 
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [text, setText] = useState("");
+    const [checked, setChecked] = useState(false);
+    const [contactDetails, setContactDetails] = useState<>("");
     const [published, setPublished] = useState(false);
 
+    console.log(contactDetails);
 
-    const postResponse = async () => {
+
+    const onPostResponse = async () => {
 
         if (!emotion) {
 
@@ -38,10 +62,12 @@ export const ResponseSection = ({ page }) => {
             return;
         }
 
-        const [status] = await post(`/api/pages/${page.id}/responses`, {
-            emotion, text, page_id: page.id
-        } as ResponseModel);
-
+        const [status] = await postResponse({
+            emotion,
+            text,
+            page_id: page.id,
+            contact_details: contactDetails ? contactDetails : null
+        });
 
         if (status === CREATED) {
 
@@ -49,11 +75,8 @@ export const ResponseSection = ({ page }) => {
         } else {
 
             alert(uiText.response.error);
-            console.warn(postResponse);
         }
     };
-
-    const [checked, setChecked] = useState(false);
 
     const form = published ?
         <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
@@ -65,20 +88,14 @@ export const ResponseSection = ({ page }) => {
                 <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
             </Flex>
             {emotion && <>
-                <TextInput setText={setText} postResponse={postResponse} emotion={emotion} />
-                <Label width={[1 / 2, 1 / 4]} p={2}>
-                    <Checkbox
-                        onChange={() => { setChecked(!checked) }}
-                        checked={checked}
-                    />
-                    La eieren kontakte meg
-                </Label>
-                {checked &&
-                    <Input
-                        placeholder={"noe greier"}
-                        onChange={console.log}
-                    />
-                }
+                <TextInput
+                    setText={setText}
+                    onPostResponse={onPostResponse}
+                    emotion={emotion} />
+                <ContactInput
+                    checked={checked}
+                    setChecked={setChecked}
+                    setContactDetails={setContactDetails} />
             </>}
         </>
 
