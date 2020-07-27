@@ -25,11 +25,13 @@ const TextInput = ({ setText, onPostResponse, emotion }) => <Flex p={[1, 2, 3]}>
         aria-label="response-button-input"
         m={1}
         px={3}
-        onClick={onPostResponse}>{uiText.response.button}</Button>
+        onClick={onPostResponse}>
+        {uiText.response.button}
+    </Button>
 </Flex>
 
-const ContactInput = ({ checked, setChecked, setContactDetails }) => <>
-    <Label width={[]} p={2}>
+const ContactInput = ({ checked, setChecked, setContactDetails }) => <Flex p={[1, 2, 3]}>
+    <Label width={[]} p={2} fontSize={[1]}>
         <Checkbox
             aria-label="response-checkbox-input"
             onChange={() => { setChecked(!checked) }}
@@ -48,7 +50,7 @@ const ContactInput = ({ checked, setChecked, setContactDetails }) => <>
             }}
         />
     }
-</>
+</Flex>
 
 export const ResponseSection = ({ page }) => {
 

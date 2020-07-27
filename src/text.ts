@@ -31,7 +31,7 @@ export const response = strings({
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
         contactCheckbox: "I want to give further feedback",
-        contactPlaceholder: "Enter your email or phone number",
+        contactPlaceholder: "Email or phone number",
     },
     no: {
         header: "Gi tilbakemelding til",
@@ -45,7 +45,7 @@ export const response = strings({
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
         contactCheckbox: "Jeg vil gi mer tilbakemelding",
-        contactPlaceholder: "Din epost eller ditt telefonnummer",
+        contactPlaceholder: "Epost eller telefonnummer",
     }
 });
 
