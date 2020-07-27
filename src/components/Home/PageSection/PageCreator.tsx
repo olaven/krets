@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Flex, Heading, Text } from "rebass";
 import { Input } from "@rebass/forms"
 import { PagesContext } from "../../../context/PagesContext";
-import { post } from "../../../http/methods";
-import { OK, CREATED } from "../../../http/codes";
+import { post, CREATED, OK } from "node-kall";
 import * as text from "../../../text"
 import { TooltipHelp } from "tooltip-help-react";
 
@@ -18,6 +17,8 @@ export const nameToId = (name: string) => name
 
 
 export const PageCreator = () => {
+
+    console.log("post", post);
 
     const { refreshPages } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp);

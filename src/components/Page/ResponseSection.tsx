@@ -4,7 +4,7 @@ import { Input } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
 import { get, post } from "../../http/methods";
-import { CREATED } from "../../http/codes";
+import { CREATED } from "node-kall";
 import { ReseponseModel, Emotion } from "../../models";
 import * as uiText from "../../text";
 

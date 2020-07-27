@@ -3,7 +3,7 @@ import { Box, Button, Heading, Text, Flex } from "rebass";
 import { Input } from "@rebass/forms"
 import { putPage, deletePage } from "../../http/fetchers";
 import { useState, useContext } from "react";
-import { NO_CONTENT } from "../../http/codes";
+import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
 import config from "../../auth/config";

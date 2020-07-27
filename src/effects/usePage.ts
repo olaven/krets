@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageModel } from "../models";
-import { OK } from "../http/codes";
+import { OK } from "node-kall";
 import { getPage } from "../http/fetchers";
 
 export const usePage = (id: string): [PageModel, boolean, (() => Promise<any>),] => {

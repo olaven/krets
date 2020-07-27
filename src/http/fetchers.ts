@@ -13,5 +13,7 @@ export const getPage = (id: string) =>
 export const getPages = () =>
     get<PageModel[]>("/api/pages");
 
+
+
 export const getResponses = (pageId: string) =>
     get<ReseponseModel[]>(`/api/pages/${pageId}/responses`);

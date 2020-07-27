@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { ReseponseModel } from "../models"
-import { OK } from "../http/codes";
+import { OK } from "node-kall";
 import { getResponses } from "../http/fetchers";
 
 

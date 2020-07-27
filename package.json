@@ -19,7 +19,7 @@
     "@tippyjs/react": "^4.0.5",
     "emotion-theming": "^10.0.27",
     "next": "^9.4.4",
-    "node-kall": "^1.0.1",
+    "node-kall": "^1.0.2",
     "node-pg-migrate": "^5.2.0",
     "pg": "^8.2.1",
     "react": "^16.13.1",
