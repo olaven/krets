@@ -124,10 +124,12 @@ export const pageCreator = strings({
 
 export const adminPage = strings({
     en: {
+        contactDetails: "Contact details",
         loading: "Loading admin page...",
         notOwning: "You do not own this page."
     },
     no: {
+        contactDetails: "Kontaktinformasjon",
         loading: "Laster adminside...",
         notOwning: "Denne siden eier du ikke."
     }
