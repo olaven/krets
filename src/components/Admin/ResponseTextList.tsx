@@ -1,7 +1,7 @@
 import { Card, Flex, Box, Text } from "rebass";
 import { AdminPageContext } from "../../context/AdminPageContext"
 import { useContext } from "react";
-import { ReseponseModel } from "../../models";
+import { ResponseModel } from "../../models";
 import Emoji from "react-emoji-render";
 import * as text from "../../text";
 
@@ -32,7 +32,7 @@ export const ResponseTextList = () => {
     }
 
 
-    const ResponseCard = ({ response }: { response: ReseponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
+    const ResponseCard = ({ response }: { response: ResponseModel }) => <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color="secondary">
         <Flex>
             <Emoji text={response.emotion}></Emoji>
             <Text opacity={0.5} fontSize={[1, 2, 3]}>{formatDate(response.created_at)}</Text>

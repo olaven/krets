@@ -1,5 +1,5 @@
 import { get, put, del } from "node-kall";
-import { PageModel, ReseponseModel } from "./models";
+import { PageModel, ResponseModel } from "./models";
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
@@ -14,4 +14,4 @@ export const getPages = () =>
     get<PageModel[]>("/api/pages");
 
 export const getResponses = (pageId: string) =>
-    get<ReseponseModel[]>(`/api/pages/${pageId}/responses`);
+    get<ResponseModel[]>(`/api/pages/${pageId}/responses`);

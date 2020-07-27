@@ -1,7 +1,7 @@
 import { VictoryArea, VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from "victory"
 import { useContext, useEffect, useState } from "react";
 import { AdminPageContext } from "../../context/AdminPageContext";
-import { ReseponseModel, Emotion } from "../../models";
+import { ResponseModel, Emotion } from "../../models";
 import { Box, Heading } from "rebass";
 import { CompareContext, PageInformation } from "../../context/CompareContext";
 import * as text from "../../text"
@@ -12,7 +12,7 @@ export const emotionToNumeric = (emotion: Emotion) => ({
     ":-(": 0,
 }[emotion])
 
-const responsesToCoordinates = (responses: ReseponseModel[]) =>
+const responsesToCoordinates = (responses: ResponseModel[]) =>
     responses.length === 0 ?
         [] :
         responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length

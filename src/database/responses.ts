@@ -1,8 +1,8 @@
 import { withDatabase } from "./connect";
-import { ReseponseModel } from "../models";
+import { ResponseModel } from "../models";
 
 
-const getResponses = (pageId: string) => withDatabase<ReseponseModel[]>(async client => {
+const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async client => {
 
     const result = await client
         .query(`
@@ -16,7 +16,7 @@ const getResponses = (pageId: string) => withDatabase<ReseponseModel[]>(async cl
 });
 
 
-const createResponse = async (response: ReseponseModel) => withDatabase<ReseponseModel>(async (client) => {
+const createResponse = async (response: ResponseModel) => withDatabase<ResponseModel>(async (client) => {
 
     const result = await client.query(
         "insert into responses(emotion, text, page_id) values($1, $2, $3) RETURNING *",

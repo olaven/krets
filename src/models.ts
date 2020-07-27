@@ -1,7 +1,7 @@
 export type Emotion =
     ':-)' | ':-|' | ':-('
 
-export interface ReseponseModel {
+export interface ResponseModel {
     id?: string,
     emotion: Emotion,
     text: string,

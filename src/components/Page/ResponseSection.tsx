@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
 import { get, post } from "node-kall";
 import { CREATED } from "node-kall";
-import { ReseponseModel, Emotion } from "../../models";
+import { ResponseModel, Emotion } from "../../models";
 import * as uiText from "../../text";
 
 
@@ -40,7 +40,7 @@ export const ResponseSection = ({ page }) => {
 
         const [status] = await post(`/api/pages/${page.id}/responses`, {
             emotion, text, page_id: page.id
-        } as ReseponseModel);
+        } as ResponseModel);
 
 
         if (status === CREATED) {

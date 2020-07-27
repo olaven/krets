@@ -1,12 +1,12 @@
 import React, { createContext, useState, useEffect, SetStateAction } from "react";
-import { PageModel, ReseponseModel } from "../models";
+import { PageModel, ResponseModel } from "../models";
 import { filterBody } from "node-kall";
 import { getResponses, getPage } from "../fetchers";
 
 
 export type PageInformation = {
     page: PageModel,
-    responses: ReseponseModel[]
+    responses: ResponseModel[]
 }
 
 interface ContextInterface {
