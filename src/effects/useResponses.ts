@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { ReseponseModel } from "../models"
 import { OK } from "node-kall";
-import { getResponses } from "../http/fetchers";
+import { getResponses } from "../fetchers";
 
 
 //NOTE: Response fetching in this file is a common pattern. Should have common, fitting abstraction

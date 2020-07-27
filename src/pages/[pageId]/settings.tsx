@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Box, Button, Heading, Text, Flex } from "rebass";
 import { Input } from "@rebass/forms"
-import { putPage, deletePage } from "../../http/fetchers";
+import { putPage, deletePage } from "../../fetchers";
 import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";

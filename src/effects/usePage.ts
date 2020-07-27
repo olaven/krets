@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PageModel } from "../models";
 import { OK } from "node-kall";
-import { getPage } from "../http/fetchers";
+import { getPage } from "../fetchers";
 
 export const usePage = (id: string): [PageModel, boolean, (() => Promise<any>),] => {
 

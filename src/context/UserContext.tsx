@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { get } from "../http/methods";
+import { get } from "node-kall";
 import { AuthModel } from "../models";
 
 interface IUserContext {
