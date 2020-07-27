@@ -1,6 +1,6 @@
 import Emoji from "react-emoji-render";
 import { Box, Button, Flex, Heading } from "rebass"
-import { Input } from '@rebass/forms'
+import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
 import { get, post } from "node-kall";
@@ -53,6 +53,8 @@ export const ResponseSection = ({ page }) => {
         }
     };
 
+    const [checked, setChecked] = useState(false);
+
     const form = published ?
         <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
         <>
@@ -62,7 +64,22 @@ export const ResponseSection = ({ page }) => {
                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
                 <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
             </Flex>
-            {emotion && <TextInput setText={setText} postResponse={postResponse} emotion={emotion} />}
+            {emotion && <>
+                <TextInput setText={setText} postResponse={postResponse} emotion={emotion} />
+                <Label width={[1 / 2, 1 / 4]} p={2}>
+                    <Checkbox
+                        onChange={() => { setChecked(!checked) }}
+                        checked={checked}
+                    />
+                    La eieren kontakte meg
+                </Label>
+                {checked &&
+                    <Input
+                        placeholder={"noe greier"}
+                        onChange={console.log}
+                    />
+                }
+            </>}
         </>
 
     return <Box m={"auto"} py={[4, 8, 16]}>
