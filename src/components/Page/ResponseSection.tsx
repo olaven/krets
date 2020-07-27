@@ -57,7 +57,7 @@ const ResponseSectionForm = ({ page, published, emotion, setEmotion, setText, ch
     published ?
         <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
         <>
-            <Heading aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
+            <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
             <Flex>
                 <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
