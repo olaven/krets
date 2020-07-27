@@ -52,6 +52,29 @@ const ContactInput = ({ checked, setChecked, setContactDetails }) => <Flex p={[1
     }
 </Flex>
 
+
+const ResponseSectionForm = ({ page, published, emotion, setEmotion, setText, checked, setChecked, setContactDetails, onPostResponse }) =>
+    published ?
+        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
+        <>
+            <Heading aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
+            <Flex>
+                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
+                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
+            </Flex>
+            {emotion && <>
+                <TextInput
+                    setText={setText}
+                    onPostResponse={onPostResponse}
+                    emotion={emotion} />
+                <ContactInput
+                    checked={checked}
+                    setChecked={setChecked}
+                    setContactDetails={setContactDetails} />
+            </>}
+        </>
+
 export const ResponseSection = ({ page }) => {
 
     const [emotion, setEmotion] = useState<Emotion>(null);
@@ -85,28 +108,18 @@ export const ResponseSection = ({ page }) => {
         }
     };
 
-    const form = published ?
-        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
-        <>
-            <Heading aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
-            <Flex>
-                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
-                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
-                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
-            </Flex>
-            {emotion && <>
-                <TextInput
-                    setText={setText}
-                    onPostResponse={onPostResponse}
-                    emotion={emotion} />
-                <ContactInput
-                    checked={checked}
-                    setChecked={setChecked}
-                    setContactDetails={setContactDetails} />
-            </>}
-        </>
-
+    /* TODO: Find a better way to split up functions than this. It introduces way too many prop-layers */
     return <Box m={"auto"} py={[4, 8, 16]}>
-        {form}
+        <ResponseSectionForm
+            page={page}
+            published={published}
+            emotion={emotion}
+            setEmotion={setEmotion}
+            setText={setText}
+            checked={checked}
+            setChecked={setChecked}
+            setContactDetails={setContactDetails}
+            onPostResponse={onPostResponse}
+        />
     </Box>;
 };

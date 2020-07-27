@@ -27,9 +27,9 @@ describe("The component for creating new responses", () => {
         it("Does show smileys at render", () => {
 
             const { getByText } = launch(page());
-            expect(getByText("😃")).toBeInTheDocument();
-            expect(getByText("😐")).toBeInTheDocument();
-            expect(getByText("😦")).toBeInTheDocument();
+            ["😃", "😐", "😦"].forEach(emoji => {
+                expect(getByText(emoji)).toBeInTheDocument();
+            });
         });
 
 
