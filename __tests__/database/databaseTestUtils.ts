@@ -11,7 +11,7 @@ export const randomPage = (ownerId: string): PageModel => ({
     owner_id: ownerId
 });
 
-export const randomResponse = (ownerId: string, pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
+export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
     ({
         id: faker.random.uuid(),
         page_id: pageId,

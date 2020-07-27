@@ -44,7 +44,7 @@ describe("Database repository for pages", () => {
         const page = await pages.createPage(randomPage(user.id));
         const contact_details = "mail@example.com";
 
-        await responses.createResponse(randomResponse(user.id, page.id, ":-)", contact_details));
+        await responses.createResponse(randomResponse(page.id, ":-)", contact_details));
 
         const retrieved = await responses.getResponses(page.id);
         expect(retrieved.length).toEqual(1);
