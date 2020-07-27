@@ -17,6 +17,8 @@ const responsesToCoordinates = (responses: ReseponseModel[]) =>
         [] :
         responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
 
+
+
 const pageInformationsToCoordinates = (pageInformations: PageInformation[]) => pageInformations
     .map(({ page, responses }) => ({
         x: page.name,

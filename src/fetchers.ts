@@ -1,5 +1,5 @@
-import { get, put, del } from "./methods";
-import { PageModel, ReseponseModel } from "../models";
+import { get, put, del } from "node-kall";
+import { PageModel, ReseponseModel } from "./models";
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);

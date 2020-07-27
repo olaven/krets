@@ -1,6 +1,6 @@
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/pages";
-import { CREATED, OK } from "../../../http/codes";
+import { CREATED, OK } from "node-kall";
 import { PageModel } from "../../../models";
 
 

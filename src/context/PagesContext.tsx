@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getPages } from "../http/fetchers";
-import { OK } from "../http/codes";
+import { getPages } from "../fetchers";
+import { OK } from "node-kall";
 import { PageModel } from "../models";
 
 
