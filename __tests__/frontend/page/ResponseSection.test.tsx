@@ -21,15 +21,15 @@ describe("The component for creating new responses", () => {
         it("Does show something", () => {
 
             const { getByLabelText } = launch(page());
-            expect(getByLabelText("response-section-header")).toBeInTheDOM();
+            expect(getByLabelText("response-section-header")).toBeInTheDocument();
         });
 
         it("Does show smileys at render", () => {
 
             const { getByText } = launch(page());
-            expect(getByText("😃")).toBeInTheDOM();
-            expect(getByText("😐")).toBeInTheDOM();
-            expect(getByText("😦")).toBeInTheDOM();
+            expect(getByText("😃")).toBeInTheDocument();
+            expect(getByText("😐")).toBeInTheDocument();
+            expect(getByText("😦")).toBeInTheDocument();
         });
 
 

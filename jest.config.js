@@ -6,6 +6,7 @@ module.exports = {
   testPathIgnorePatterns: [
     "./__tests__/api/apiTestUtils.ts",
     "./__tests__/frontend/frontendTestUtils.tsx",
+    "./__tests__/database/databaseTestUtils.tsx",
   ],
   transform: {
     '^.+\\.tsx?$': 'babel-jest',
