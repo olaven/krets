@@ -19,8 +19,8 @@ const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async cli
 const createResponse = async (response: ResponseModel) => withDatabase<ResponseModel>(async (client) => {
 
     const result = await client.query(
-        "insert into responses(emotion, text, page_id) values($1, $2, $3) RETURNING *",
-        [response.emotion, response.text, response.page_id]
+        "insert into responses(emotion, text, page_id, contact_details) values($1, $2, $3, $4) RETURNING *",
+        [response.emotion, response.text, response.page_id, response.contact_details]
     );
 
     if (result.rowCount !== 1) throw "error inserting response..";
