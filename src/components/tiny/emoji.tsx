@@ -13,11 +13,11 @@ export const KretsEmoji = props => {
         };
 
 
-    return <Box  {...style} m={[1, 2, 3]} sx={{
-        boxShadow: "large",
-        textShadow: "large"
-    }} onClick={() => { setEmotion(type) }}>
-        <Button aria-label="response-emoji-button">
+    return <Box  {...style} m={[1, 2, 3]} onClick={() => { setEmotion(type) }}>
+        <Button aria-label="response-emoji-button"
+            sx={{
+                boxShadow: "large",
+            }} >
             <Emoji text={type} />
         </Button>
     </Box>
