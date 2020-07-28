@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getCategories } from "../http/fetchers";
+import { getCategories } from "../fetchers";
 import { CategoryModel } from "../models";
-import { OK } from "../http/codes";
+import { OK } from "node-kall";
 
 
 //TODO: proper types

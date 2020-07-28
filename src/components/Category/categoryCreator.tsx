@@ -4,8 +4,8 @@ import { Input } from "@rebass/forms";
 import * as text from "../../text"
 import { CategoryModel } from "../../models";
 import { UserContext } from "../../context/UserContext";
-import { postCategory } from "../../http/fetchers";
-import { CREATED } from "../../http/codes";
+import { postCategory } from "../../fetchers";
+import { CREATED } from "node-kall";
 import { CategoriesContext } from "../../context/CategoriesContext";
 
 

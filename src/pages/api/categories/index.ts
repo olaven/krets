@@ -1,5 +1,5 @@
 import auth0 from "../../../auth/auth0";
-import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "../../../http/codes";
+import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "node-kall";
 import { CategoryModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "../../../database/categories";
