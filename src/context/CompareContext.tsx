@@ -1,12 +1,12 @@
 import React, { createContext, useState, useEffect, SetStateAction } from "react";
-import { PageModel, ReseponseModel } from "../models";
-import { stripStatus } from "../http/methods";
-import { getResponses, getPage } from "../http/fetchers";
+import { PageModel, ResponseModel } from "../models";
+import { filterBody } from "node-kall";
+import { getResponses, getPage } from "../fetchers";
 
 
 export type PageInformation = {
     page: PageModel,
-    responses: ReseponseModel[]
+    responses: ResponseModel[]
 }
 
 interface ContextInterface {
@@ -30,12 +30,11 @@ export const CompareContextProvider = ({ children }) => {
 
             const pageInformations = await Promise.all(selected.map(async id => ({
 
-                responses: await stripStatus(getResponses(id)),
-                page: await stripStatus(getPage(id))
+                responses: await filterBody(getResponses(id)),
+                page: await filterBody(getPage(id))
             })));
 
             setPageInformations(pageInformations)
-            console.log(pageInformations);
         })()
     }, [selected.length]);
 

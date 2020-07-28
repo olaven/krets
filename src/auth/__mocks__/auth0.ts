@@ -4,7 +4,7 @@ import { CallbackOptions } from "@auth0/nextjs-auth0/dist/handlers/callback";
 import { ProfileOptions } from "@auth0/nextjs-auth0/dist/handlers/profile";
 import { ISession } from "@auth0/nextjs-auth0/dist/session/session";
 import { IApiRoute } from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
-import { UNAUTHORIZED } from "../../http/codes";
+import { UNAUTHORIZED } from "node-kall";
 
 const getSession = async (req: NextApiRequest): Promise<ISession> => {
 

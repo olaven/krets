@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: node:12
+    image: node:14
       # context: .
       # dockerfile: Dockerfile
       # args:
@@ -12,13 +12,13 @@ services:
 
     links:
       - db
-
-  db:
-    image: postgres
-    restart: unless-stopped
-    ports: 
-      - 5432:5432
-    environment:
-      POSTGRES_PASSWORD: pass
-      POSTGRES_USER: user
-      POSTGRES_DB: data
+  
+    db:
+      image: postgres
+      restart: unless-stopped
+      ports: 
+        - 5432:5432
+      environment:
+        POSTGRES_PASSWORD: pass
+        POSTGRES_USER: user
+        POSTGRES_DB: data

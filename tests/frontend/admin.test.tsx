@@ -7,7 +7,7 @@ import { AdminPage } from "../../src/components/Admin/AdminPage"
 import {/*  averageUntil, */ emotionToNumeric } from "../../src/components/Admin/MoodGraph"
 import { ResponseTextList } from "../../src/components/Admin/ResponseTextList";
 import { waitFor, render } from "@testing-library/react"
-import { ReseponseModel } from "../../src/models";
+import { ResponseModel } from "../../src/models";
 import * as text from "../../src/text"
 import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
@@ -15,7 +15,7 @@ import { mockRouter } from "./frontendTestUtils";
 import { AdminPageContext } from "../../src/context/AdminPageContext";
 import { UserContext } from "../../src/context/UserContext";
 
-const fakeResponses = (amount: number): ReseponseModel[] => new Array(amount).fill(0)
+const fakeResponses = (amount: number): ResponseModel[] => new Array(amount).fill(0)
     .map(() => ({
         id: faker.random.uuid(),
         emotion: ":-)", //TODO: make random

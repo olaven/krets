@@ -6,6 +6,7 @@ import { users } from "../../../../src/database/users";
 import { pages } from "../../../../src/database/pages";
 import { responses } from "../../../../src/database/responses";
 import fetch from "cross-fetch";
+import { randomUser, randomPage, randomResponse } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -106,5 +107,33 @@ describe("The endpoint for responses", () => {
             r.page_id === response.page_id)
 
         expect(hasCorrect).toBeTruthy();
+    });
+
+
+    it("Is possible to have the response contain contact details", async () => {
+
+        const user = await users.createUser(randomUser());
+        const page = await pages.createPage(randomPage(user.id));
+        const contactDetails = faker.internet.email();
+
+        const response = await randomResponse(page.id, ":-|", contactDetails);
+
+        const before = await responses.getResponses(page.id);
+        const { status } = await fetch(fullURL(page.id), {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(response)
+        });
+
+        expect(status).toEqual(201);
+
+        const after = await responses.getResponses(page.id);
+        expect(before.length).toEqual(0);
+        expect(after.length).toEqual(1);
+
+        const [retrievedResponse] = after;
+        expect(retrievedResponse.contact_details).toEqual(contactDetails);
     })
 });

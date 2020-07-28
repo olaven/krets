@@ -1,6 +1,6 @@
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/pages";
-import { CREATED, OK, NOT_IMPLEMENTED } from "../../../http/codes";
+import { CREATED, OK } from "node-kall";
 import { PageModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
 

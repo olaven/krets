@@ -1,6 +1,6 @@
 import auth0 from '../../../auth/auth0';
-import {users} from "../../../database/users";
-import { BAD_REQUEST } from '../../../http/codes';
+import { users } from "../../../database/users";
+import { BAD_REQUEST } from 'node-kall';
 
 
 const createIfNotPresent = async (id: string) => {
@@ -9,7 +9,7 @@ const createIfNotPresent = async (id: string) => {
 
   if (!user) {
 
-    await users.createUser({id});
+    await users.createUser({ id });
   }
 };
 
@@ -17,7 +17,7 @@ export default async function callback(req, res) {
   try {
     await auth0.handleCallback(req, res, {
       onUserLoaded: async (req, res, session, state) => {
-        
+
         const { user } = session;
 
 
@@ -28,7 +28,7 @@ export default async function callback(req, res) {
           user: {
             ...session.user,
             age: 20
-          }, 
+          },
           redirectTo: "/"
         };
       }

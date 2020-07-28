@@ -21,19 +21,31 @@ export const intro = strings({
 export const response = strings({
     en: {
         header: "Give feedback to",
-        placeholder: "Optional text",
+        placeholder: {
+            happy: "What did you like?",
+            neutral: "What should've been different?",
+            sad: "What did you dislike?"
+        },
         button: "Send",
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
+        contactCheckbox: "I want to give further feedback",
+        contactPlaceholder: "Email or phone number",
     },
     no: {
         header: "Gi tilbakemelding til",
-        placeholder: "Valgfri tekst",
+        placeholder: {
+            happy: "Hva likte du?",
+            neutral: "Hva burde vært annerledes?",
+            sad: "Hva mislikte du?"
+        },
         button: "Send",
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
+        contactCheckbox: "Jeg vil gi mer tilbakemelding",
+        contactPlaceholder: "Epost eller telefonnummer",
     }
 });
 
@@ -127,10 +139,12 @@ export const categoryCreator = strings({
 
 export const adminPage = strings({
     en: {
+        contactDetails: "Contact details",
         loading: "Loading admin page...",
         notOwning: "You do not own this page."
     },
     no: {
+        contactDetails: "Kontaktinformasjon",
         loading: "Laster adminside...",
         notOwning: "Denne siden eier du ikke."
     }

@@ -35,6 +35,11 @@ export const mockFetch = <T extends unknown>(payload: T, status = 200) => {
     global.fetch = jest.fn(() => {
         return Promise.resolve({
             status,
+            headers: {
+                get: (_: string) => {
+                    return "application/json"
+                }
+            },
             json: () => Promise.resolve(payload)
         } as Response);
     });
