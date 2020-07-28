@@ -15,23 +15,16 @@ const getPlaceholder = (emotion: Emotion) => ({
     ":-(": uiText.response.placeholder.sad,
 }[emotion])
 
-const TextInput = ({ setText, onPostResponse, emotion }) => <Flex p={[1, 2, 3]}>
+const TextInput = ({ setText, emotion }) => <Flex p={[1, 2, 3]}>
     <Input
         aria-label="response-text-input"
         placeholder={getPlaceholder(emotion)}
         onChange={event => { setText(event.target.value) }}
     />
-    <Button
-        aria-label="response-button-input"
-        m={1}
-        px={3}
-        onClick={onPostResponse}>
-        {uiText.response.button}
-    </Button>
 </Flex>
 
-const ContactInput = ({ checked, setChecked, setContactDetails }) => <Flex p={[1, 2, 3]}>
-    <Label width={[]} p={2} fontSize={[1]}>
+const ContactInput = ({ checked, setChecked, setContactDetails }) => <Flex p={[1, 2]}>
+    <Label width={[]} fontSize={[1]}>
         <Checkbox
             aria-label="response-checkbox-input"
             onChange={() => { setChecked(!checked) }}
@@ -66,12 +59,19 @@ const ResponseSectionForm = ({ page, published, emotion, setEmotion, setText, ch
             {emotion && <>
                 <TextInput
                     setText={setText}
-                    onPostResponse={onPostResponse}
                     emotion={emotion} />
                 <ContactInput
                     checked={checked}
                     setChecked={setChecked}
                     setContactDetails={setContactDetails} />
+                <Button
+                    aria-label="response-button-input"
+                    width={1}
+                    m={1}
+                    px={3}
+                    onClick={onPostResponse}>
+                    {uiText.response.button}
+                </Button>
             </>}
         </>
 
