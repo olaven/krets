@@ -67,7 +67,12 @@ export const PageCreator = () => {
                         }} value={name} />
                     </Tooltip>
                     <Tooltip content={text.tooltips.pageCreatorButton}>
-                        <Button mx={[0, 2, 3]} width={1 / 3} onClick={postPage} aria-label={"create-button"}>
+                        <Button
+                            mx={[0, 2, 3]}
+                            width={1 / 3}
+                            aria-label={"create-button"}
+                            onClick={id === "" ? null : postPage}
+                            color={id === "" ? "inactive" : "secondary"}>
                             {text.pageCreator.button}
                         </Button>
                     </Tooltip>

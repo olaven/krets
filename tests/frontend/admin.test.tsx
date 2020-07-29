@@ -4,7 +4,7 @@
 
 import React from "react";
 import { AdminPage } from "../../src/components/Admin/AdminPage"
-import { ResponseTextList } from "../../src/components/Admin/ResponseTextList";
+import { TextList } from "../../src/components/Admin/TextList/TextList";
 import { waitFor, render } from "@testing-library/react"
 import { ResponseModel } from "../../src/models";
 import * as text from "../../src/text"
@@ -134,7 +134,7 @@ describe("Mood graph", () => {
             mockRouter("some-id");
             const rendered = render(
                 <AdminPageContext.Provider value={{ responses, responsesLoading: false, page: null, pageLoading: false }}>
-                    <ResponseTextList />
+                    <TextList />
                 </AdminPageContext.Provider>
             );
 
