@@ -1,13 +1,12 @@
 import { withDatabase, firstRow } from "./connect";
 import { PageModel } from "../models";
-import PageId from "../pages/[pageId]";
 
 
 const createPage = (page: PageModel) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query(
-        "insert into pages(id, owner_id, name) values($1, $2, $3) returning *",
-        [page.id, page.owner_id, page.name]);
+        "insert into pages(id, owner_id, name, color) values($1, $2, $3, $4) returning *",
+        [page.id, page.owner_id, page.name, page.color]);
 
     return result.rows[0];
 });
@@ -32,7 +31,7 @@ const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
 
 const updatePage = async (page: PageModel) => withDatabase<PageModel>(async client => {
 
-    const result = await client.query("update pages set name = $1 where id = $2", [page.name, page.id]);
+    const result = await client.query("update pages set name = $1, color = $2 where id = $3 returning *", [page.name, page.color, page.id]);
     return firstRow(result);
 });
 

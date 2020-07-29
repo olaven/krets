@@ -3,6 +3,7 @@ import * as faker from "faker";
 import { users } from "../../src/database/users";
 import { UserModel } from "../../src/models";
 import { responses } from "../../src/database/responses";
+import { randomPage } from "./databaseTestUtils";
 
 describe("Database interface for pages", () => {
 
@@ -98,4 +99,55 @@ describe("Database interface for pages", () => {
         const responsesAfter = await responses.getResponses(page.id);
         expect(responsesAfter.length).toEqual(0);
     });
+
+    describe("The 'color'-column", () => {
+
+        it("Does exist", async () => {
+
+            const color = '#AABBCC';
+            const owner = await createUser();
+            const page = await pages.createPage(randomPage(owner.id, color));
+
+            expect(page.color).toEqual(color);
+        });
+
+        it("Does not have to be specified", async () => {
+
+            const color = null;
+            const owner = await createUser();
+            const page = await pages.createPage(randomPage(owner.id, color));
+
+            expect(page.color).toEqual(color);
+        });
+
+        it("Has constraints on char count", async () => {
+
+            const sixChars = '#AABBC';
+            const eightChars = '#AABBCCC';
+            const owner = await createUser();
+
+            await expect(async () => {
+
+                await pages.createPage(randomPage(owner.id, sixChars));
+                await pages.createPage(randomPage(owner.id, eightChars));
+            }).rejects.toThrow();
+        });
+
+        it("Can be updated", async () => {
+
+            const owner = await createUser();
+            const originalColor = '#AABBCC';
+
+            const page = await pages.createPage(randomPage(owner.id, originalColor))
+            expect(page.color).toEqual(originalColor);
+
+            const newColor = '#CCBBAA';
+            const updated = await pages.updatePage(
+                { ...page, color: newColor }
+            );
+
+            expect(updated.color).toEqual(newColor);
+            expect(updated.color).not.toEqual(page.color);
+        })
+    })
 });
