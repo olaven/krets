@@ -27,6 +27,7 @@ export const LineChart = ({ pageInformations }) => <VictoryChart
     minDomain={{ y: 0 }}
 >
     {pageInformations.map(({ page, responses }) => <VictoryLine
+        key={page.id}
         interpolation="natural"
         data={responses
             .map(response => toDateCoordinates(response, responses))}
