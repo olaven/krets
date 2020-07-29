@@ -31,7 +31,7 @@ const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
 
 const updatePage = async (page: PageModel) => withDatabase<PageModel>(async client => {
 
-    const result = await client.query("update pages set name = $1 where id = $2", [page.name, page.id]);
+    const result = await client.query("update pages set name = $1, color = $2 where id = $3 returning *", [page.name, page.color, page.id]);
     return firstRow(result);
 });
 

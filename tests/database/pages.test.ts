@@ -142,9 +142,10 @@ describe("Database interface for pages", () => {
             expect(page.color).toEqual(originalColor);
 
             const newColor = '#CCBBAA';
-            page.color = newColor;
+            const updated = await pages.updatePage(
+                { ...page, color: newColor }
+            );
 
-            const updated = await pages.updatePage(page);
             expect(updated.color).toEqual(newColor);
             expect(updated.color).not.toEqual(page.color);
         })
