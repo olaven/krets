@@ -25,6 +25,7 @@ const toDateCoordinates = (response: ResponseModel, responses: ResponseModel[]) 
 
 export const LineChart = ({ pageInformations }) => <VictoryChart
     minDomain={{ y: 0 }}
+    maxDomain={{ y: 3 }}
 >
     {pageInformations.map(({ page, responses }) => <VictoryLine
         key={page.id}
