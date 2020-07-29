@@ -1,9 +1,7 @@
-import { Card, Flex, Box, Text } from "rebass";
+import { Flex, Box } from "rebass";
 import { AdminPageContext } from "../../../context/AdminPageContext"
-import { useContext, useState, useEffect } from "react";
-import { ResponseModel, Emotion } from "../../../models";
-import Emoji from "react-emoji-render";
-import { Button } from "rebass"
+import { useContext, useState } from "react";
+import { Emotion } from "../../../models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
 import { TextCard } from "./TextCard";
@@ -28,6 +26,7 @@ export const TextList = () => {
     /* if (!filtered.length)
         return <div>Ingen svar med tekst som passer valgt filter</div> */
 
+    console.log(filtered);
     return <Flex flexDirection={"column"} my={[1, 2, 3]}>
         <FilterButtons
             selected={selectedEmotions}
