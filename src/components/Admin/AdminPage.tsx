@@ -3,8 +3,8 @@ import { UserContext } from "../../context/UserContext";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { Box, Flex } from "rebass";
 import { LoginButton } from "../tiny/buttons";
-import { ResponseTextList } from "./ResponseTextList";
-import { Graphs } from "./Graphs";
+import { TextList } from "./TextList/TextList";
+import { Charts } from "./Charts/Charts";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
 
@@ -20,10 +20,10 @@ const AdminContent = () => <Flex flexWrap="wrap">
         <CompareSelect />
     </AdminBox>
     <AdminBox>
-        <Graphs />
+        <Charts />
     </AdminBox>
     <AdminBox>
-        <ResponseTextList />
+        <TextList />
     </AdminBox>
 </Flex>
 
