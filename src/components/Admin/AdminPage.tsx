@@ -4,7 +4,7 @@ import { AdminPageContext } from "../../context/AdminPageContext";
 import { Box, Flex } from "rebass";
 import { LoginButton } from "../tiny/buttons";
 import { ResponseTextList } from "./ResponseTextList";
-import { MoodGraph } from "./MoodGraph";
+import { Graphs } from "./Graphs";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
 
@@ -20,7 +20,7 @@ const AdminContent = () => <Flex flexWrap="wrap">
         <CompareSelect />
     </AdminBox>
     <AdminBox>
-        <MoodGraph />
+        <Graphs />
     </AdminBox>
     <AdminBox>
         <ResponseTextList />
