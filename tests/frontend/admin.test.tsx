@@ -4,7 +4,6 @@
 
 import React from "react";
 import { AdminPage } from "../../src/components/Admin/AdminPage"
-import {/*  averageUntil, */ emotionToNumeric } from "../../src/components/Admin/MoodGraph"
 import { ResponseTextList } from "../../src/components/Admin/ResponseTextList";
 import { waitFor, render } from "@testing-library/react"
 import { ResponseModel } from "../../src/models";
@@ -14,6 +13,7 @@ import * as faker from "faker";
 import { mockRouter } from "./frontendTestUtils";
 import { AdminPageContext } from "../../src/context/AdminPageContext";
 import { UserContext } from "../../src/context/UserContext";
+import { emotionToNumeric } from "../../src/components/Admin/Charts/ChartUtils";
 
 const fakeResponses = (amount: number): ResponseModel[] => new Array(amount).fill(0)
     .map(() => ({

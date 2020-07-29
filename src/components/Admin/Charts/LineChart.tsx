@@ -26,7 +26,6 @@ const toDateCoordinates = (response: ResponseModel, responses: ResponseModel[]) 
 export const LineChart = ({ pageInformations }) => <VictoryChart
     minDomain={{ y: 0 }}
 >
-    {(() => { console.log("line  with infroatmion", pageInformations) })()}
     {pageInformations.map(({ page, responses }) => <VictoryLine
         interpolation="natural"
         data={responses
@@ -36,6 +35,13 @@ export const LineChart = ({ pageInformations }) => <VictoryChart
             duration: 2000,
             onLoad: { duration: 1000 }
         }}
-    ></VictoryLine>
+        style={{
+            data: {
+                stroke: "cyan", //TODO: random based on page color 
+                strokeWidth: 4
+            }
+        }}
+    >
+    </VictoryLine>
     )}
 </VictoryChart >
