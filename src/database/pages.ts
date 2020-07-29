@@ -1,13 +1,12 @@
 import { withDatabase, firstRow } from "./connect";
 import { PageModel } from "../models";
-import PageId from "../pages/[pageId]";
 
 
 const createPage = (page: PageModel) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query(
-        "insert into pages(id, owner_id, name) values($1, $2, $3) returning *",
-        [page.id, page.owner_id, page.name]);
+        "insert into pages(id, owner_id, name, color) values($1, $2, $3, $4) returning *",
+        [page.id, page.owner_id, page.name, page.color]);
 
     return result.rows[0];
 });
