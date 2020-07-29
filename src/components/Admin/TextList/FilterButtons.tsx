@@ -8,12 +8,11 @@ const FilterButton = ({ emotion, selected, setSelected }) => {
 
     useEffect(() => {
 
-        if (active) {
-            if (!selected.includes(emotion)) {
-                setSelected(
-                    [emotion, ...selected]
-                );
-            }
+        if (active && !selected.includes(emotion)) {
+
+            setSelected(
+                [emotion, ...selected]
+            );
         } else {
 
             setSelected(
@@ -27,13 +26,9 @@ const FilterButton = ({ emotion, selected, setSelected }) => {
         () => { setActive(!active) }
     }
         backgroundColor={active ? "primary" : "inactive"}
-        m={[0, 1, 2]}
-        sx={{
-            boxShadow: "large",
-        }} >
-
+        m={[0, 1, 2]} >
         <Emoji text={emotion} />
-    </Button>
+    </Button >
 }
 
 export const FilterButtons = ({ selected, setSelected }) => <Flex m={"auto"}>
