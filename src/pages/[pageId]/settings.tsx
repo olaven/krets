@@ -6,7 +6,6 @@ import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
-import config from "../../auth/config";
 
 const UpdateName = () => {
 
@@ -69,6 +68,13 @@ export const DeletePage = () => {
         <WantsToDeleteToggle />
         {wantsToDelete && <Confirmation />}
     </Box>
+}
+
+const UpdateColor = () => {
+
+    const { page } = useContext(SettingsContext);
+
+    return
 }
 
 export const SettingsContent = () => {
