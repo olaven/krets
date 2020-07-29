@@ -14,7 +14,8 @@ export interface PageModel {
     id: string,
     name: string,
     owner_id: string,
-    created_at?: string
+    created_at?: string,
+    color?: string
 }
 
 //From DB 
