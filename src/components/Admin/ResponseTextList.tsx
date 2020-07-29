@@ -1,10 +1,10 @@
 import { Card, Flex, Box, Text } from "rebass";
 import { AdminPageContext } from "../../context/AdminPageContext"
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ResponseModel, Emotion } from "../../models";
 import Emoji from "react-emoji-render";
+import { Button } from "rebass"
 import * as text from "../../text";
-import { emotionToNumeric } from "./Charts/ChartUtils";
 
 
 const formatDate = (dateString: string) => {
@@ -33,8 +33,52 @@ const TextCard = ({ response }: { response: ResponseModel }) => <Card p={[0, 1, 
             {text.adminPage.contactDetails}: {response.contact_details}
         </Text>}
     </Flex>
-
 </Card>
+
+const FilterButton = ({ emotion, selected, setSelected }) => {
+
+    const [active, setActive] = useState(true);
+
+    useEffect(() => {
+
+        if (active) {
+            if (!selected.includes(emotion)) {
+                setSelected(
+                    [emotion, ...selected]
+                );
+            }
+        } else {
+
+            setSelected(
+                selected.filter(e => e !== emotion)
+            );
+        }
+
+    }, [active]);
+
+    return <Button onClick={
+        () => { setActive(!active) }
+    }
+        backgroundColor={active ? "primary" : "secondary"}
+    >
+        <Emoji text={emotion} />
+    </Button>
+}
+
+const FilterButtons = ({ selected, setSelected }) => <>
+    <FilterButton
+        selected={selected}
+        setSelected={setSelected}
+        emotion={":-)"} />
+    <FilterButton
+        selected={selected}
+        setSelected={setSelected}
+        emotion={":-|"} />
+    <FilterButton
+        selected={selected}
+        setSelected={setSelected}
+        emotion={":-("} />
+</>
 
 export const ResponseTextList = () => {
 
@@ -52,12 +96,16 @@ export const ResponseTextList = () => {
         .filter(({ text }) => text)
         .filter(({ emotion }) => selectedEmotions.includes(emotion))
 
-    if (!filtered.length)
-        return <div>Ingen svar med tekst som passer valgt filter</div>
+    /* if (!filtered.length)
+        return <div>Ingen svar med tekst som passer valgt filter</div> */
 
-    return <Flex flexDirection={"column"} my={[1, 2, 3]}>{
-        filtered
+    return <Flex flexDirection={"column"} my={[1, 2, 3]}>
+        <FilterButtons
+            selected={selectedEmotions}
+            setSelected={setSelectedEmotions}
+        />
+        {filtered
             .map(response =>
-                <TextCard key={response.id} response={response} />)
-    }</Flex>
+                <TextCard key={response.id} response={response} />)}
+    </Flex>
 }
