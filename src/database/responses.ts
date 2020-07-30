@@ -47,11 +47,15 @@ const createResponse = async (response: ResponseModel) => withDatabase<ResponseM
 const getAverageEmotionByPage = async (pageId: string) => withDatabase<number>(async (client) => {
 
     const result = await client.query(
-        "SELECT AVG(emotion) FROM responses WHERE page_id = $1"
+        `SELECT AVG(emotion) FROM responses 
+        WHERE page_id = $1`,
         [pageId]
     );
 
-    return result //WHAT IS THIS? 
+    const average = parseFloat(result.rows[0].avg);
+    return average ?
+        average :
+        0 // If there are no responses
 });
 
 

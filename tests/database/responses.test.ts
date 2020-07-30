@@ -46,6 +46,15 @@ describe("Database repository for pages", () => {
             expect(average).not.toBeNaN();
         });
 
+        it("Returns 0 if no responses are present", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
+
+            const average = await responses.getAverageEmotionByPage(page.id);
+            expect(average).toEqual(0);
+        })
+
         it("Returns the average of persisted responses", async () => {
 
             const user = await users.createUser(randomUser());
