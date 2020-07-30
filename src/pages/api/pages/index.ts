@@ -1,5 +1,5 @@
 import auth0 from "../../../auth/auth0";
-import { pages } from "../../../database/pages";
+import { pages } from "../../../database/database";
 import { CREATED, OK } from "node-kall";
 import { PageModel } from "../../../models";
 

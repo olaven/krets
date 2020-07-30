@@ -1,5 +1,5 @@
 import auth0 from '../../../auth/auth0';
-import { users } from "../../../database/users";
+import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 
 

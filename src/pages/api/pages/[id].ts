@@ -1,7 +1,7 @@
 import auth0 from "../../../auth/auth0";
-import { pages } from "../../../database/pages";
+import { pages } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models";
 
 export default function pageHandler(request: NextApiRequest, response: NextApiResponse) {

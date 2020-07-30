@@ -1,7 +1,7 @@
 
 import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages";
-import { users } from "../../../src/database/users";
+import { users } from "../../../src/database/database";
 import { Server } from "net";
 import * as faker from "faker";
 import fetch from "cross-fetch";

@@ -1,10 +1,8 @@
-import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
 import { Server } from "net";
-import averageHandler from '../../../../src/pages/api/pages/[id]/average';
-import { users } from "../../../../src/database/users";
-import { pages } from "../../../../src/database/pages";
-import { responses } from "../../../../src/database/responses";
 import fetch from "cross-fetch";
+import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
+import averageHandler from '../../../../src/pages/api/pages/[id]/average';
+import { users, pages, responses } from "../../../../src/database/database";
 import { randomUser, randomPage } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");

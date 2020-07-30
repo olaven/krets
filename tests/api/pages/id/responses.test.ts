@@ -2,9 +2,7 @@ import { setupServer, teardownServer, uid } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import { users } from "../../../../src/database/users";
-import { pages } from "../../../../src/database/pages";
-import { responses } from "../../../../src/database/responses";
+import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
 import { randomUser, randomPage, randomResponse } from "../../../database/databaseTestUtils";
 
