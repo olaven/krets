@@ -5,6 +5,7 @@ import { users } from "../../../src/database/database";
 import { Server } from "net";
 import * as faker from "faker";
 import fetch from "cross-fetch";
+import { randomUser, randomPage } from "../../database/databaseTestUtils";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -23,50 +24,87 @@ describe("The pages endpoint", () => {
         await teardownServer(server);
     });
 
-    it("does not give access when user is not authenticated", async () => {
+    describe("The access control", () => {
 
-        const response = await fetch(url, {});
-        expect(response.status).toEqual(401);
-    });
 
-    it("does give access when user is authenticated", async () => {
+        it("does not give access when user is not authenticated", async () => {
 
-        const response = await authenticatedFetch(uid(), url);
-        expect(response.status).toEqual(200);
-    });
-
-    it("Is possible to create a page if authenticated", async () => {
-
-        const userId = uid();
-        await users.createUser({
-            id: userId
+            const response = await fetch(url, {});
+            expect(response.status).toEqual(401);
         });
 
-        const response = await postPage({
-            id: faker.random.alphaNumeric(40), name: "My Page", owner_id: userId
-        }, url, userId);
+        it("does give access when user is authenticated", async () => {
 
-        expect(response.status).toEqual(201)
+            const response = await authenticatedFetch(uid(), url);
+            expect(response.status).toEqual(200);
+        });
     });
 
-    it("/pages returns all pages belonging to given user", async () => {
+    describe("Creation of pages", () => {
 
-        const n = 5;
-        const user = await users.createUser({
-            id: uid()
+
+        it("Is possible to create a page if authenticated", async () => {
+
+            const userId = uid();
+            await users.createUser({
+                id: userId
+            });
+
+            const response = await postPage({
+                id: faker.random.alphaNumeric(40), name: "My Page", owner_id: userId
+            }, url, userId);
+
+            expect(response.status).toEqual(201)
         });
 
-        const before = await getPages(url, user.id);
+        it("Assigns a pseudo-random color value to the page", async () => {
 
-        for (let i = 0; i < n; i++) {
+            const user = await users.createUser(randomUser());
+            const page = randomPage(user.id);
 
-            await postPage({
-                id: faker.random.uuid(), name: faker.company.companyName(), owner_id: user.id
-            }, url, user.id);
-        }
+            expect(page.color).toBeNull();
+            await postPage(page, url, user.id);
+            const [retrieved] = await getPages(`${url}/${page.id}`, user.id);
 
-        const after = await getPages(url, user.id);
-        //expect(before.length).toEqual(0);
-        expect(after.length).toEqual(before.length + n);
-    });
+            expect(retrieved.id).toEqual(page.id);
+            expect(retrieved.color).toBeDefined();
+        });
+
+        it("Assigns a hex value as the color", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = randomPage(user.id);
+
+            await postPage(randomPage(user.id), url, user.id);
+            const [retrieved] = await getPages(`${url}/${page.id}`, user.id);
+
+            expect(retrieved.color.length).toEqual(7);
+            expect(retrieved.color[0]).toEqual("#");
+        });
+    })
+
+    describe("Retrieving pages", () => {
+
+        it("/pages returns all pages belonging to given user", async () => {
+
+            const n = 5;
+            const user = await users.createUser({
+                id: uid()
+            });
+
+            const before = await getPages(url, user.id);
+
+            for (let i = 0; i < n; i++) {
+
+                await postPage({
+                    id: faker.random.uuid(), name: faker.company.companyName(), owner_id: user.id
+                }, url, user.id);
+            }
+
+            const after = await getPages(url, user.id);
+            //expect(before.length).toEqual(0);
+            expect(after.length).toEqual(before.length + n);
+        });
+    })
+
 });

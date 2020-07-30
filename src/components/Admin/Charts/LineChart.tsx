@@ -1,5 +1,5 @@
 import { ResponseModel, PageModel } from "../../../models";
-import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis, createContainer } from "victory";
+import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis } from "victory";
 import { emotionToNumeric } from "./ChartUtils";
 
 const getRelevant = (response: ResponseModel, responses: ResponseModel[]) =>
