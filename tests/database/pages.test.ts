@@ -1,8 +1,6 @@
-import { pages } from "../../src/database/pages";
 import * as faker from "faker";
-import { users } from "../../src/database/users";
+import { pages, users, responses } from "../../src/database/database";
 import { UserModel } from "../../src/models";
-import { responses } from "../../src/database/responses";
 import { randomPage } from "./databaseTestUtils";
 
 describe("Database interface for pages", () => {

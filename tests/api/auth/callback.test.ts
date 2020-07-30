@@ -2,7 +2,7 @@ import { Server } from "net";
 import handler from "../../../src/pages/api/auth/callback";
 import { authenticatedFetch, setupServer, teardownServer } from "../apiTestUtils";
 import * as faker from "faker";
-import { users } from "../../../src/database/users";
+import { users } from "../../../src/database/database";
 
 jest.mock("../../../src/auth/auth0");
 

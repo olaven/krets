@@ -1,8 +1,7 @@
 import * as faker from "faker";
-import { responses, convertEmotion } from "../../src/database/responses";
 import { randomResponse, randomUser, randomPage } from "./databaseTestUtils";
-import { users } from "../../src/database/users";
-import { pages } from "../../src/database/pages";
+import { convertEmotion } from "../../src/database/responses";
+import { users, pages, responses } from "../../src/database/database";
 
 
 describe("Database repository for pages", () => {
