@@ -35,14 +35,6 @@ const updatePage = (page: PageModel) => withDatabase<PageModel>(async client => 
     return firstRow(result);
 });
 
-const getAverage = (pageId: string) => withDatabase<number>(async (client) => {
-
-    /* cons reuslt = await client.query(
-        `select avg()`
-    ) */
-
-    return -1;
-})
 
 /**
  * DANGER: will delete responses as well! 
@@ -63,5 +55,4 @@ export const pages = ({
     createPage,
     updatePage,
     deletePage,
-    getAverage
 });

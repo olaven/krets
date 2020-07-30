@@ -1,6 +1,5 @@
-import { withDatabase } from "./connect";
+import { withDatabase, firstRow } from "./connect";
 import { ResponseModel, Emotion } from "../models";
-
 
 /**
 * The database expects `emotion` to have type `integer`, while 
@@ -33,8 +32,6 @@ const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async cli
 });
 
 
-
-
 const createResponse = async (response: ResponseModel) => withDatabase<ResponseModel>(async (client) => {
 
     const emotion = convertEmotion.toSQL(response.emotion)
@@ -47,8 +44,19 @@ const createResponse = async (response: ResponseModel) => withDatabase<ResponseM
     return result.rows[0];
 });
 
+const getAverageEmotionByPage = async (pageId: string) => withDatabase<number>(async (client) => {
+
+    const result = await client.query(
+        "SELECT AVG(emotion) FROM responses WHERE page_id = $1"
+        [pageId]
+    );
+
+    return result //WHAT IS THIS? 
+});
+
 
 export const responses = ({
     getResponses,
-    createResponse
+    createResponse,
+    getAverageEmotionByPage
 });

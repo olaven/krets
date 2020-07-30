@@ -33,51 +33,79 @@ describe("Database repository for pages", () => {
                 expect(sad).toEqual(":-(");
             });
         })
-    })
-
-    test("Can get responses", async () => {
-
-        const result = await responses.getResponses(faker.random.uuid());
-        expect(result).toEqual([]);
     });
 
-    test("Can create response", async () => {
+    describe("Calculation of average emotion", () => {
 
-        const page_id = faker.random.uuid();
-        const user = { id: faker.random.uuid() };
-        const page = {
-            owner_id: user.id,
-            name: "Amazing cafe!",
-            id: page_id
-        };
+        it("Returns a number", async () => {
 
-        await users.createUser(user);
-        await pages.createPage(page);
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
 
-        const before = await responses.getResponses(page_id);
-        await responses.createResponse({
-            emotion: ':-)',
-            text: "",
-            page_id: page_id
+            const average = await responses.getAverageEmotionByPage(page.id);
+            expect(average).not.toBeNaN();
         });
-        const after = await responses.getResponses(page_id);
 
-        expect(before.length).toEqual(0);
-        expect(after.length).toEqual(1);
+        it("Returns the average of persisted responses", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
+
+            await responses.createResponse(randomResponse(page.id, ":-)")); //2 
+            await responses.createResponse(randomResponse(page.id, ":-|")); //1
+
+            const average = await responses.getAverageEmotionByPage(page.id);
+            expect(average).toEqual(1.5) // (2 + 1) / 2
+        });
     });
 
-    test("Can create response with contact details", async () => {
+    describe("Basic CRUD operation on responses", () => {
 
-        const user = await users.createUser(randomUser());
-        const page = await pages.createPage(randomPage(user.id));
-        const contact_details = "mail@example.com";
 
-        await responses.createResponse(randomResponse(page.id, ":-)", contact_details));
+        test("Can get responses", async () => {
 
-        const retrieved = await responses.getResponses(page.id);
-        expect(retrieved.length).toEqual(1);
+            const result = await responses.getResponses(faker.random.uuid());
+            expect(result).toEqual([]);
+        });
 
-        const [response] = retrieved;
-        expect(response.contact_details).toEqual(contact_details)
-    });
+        test("Can create response", async () => {
+
+            const page_id = faker.random.uuid();
+            const user = { id: faker.random.uuid() };
+            const page = {
+                owner_id: user.id,
+                name: "Amazing cafe!",
+                id: page_id
+            };
+
+            await users.createUser(user);
+            await pages.createPage(page);
+
+            const before = await responses.getResponses(page_id);
+            await responses.createResponse({
+                emotion: ':-)',
+                text: "",
+                page_id: page_id
+            });
+            const after = await responses.getResponses(page_id);
+
+            expect(before.length).toEqual(0);
+            expect(after.length).toEqual(1);
+        });
+
+        test("Can create response with contact details", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
+            const contact_details = "mail@example.com";
+
+            await responses.createResponse(randomResponse(page.id, ":-)", contact_details));
+
+            const retrieved = await responses.getResponses(page.id);
+            expect(retrieved.length).toEqual(1);
+
+            const [response] = retrieved;
+            expect(response.contact_details).toEqual(contact_details)
+        });
+    })
 });
