@@ -1,4 +1,4 @@
-import randomColor from "randomColor"
+import randomColor from "randomcolor"
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/database";
 import { CREATED, OK } from "node-kall";
