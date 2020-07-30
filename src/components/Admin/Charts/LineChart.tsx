@@ -1,5 +1,5 @@
-import { ResponseModel } from "../../../models";
-import { VictoryChart, VictoryLabel, VictoryLine } from "victory";
+import { ResponseModel, PageModel } from "../../../models";
+import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis, createContainer } from "victory";
 import { emotionToNumeric } from "./ChartUtils";
 
 const getRelevant = (response: ResponseModel, responses: ResponseModel[]) =>
@@ -10,40 +10,45 @@ const sumEmotions = (responses: ResponseModel[]) => responses
     .map(({ emotion }) => emotionToNumeric(emotion))
     .reduce((a, b) => a + b)
 
-const toDateCoordinates = (response: ResponseModel, responses: ResponseModel[]) => {
+const isLast = (element: any, array: any[]) =>
+    array.indexOf(element) === (array.length - 1)
+
+const toDateCoordinates = (page: PageModel, response: ResponseModel, responses: ResponseModel[]) => {
 
     const relevant = getRelevant(response, responses);
     const sum = sumEmotions(relevant);
     const average = sum / relevant.length;
 
+    console.log("is last: ", isLast(response, responses), "in ", page.name);
     return {
         y: average,
-        x: new Date(response.created_at)
+        x: new Date(response.created_at),
+        label: isLast(response, responses) ?
+            page.name : null
     }
 }
 
 
 export const LineChart = ({ pageInformations }) => <VictoryChart
-    minDomain={{ y: 0 }}
-    maxDomain={{ y: 3 }}
+    domainPadding={{ y: 10 }}
+    domain={{ y: [0, 2] }}
 >
-    {pageInformations.map(({ page, responses }) => <VictoryLine
-        key={page.id}
-        interpolation="natural"
-        data={responses
-            .map(response => toDateCoordinates(response, responses))}
-        //labels={({ datum }) => datum.y > 2 ? ":-)" : ":-|"}
-        animate={{
-            duration: 2000,
-            onLoad: { duration: 1000 }
-        }}
-        style={{
-            data: {
-                stroke: "cyan", //TODO: random based on page color 
-                strokeWidth: 4
-            }
-        }}
-    >
-    </VictoryLine>
-    )}
-</VictoryChart >
+    <VictoryAxis
+        dependentAxis
+        tickValues={[0, 1, 2]}
+        tickFormat={tick => [":-(", ":-|", ":-)"][tick]} //TODO: Proper emoji
+    />
+    {pageInformations.map(({ page, responses }) => {
+        return (
+            <VictoryLine
+                name={`line_${page.id}`}
+                style={{
+                    data: { stroke: "cyan", strokeWidth: 5 } //TODO: page.color
+                }}
+                data={responses
+                    .map(response => toDateCoordinates(page, response, responses))}
+                labelComponent={<VictoryLabel dx={10} dy={15} renderInPortal />}
+            />
+        );
+    })}
+</VictoryChart>

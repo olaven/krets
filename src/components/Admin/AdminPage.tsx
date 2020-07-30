@@ -38,7 +38,7 @@ const AverageScore = () => {
     }, [])
 
     return <Text>
-        Gjennomsnittlig score: {average}/3
+        Gjennomsnittlig score: {average + 1}/3
     </Text>
 }
 
