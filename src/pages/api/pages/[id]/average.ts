@@ -1,7 +1,7 @@
 import { OK } from "node-kall";
 //import { useRouter } from "next/router"; //TODO: use this once workaround not needed
-import auth0 from "../../../../../auth0";
 import { responses } from "../../../../database/responses";
+import auth0 from "../../../../auth/auth0";
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
 const getId = (url: string) => {

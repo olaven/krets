@@ -3,6 +3,7 @@ import {
 } from '@auth0/nextjs-auth0';
 
 
+//TODO: remove this file? 
 const config = (typeof window === "undefined") ?
     {
         AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
