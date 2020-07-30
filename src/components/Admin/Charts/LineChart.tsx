@@ -1,5 +1,5 @@
 import { ResponseModel, PageModel } from "../../../models";
-import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis, createContainer } from "victory";
+import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis } from "victory";
 import { emotionToNumeric } from "./ChartUtils";
 
 const getRelevant = (response: ResponseModel, responses: ResponseModel[]) =>
@@ -43,7 +43,7 @@ export const LineChart = ({ pageInformations }) => <VictoryChart
             <VictoryLine
                 name={`line_${page.id}`}
                 style={{
-                    data: { stroke: "cyan", strokeWidth: 5 } //TODO: page.color
+                    data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 } //TODO: page.color
                 }}
                 data={responses
                     .map(response => toDateCoordinates(page, response, responses))}
