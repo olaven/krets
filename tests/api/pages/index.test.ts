@@ -81,6 +81,17 @@ describe("The pages endpoint", () => {
             expect(retrieved.color.length).toEqual(7);
             expect(retrieved.color[0]).toEqual("#");
         });
+
+        it("Assigns different colors", async () => {
+
+            const user = await users.createUser(randomUser());
+
+            await postPage(randomPage(user.id), url, user.id);
+            await postPage(randomPage(user.id), url, user.id);
+
+            const [first, second] = await getPages(url, user.id);
+            expect(first.color).not.toEqual(second.color);
+        });
     })
 
     describe("Retrieving pages", () => {

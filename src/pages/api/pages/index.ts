@@ -1,3 +1,4 @@
+import randomColor from "randomColor"
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/database";
 import { CREATED, OK } from "node-kall";
@@ -21,7 +22,7 @@ export default auth0.requireAuthentication(async function pagesHandler(request, 
         //NOTE: automatically set page owner
         const page = request.body as PageModel;
         page.owner_id = user.sub;
-        page.color = '#AABBCC'
+        page.color = randomColor();
 
         try {
 

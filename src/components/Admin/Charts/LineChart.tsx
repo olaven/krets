@@ -43,7 +43,7 @@ export const LineChart = ({ pageInformations }) => <VictoryChart
             <VictoryLine
                 name={`line_${page.id}`}
                 style={{
-                    data: { stroke: "cyan", strokeWidth: 5 } //TODO: page.color
+                    data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 } //TODO: page.color
                 }}
                 data={responses
                     .map(response => toDateCoordinates(page, response, responses))}
