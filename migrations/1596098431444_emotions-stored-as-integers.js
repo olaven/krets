@@ -20,9 +20,6 @@ exports.up = pgm => {
             ALTER "emotion" SET DATA TYPE integer
             USING emotion::integer
     `)
-    /*     pgm.alterColumn("responses", "emotion", {
-            type: 'integer',
-        }); */
 
     pgm.addConstraint("responses", "valid-emotion-integer", {
         check: 'emotion >= 0 and emotion <= 2'

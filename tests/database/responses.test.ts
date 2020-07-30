@@ -1,11 +1,39 @@
 import * as faker from "faker";
-import { responses } from "../../src/database/responses";
+import { responses, convertEmotion } from "../../src/database/responses";
 import { randomResponse, randomUser, randomPage } from "./databaseTestUtils";
 import { users } from "../../src/database/users";
 import { pages } from "../../src/database/pages";
 
 
 describe("Database repository for pages", () => {
+
+    describe("Conversion function between schema representation and model representation", () => {
+
+        describe("The conversion of Emotion", () => {
+
+            it("Converts from model to SQL", () => {
+
+                const happy = convertEmotion.toSQL(":-)");
+                const neutral = convertEmotion.toSQL(":-|");
+                const sad = convertEmotion.toSQL(":-(");
+
+                expect(happy).toEqual(2);
+                expect(neutral).toEqual(1);
+                expect(sad).toEqual(0);
+            });
+
+            it("Converts from SQL to model", () => {
+
+                const happy = convertEmotion.toModel(2);
+                const neutral = convertEmotion.toModel(1);
+                const sad = convertEmotion.toModel(0);
+
+                expect(happy).toEqual(":-)");
+                expect(neutral).toEqual(":-|");
+                expect(sad).toEqual(":-(");
+            });
+        })
+    })
 
     test("Can get responses", async () => {
 
