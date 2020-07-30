@@ -59,6 +59,8 @@ export default ({
 
     requireAuthentication: (apiRoute: IApiRoute): IApiRoute => async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 
+        console.log("IN MOCK: ");
+        console.log("UID here:", req.headers["x-mock-is-authenticated"]);
         if (!req.headers["x-mock-is-authenticated"]) {
 
             res.status(UNAUTHORIZED).json({

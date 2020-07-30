@@ -19,6 +19,7 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
 const post = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
+    const pagesInDatabase = await pages.getByOwner(user.sub);
 
     const page = request.body as PageModel;
     page.owner_id = user.sub;

@@ -4,7 +4,7 @@ import { OK } from "node-kall";
 import { PageModel } from "../models";
 
 
-//TODO: proper types
+
 export const PagesContext = createContext<{
     pages: PageModel[],
     refreshPages: () => Promise<any>

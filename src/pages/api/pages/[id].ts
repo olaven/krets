@@ -91,6 +91,15 @@ const put = async (request, response) => {
         return;
     }
 
+    const pageFromDb = await pages.getPage(page.id)
+    if (!pageFromDb) {
+
+        response
+            .status(NOT_FOUND)
+            .send("Page was not found");
+        return;
+    }
+
     if (page.owner_id !== user.sub) {
 
         response
@@ -111,7 +120,7 @@ const put = async (request, response) => {
 
         await pages.updatePage(page)
         response
-            .status(204)
+            .status(NO_CONTENT)
             .send("")
     } catch (error) {
 

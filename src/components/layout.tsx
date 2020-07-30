@@ -26,6 +26,7 @@ const AuthButton = () => {
     const router = useRouter();
     const { user } = React.useContext(UserContext);
 
+
     if ([
         "/[pageId]", "/[pageId]/code"
     ].includes(router.pathname)) {

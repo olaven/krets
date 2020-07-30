@@ -1,22 +1,17 @@
-#-------------------------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
-#-------------------------------------------------------------------------------------------------------------
+version: '3'
+services:
+  web:
+    image: node:14
+      # context: .
+      # dockerfile: Dockerfile
+      # args:
+      #   VARIANT: 12
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
 
-  version: '3'
-  services:
-    web:
-      image: node:14
-        # context: .
-        # dockerfile: Dockerfile
-        # args:
-        #   VARIANT: 12
-      volumes:
-        - ..:/workspace:cached
-      command: sleep infinity
-  
-      links:
-        - db
+    links:
+      - db
   
     db:
       image: postgres
