@@ -18,3 +18,6 @@ export const getResponses = (pageId: string) =>
 
 export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
+
+export const getOverallAverage = (pageId: string) =>
+    get<number>(`/api/pages/${pageId}/average`); 
