@@ -1,4 +1,4 @@
-import { users } from "../../src/database/users";
+import { users } from "../../src/database/database";
 import * as faker from "faker";
 
 describe("User repository", () => {
