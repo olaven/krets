@@ -13,9 +13,11 @@ const getId = (url: string) => {
 
 export default auth0.requireAuthentication(async function average(request, response) {
 
+    console.log("in average")
     const id = getId(request.url)
-    const average = pages.getAverage(id);
-
+    console.log("Her er jeg", id);
+    const average = await pages.getAverage(id);
+    console.log("Her er jeg igjen", average);
 
     response
         .status(OK)
