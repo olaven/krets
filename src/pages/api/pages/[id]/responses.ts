@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { pages } from "../../../../database/pages";
-import { responses } from "../../../../database/responses";
+import { pages, responses } from "../../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
 
 

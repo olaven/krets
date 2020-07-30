@@ -28,7 +28,7 @@ const AverageScore = () => {
             const [status, average] = await getOverallAverage(page.id)
             if (status === OK) {
 
-                const rounded = Math.round(average * 10) / 10
+                const rounded = Math.round(average * 10) / 10;
                 setAverage(rounded);
             } else {
 
