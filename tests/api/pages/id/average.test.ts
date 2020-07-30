@@ -10,7 +10,7 @@ import { randomUser, randomPage } from "../../../database/databaseTestUtils";
 jest.mock("../../../../src/auth/auth0");
 
 //TODO: Skipped as not relevant to db work. Unskip once working on API 
-describe.skip("The endpoint for average all-time score", () => {
+describe("The endpoint for average all-time score", () => {
 
     let server: Server;
     let url: string;
@@ -80,11 +80,50 @@ describe.skip("The endpoint for average all-time score", () => {
                 page_id: page.id,
                 emotion: ":-)",
                 text: ""
-            }); // 3
+            }); // 2
 
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-|",
+                text: ""
+            }); // 1
+
+            const url = fullURL(page.id);
+            const fetchResponse = await authenticatedFetch(user.id, url);
+            expect(fetchResponse.status).toEqual(200);
+
+            const body = await fetchResponse.text();
+            //NOTE: 2 and 1 makes for an average of 1.5
+            expect(parseFloat(body)).toEqual(1.5);
+        });
+
+
+        it("Returns actual average of second combination", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
+
+            await responses.createResponse({
+                page_id: page.id,
+                emotion: ":-|",
+                text: ""
+            }); // 1
+
+            await responses.createResponse({
+                page_id: page.id,
+                emotion: ":-)",
+                text: ""
+            }); // 2
+
+            await responses.createResponse({
+                page_id: page.id,
+                emotion: ":-)",
+                text: ""
+            }); // 2
+
+            await responses.createResponse({
+                page_id: page.id,
+                emotion: ":-)",
                 text: ""
             }); // 2
 
@@ -93,8 +132,8 @@ describe.skip("The endpoint for average all-time score", () => {
             expect(fetchResponse.status).toEqual(200);
 
             const body = await fetchResponse.text();
-            //NOTE: 3 and 2 makes for an average of 2.5
-            expect(parseInt(body)).toEqual(2.5);
-        })
+            //NOTE: (1 + 2 + 2 + 2) / 4 gives 1.75
+            expect(parseFloat(body)).toEqual(1.75);
+        });
     })
 });
