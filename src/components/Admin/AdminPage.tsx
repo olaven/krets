@@ -44,10 +44,10 @@ const AverageScore = () => {
 
 const AdminContent = () => <Flex flexWrap="wrap">
     <AdminBox width={1}>
-        <CompareSelect />
+        <AverageScore />
     </AdminBox>
     <AdminBox>
-        <AverageScore />
+        <CompareSelect />
         <Charts />
     </AdminBox>
     <AdminBox>
