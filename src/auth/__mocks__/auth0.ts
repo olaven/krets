@@ -68,7 +68,8 @@ export default ({
             return;
         }
 
-        await apiRoute(req, res)
+        console.info("Mock authenticated as ", req.headers["x-mock-is-authenticated"]);
+        await apiRoute(req, res);
     },
 
     tokenCache: (req: NextApiRequest, res: NextApiResponse) => {

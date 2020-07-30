@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../context/UserContext";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { Box, Flex, Text } from "rebass";
+import { OK } from "node-kall";
 import { LoginButton } from "../tiny/buttons";
 import { TextList } from "./TextList/TextList";
 import { Charts } from "./Charts/Charts";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
-import { useResponses } from "../../effects/useResponses";
-import { emotionToNumeric } from "./Charts/ChartUtils";
+import { getOverallAverage } from "../../fetchers";
 
 const AdminBox = props => <Box
     width={props.width ? props.width : [1, 1 / 2]}
@@ -20,32 +20,22 @@ const AdminBox = props => <Box
 const AverageScore = () => {
 
     const { page } = useContext(AdminPageContext);
-    const [responses] = useResponses(page.id);
 
     const [average, setAverage] = useState<number>(0);
 
-    //TODO: move this to backend SQL query 
     useEffect(() => {
+        (async () => {
+            const [status, average] = await getOverallAverage(page.id)
+            if (status === OK) {
 
-        if (responses.length === 0)
-            return;
+                const rounded = Math.round(average * 10) / 10
+                setAverage(rounded);
+            } else {
 
-        if (responses.length === 1) {
-
-            const [response] = responses;
-            setAverage(
-                emotionToNumeric(response.emotion));
-        } else {
-
-            const sum = responses
-                .map(({ emotion }) => emotion)
-                .map(emotionToNumeric)
-                .reduce((a, b) => a + b)
-
-            const roundedAverage = Math.round((sum / responses.length) * 10) / 10
-            setAverage(roundedAverage);
-        }
-    }, [responses.length])
+                console.warn(`Error fetching average: ${status}`);
+            }
+        })()
+    }, [])
 
     return <Text>
         Gjennomsnittlig score: {average}/3

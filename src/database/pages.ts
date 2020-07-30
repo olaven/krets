@@ -29,11 +29,12 @@ const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
     return firstRow(result);
 });
 
-const updatePage = async (page: PageModel) => withDatabase<PageModel>(async client => {
+const updatePage = (page: PageModel) => withDatabase<PageModel>(async client => {
 
     const result = await client.query("update pages set name = $1, color = $2 where id = $3 returning *", [page.name, page.color, page.id]);
     return firstRow(result);
 });
+
 
 /**
  * DANGER: will delete responses as well! 
@@ -53,5 +54,5 @@ export const pages = ({
     getByOwner,
     createPage,
     updatePage,
-    deletePage
+    deletePage,
 });

@@ -4,7 +4,7 @@ import { CREATED, OK } from "node-kall";
 import { PageModel } from "../../../models";
 
 
-export default auth0.requireAuthentication(async function brand(request, response) {
+export default auth0.requireAuthentication(async function pagesHandler(request, response) {
 
     const { user } = await auth0.getSession(request);
 

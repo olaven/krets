@@ -83,7 +83,7 @@ describe("The endpoint for responses", () => {
 
         const response = {
             text: "OK",
-            emotion: 'neutral',
+            emotion: ':-|',
             page_id: page.id
         };
 

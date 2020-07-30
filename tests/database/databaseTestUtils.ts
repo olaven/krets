@@ -17,6 +17,6 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
         id: faker.random.uuid(),
         page_id: pageId,
         text: faker.lorem.lines(1),
-        emotion: ":-)",
+        emotion: emotion,
         contact_details: contactDetails
     });
