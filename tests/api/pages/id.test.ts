@@ -1,8 +1,9 @@
+import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
+import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
-import { users, pages, categories } from "../../../src/database/database";
-import handler from "../../../src/pages/api/pages/[id]";
+import { users, categories, pages } from "../../../src/database/database"
+
 
 
 jest.mock("../../../src/auth/auth0");

@@ -3,6 +3,7 @@ import { pages, categories, responses } from "../../src/database/database";
 import { createUser, createPage, createCategory } from "../../__tests__/database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 
+
 describe("Database interface for pages", () => {
 
     it("Can create page", async () => {

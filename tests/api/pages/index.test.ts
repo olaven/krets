@@ -57,7 +57,6 @@ describe("The pages endpoint", () => {
         });
 
         it("Assigns a pseudo-random color value to the page", async () => {
-
             const user = await users.createUser(randomUser());
             const page = randomPage(user.id);
 

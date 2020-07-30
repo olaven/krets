@@ -24,5 +24,6 @@ export const getCategories = () =>
 
 export const postCategory = (category: CategoryModel) =>
     post<CategoryModel>(`/api/categories`, category);
+
 export const getOverallAverage = (pageId: string) =>
-    get<number>(`/api/pages/${pageId}/average`); 
+    get<number>(`/api/pages/${pageId}/average`);

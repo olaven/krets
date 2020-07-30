@@ -17,7 +17,7 @@ export const randomPage = (ownerId: string, color: string = null): PageModel => 
 });
 
 
-//TODO: PageId DTO?
+
 export const postPage = (page: PageModel, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
     method: "POST",
     headers: {

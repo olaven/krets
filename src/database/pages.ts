@@ -33,20 +33,6 @@ const getByOwnerAndCategory = (ownerId: string, categoryId: string) => withDatab
     return result.rows;
 });
 
-/* 
-TODO: implement this idea for `rows` and `firstRow`, with the API demonstrated below. 
-Not implemented now, as it does not belong to the current task I am working on.
-
-const rows = <T>(query: string, values = []) => withDatabase<T>(async client => {
-
-    const result = await client.query(query, values);
-    return result.rows;
-});
-
-//made as test for `rows`
-const getPageTest = (id: string) =>
-    rows("select * from pages where id = $1", [id]);
- */
 const getPage = (id: string) => withDatabase<PageModel>(async (client) => {
 
     const result = await client.query("select * from pages where id = $1", [id]);
