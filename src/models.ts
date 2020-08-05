@@ -15,7 +15,15 @@ export interface PageModel {
     name: string,
     owner_id: string,
     created_at?: string,
-    color?: string
+    color?: string,
+    category_id?: string
+}
+
+export interface CategoryModel {
+    id?: string,
+    name: string
+    owner_id: string,
+    created_at?: string,
 }
 
 //From DB 

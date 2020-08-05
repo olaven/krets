@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel } from "./models";
+import { PageModel, ResponseModel, CategoryModel } from "./models";
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
@@ -19,5 +19,11 @@ export const getResponses = (pageId: string) =>
 export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
 
+export const getCategories = () =>
+    get<CategoryModel>(`/api/categories`);
+
+export const postCategory = (category: CategoryModel) =>
+    post<CategoryModel>(`/api/categories`, category);
+
 export const getOverallAverage = (pageId: string) =>
-    get<number>(`/api/pages/${pageId}/average`); 
+    get<number>(`/api/pages/${pageId}/average`);

@@ -107,6 +107,17 @@ export const myPages = strings({
     }
 });
 
+export const myCategories = strings({
+    en: {
+        inDevelopmentWarning: "'Categories' is not a finished feature of Krets. It is unstable and should not be used yet :-)",
+        header: "My Categories"
+    },
+    no: {
+        inDevelopmentWarning: "'Kategorier' er ikke en ferdig funksjon i Krets. Det er ustabilt og bør ikke brukes enda :-)",
+        header: "Mine kategorier"
+    },
+});
+
 export const pageCreator = strings({
     en: {
         preview: "Your page:",
@@ -118,9 +129,24 @@ export const pageCreator = strings({
         preview: "Din side:",
         placeholder: "Sidens navn",
         button: "Lag side",
-        error: "An error occured😐"
+        error: "En feil oppsto😐"
     }
 });
+
+
+export const categoryCreator = strings({
+    en: {
+        placeholder: "Enter the category name",
+        button: "Create page",
+        error: "An error occured😐"
+    },
+    no: {
+        placeholder: "Kategoriens navn",
+        button: "Lag kategori",
+        error: "En feil oppsto😐"
+    }
+});
+
 
 export const adminPage = strings({
     en: {
@@ -153,7 +179,7 @@ export const settings = strings({
         changeNameButton: "Endre navn",
         changeNameError: "Det skjedde en feil med oppdatering av navn..",
         deleteButton: "Slett side.",
-        deleteWarning: "Er du sikker? Siden og alle responser slettes permanent. Du kan ikke gjøre om dette.",
+        deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",
         deleteConfirmation: "Jeg er helt sikker.",
         deleteCancelation: "Ikke slett.",
         deleteError: "En feil oppsto med slettingen.."

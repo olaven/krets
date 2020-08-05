@@ -1,11 +1,10 @@
-
-import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid } from "../apiTestUtils";
+import { Server } from "net";
+import fetch from "cross-fetch";
+import * as faker from "faker";
+import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages";
 import { users } from "../../../src/database/database";
-import { Server } from "net";
-import * as faker from "faker";
-import fetch from "cross-fetch";
-import { randomUser, randomPage } from "../../database/databaseTestUtils";
+import { randomUser } from "../../database/databaseTestUtils";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -58,7 +57,6 @@ describe("The pages endpoint", () => {
         });
 
         it("Assigns a pseudo-random color value to the page", async () => {
-
             const user = await users.createUser(randomUser());
             const page = randomPage(user.id);
 
@@ -116,6 +114,5 @@ describe("The pages endpoint", () => {
             //expect(before.length).toEqual(0);
             expect(after.length).toEqual(before.length + n);
         });
-    })
-
+    });
 });

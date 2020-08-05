@@ -1,21 +1,10 @@
 import * as faker from "faker";
-import { pages, users, responses } from "../../src/database/database";
-import { UserModel } from "../../src/models";
-import { randomPage } from "./databaseTestUtils";
+import { pages, categories, responses } from "../../src/database/database";
+import { createUser, createPage, createCategory } from "../../__tests__/database/databaseTestUtils";
+import { randomPage } from "../api/apiTestUtils";
+
 
 describe("Database interface for pages", () => {
-
-    const createUser = async (): Promise<UserModel> => users.createUser({
-        id: faker.random.uuid() as string
-    });
-
-    const createPage = (ownerId: string) =>
-        pages.createPage({
-            owner_id: ownerId,
-            name: faker.company.companyName(),
-            id: faker.random.uuid()
-        })
-
 
     it("Can create page", async () => {
 
@@ -25,7 +14,8 @@ describe("Database interface for pages", () => {
         const page = {
             owner_id: owner.id,
             name: "Amazing cafe!",
-            id: id
+            id: id,
+            category_id: null
         };
 
         const before = await pages.getPage(id);
@@ -46,7 +36,8 @@ describe("Database interface for pages", () => {
         const page = {
             owner_id: owner.id,
             name: originalName,
-            id: faker.random.uuid()
+            id: faker.random.uuid(),
+            category_id: null
         }
 
         await pages.createPage(page);
@@ -98,6 +89,61 @@ describe("Database interface for pages", () => {
         expect(responsesAfter.length).toEqual(0);
     });
 
+    it("Can set category", async () => {
+
+        const user = await createUser();
+        const persistedCategory = await categories.createCategory({ name: "category name", owner_id: user.id });
+
+        const page = {
+            owner_id: user.id,
+            name: "page name",
+            id: faker.random.uuid(),
+            category_id: persistedCategory.id
+        }
+
+        await pages.createPage(page);
+
+        const retrievedPage = await pages.getPage(page.id);
+        expect(retrievedPage.category_id).toEqual(persistedCategory.id);
+    });
+
+
+    describe("Getting pages by owner and category", () => {
+
+        it("Can returns pages", async () => {
+
+            const owner = await createUser();
+            const category = await createCategory(owner.id);
+
+            const persisted = [];
+            for (let i = 0; i < 4; i++) {
+
+                const page = await createPage(owner.id, category.id);
+                persisted.push(page);
+            }
+
+            const retrieved = await pages.getByOwnerAndCategory(owner.id, category.id);
+            expect(retrieved).toEqual(persisted);
+        });
+
+
+        it("Does not return pages with other owners or categories", async () => {
+
+            const owner = await createUser();
+            const other = await createUser();
+            const ownerCategory = await createCategory(owner.id);
+            const otherCategory = await createCategory(other.id);
+
+            const ownerPage = await createPage(owner.id, ownerCategory.id);
+            const otherPage = await createPage(other.id, otherCategory.id);
+
+            const retrieved = await pages.getByOwnerAndCategory(owner.id, ownerCategory.id);
+
+            expect(retrieved.length).toEqual(1);
+            expect(retrieved[0]).toEqual(ownerPage);
+            expect(retrieved[0]).not.toEqual(otherPage);
+        });
+    });
     describe("The 'color'-column", () => {
 
         it("Does exist", async () => {

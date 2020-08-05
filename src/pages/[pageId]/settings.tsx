@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Box, Button, Heading, Text, Flex } from "rebass";
-import { Input } from "@rebass/forms"
+import { Input, Label, Select } from "@rebass/forms"
 import { putPage, deletePage } from "../../fetchers";
 import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
@@ -27,10 +27,11 @@ const UpdateName = () => {
     }
 
     return <Flex>
-        <Input value={name} onChange={(event) => { setName(event.target.value) }}></Input>
+        <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
         <Button onClick={updateName}>{text.settings.changeNameButton}</Button>
     </Flex>
 }
+
 
 export const DeletePage = () => {
 
@@ -70,11 +71,26 @@ export const DeletePage = () => {
     </Box>
 }
 
-const UpdateColor = () => {
+//TODO: actually pull categories (from context etc.)
+const UpdateCategory = () => {
 
     const { page } = useContext(SettingsContext);
+    const options = [
+        { value: "first_id", name: "My First Category" },
+        { value: "second_id", name: "My Second Category" },
+        { value: "third_id", name: "My Third Category" },
+        { value: "fourth_id", name: "My Fourth Category" },
+    ]
 
-    return
+    return <Box>
+        <Label htmlFor='category'>Kategori</Label>
+        <Select
+            id='category'
+            name='category'>
+            {options.map(({ value, name }) => <option value={value}>{name}</option>)}
+        </Select>
+        her skal jeg oppdatere kategori for {page.name}
+    </Box>
 }
 
 export const SettingsContent = () => {
@@ -88,6 +104,7 @@ export const SettingsContent = () => {
                 {text.settings.heading} {page.name}
             </Heading>
             <UpdateName />
+            <UpdateCategory />
             <DeletePage />
         </Box>
 }

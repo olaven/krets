@@ -5,17 +5,51 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { PageModel } from '../../src/models';
+import { PageModel, CategoryModel } from '../../src/models';
 
 
-//TODO: PageId DTO?
+export const randomPage = (ownerId: string, color: string = null): PageModel => ({
+    id: uid(),
+    owner_id: ownerId,
+    name: faker.company.companyName(),
+    color,
+    category_id: null
+});
+
+
+
 export const postPage = (page: PageModel, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
     method: "POST",
     headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
     },
     body: JSON.stringify((page))
 });
+
+export const putPage = (page: PageModel, userId: string) => authenticatedFetch(userId, `/api/pages/${page.id}`, {
+    method: "PUT",
+    headers: {
+        "content-type": "application/json",
+        body: JSON.stringify(page)
+    }
+});
+
+export const authenticatedGet = async <T>(userId: string, url: string) => {
+
+    const response = await authenticatedFetch(userId, url);
+    expect(response.status).toEqual(200);
+    const body = await response.json();
+    return body as T;
+};
+
+export const postCategory = async (userId: string, url: string, category: CategoryModel) => authenticatedFetch(userId, url, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(category)
+});
+
 
 export const uid = () => faker.random.uuid();
 
@@ -33,8 +67,7 @@ export const getPages = async (url: string, userId = uid()) => {
  * @param url
  * @param options
  */
-export const authenticatedFetch = (userId: string, url: string, options: any = { headers: {} }) => {
-
+export const authenticatedFetch = (userId: string, url: string, options: any = {}) => {
 
     const mergedOptions = {
         ...options,
@@ -43,7 +76,6 @@ export const authenticatedFetch = (userId: string, url: string, options: any = {
             ...options.headers
         },
     };
-
 
     return fetch(url, mergedOptions);
 };

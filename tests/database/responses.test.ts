@@ -36,6 +36,15 @@ describe("Database repository for pages", () => {
 
     describe("Calculation of average emotion", () => {
 
+        const page_id = faker.random.uuid();
+        const user = { id: faker.random.uuid() };
+        const page = {
+            owner_id: user.id,
+            name: "Amazing cafe!",
+            id: page_id,
+            category_id: null
+        };
+
         it("Returns a number", async () => {
 
             const user = await users.createUser(randomUser());
