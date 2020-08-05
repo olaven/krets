@@ -4,7 +4,7 @@ import { PageInformation } from "../../../context/CompareContext";
 import { emotionToNumeric } from "./ChartUtils";
 import * as text from "../../../text";
 
-const responsesToCoordinates = (responses: ResponseModel[]) =>
+const responsesToAverage = (responses: ResponseModel[]) =>
     responses.length === 0 ?
         [] :
         responses.map((response => emotionToNumeric(response.emotion))).reduce((a, b) => a + b) / responses.length
@@ -12,7 +12,7 @@ const responsesToCoordinates = (responses: ResponseModel[]) =>
 const toChartData = (pageInformations: PageInformation[]) => pageInformations
     .map(({ page, responses }) => ({
         x: page.name,
-        y: responsesToCoordinates(responses)
+        y: responsesToAverage(responses)
     }));
 
 export const BarChart = ({ pageInformations }) => <VictoryChart

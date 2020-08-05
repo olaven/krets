@@ -1,9 +1,11 @@
 import { ResponseModel, PageModel } from "../../../models";
 import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis } from "victory";
 import { emotionToNumeric } from "./ChartUtils";
+import { PageInformation } from "../../../context/CompareContext";
+import { response } from "../../../text";
 
 const getRelevant = (response: ResponseModel, responses: ResponseModel[]) =>
-    responses.filter(r => new Date(r.created_at).getDate() <= new Date(response.created_at).getDate());
+    responses.filter(r => new Date(r.created_at).getTime() <= new Date(response.created_at).getTime());
 
 //TODO: this should be done in an SQL query backend 
 const sumEmotions = (responses: ResponseModel[]) => responses
@@ -19,7 +21,6 @@ const toDateCoordinates = (page: PageModel, response: ResponseModel, responses: 
     const sum = sumEmotions(relevant);
     const average = sum / relevant.length;
 
-    console.log("is last: ", isLast(response, responses), "in ", page.name);
     return {
         y: average,
         x: new Date(response.created_at),
@@ -28,8 +29,7 @@ const toDateCoordinates = (page: PageModel, response: ResponseModel, responses: 
     }
 }
 
-
-export const LineChart = ({ pageInformations }) => <VictoryChart
+export const LineChart = ({ pageInformations }: { pageInformations: PageInformation[] }) => <VictoryChart
     domainPadding={{ y: 10 }}
     domain={{ y: [0, 2] }}
 >
@@ -39,14 +39,17 @@ export const LineChart = ({ pageInformations }) => <VictoryChart
         tickFormat={tick => [":-(", ":-|", ":-)"][tick]} //TODO: Proper emoji
     />
     {pageInformations.map(({ page, responses }) => {
+
+        const chartData = responses
+            .map(response => toDateCoordinates(page, response, responses))
+
         return (
             <VictoryLine
                 name={`line_${page.id}`}
                 style={{
                     data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 } //TODO: page.color
                 }}
-                data={responses
-                    .map(response => toDateCoordinates(page, response, responses))}
+                data={chartData}
                 labelComponent={<VictoryLabel dx={10} dy={15} renderInPortal />}
             />
         );
