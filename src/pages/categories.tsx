@@ -27,7 +27,8 @@ const CategoriesTooltipProvider = ({ children }) => <TooltipHelpProvider
 const CategoriesContent = () => {
 
     return <>
-        <Heading color={"primary"} textAlign={"center"} fontSize={[4, 5, 6]}>Kategorier</Heading>
+        <Heading color={"primary"} textAlign={"center"} fontSize={[4, 5, 6]}>{text.myCategories.header}</Heading>
+        <Heading color={"black"} textAlign={"center"} fontSize={[0, 1, 2]}>{text.myCategories.inDevelopmentWarning}</Heading>
         <CategoryCreator />
         <CategoryList />
     </>

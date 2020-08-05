@@ -107,6 +107,17 @@ export const myPages = strings({
     }
 });
 
+export const myCategories = strings({
+    en: {
+        inDevelopmentWarning: "'Categories' is not a finished feature of Krets. It is unstable and should not be used yet :-)",
+        header: "My Categories"
+    },
+    no: {
+        inDevelopmentWarning: "'Kategorier' er ikke en ferdig funksjon i Krets. Det er ustabilt og bør ikke brukes enda :-)",
+        header: "Mine kategorier"
+    },
+});
+
 export const pageCreator = strings({
     en: {
         preview: "Your page:",

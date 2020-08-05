@@ -1,11 +1,9 @@
 import { Box, Card, Flex, Heading } from "rebass";
 import React, { useContext } from "react";
-import { TooltipHelp } from "tooltip-help-react";
-import * as text from "../../text"
 import { CategoriesContext } from "../../context/CategoriesContext";
 
 const CategoryCard = ({ name }) => <Box>
-    <Heading>{name} {"<-"} kategorinavn</Heading>
+    <Heading>{name} {"<-"} name</Heading>
 </Box>
 
 export const CategoryList = () => {
