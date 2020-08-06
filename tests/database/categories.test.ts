@@ -1,7 +1,8 @@
 import * as faker from "faker";
 import { categories } from "../../src/database/categories";
-import { createUser } from "./databaseTestUtils";
+import { randomUser } from "./databaseTestUtils";
 import { CategoryModel } from "../../src/models";
+import { users } from "../../src/database/users";
 
 describe("Database interface for categories", () => {
 
@@ -12,7 +13,7 @@ describe("Database interface for categories", () => {
 
     it("is possible to create a category", async () => {
 
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
         const category = randomCategory(owner.id);
         const persisted = await categories.createCategory(category);
 
@@ -21,7 +22,7 @@ describe("Database interface for categories", () => {
 
     it("Method for creation does return the persisted category", async () => {
 
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
         const category = await categories.createCategory(randomCategory(owner.id));
 
         expect(category).not.toBeUndefined();
@@ -31,7 +32,7 @@ describe("Database interface for categories", () => {
     it("Is possible to get by owner", async () => {
 
         const n = faker.random.number(15);
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
 
         for (let i = 0; i < n; i++) {
 
@@ -47,7 +48,7 @@ describe("Database interface for categories", () => {
     it("Does not return from other owners", async () => {
 
         const n = faker.random.number(15);
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
 
         for (let i = 0; i < n; i++) {
 
@@ -71,7 +72,7 @@ describe("Database interface for categories", () => {
 
     it("returns category objects", async () => {
 
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
         const n = faker.random.number(10) + 1;
 
         /* 
