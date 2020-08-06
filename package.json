@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "yarn migrate up && NODE_ENV=development NODE_OPTIONS='--inspect' next",
     "build": "next build",
-    "start": "yarn migrate up --no-reject-unauthorized && NODE_ENV='production' next start",
+    "start": "yarn migrate up --no-check-order --no-reject-unauthorized && NODE_ENV='production' next start",
     "test": "yarn migrate up && NODE_ENV=test jest --runInBand ./tests --forceExit --detectOpenHandles",
     "migrate": "node-pg-migrate"
   },
