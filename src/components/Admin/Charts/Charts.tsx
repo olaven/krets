@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import Collapsible from "react-collapsible";
+/* import Collapsible from "react-collapsible"; */
 import { AdminPageContext } from "../../../context/AdminPageContext";
 import { CompareContext } from "../../../context/CompareContext";
 import { LineChart } from "./LineChart";
 import { BarChart } from "./BarChart";
+import { Collapsible } from "./Collapsible";
 
 
 export const Charts = () => {
@@ -18,26 +19,10 @@ export const Charts = () => {
 
     const [visible, setVisible] = useState(true);
     return <>
-        <div
-            onClick={() => {
-                setVisible(!visible)
-            }}>
-            <div
-
-            >min trigger</div>
-            <div
-                style={{
-                    display: visible ? "block" : "none"
-                }}
-            >
-                Graf
-            </div>
-
-        </div>
-        <Collapsible trigger="first" style={{ backgroundColor: "orange" }}>
+        <Collapsible text="first">
             <LineChart pageInformations={pageInformations} />
         </Collapsible>
-        <Collapsible trigger="andre">
+        <Collapsible text="andre">
             <BarChart pageInformations={pageInformations} />
         </Collapsible>
     </>;
