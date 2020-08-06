@@ -24,7 +24,6 @@
     "pg": "^8.2.1",
     "randomcolor": "^0.6.2",
     "react": "^16.13.1",
-    "react-collapsible": "^2.8.0",
     "react-dom": "^16.13.1",
     "react-emoji-render": "^1.2.4",
     "react-localization": "^1.0.15",

@@ -8,6 +8,7 @@ export const Collapsible = ({ text, children }: Props) => {
 
     return <>
         <Button
+            aria-label={"collapsible-button"}
             onClick={() => {
                 setVisible(!visible);
             }}
