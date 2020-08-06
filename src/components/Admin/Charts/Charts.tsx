@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-/* import Collapsible from "react-collapsible"; */
 import { AdminPageContext } from "../../../context/AdminPageContext";
 import { CompareContext } from "../../../context/CompareContext";
+import * as text from "../../../text";
 import { LineChart } from "./LineChart";
 import { BarChart } from "./BarChart";
 import { Collapsible } from "./Collapsible";
@@ -17,12 +17,11 @@ export const Charts = () => {
     }, []);
 
 
-    const [visible, setVisible] = useState(true);
     return <>
-        <Collapsible text="first">
+        <Collapsible text={text.charts.lineChartCollapsible}>
             <LineChart pageInformations={pageInformations} />
         </Collapsible>
-        <Collapsible text="andre">
+        <Collapsible text={text.charts.barChartCollapsible}>
             <BarChart pageInformations={pageInformations} />
         </Collapsible>
     </>;
