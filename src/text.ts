@@ -188,12 +188,23 @@ export const settings = strings({
 
 export const compareSelect = strings({
     en: {
-        heading: "Compare pages",
+        heading: "Select pages",
         choose: "Choose pages"
     },
     no: {
-        heading: "Sammenlign sider",
+        heading: "Velg flere sider",
         choose: "Velg sider"
+    }
+});
+
+export const charts = strings({
+    en: {
+        lineChartCollapsible: "Show development over time",
+        barChartCollapsible: "Show overall score"
+    },
+    no: {
+        lineChartCollapsible: "Vis utvikling over tid",
+        barChartCollapsible: "Vis samlet score"
     }
 })
 

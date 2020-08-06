@@ -8,12 +8,13 @@ import fetch from "cross-fetch";
 import { PageModel, CategoryModel } from '../../src/models';
 
 
-export const randomPage = (ownerId: string, color: string = null): PageModel => ({
-    id: uid(),
-    owner_id: ownerId,
+//TODO: this is duplicate of function in databaseTestUtils. This should probably be removed in favour of databaseTestUtils-version
+export const randomPage = (ownerId: string, color: string = null, categoryId: string = null): PageModel => ({
+    id: faker.random.uuid(),
     name: faker.company.companyName(),
+    owner_id: ownerId,
     color,
-    category_id: null
+    category_id: categoryId
 });
 
 

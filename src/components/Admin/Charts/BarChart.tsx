@@ -15,16 +15,7 @@ const toChartData = (pageInformations: PageInformation[]) => pageInformations
         y: responsesToAverage(responses)
     }));
 
-export const BarChart = ({ pageInformations }) => <VictoryChart
-    animate={{
-        duration: 2000,
-        onLoad: { duration: 1000 }
-    }}
-    domainPadding={{ x: 15 }}
->
-    <VictoryBar
-        data={toChartData(pageInformations)}
-        style={{ data: { fill: "orange", opacity: 0.7 } }} />
+const Axis = () => <>
     <VictoryAxis
         label={text.moodGraph.xLabel}
         style={{
@@ -35,7 +26,20 @@ export const BarChart = ({ pageInformations }) => <VictoryChart
         label={text.moodGraph.yLabel}
         style={{
             axisLabel: { padding: 40 }
-        }}
-    />
+        }} />
+</>
 
-</VictoryChart>
+export const BarChart = ({ pageInformations }) => <span aria-label="bar-chart-label">
+    <VictoryChart
+        animate={{
+            duration: 2000,
+            onLoad: { duration: 1000 }
+        }}
+        domainPadding={{ x: 15 }}
+    >
+        <VictoryBar
+            data={toChartData(pageInformations)}
+            style={{ data: { fill: "orange", opacity: 0.7 } }} />
+        <Axis />
+    </VictoryChart>
+</span>

@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AdminPageContext } from "../../../context/AdminPageContext";
 import { CompareContext } from "../../../context/CompareContext";
+import * as text from "../../../text";
 import { LineChart } from "./LineChart";
 import { BarChart } from "./BarChart";
+import { Collapsible } from "./Collapsible";
 
 
 export const Charts = () => {
@@ -16,7 +18,11 @@ export const Charts = () => {
 
 
     return <>
-        <LineChart pageInformations={pageInformations} />
-        <BarChart pageInformations={pageInformations} />
+        <Collapsible text={text.charts.lineChartCollapsible}>
+            <LineChart pageInformations={pageInformations} />
+        </Collapsible>
+        <Collapsible text={text.charts.barChartCollapsible}>
+            <BarChart pageInformations={pageInformations} />
+        </Collapsible>
     </>;
 }
