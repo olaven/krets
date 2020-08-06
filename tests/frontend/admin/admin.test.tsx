@@ -3,17 +3,17 @@
  */
 
 import React from "react";
-import { AdminPage } from "../../src/components/Admin/AdminPage"
-import { TextList } from "../../src/components/Admin/TextList/TextList";
+import { AdminPage } from "../../../src/components/Admin/AdminPage"
+import { TextList } from "../../../src/components/Admin/TextList/TextList";
 import { waitFor, render } from "@testing-library/react"
-import { ResponseModel } from "../../src/models";
-import * as text from "../../src/text"
+import { ResponseModel } from "../../../src/models";
+import * as text from "../../../src/text"
 import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
-import { mockRouter } from "./frontendTestUtils";
-import { AdminPageContext } from "../../src/context/AdminPageContext";
-import { UserContext } from "../../src/context/UserContext";
-import { emotionToNumeric } from "../../src/components/Admin/Charts/ChartUtils";
+import { mockRouter } from "../frontendTestUtils";
+import { AdminPageContext } from "../../../src/context/AdminPageContext";
+import { UserContext } from "../../../src/context/UserContext";
+import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
 
 const fakeResponses = (amount: number): ResponseModel[] => new Array(amount).fill(0)
     .map(() => ({
@@ -66,37 +66,8 @@ describe("Admin page", () => {
     })
 });
 
-describe("Mood graph", () => {
-    /*  //NOTE: commented out as using dates in graphs is currently not done anymore. 
-        describe("Calculation of coordinates", () => {
-    
-            it("Returns Y coordinate with average", () => {
-    
-                const n = faker.random.number(10) + 1;
-    
-                const responses = fakeResponses(n);
-                const sum = (responses
-                    .map(({ emotion }) => emotion)
-                    .map(emotionToNumeric)
-                    .reduce((a, b) => a + b))
-    
-                const result = averageUntil(responses[responses.length - 1], responses);
-    
-                expect(result.y).toEqual(sum / responses.length);
-            });
-    
-            it("Average is just the one if there's just one", () => {
-    
-                const responses = fakeResponses(1);
-                const [response] = responses;
-    
-                const result = averageUntil(response, responses)
-    
-                expect(responses.length).toEqual(1);
-                expect(emotionToNumeric(response.emotion)).toEqual(result.y);
-            });
-        });
-     */
+describe("Conversion between emotins and numeric values", () => {
+
     describe("The function converting Emotion to numeric value", () => {
 
         it("values happy face over neutral face", () => {

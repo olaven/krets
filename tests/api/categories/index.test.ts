@@ -8,7 +8,6 @@ import { CategoryModel } from "../../../src/models";
 import { users } from "../../../src/database/users";
 import { randomUser } from "../../database/databaseTestUtils";
 
-
 jest.mock("../../../src/auth/auth0");
 
 describe("The categories endpoint", () => {

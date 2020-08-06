@@ -1,6 +1,6 @@
 import * as faker from "faker";
-import { pages, categories, responses } from "../../src/database/database";
-import { createUser, createPage, createCategory } from "../../__tests__/database/databaseTestUtils";
+import { pages, categories, responses, users } from "../../src/database/database";
+import { randomUser } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 
 
@@ -8,7 +8,7 @@ describe("Database interface for pages", () => {
 
     it("Can create page", async () => {
 
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
 
         const id = faker.random.uuid();
         const page = {
@@ -31,7 +31,7 @@ describe("Database interface for pages", () => {
         const originalName = faker.company.companyName();
         const updatedName = faker.company.companyName();
 
-        const owner = await createUser();
+        const owner = await users.createUser(randomUser())
 
         const page = {
             owner_id: owner.id,
@@ -56,9 +56,8 @@ describe("Database interface for pages", () => {
     it("Can delete pages", async () => {
 
 
-        const owner = await createUser();
-        const page = await createPage(owner.id);
-
+        const owner = await users.createUser(randomUser())
+        const page = await pages.createPage(randomPage(owner.id))
         const retrievedBefore = await pages.getPage(page.id);
         expect(retrievedBefore.name).toEqual(page.name);
 
@@ -70,8 +69,8 @@ describe("Database interface for pages", () => {
 
     it("Deletes responses along with page", async () => {
 
-        const owner = await createUser();
-        const page = await createPage(owner.id);
+        const owner = await users.createUser(randomUser())
+        const page = await pages.createPage(randomPage(owner.id));
 
         await responses.createResponse({
             emotion: ":-(",
@@ -91,7 +90,7 @@ describe("Database interface for pages", () => {
 
     it("Can set category", async () => {
 
-        const user = await createUser();
+        const user = await users.createUser(randomUser())
         const persistedCategory = await categories.createCategory({ name: "category name", owner_id: user.id });
 
         const page = {
@@ -112,13 +111,16 @@ describe("Database interface for pages", () => {
 
         it("Can returns pages", async () => {
 
-            const owner = await createUser();
-            const category = await createCategory(owner.id);
+            const owner = await users.createUser(randomUser())
+            const category = await categories.createCategory({
+                name: faker.commerce.productName(),
+                owner_id: owner.id
+            });
 
             const persisted = [];
             for (let i = 0; i < 4; i++) {
 
-                const page = await createPage(owner.id, category.id);
+                const page = await pages.createPage(randomPage(owner.id, "#aabbcc", category.id));
                 persisted.push(page);
             }
 
@@ -129,13 +131,19 @@ describe("Database interface for pages", () => {
 
         it("Does not return pages with other owners or categories", async () => {
 
-            const owner = await createUser();
-            const other = await createUser();
-            const ownerCategory = await createCategory(owner.id);
-            const otherCategory = await createCategory(other.id);
+            const owner = await users.createUser(randomUser())
+            const other = await users.createUser(randomUser())
+            const ownerCategory = await categories.createCategory({
+                name: faker.commerce.productName(),
+                owner_id: owner.id
+            });
+            const otherCategory = await categories.createCategory({
+                name: faker.commerce.productName(),
+                owner_id: other.id
+            });
 
-            const ownerPage = await createPage(owner.id, ownerCategory.id);
-            const otherPage = await createPage(other.id, otherCategory.id);
+            const ownerPage = await pages.createPage(randomPage(owner.id, "#aabbcc", ownerCategory.id));
+            const otherPage = await pages.createPage(randomPage(other.id, "#aabbcc", otherCategory.id));
 
             const retrieved = await pages.getByOwnerAndCategory(owner.id, ownerCategory.id);
 
@@ -149,7 +157,7 @@ describe("Database interface for pages", () => {
         it("Does exist", async () => {
 
             const color = '#AABBCC';
-            const owner = await createUser();
+            const owner = await users.createUser(randomUser())
             const page = await pages.createPage(randomPage(owner.id, color));
 
             expect(page.color).toEqual(color);
@@ -158,7 +166,7 @@ describe("Database interface for pages", () => {
         it("Does not have to be specified", async () => {
 
             const color = null;
-            const owner = await createUser();
+            const owner = await users.createUser(randomUser())
             const page = await pages.createPage(randomPage(owner.id, color));
 
             expect(page.color).toEqual(color);
@@ -168,7 +176,7 @@ describe("Database interface for pages", () => {
 
             const sixChars = '#AABBC';
             const eightChars = '#AABBCCC';
-            const owner = await createUser();
+            const owner = await users.createUser(randomUser())
 
             await expect(async () => {
 
@@ -179,7 +187,7 @@ describe("Database interface for pages", () => {
 
         it("Can be updated", async () => {
 
-            const owner = await createUser();
+            const owner = await users.createUser(randomUser())
             const originalColor = '#AABBCC';
 
             const page = await pages.createPage(randomPage(owner.id, originalColor))

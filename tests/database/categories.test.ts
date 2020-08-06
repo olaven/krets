@@ -57,7 +57,7 @@ describe("Database interface for categories", () => {
         };
 
         const m = faker.random.number(15);
-        const other = await createUser();
+        const other = await users.createUser(randomUser());
 
         for (let i = 0; i < m; i++) {
 

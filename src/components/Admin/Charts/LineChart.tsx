@@ -29,6 +29,24 @@ const toDateCoordinates = (page: PageModel, response: ResponseModel, responses: 
     }
 }
 
+const toLines = (pageInformations: PageInformation[]) => pageInformations.map(({ page, responses }) => {
+
+    const chartData = responses
+        .map(response => toDateCoordinates(page, response, responses))
+
+    return (
+        <VictoryLine
+            key={page.id}
+            name={`line_${page.id}`}
+            style={{
+                data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 } //TODO: page.color
+            }}
+            data={chartData}
+            labelComponent={<VictoryLabel dx={10} dy={15} renderInPortal />}
+        />
+    );
+});
+
 export const LineChart = ({ pageInformations }: { pageInformations: PageInformation[] }) => <span
     aria-label="line-chart-label">
     <VictoryChart
@@ -40,23 +58,7 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
             tickValues={[0, 1, 2]}
             tickFormat={tick => [":-(", ":-|", ":-)"][tick]} //TODO: Proper emoji
         />
-        {pageInformations.map(({ page, responses }) => {
-
-            const chartData = responses
-                .map(response => toDateCoordinates(page, response, responses))
-
-            return (
-                <VictoryLine
-                    key={page.id}
-                    name={`line_${page.id}`}
-                    style={{
-                        data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 } //TODO: page.color
-                    }}
-                    data={chartData}
-                    labelComponent={<VictoryLabel dx={10} dy={15} renderInPortal />}
-                />
-            );
-        })}
+        {toLines(pageInformations)}
     </VictoryChart>
 </span>
 
