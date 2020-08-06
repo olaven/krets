@@ -15,9 +15,7 @@ const toChartData = (pageInformations: PageInformation[]) => pageInformations
         y: responsesToAverage(responses)
     }));
 
-export const BarChart = ({ pageInformations }) => <span
-    aria-label="bar-chart-label"
->
+export const BarChart = ({ pageInformations }) => <span aria-label="bar-chart-label">
     <VictoryChart
         animate={{
             duration: 2000,
