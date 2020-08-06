@@ -11,9 +11,11 @@ export default (request: NextApiRequest, response: NextApiResponse) => {
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
 
+    //TODO: signing fails. Probably due to some parsing Next does on the body. Stripe expects raw body, as I understand it. Seehttps://github.com/stripe/stripe-node/issues/860
+    // raw buffer ints? 
     try {
         event = stripe.webhooks.constructEvent(
-            request.body,
+            JSON.stringify(request.body),
             request.headers['stripe-signature'],
             process.env.STRIPE_WEBHOOK_SECRET
         );
