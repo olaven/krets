@@ -1,11 +1,7 @@
 import auth0 from '../../auth/auth0';
 import * as nodemailer from "nodemailer";
+import { EmailModel } from '../../models';
 
-interface EmailModel {
-    to: string,
-    from: string,
-    text: string
-}
 
 const getSMTPConfig = async () => {
 
@@ -30,14 +26,27 @@ const getSMTPConfig = async () => {
     }
 }
 
+/**
+ * Logs link to test URL unless 
+ * server is running in production 
+ * @param info 
+ */
+const logMail = (info: any) => {
+
+    if (process.env.NODE_ENV !== "production") {
+
+        const url = nodemailer.getTestMessageUrl(info);
+        console.log(`Test mail URL: ${url}`);
+    }
+}
 
 const send = async (email: EmailModel) => {
 
     const config = await getSMTPConfig()
     let transporter = nodemailer.createTransport(config);
 
-    /* const info =  */await transporter.sendMail(email);
-    //const url = nodemailer.getTestMessageUrl(info);
+    const info = await transporter.sendMail(email);
+    logMail(info);
 }
 
 export default auth0.requireAuthentication(async (request, response) => {

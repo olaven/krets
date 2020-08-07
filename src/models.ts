@@ -36,3 +36,9 @@ export interface AuthModel {
     name: string,
     sub: string
 }
+
+export interface EmailModel {
+    to: string,
+    from: string,
+    text: string
+}
