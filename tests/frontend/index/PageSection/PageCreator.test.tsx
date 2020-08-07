@@ -5,7 +5,6 @@
 import React from "react";
 import { waitFor, render, fireEvent, findByText, getByText } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
-import { PagesContext } from "../../../../src/context/PagesContext";
 import * as text from "../../../../src/text"
 import { PageCreator, nameToId } from "../../../../src/components/Home/PageSection/PageCreator";
 import { renderWithPagesContext, mockFetch } from "../../frontendTestUtils";

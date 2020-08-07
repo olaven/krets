@@ -200,13 +200,25 @@ export const compareSelect = strings({
 export const charts = strings({
     en: {
         lineChartCollapsible: "Show development over time",
-        barChartCollapsible: "Show overall score"
+        barChartCollapsible: "Show overall score",
+        suggestion: {
+            collapsible: "Suggest your own chart",
+            label: "Your suggestion",
+            error: "Something went wrong.. Try again later or contact us directly",
+            send: "Send suggestion",
+        }
     },
     no: {
         lineChartCollapsible: "Vis utvikling over tid",
-        barChartCollapsible: "Vis samlet score"
+        barChartCollapsible: "Vis samlet score",
+        suggestion: {
+            collapsible: "Foreslå en ny graf",
+            label: "Ditt forslag",
+            error: "Noe gikk galt.. Forsøk senere eller send oss en mail",
+            send: "Send forslag",
+        }
     }
-})
+});
 
 //NOTE: nothing yet 
 export const moodGraph = strings({

@@ -5,6 +5,7 @@ import * as text from "../../../text";
 import { LineChart } from "./LineChart";
 import { BarChart } from "./BarChart";
 import { Collapsible } from "./Collapsible";
+import ChartSuggestion from "./ChartSuggestion";
 
 
 export const Charts = () => {
@@ -23,6 +24,9 @@ export const Charts = () => {
         </Collapsible>
         <Collapsible text={text.charts.barChartCollapsible}>
             <BarChart pageInformations={pageInformations} />
+        </Collapsible>
+        <Collapsible text={text.charts.suggestion.collapsible}>
+            <ChartSuggestion />
         </Collapsible>
     </>;
 }
