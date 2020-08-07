@@ -1,3 +1,4 @@
+import { buffer } from "micro";
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import Cors from 'micro-cors'
@@ -17,17 +18,15 @@ export const config = {
     },
 }
 
-export default cors((request: NextApiRequest, response: NextApiResponse) => {
+export default cors(async (request: NextApiRequest, response: NextApiResponse) => {
 
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
+    const buff = await buffer(request)
 
-    const buf = await buffer(request)
-    //TODO: signing fails. Probably due to some parsing Next does on the body. Stripe expects raw body, as I understand it. Seehttps://github.com/stripe/stripe-node/issues/860
-    // raw buffer ints? 
     try {
         event = stripe.webhooks.constructEvent(
-            buf.toString(),
+            buff.toString(),
             //JSON.stringify(request.body, null, 2),
             request.headers['stripe-signature'],
             process.env.STRIPE_WEBHOOK_SECRET
