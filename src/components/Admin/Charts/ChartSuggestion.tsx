@@ -1,27 +1,27 @@
+import { useState } from "react"
 import { Button, Text } from "rebass"
 import { Label, Textarea } from "@rebass/forms"
 import { CREATED } from "node-kall"
 import { postEmail } from "../../../fetchers"
-import { useState } from "react"
-import Emoji from "react-emoji-render"
+import * as uiText from "../../../text";
+
 import { Thanks } from "../../tiny/Thanks"
 
-/* const Thanks = () => <Text
-    color="secondary"
-    backgroundColor="primarytakk"
-    fontFamily="bold"
->TAKK!
-    <Emoji text=":tada:" />
-</Text> */
 
-const Error = () => <Text>Ups.. Forsoek senere eller post@krets.app</Text>
+const Error = () => <Text>
+    {uiText.charts.suggestion.error} {process.env.CONTACT_EMAIL}
+</Text>
 
-const Form = ({ text, setText, sendSuggestion }) => <> <Label htmlFor='comment'>Comment</Label>
+const Form = ({ text, setText, sendSuggestion }) => <> <Label>
+    {uiText.charts.suggestion.label}
+</Label>
     <Textarea
         value={text}
         onChange={event => { setText(event.target.value) }}
     />
-    <Button onClick={sendSuggestion}>Send test mail</Button>
+    <Button onClick={sendSuggestion}>
+        {uiText.charts.suggestion.send}
+    </Button>
 </>
 
 export default () => {
@@ -33,8 +33,8 @@ export default () => {
     const sendSuggestion = async () => {
 
         const [status] = await postEmail({
-            to: `post@krets.app`,
-            from: `post@krets.app`,
+            to: process.env.CONTACT_EMAIL,
+            from: process.env.CONTACT_EMAIL,
             text
         });
 
