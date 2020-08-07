@@ -25,7 +25,7 @@ export const Charts = () => {
         <Collapsible text={text.charts.barChartCollapsible}>
             <BarChart pageInformations={pageInformations} />
         </Collapsible>
-        <Collapsible text={"DITT FORSLAG"}>
+        <Collapsible text={text.charts.suggestion.collapsible}>
             <ChartSuggestion />
         </Collapsible>
     </>;

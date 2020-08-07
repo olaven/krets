@@ -9,7 +9,7 @@ import { Thanks } from "../../tiny/Thanks"
 
 
 const Error = () => <Text>
-    {uiText.charts.suggestion.error} {process.env.CONTACT_EMAIL}
+    {uiText.charts.suggestion.error}
 </Text>
 
 const Form = ({ text, setText, sendSuggestion }) => <> <Label>
@@ -19,7 +19,7 @@ const Form = ({ text, setText, sendSuggestion }) => <> <Label>
         value={text}
         onChange={event => { setText(event.target.value) }}
     />
-    <Button onClick={sendSuggestion}>
+    <Button onClick={text ? sendSuggestion : null} opacity={text ? 1 : 0.8}>
         {uiText.charts.suggestion.send}
     </Button>
 </>
@@ -33,8 +33,6 @@ export default () => {
     const sendSuggestion = async () => {
 
         const [status] = await postEmail({
-            to: process.env.CONTACT_EMAIL,
-            from: process.env.CONTACT_EMAIL,
             text
         });
 
