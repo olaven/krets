@@ -7,9 +7,17 @@ const getSMTPConfig = async () => {
 
     const { NODE_ENV } = process.env;
     if (NODE_ENV === "production") {
-
-        {
-            //TODO: Hover account 
+        return {
+            host: "mail.hover.com",
+            secureConnection: true,
+            port: 465,
+            auth: {
+                user: process.env.CONTACT_EMAIL,
+                pass: process.env.CONTACT_EMAIL_PASSWORD
+            },
+            tls: {
+                secureProtocol: "TLSv1_method"
+            }
         }
     } else {
 
@@ -59,7 +67,6 @@ export default auth0.requireAuthentication(async (request, response) => {
         return;
     }
 
-    console.log("user data: ", user);
     const email = request.body as EmailModel;
     email.text = `${email.text} - ${user.name}`; //TODO: remove in favour of user email as `.from`
     email.to = process.env.CONTACT_EMAIL;
