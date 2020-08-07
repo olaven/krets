@@ -2,36 +2,36 @@ import auth0 from '../../auth/auth0';
 import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models';
 
+const productionMail = {
+    host: "mail.hover.com",
+    secureConnection: true,
+    port: 465,
+    auth: {
+        user: process.env.CONTACT_EMAIL,
+        pass: process.env.CONTACT_EMAIL_PASSWORD
+    },
+    tls: {
+        secureProtocol: "TLSv1_method"
+    }
+}
 
 const getSMTPConfig = async () => {
 
-    const { NODE_ENV } = process.env;
-    if (NODE_ENV === "production") {
-        return {
-            host: "mail.hover.com",
-            secureConnection: true,
-            port: 465,
-            auth: {
-                user: process.env.CONTACT_EMAIL,
-                pass: process.env.CONTACT_EMAIL_PASSWORD
-            },
-            tls: {
-                secureProtocol: "TLSv1_method"
-            }
-        }
-    } else {
+    if (process.env.NODE_ENV === "production")
+        return productionMail;
 
-        const account = await nodemailer.createTestAccount();
-        return {
-            host: 'smtp.ethereal.email',
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: account.user, // generated ethereal user
-                pass: account.pass  // generated ethereal password
-            }
+
+    const account = await nodemailer.createTestAccount();
+    return {
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: account.user, // generated ethereal user
+            pass: account.pass  // generated ethereal password
         }
     }
+
 }
 
 /**
