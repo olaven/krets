@@ -7,6 +7,7 @@ import { CREATED } from "node-kall";
 import { Emotion } from "../../models";
 import * as uiText from "../../text";
 import { postResponse } from "../../fetchers";
+import { Thanks } from "../tiny/Thanks";
 
 
 const getPlaceholder = (emotion: Emotion) => ({
@@ -48,7 +49,7 @@ const ContactInput = ({ checked, setChecked, setContactDetails }) => <Flex p={[1
 
 const ResponseSectionForm = ({ page, published, emotion, setEmotion, setText, checked, setChecked, setContactDetails, onPostResponse }) =>
     published ?
-        <Heading p={[2, 3, 4]} fontSize={[5, 6, 7]} backgroundColor="success" color="secondary">{uiText.response.thanks}<Emoji text=":tada:" /></Heading> :
+        <Thanks /> :
         <>
             <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
             <Flex>

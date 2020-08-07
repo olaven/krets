@@ -3,8 +3,16 @@ import { Label, Textarea } from "@rebass/forms"
 import { CREATED } from "node-kall"
 import { postEmail } from "../../../fetchers"
 import { useState } from "react"
+import Emoji from "react-emoji-render"
+import { Thanks } from "../../tiny/Thanks"
 
-const Thanks = () => <Text>TAKK!</Text>
+/* const Thanks = () => <Text
+    color="secondary"
+    backgroundColor="primarytakk"
+    fontFamily="bold"
+>TAKK!
+    <Emoji text=":tada:" />
+</Text> */
 
 const Error = () => <Text>Ups.. Forsoek senere eller post@krets.app</Text>
 
