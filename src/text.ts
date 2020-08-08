@@ -32,6 +32,10 @@ export const response = strings({
         thanks: "Thank you!",
         contactCheckbox: "I want to be contacted",
         contactPlaceholder: "Email or phone number",
+        copyButton: {
+            copy: "Copy link!",
+            copied: "Link copied!"
+        }
     },
     no: {
         header: "Gi tilbakemelding til",
@@ -46,6 +50,10 @@ export const response = strings({
         thanks: "Tusen takk!",
         contactCheckbox: "Jeg vil bli kontaktet igjen",
         contactPlaceholder: "Epost eller telefonnummer",
+        copyButton: {
+            copy: "Kopier lenke!",
+            copied: "Lenke kopiert!"
+        }
     }
 });
 
