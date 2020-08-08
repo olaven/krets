@@ -20,6 +20,7 @@ export const UserContextProvider = props => {
         const [status, user] = await get<AuthModel>('/api/auth/me');
         if (status === 200) {
 
+            console.log(user);
             setUser(user);
         } else {
 
