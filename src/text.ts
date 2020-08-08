@@ -186,7 +186,7 @@ export const settings = strings({
         loading: "Laster instillinger..",
         changeNameButton: "Endre navn",
         changeNameError: "Det skjedde en feil med oppdatering av navn..",
-        deleteButton: "Slett side.",
+        deletePageButton: "Slett side.",
         deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",
         deleteConfirmation: "Jeg er helt sikker.",
         deleteCancelation: "Ikke slett.",
