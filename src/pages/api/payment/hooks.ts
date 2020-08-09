@@ -22,7 +22,8 @@ export default cors(async (request: NextApiRequest, response: NextApiResponse) =
 
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
-    const buff = await buffer(request)
+    const buff = await buffer(request);
+
 
     try {
         event = stripe.webhooks.constructEvent(
