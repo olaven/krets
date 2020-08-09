@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import Cors from 'micro-cors'
 
-const stripe = new Stripe(process.env.STRIPE_API_KEY, {
+const stripe = new Stripe(process.env.STRIPE_PUBLISHABLE_KEY, {
     apiVersion: "2020-03-02"
 });
 

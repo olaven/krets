@@ -29,4 +29,7 @@ export const getOverallAverage = (pageId: string) =>
     get<number>(`/api/pages/${pageId}/average`);
 
 export const postEmail = (email: EmailModel) =>
-    post<EmailModel>(`/api/mail`, email); 
+    post<EmailModel>(`/api/mail`, email);
+
+export const getPaymentSession = () =>
+    get<{ id: string }>(`/api/payment/session`); 
