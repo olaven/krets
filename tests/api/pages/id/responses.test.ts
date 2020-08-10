@@ -38,9 +38,7 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const user = await users.createUser({
-            id: faker.random.uuid()
-        });
+        const user = await users.createUser(randomUser());
 
         const page = await pages.createPage({
             id: faker.random.uuid(),
@@ -69,9 +67,7 @@ describe("The endpoint for responses", () => {
 
     it("is possible to create a response", async () => {
 
-        const user = await users.createUser({
-            id: faker.random.uuid()
-        });
+        const user = await users.createUser(randomUser());
 
         const page = await pages.createPage({
             id: faker.random.uuid(),

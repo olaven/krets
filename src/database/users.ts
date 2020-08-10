@@ -1,16 +1,16 @@
 import { withDatabase } from "./connect";
 import { UserModel } from "../models";
 
-const getUser = (id: string) => withDatabase(async client => {
+const getUser = (id: string) => withDatabase<UserModel>(async client => {
 
    const result = await client.query("select * from users where id = $1", [id]);
    return result.rows[0];
 });
 
-const createUser = (user: { id: string }) => withDatabase<UserModel>(async client => {
+const createUser = (user: UserModel) => withDatabase<UserModel>(async client => {
 
 
-   const result = await client.query("insert into users(id) values($1) RETURNING *", [user.id]);
+   const result = await client.query("insert into users(id, customer_id) values($1, $2) RETURNING *", [user.id, user.customer_id]);
    return result.rows[0];
 });
 

@@ -7,6 +7,7 @@ const config = (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev
         ca: process.env.SSH_DATABASE_CERTIFICATE,
     }
 };
+
 const pool = new Pool(config)
 
 pool.on('error', (err, client) => {
@@ -15,11 +16,11 @@ pool.on('error', (err, client) => {
 });
 
 
-export const withDatabase = async <T>(action: (client: PoolClient) => Promise<T>) => {
+export const withDatabase = async <T>(action: (pool: Pool) => Promise<T>) => {
 
-    const client = await pool.connect();
-    const result = await action(client);
-    client.release();
+    //const client = await pool.connect();
+    const result = await action(pool); //action(client) //PoolClient
+    //client.release();
 
     return result;
 };

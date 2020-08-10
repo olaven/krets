@@ -45,9 +45,7 @@ describe("The pages endpoint", () => {
         it("Is possible to create a page if authenticated", async () => {
 
             const userId = uid();
-            await users.createUser({
-                id: userId
-            });
+            await users.createUser(randomUser());
 
             const response = await postPage({
                 id: faker.random.alphaNumeric(40), name: "My Page", owner_id: userId
@@ -97,9 +95,7 @@ describe("The pages endpoint", () => {
         it("/pages returns all pages belonging to given user", async () => {
 
             const n = 5;
-            const user = await users.createUser({
-                id: uid()
-            });
+            const user = await users.createUser(randomUser());
 
             const before = await getPages(url, user.id);
 

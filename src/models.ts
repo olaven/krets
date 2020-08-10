@@ -28,7 +28,8 @@ export interface CategoryModel {
 
 //From DB 
 export interface UserModel {
-    id: string
+    id: string,
+    customer_id: string
 }
 
 //from Auth0

@@ -1,11 +1,6 @@
 import auth0 from "../../../../auth0";
 import { OK, NOT_IMPLEMENTED } from "node-kall"
-
-import Stripe from "stripe";
-console.log("process.env.STRIPE_SECRET_KEY", process.env.STRIPE_SECRET_KEY);
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2020-03-02"
-});//identical to hooks. TODO: should share 
+import { stripe } from "../../../payment/stripe";
 
 /**
  * NOTE: It may be that this route should not require authentication. 

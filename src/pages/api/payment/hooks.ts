@@ -1,11 +1,7 @@
 import { buffer } from "micro";
 import { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
 import Cors from 'micro-cors'
-
-const stripe = new Stripe(process.env.STRIPE_PUBLISHABLE_KEY, {
-    apiVersion: "2020-03-02"
-});
+import { stripe } from "../../../payment/stripe";
 
 const cors = Cors({
     allowMethods: ['POST', 'HEAD']
