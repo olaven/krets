@@ -31,5 +31,10 @@ export const getOverallAverage = (pageId: string) =>
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);
 
+//TODO: remove this and endpoint if not needed for metered billing setup 
 export const getPaymentSession = () =>
-    get<{ id: string }>(`/api/payment/session`); 
+    get<{ id: string }>(`/api/payment/session`);
+
+//TODO: remove this 
+export const createCustomer = (email: string) =>
+    post<any>(`/api/payment/customer`, { email }); 
