@@ -1,4 +1,7 @@
 import auth0 from '../../../auth/auth0';
-import { auth0HandleWrapper } from './logout';
+import { handleError } from '../../../middleware/handleError';
+import { KretsCors } from '../../../middleware/cors';
 
-export default auth0HandleWrapper(auth0.handleLogin); 
+export default KretsCors(
+    handleError(auth0.handleLogin)
+); 
