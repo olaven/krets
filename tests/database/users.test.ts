@@ -30,5 +30,20 @@ describe("User repository", () => {
 
         expect(before).toBeFalsy();
         expect(after).toBeTruthy();
-    })
+    });
+
+    test("Can update user id", async () => {
+
+        const original = await users.createUser(randomUser());
+        const NEW_CUSTOMER_ID = faker.random.uuid();
+
+        const updated = await users.updateUser({
+            id: original.id,
+            customer_id: NEW_CUSTOMER_ID
+        });
+
+        expect(updated.id).toEqual(original.id);
+        expect(updated.customer_id).not.toEqual(original.customer_id);
+        expect(updated.customer_id).toEqual(NEW_CUSTOMER_ID);
+    });
 });

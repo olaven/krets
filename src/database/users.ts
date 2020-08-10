@@ -14,6 +14,13 @@ const createUser = (user: UserModel) => withDatabase<UserModel>(async client => 
    return result.rows[0];
 });
 
+const updateUser = (user: UserModel) => withDatabase<UserModel>(async client => {
+
+   const result = await
+      client.query("update users set customer_id = $2 where id = $1 returning *", [user.id, user.customer_id]);
+   return result.rows[0];
+})
+
 const userExists = (id: string) => withDatabase<boolean>(async client => {
 
    const result = await client.query(
@@ -24,5 +31,5 @@ const userExists = (id: string) => withDatabase<boolean>(async client => {
 });
 
 export const users = ({
-   getUser, createUser, userExists
+   getUser, createUser, updateUser, userExists
 });
