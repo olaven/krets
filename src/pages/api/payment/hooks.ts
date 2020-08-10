@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import Cors from 'micro-cors'
 
-const stripe = new Stripe(process.env.STRIPE_API_KEY, {
+const stripe = new Stripe(process.env.STRIPE_PUBLISHABLE_KEY, {
     apiVersion: "2020-03-02"
 });
 
@@ -22,7 +22,8 @@ export default cors(async (request: NextApiRequest, response: NextApiResponse) =
 
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
-    const buff = await buffer(request)
+    const buff = await buffer(request);
+
 
     try {
         event = stripe.webhooks.constructEvent(
