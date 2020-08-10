@@ -27,7 +27,6 @@ export default KretsCors(async function callback(req, res) {
     await auth0.handleCallback(req, res, {
       onUserLoaded: async (req, res, session, state) => {
 
-        console.log(session.user);
         const { user } = session;
 
 
