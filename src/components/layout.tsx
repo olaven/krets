@@ -33,8 +33,6 @@ const AuthButton = () => {
         return null;
     }
 
-    console.log(router.pathname);
-
     return user ?
         <LogoutButton /> :
         <LoginButton />;

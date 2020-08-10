@@ -48,6 +48,7 @@
     "@testing-library/react": "^10.4.3",
     "@types/faker": "^4.1.12",
     "@types/jest": "^26.0.3",
+    "@types/micro-cors": "^0.1.1",
     "@types/node-pg-migrate": "^2.3.1",
     "@types/nodemailer": "^6.4.0",
     "@types/randomcolor": "^0.5.5",
