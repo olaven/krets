@@ -1,8 +1,9 @@
-import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
-import handler from "../../../src/pages/api/pages/[id]";
 import * as faker from "faker";
 import fetch from "cross-fetch";
 import { users, categories, pages } from "../../../src/database/database"
+import { randomUser } from "../../database/databaseTestUtils";
+import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
+import handler from "../../../src/pages/api/pages/[id]";
 
 
 
@@ -17,9 +18,6 @@ describe("Endpoints for specific page", () => {
     const fullUrl = (brandId) =>
         `${url}${brandId}`;
 
-
-    const createUser = (id = uid()) =>
-        users.createUser({ id });
 
     const createPage = async (ownerId: string, categoryId: string = null) => {
 
@@ -56,7 +54,7 @@ describe("Endpoints for specific page", () => {
     describe("GET requests on specific page", () => {
         it("Returns 200 if page exists", async () => {
 
-            const user = await createUser();
+            const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
 
             const full = fullUrl(page.id);
@@ -75,7 +73,7 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 400 if method is not supported", async () => {
 
-            const { id } = await createUser()
+            const { id } = await users.createUser(randomUser())
             const page = await createPage(id);
             const statusFromFetch = async (method: string) => {
 
@@ -109,8 +107,8 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 403 if user does not own the page", async () => {
 
-            const owner = await createUser();
-            const other = await createUser();
+            const owner = await users.createUser(randomUser());
+            const other = await users.createUser(randomUser());
 
             const page = await createPage(owner.id);
 
@@ -120,7 +118,7 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 204 on succesful update", async () => {
 
-            const user = await createUser();
+            const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
 
             const { status } = await putFetch(user.id, page.id, page);
@@ -129,7 +127,7 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 404 if the page does not exist", async () => {
 
-            const user = await createUser();
+            const user = await users.createUser(randomUser());
             const page = randomPage(user.id); //NOTE: never persisted
 
             const { status } = await putFetch(user.id, page.id, page);
@@ -138,7 +136,7 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 204 on succesful category update", async () => {
 
-            const user = await createUser();
+            const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
             const category = await createCategory(user.id);
 
@@ -155,7 +153,7 @@ describe("Endpoints for specific page", () => {
         //NOTE: should perhaps be 404
         it("Returns 400 if category does not exist", async () => {
 
-            const user = await createUser();
+            const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
 
 
@@ -179,7 +177,7 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 401 if user is not authenticated", async () => {
 
-            const owner = await createUser();
+            const owner = await users.createUser(randomUser());
             const page = await createPage(owner.id);
 
             //NOTE: no user information passed 
@@ -189,8 +187,8 @@ describe("Endpoints for specific page", () => {
 
         it("Returnd 403 if user does not own the page", async () => {
 
-            const owner = await createUser();
-            const other = await createUser();
+            const owner = await users.createUser(randomUser());
+            const other = await users.createUser(randomUser());
 
             const page = await createPage(owner.id);
 
@@ -200,7 +198,7 @@ describe("Endpoints for specific page", () => {
 
         it("Returns 204 on successful deletion", async () => {
 
-            const owner = await createUser();
+            const owner = await users.createUser(randomUser());
             const page = await createPage(owner.id);
 
             const { status } = await deleteFetch(page.id, owner.id);

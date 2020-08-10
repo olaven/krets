@@ -1,15 +1,23 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
+import { registerCustomer } from '../../../payment/customer';
+import { AuthModel } from '../../../models';
 
+const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
-const createIfNotPresent = async (id: string) => {
-
-  const user = await users.getUser(id);
-
+  const user = await users.getUser(sub);
   if (!user) {
 
-    await users.createUser({ id });
+    const customer_id = await registerCustomer(email);
+    await users.createUser({ id: sub, customer_id });
+  }
+  else if (user.customer_id === "default_customer_id") {
+    //NOTE: "on demand migration" from old system where customer_id did not exist. TODO: migrate all existing users to some customer_id, remove default value on column and remove this code section
+    const customer_id = await registerCustomer(email);
+    await users.updateUser({
+      id: sub, customer_id
+    });
   }
 };
 
@@ -18,16 +26,17 @@ export default async function callback(req, res) {
     await auth0.handleCallback(req, res, {
       onUserLoaded: async (req, res, session, state) => {
 
+        console.log(session.user);
         const { user } = session;
 
 
-        await createIfNotPresent(user.sub);
+        //TODO: handle if user has default customer id. Or migrate every user. Not sure.
+        await createIfNotPresent(user as AuthModel);
 
         return {
           ...session,
           user: {
             ...session.user,
-            age: 20
           },
           redirectTo: "/"
         };

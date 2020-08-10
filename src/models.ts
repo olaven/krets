@@ -28,13 +28,15 @@ export interface CategoryModel {
 
 //From DB 
 export interface UserModel {
-    id: string
+    id: string,
+    customer_id: string
 }
 
 //from Auth0
 export interface AuthModel {
     name: string,
-    sub: string
+    sub: string,
+    email: string
 }
 
 export interface EmailModel {

@@ -33,7 +33,7 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
             .json(result)
     } catch (error) {
 
-        console.log("PageId iwht error: ", page, "error", error);
+        console.log("Page with error: ", page, "error", error);
         throw error
     }
 
