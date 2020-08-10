@@ -3,7 +3,7 @@ import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
-import { KretsCors } from '../../../middleware/cors';
+import { KretsCors } from '../../../middleware/KretsCors';
 
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
