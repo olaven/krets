@@ -35,7 +35,6 @@ describe("The endpoint for responses", () => {
         expect(response.status).toEqual(404);
     });
 
-
     it("Returns 200 with responses if they exist", async () => {
 
         const user = await users.createUser(randomUser());

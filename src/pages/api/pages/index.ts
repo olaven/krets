@@ -4,6 +4,7 @@ import { pages } from "../../../database/database";
 import { CREATED, OK } from "node-kall";
 import { PageModel } from "../../../models";
 import { NextApiResponse, NextApiRequest } from "next";
+import { KretsCors } from "../../../middleware/KretsCors";
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
@@ -40,14 +41,17 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
 }
 
 
-export default auth0.requireAuthentication(async function pagesHandler(request, response) {
+export default KretsCors(
 
-    if (request.method === "GET") {
+    auth0.requireAuthentication(async function pagesHandler(request, response) {
 
-        get(request, response);
-    } else if (request.method === "POST") {
+        if (request.method === "GET") {
 
-        post(request, response);
-    }
-});
+            get(request, response);
+        } else if (request.method === "POST") {
+
+            post(request, response);
+        }
+    })
+);
 

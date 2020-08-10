@@ -66,7 +66,7 @@ describe("The callback endpoint", () => {
     // this tests a "on-demand migration"
     it("Does create a new customer ID if not already created", async () => {
 
-        const default_customer_id = "default_customer_id"
+        const default_customer_id = "default_customer_id";
 
         const before = await users.createUser({
             id: faker.random.uuid(),

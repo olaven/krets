@@ -3,26 +3,29 @@ import { pages } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models";
+import { KretsCors } from "../../../middleware/KretsCors";
 
-export default function pageHandler(request: NextApiRequest, response: NextApiResponse) {
+export default KretsCors(
+    function pageHandler(request: NextApiRequest, response: NextApiResponse) {
 
-    const { method } = request;
-    if (method === "GET") {
+        const { method } = request;
+        if (method === "GET") {
 
-        get(request, response);
-    } else if (method === "PUT") {
+            get(request, response);
+        } else if (method === "PUT") {
 
-        put(request, response);
-    } else if (method === "DELETE") {
+            put(request, response);
+        } else if (method === "DELETE") {
 
-        del(request, response);
-    } else {
+            del(request, response);
+        } else {
 
-        response
-            .status(BAD_REQUEST)
-            .send("Method not supported")
+            response
+                .status(BAD_REQUEST)
+                .send("Method not supported")
+        }
     }
-}
+);
 
 const getId = (url: string) => {
 

@@ -3,6 +3,7 @@ import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
+import { KretsCors } from '../../../middleware/KretsCors';
 
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
@@ -26,7 +27,6 @@ export default async function callback(req, res) {
     await auth0.handleCallback(req, res, {
       onUserLoaded: async (req, res, session, state) => {
 
-        console.log(session.user);
         const { user } = session;
 
 

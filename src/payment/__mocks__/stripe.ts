@@ -5,7 +5,7 @@ export const stripe = {
         create: (user: {
             email: string
         }) => {
-            console.log("STRIPE MOCK");
+
             return {
                 id: faker.random.uuid()
             }

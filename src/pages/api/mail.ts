@@ -1,6 +1,7 @@
 import auth0 from '../../auth/auth0';
 import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models';
+import { KretsCors } from '../../middleware/KretsCors';
 
 const productionMail = {
     host: "mail.hover.com",
@@ -57,31 +58,33 @@ const send = async (email: EmailModel) => {
     logMail(info);
 }
 
-export default auth0.requireAuthentication(async (request, response) => {
+export default KretsCors(
+    auth0.requireAuthentication(async (request, response) => {
 
-    const { user } = await auth0.getSession(request);
+        const { user } = await auth0.getSession(request);
 
-    if (request.method !== "POST") {
+        if (request.method !== "POST") {
 
-        response.status(404);
-        return;
-    }
+            response.status(404);
+            return;
+        }
 
-    const email = request.body as EmailModel;
-    email.text = `${email.text} - ${user.name}`; //TODO: remove in favour of user email as `.from`
-    email.to = process.env.CONTACT_EMAIL;
-    email.from = process.env.CONTACT_EMAIL; //TODO: should be user email? 
+        const email = request.body as EmailModel;
+        email.text = `${email.text} - ${user.name}`; //TODO: remove in favour of user email as `.from`
+        email.to = process.env.CONTACT_EMAIL;
+        email.from = process.env.CONTACT_EMAIL; //TODO: should be user email? 
 
-    try {
+        try {
 
-        await send(email);
-        response
-            .status(201)
-            .send(null);
-    } catch {
+            await send(email);
+            response
+                .status(201)
+                .send(null);
+        } catch {
 
-        response
-            .status(400)
-            .send(null);
-    }
-});
+            response
+                .status(400)
+                .send(null);
+        }
+    })
+);
