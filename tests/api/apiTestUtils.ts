@@ -86,7 +86,8 @@ export const authenticatedFetch = (userId: string, url: string, options: any = {
 export const setupServer = async (handler: NextApiHandler, path: string): Promise<[Server, string]> => {
 
     const server = http.createServer((req, res) =>
-        apiResolver(req, res, undefined, handler, undefined));
+        //@ts-ignore
+        apiResolver(req, res, undefined, handler, undefined))
     const url = (`${await listen(server)}${path}`);
     return [server, url]
 };
