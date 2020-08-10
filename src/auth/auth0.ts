@@ -17,7 +17,7 @@ export default initAuth0({
     domain: AUTH0_DOMAIN as string,
     clientId: AUTH0_CLIENT_ID as string,
     clientSecret: AUTH0_CLIENT_SECRET,
-    scope: 'openid profile',
+    scope: 'openid profile email',
     redirectUri: REDIRECT_URI as string,
     postLogoutRedirectUri: POST_LOGOUT_REDIRECT_URI as string,
     session: {
