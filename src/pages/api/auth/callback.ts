@@ -22,28 +22,30 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
   }
 };
 
-export default async function callback(req, res) {
-  try {
-    await auth0.handleCallback(req, res, {
-      onUserLoaded: async (req, res, session, state) => {
+export default KretsCors(
+  async function callback(req, res) {
+    try {
+      await auth0.handleCallback(req, res, {
+        onUserLoaded: async (req, res, session, state) => {
 
-        const { user } = session;
+          const { user } = session;
 
 
-        //TODO: handle if user has default customer id. Or migrate every user. Not sure.
-        await createIfNotPresent(user as AuthModel);
+          //TODO: handle if user has default customer id. Or migrate every user. Not sure.
+          await createIfNotPresent(user as AuthModel);
 
-        return {
-          ...session,
-          user: {
-            ...session.user,
-          },
-          redirectTo: "/"
-        };
-      }
-    });
-  } catch (error) {
+          return {
+            ...session,
+            user: {
+              ...session.user,
+            },
+            redirectTo: "/"
+          };
+        }
+      });
+    } catch (error) {
 
-    res.status(error.status || BAD_REQUEST).end(error.message);
+      res.status(error.status || BAD_REQUEST).end(error.message);
+    }
   }
-}
+) 
