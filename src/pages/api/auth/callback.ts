@@ -2,10 +2,9 @@ import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
+import { AuthModel } from '../../../models';
 
-type SessionUser = { email: string, sub: string }
-
-const createIfNotPresent = async ({ sub, email }: SessionUser) => {
+const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
   const user = await users.getUser(sub);
 
@@ -26,7 +25,7 @@ export default async function callback(req, res) {
 
 
         //TODO: handle if user has default customer id. Or migrate every user. Not sure.
-        await createIfNotPresent(user as SessionUser);
+        await createIfNotPresent(user as AuthModel);
 
         return {
           ...session,

@@ -1,1 +1,14 @@
-export const stripe = "THIS IS MY CUSTOM STRIPE MOCK"
+import * as faker from "faker";
+
+export const stripe = {
+    customers: {
+        create: (user: {
+            email: string
+        }) => {
+            console.log("STRIPE MOCK");
+            return {
+                id: faker.random.uuid()
+            }
+        }
+    }
+}
