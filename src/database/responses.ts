@@ -1,4 +1,4 @@
-import { withDatabase, firstRow } from "./connect";
+import { withDatabase, rows, first } from "./helpers/helpers";
 import { ResponseModel, Emotion } from "../models";
 
 /**
@@ -17,6 +17,7 @@ export const convertEmotion = {
     ][emotion]
 }
 
+//TODO: should figure out a way to convert this over to `helper/query`-functions
 const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async client => {
 
     const result = await client
@@ -31,32 +32,26 @@ const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async cli
     return result.rows;
 });
 
+const createResponse = async (response: ResponseModel) => {
 
-const createResponse = async (response: ResponseModel) => withDatabase<ResponseModel>(async (client) => {
-
-    const emotion = convertEmotion.toSQL(response.emotion)
-    const result = await client.query(
+    const emotion = convertEmotion.toSQL(response.emotion);
+    return first(
         "insert into responses(emotion, text, page_id, contact_details) values($1, $2, $3, $4) RETURNING *",
         [emotion, response.text, response.page_id, response.contact_details]
     );
+}
 
-    if (result.rowCount !== 1) throw "error inserting response..";
-    return result.rows[0];
-});
+const getAverageEmotionByPage = async (pageId: string) => {
 
-const getAverageEmotionByPage = async (pageId: string) => withDatabase<number>(async (client) => {
-
-    const result = await client.query(
-        `SELECT AVG(emotion) FROM responses 
-        WHERE page_id = $1`,
+    const average = await first<{ avg: string | null }>(
+        `SELECT AVG(emotion) FROM responses WHERE page_id = $1`,
         [pageId]
     );
 
-    const average = parseFloat(result.rows[0].avg);
-    return average ?
-        average :
+    return average.avg ?
+        parseFloat(average.avg) :
         0 // If there are no responses
-});
+}
 
 
 export const responses = ({

@@ -200,6 +200,6 @@ describe("Database interface for pages", () => {
 
             expect(updated.color).toEqual(newColor);
             expect(updated.color).not.toEqual(page.color);
-        })
-    })
+        });
+    });
 });

@@ -16,16 +16,6 @@ pool.on('error', (err, client) => {
 });
 
 
-export const withDatabase = async <T>(action: (pool: Pool) => Promise<T>) => {
-
-    //const client = await pool.connect();
-    const result = await action(pool); //action(client) //PoolClient
-    //client.release();
-
-    return result;
-};
-
-export const firstRow = <T>(result: QueryResult<T>) =>
-    result.rowCount > 0 ?
-        result.rows[0] :
-        null
+export const withDatabase =
+    <T>(action: (pool: Pool) => Promise<T>) =>
+        action(pool);

@@ -1,34 +1,30 @@
-import { withDatabase } from "./connect";
+import { first } from "./helpers/helpers";
 import { UserModel } from "../models";
 
-const getUser = (id: string) => withDatabase<UserModel>(async client => {
+const getUser = (id: string) => first<UserModel>(
+   "select * from users where id = $1",
+   [id]
+);
 
-   const result = await client.query("select * from users where id = $1", [id]);
-   return result.rows[0];
-});
+const createUser = (user: UserModel) => first<UserModel>(
+   "insert into users(id, customer_id) values($1, $2) RETURNING *",
+   [user.id, user.customer_id]
+)
 
-const createUser = (user: UserModel) => withDatabase<UserModel>(async client => {
+const updateUser = (user: UserModel) => first<UserModel>(
+   "update users set customer_id = $2 where id = $1 returning *",
+   [user.id, user.customer_id]
+)
 
+const userExists = async (id: string) => {
 
-   const result = await client.query("insert into users(id, customer_id) values($1, $2) RETURNING *", [user.id, user.customer_id]);
-   return result.rows[0];
-});
-
-const updateUser = (user: UserModel) => withDatabase<UserModel>(async client => {
-
-   const result = await
-      client.query("update users set customer_id = $2 where id = $1 returning *", [user.id, user.customer_id]);
-   return result.rows[0];
-})
-
-const userExists = (id: string) => withDatabase<boolean>(async client => {
-
-   const result = await client.query(
+   const result = await first<{ count: string }>(
       "select count(*) from users where id = $1",
-      [id]);
+      [id]
+   )
 
-   return result.rows[0].count == 1;
-});
+   return result.count === '1';
+};
 
 export const users = ({
    getUser, createUser, updateUser, userExists
