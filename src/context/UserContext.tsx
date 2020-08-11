@@ -14,9 +14,13 @@ export const UserContext = createContext<IUserContext>({
 
 
 /**
- * This adds negligible value apart from being fun :sweat_smile: 
+ * Runs a HTTP GET on the given path and 
+ * updates state with returned value, if it was successful
  * @param path 
  * @param setter 
+ *
+ * NOTE: This adds negligible value apart from being fun :sweat_smile: 
+ * TODO: Furthermore, as it its use is not specific to `UserContext.tsx` 
  */
 const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetStateAction<T>>) =>
     async () => {
