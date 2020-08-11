@@ -2,7 +2,7 @@ import fetch from "cross-fetch";
 import { users } from "../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
-import handler from "../../../src/pages/api/users/[id]";
+import userHandler from "../../../src/pages/api/users/[id]";
 import { UserModel } from "../../../src/models";
 
 
@@ -21,7 +21,7 @@ describe("Endpoints for database user data", () => {
     beforeAll(async () => {
 
         //NOTE: URL does not include id - must be added in tests
-        [server, url] = await setupServer(handler, "/api/users/")
+        [server, url] = await setupServer(userHandler, "/api/users/")
     });
 
     afterAll(async () => {
@@ -38,11 +38,11 @@ describe("Endpoints for database user data", () => {
             const getResponse = await authenticatedFetch(id, fullUrl(id), { method: "GET" });
             expect(getResponse.status).toEqual(200);
 
-            ["GET", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"].forEach(async method => {
+            for (let method of ["PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
 
                 const { status } = await authenticatedFetch(id, fullUrl(id), { method });
                 expect(status).toEqual(400);
-            });
+            }
         });
 
         it("Responds with 401 if unauthenticated", async () => {
@@ -56,7 +56,7 @@ describe("Endpoints for database user data", () => {
             const user = await users.createUser(randomUser());
             const response = await authenticatedFetch(user.id, fullUrl(user.id));
 
-            expect(response.status).toEqual(200);
+            expect(200).toEqual(response.status);
 
             const retrieved = await response.json() as UserModel;
 
