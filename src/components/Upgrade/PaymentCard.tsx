@@ -6,14 +6,15 @@ import {
     useElements,
 } from '@stripe/react-stripe-js';
 import { Box, Flex, Button, Text } from 'rebass';
-import './Card.module.css'
+import './PaymentCard.module.css'
 import { StripeError } from '@stripe/stripe-js';
 import { postSubscription } from '../../fetchers';
 import { PaymentRequestModel } from '../../models';
 import { UserContext } from '../../context/UserContext';
 
 
-export function Card() {
+type Props = { priceId: string }
+export function PaymentCard({ priceId }) {
 
     const [error, setError] = useState<StripeError>(null);
 
@@ -21,8 +22,6 @@ export function Card() {
 
     const stripe = useStripe();
     const elements = useElements();
-
-
 
     const withStripeErrorHandling = async (action: () => Promise<any>) => {
 
@@ -48,7 +47,10 @@ export function Card() {
             const [status, subscription] = await postSubscription(paymentRequest)
             if (status === CREATED) {
 
-                console.log("Created a subscription");
+                console.log("Created a subscription", subscription);
+            } else {
+
+                console.error("status when creating subscription:", status);
             }
         })
 
@@ -64,15 +66,13 @@ export function Card() {
             setError(error);
         } else {
 
+            setError(null);
             await createSubscription({
                 customerId: databaseUser.customer_id,
                 paymentMethodId: paymentMethod.id,
-                priceId: "SOME_MAGIC_PRICE_ID"
-            })
+                priceId
+            });
         }
-
-        console.error("error: ", error);
-        console.info("paymentMethod: ", paymentMethod)
     }
 
     return <>

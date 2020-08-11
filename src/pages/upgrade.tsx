@@ -1,19 +1,15 @@
 import { useEffect } from "react";
-//import { getPaymentSession, createCustomer } from "../fetchers";
-import { Card } from "../components/Upgrade/Card";
+import { PaymentCard } from "../components/Upgrade/PaymentCard";
+import { Heading } from "rebass";
 
 export default () => {
 
-    useEffect(() => (async () => {
-
-        console.log("Going to create Stripe Checkout Session");
-
-    }));
 
     return <>
+        <Heading fontSize={[3, 4, 5]} textAlign="center">Oppgrader Krets!</Heading>
 
-
-        <Card />
+        <PaymentCard priceId={"price_1HDYIqIDSMRX0WhP3nTJKOGI"} />
+        {/* <PaymentCard priceId={"price_1HDYN5IDSMRX0WhPU0HbyKfg"} /> */}
     </>
 }
 

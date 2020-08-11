@@ -1,6 +1,7 @@
 import { buffer } from "micro";
 import { NextApiRequest, NextApiResponse } from "next";
 //import Cors from 'micro-cors'
+import { NOT_IMPLEMENTED, BAD_REQUEST } from "node-kall"
 import { stripe } from "../../../payment/stripe";
 import { KretsCors } from "../../../middleware/KretsCors";
 
@@ -37,15 +38,32 @@ export default KretsCors(async (request: NextApiRequest, response: NextApiRespon
             `⚠️  Check the env file and enter the correct webhook secret.`
         );
         return response
-            .status(400)
-            .send("");
+            .status(BAD_REQUEST)
+            .send(null);
     }
     // Extract the object from the event.
-    const dataObject = event.data.object;
+    const eventData = event.data.object;
+    if (event.type === "invoice.paid") {
+        handleInvoicePaid(eventData, request, response);
+    } else if (event.type === "invoice.payment_failed") {
+        handleInvoiceFailed(eventData, request, response);
+    } else {
 
-    console.log(`Received event type: ${event.type}`)
+        response
+            .status(NOT_IMPLEMENTED)
+            .send(null);
+    }
+});
 
 
-    response.send("FROM /hooks");
 
-}); 
+const handleInvoicePaid = (eventData: any, request: NextApiRequest, response: NextApiResponse) => {
+
+
+    throw "handleInvoicePaid not implemented";
+}
+
+const handleInvoiceFailed = (eventData: any, request: NextApiRequest, response: NextApiResponse) => {
+
+    throw "handleInvoiceFailed not implemented";
+}

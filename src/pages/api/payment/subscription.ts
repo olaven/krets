@@ -1,4 +1,4 @@
-import { OK, BAD_REQUEST } from "node-kall";
+import { CREATED, BAD_REQUEST } from "node-kall";
 import { KretsCors } from "../../../middleware/KretsCors";
 import { stripe } from "../../../payment/stripe";
 import { PaymentRequestModel } from "../../../models";
@@ -25,11 +25,11 @@ export default KretsCors(
             );
         } catch ({ message }) {
 
+            //TODO: handle this in frontend by displaying returned error 
             response //NOTE: 402 -> PAYMENT_REQUIRED
                 .status(402)
                 .send(message);
         }
-
 
         await stripe.customers.update(customerId, {
             invoice_settings: {
@@ -37,14 +37,18 @@ export default KretsCors(
             }
         });
 
-        const subscription = stripe.subscriptions.create({
+        const subscription = await stripe.subscriptions.create({
             customer: customerId,
             items: [{ price: priceId }],
             expand: ['latest_invoice.payment_intent']
         });
 
+        //TODO: 
+        // STORE subscription.items[0].price.id // or sothing like it 
+        // STORE subscription.id // or sothing like it 
+
         response
-            .status(OK)
+            .status(CREATED)
             .send(subscription);
     })
 );
