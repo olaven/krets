@@ -1,7 +1,7 @@
 import randomColor from "randomcolor"
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/database";
-import { CREATED, OK } from "node-kall";
+import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel } from "../../../models";
 import { NextApiResponse, NextApiRequest } from "next";
 import { withCors } from "../../../middleware/withCors";
@@ -25,6 +25,15 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
     const page = request.body as PageModel;
     page.owner_id = user.sub;
     page.color = randomColor();
+
+    const exists = await pages.pageExists(page.id);
+    if (exists) {
+
+        response
+            .status(CONFLICT)
+            .send(null);
+        return;
+    }
 
     try {
 

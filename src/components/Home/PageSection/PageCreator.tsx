@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Flex, Heading, Text } from "rebass";
 import { Input } from "@rebass/forms"
 import { PagesContext } from "../../../context/PagesContext";
-import { post, CREATED } from "node-kall";
+import { post, CREATED, CONFLICT } from "node-kall";
 import * as text from "../../../text"
 import { TooltipHelp } from "tooltip-help-react";
 
@@ -44,7 +44,11 @@ export const PageCreator = () => {
 
             setName("");
             refreshPages();
-        } else {
+        } else if (status === CONFLICT) {
+
+            alert(text.pageCreator.conflict);
+        }
+        else {
 
             alert(text.pageCreator.error);
             console.error("Error posting page: ", status);

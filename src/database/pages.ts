@@ -42,6 +42,16 @@ const deletePage = async (id: string) => {
 }
 
 
+const pageExists = async (id: string) => {
+
+    const result = await first<{ count: string }>(
+        "select count(*) from pages where id = $1",
+        [id]
+    )
+
+    return result.count === '1';
+}
+
 export const pages = ({
     getPage,
     getByOwner,
@@ -49,4 +59,5 @@ export const pages = ({
     createPage,
     updatePage,
     deletePage,
+    pageExists,
 });
