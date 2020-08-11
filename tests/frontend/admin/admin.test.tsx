@@ -39,10 +39,12 @@ describe("Admin page", () => {
         const ownerId = "B";
 
         const userContext = {
-            user: {
+            authUser: {
+                email: "mail@example.com",
                 name: "username",
                 sub: userID
             },
+            databaseUser: null,
             updateUser: () => { }
         }
 
@@ -56,6 +58,7 @@ describe("Admin page", () => {
             responses: [],
             responsesLoading: false,
         }
+
         const { getByText } = render(<UserContext.Provider value={userContext}>
             <AdminPageContext.Provider value={adminContext}>
                 <AdminPage />

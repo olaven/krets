@@ -1,36 +1,16 @@
-import { useEffect } from "react";
-import { getPaymentSession, createCustomer } from "../fetchers";
+import { PaymentCard } from "../components/Upgrade/PaymentCard";
+import { Heading } from "rebass";
+import { useState } from "react";
 
 export default () => {
 
-    useEffect(() => (async () => {
-
-        console.log("Going to create Stripe Checkout Session");
-
-    }));
-
-    const triggerCheckout = async () => {
-
-        const { id } = await getPaymentSession();
-
-
-        console.log("this is session id: ", id);
-    }
-
-    const createCustomerClick = async () => {
-
-        const [status, customer, response] = await createCustomer("olav@sundfoer.com");
-        console.log(status, customer, response);
-    }
+    const [selectedPriceId, setSelectedPriceId] = useState("price_1HDYIqIDSMRX0WhP3nTJKOGI")
 
     return <>
-        Testing out Stripe
-        <button
-            onClick={triggerCheckout}
-        >Trigger Checkout</button>
-        <button
-            onClick={createCustomerClick}
-        >Create Custome</button>
+        <Heading fontSize={[3, 4, 5]} textAlign="center">Oppgrader Krets!</Heading>
+
+        <PaymentCard priceId={selectedPriceId} />
+        {/* <PaymentCard priceId={"price_1HDYN5IDSMRX0WhPU0HbyKfg"} /> */}
     </>
 }
 

@@ -1,5 +1,5 @@
 import { UserContext, UserContextProvider } from "../context/UserContext";
-import React from "react";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { LoginButton, LogoutButton } from "./tiny/buttons";
@@ -24,8 +24,7 @@ const HeaderLogo = () =>
 const AuthButton = () => {
 
     const router = useRouter();
-    const { user } = React.useContext(UserContext);
-
+    const { authUser } = useContext(UserContext);
 
     if ([
         "/[pageId]", "/[pageId]/code"
@@ -33,9 +32,8 @@ const AuthButton = () => {
         return null;
     }
 
-    console.log(router.pathname);
 
-    return user ?
+    return authUser ?
         <LogoutButton /> :
         <LoginButton />;
 }

@@ -9,7 +9,7 @@ const getUser = (id: string) => first<UserModel>(
 const createUser = (user: UserModel) => first<UserModel>(
    "insert into users(id, customer_id) values($1, $2) RETURNING *",
    [user.id, user.customer_id]
-)
+);
 
 const updateUser = (user: UserModel) => first<UserModel>(
    "update users set customer_id = $2 where id = $1 returning *",
@@ -21,7 +21,7 @@ const userExists = async (id: string) => {
    const result = await first<{ count: string }>(
       "select count(*) from users where id = $1",
       [id]
-   )
+   );
 
    return result.count === '1';
 };

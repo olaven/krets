@@ -10,13 +10,13 @@ import { CopyURLButton } from '../components/Page/CopyURLButton';
 
 export default () => {
 
-    const { user } = useContext(UserContext);
+    const { authUser } = useContext(UserContext);
 
     const router = useRouter();
     const pageId = router.query.pageId as string;
 
     const [page, loading] = usePage(pageId);
-    const userOwnsThePage = user && user.sub === page.owner_id;
+    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
 
     return <Box>
         <Flex>

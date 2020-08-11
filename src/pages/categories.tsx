@@ -36,14 +36,14 @@ const CategoriesContent = () => {
 
 export default () => {
 
-    const { user } = useContext(UserContext);
-    if (!user) {
+    const { authUser } = useContext(UserContext);
+    if (!authUser) {
         return <>
             Denne siden er ikke tilgjengelig uten bruker
         </>
     }
 
-    return <CategoriesContextProvider user={user}>
+    return <CategoriesContextProvider user={authUser}>
         <CategoriesTooltipProvider>
             <CategoriesContent />
         </CategoriesTooltipProvider >

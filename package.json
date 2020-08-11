@@ -16,6 +16,7 @@
     "@auth0/nextjs-auth0": "^0.13.0",
     "@emotion/core": "^10.0.28",
     "@rebass/forms": "^4.0.6",
+    "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.8.0",
     "@tippyjs/react": "^4.0.5",
     "@types/micro-cors": "^0.1.1",

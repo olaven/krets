@@ -9,16 +9,16 @@ import { UserContext } from "../../context/UserContext";
 
 export default () => {
 
-    const { user } = useContext(UserContext)
+    const { authUser } = useContext(UserContext)
 
     const router = useRouter();
     const pageId = router.query.pageId as string; //NOTE: sometimes undefined figure out 
 
-    if (!pageId || !user) return <div>waiting</div>
+    if (!pageId || !authUser) return <div>waiting</div>
 
     return <AdminPageContextProvider pageId={pageId}>
         <CompareContextProvider>
-            <PagesContextProvider user={user}>
+            <PagesContextProvider user={authUser}>
                 <AdminPage />
             </PagesContextProvider>
         </CompareContextProvider>
