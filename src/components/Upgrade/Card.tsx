@@ -1,42 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { CREATED } from "node-kall"
 import {
     CardElement,
-    Elements,
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
-
+import { Box, Flex, Button, Text } from 'rebass';
 import './Card.module.css'
+import { StripeError } from '@stripe/stripe-js';
 
-const CARD_ELEMENT_OPTIONS = {
-    style: {
-        base: {
-            color: "#32325d",
-            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-            fontSmoothing: "antialiased",
-            fontSize: "16px",
-            "::placeholder": {
-                color: "#aab7c4",
-            },
-        },
-        invalid: {
-            color: "#fa755a",
-            iconColor: "#fa755a",
-        },
-    },
-};
 
 export function Card() {
 
+    const [error, setError] = useState<StripeError>(null);
+
+    const stripe = useStripe();
     const elements = useElements();
-    const cardElement = elements.getElement(CardElement);
 
 
 
-    return (
-        <label>
-            Card details
-            <CardElement options={CARD_ELEMENT_OPTIONS} />
-        </label>
-    );
+    const withStripeErrorHandling = async (action: () => Promise<any>) => {
+
+        //NOTE: https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types
+        const isStripeError = (error: any): error is StripeError =>
+            (error as StripeError).payment_method !== undefined
+
+        try {
+
+            await action()
+        } catch (error) {
+
+            if (isStripeError(error))
+                setError(error);
+            else
+                throw error
+        }
+    }
+
+    const createSubscription = (customerId: string, paymentMethodId: string, priceId: string) =>
+        withStripeErrorHandling(async () => {
+
+            //@ts-ignore //TODO: implement
+            const [status, subscription] = await postSubscription(customerId, paymentMethodId, priceId)
+            if (status === CREATED) {
+
+                console.log("Created a subscription");
+            }
+        })
+
+    const onPay = async () => {
+
+        console.log("on pay");
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: elements.getElement(CardElement)
+        });
+
+        if (error) {
+            setError(error);
+            return;
+        }
+
+        console.error("error: ", error);
+        console.info("paymentMethod: ", paymentMethod)
+    }
+
+    return <>
+        <Box>
+            <Box width={[1, 1 / 4]}>
+                <CardElement />
+            </Box>
+            <Button width={[1, 1 / 4]} onClick={onPay}>Pay</Button>
+            {error && <Text color="failure">{error.message}</Text>}
+        </Box>
+    </>
 };

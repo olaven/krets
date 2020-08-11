@@ -21,7 +21,7 @@ const userExists = async (id: string) => {
    const result = await first<{ count: string }>(
       "select count(*) from users where id = $1",
       [id]
-   )
+   );
 
    return result.count === '1';
 };
