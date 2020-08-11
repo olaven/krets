@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { stripe } from "../../../payment/stripe";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
 
 //FIXME: below is implemented, this file should be removed
 //TODO: not have this as separate endpoint, but create on signup
-export default KretsCors(
+export default withCors(
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         if (request.method !== "POST") throw "wrong method. Only accepts POST";

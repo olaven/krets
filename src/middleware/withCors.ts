@@ -9,5 +9,5 @@ const cors = Cors({
 });
 
 
-export const KretsCors = (handler: NextApiHandler) =>
+export const withCors = (handler: NextApiHandler) =>
     cors(handler)

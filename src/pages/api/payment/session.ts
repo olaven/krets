@@ -1,14 +1,14 @@
-import auth0 from "../../../../auth0";
 import { OK, NOT_IMPLEMENTED } from "node-kall"
 import { stripe } from "../../../payment/stripe";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
+import { withAuthentication } from "../../../middleware/withAuthentication";
 
 /**
  * NOTE: It may be that this route should not require authentication. 
  * NOT sure.
  */
-export default KretsCors(
-    auth0.requireAuthentication(async (request, response) => {
+export default withCors(
+    withAuthentication(async (request, response) => {
 
         if (request.method !== "GET") {
             response

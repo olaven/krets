@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { pages, responses } from "../../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
-import { KretsCors } from "../../../../middleware/KretsCors";
+import { withCors } from "../../../../middleware/withCors";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -12,7 +12,7 @@ const getId = (url: string) => {
 
 };
 
-export default KretsCors(
+export default withCors(
     async function responseHandler(request: NextApiRequest, response: NextApiResponse) {
 
         if (request.method === "GET") {

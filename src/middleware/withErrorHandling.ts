@@ -7,7 +7,7 @@ import { BAD_REQUEST } from "node-kall"
  * 
  * sends error.status || BAD_REQUEST
 */
-export const handleError = (handler: NextApiHandler) =>
+export const withErrorHandling = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
         try {
 

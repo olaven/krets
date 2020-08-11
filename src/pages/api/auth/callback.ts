@@ -3,7 +3,7 @@ import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
-import { KretsCors } from '../../../middleware/KretsCors';
+import { withCors } from '../../../middleware/withCors';
 
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
@@ -22,7 +22,7 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
   }
 };
 
-export default KretsCors(
+export default withCors(
   async function callback(req, res) {
     try {
       await auth0.handleCallback(req, res, {
