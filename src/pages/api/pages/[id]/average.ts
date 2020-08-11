@@ -1,7 +1,7 @@
 import { OK } from "node-kall";
 //import { useRouter } from "next/router"; //TODO: use this once workaround not needed
 import { responses } from "../../../../database/database";
-import { KretsCors } from "../../../../middleware/KretsCors";
+import { withCors } from "../../../../middleware/withCors";
 import { withAuthentication } from "../../../../middleware/withAuthentication";
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -12,7 +12,7 @@ const getId = (url: string) => {
 
 };
 
-export default KretsCors(
+export default withCors(
     withAuthentication(async function average(request, response) {
 
         const id = getId(request.url)

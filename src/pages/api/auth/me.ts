@@ -1,8 +1,8 @@
 import auth0 from '../../../auth/auth0';
-import { KretsCors } from '../../../middleware/KretsCors';
+import { withCors } from '../../../middleware/withCors';
 import { withAuthentication } from '../../../middleware/withAuthentication';
 
-export default KretsCors(
+export default withCors(
     withAuthentication(async function me(request, response) {
 
         try {

@@ -2,7 +2,7 @@ import { buffer } from "micro";
 import { NextApiRequest, NextApiResponse } from "next";
 //import Cors from 'micro-cors'
 import { stripe } from "../../../payment/stripe";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
 
 //TODO: remove this after asserting that webhooks work with KretsCors
 /* const cors = Cors({
@@ -16,7 +16,7 @@ export const config = {
     },
 }
 
-export default KretsCors(async (request: NextApiRequest, response: NextApiResponse) => {
+export default withCors(async (request: NextApiRequest, response: NextApiResponse) => {
 
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;

@@ -2,7 +2,7 @@
 import auth0 from "../../../../auth/auth0";
 import { pages } from "../../../../../src/database/pages"
 import { OK } from "node-kall";
-import { KretsCors } from "../../../../middleware/KretsCors";
+import { withCors } from "../../../../middleware/withCors";
 import { withAuthentication } from "../../../../middleware/withAuthentication";
 
 
@@ -13,7 +13,7 @@ const getId = (url: string) => {
     return split[split.length - 2];
 };
 
-export default KretsCors(
+export default withCors(
     withAuthentication(async function categoryPagesHandler(request, response) {
 
         const { user } = await auth0.getSession(request);

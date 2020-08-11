@@ -4,7 +4,7 @@ import { pages } from "../../../database/database";
 import { CREATED, OK } from "node-kall";
 import { PageModel } from "../../../models";
 import { NextApiResponse, NextApiRequest } from "next";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
 import { withAuthentication } from "../../../middleware/withAuthentication";
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -42,7 +42,7 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
 }
 
 
-export default KretsCors(
+export default withCors(
 
     withAuthentication(async function pagesHandler(request, response) {
 

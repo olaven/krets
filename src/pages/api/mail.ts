@@ -1,7 +1,7 @@
 import auth0 from '../../auth/auth0';
 import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models';
-import { KretsCors } from '../../middleware/KretsCors';
+import { withCors } from '../../middleware/withCors';
 import { withAuthentication } from '../../middleware/withAuthentication';
 
 const productionMail = {
@@ -59,7 +59,7 @@ const send = async (email: EmailModel) => {
     logMail(info);
 }
 
-export default KretsCors(
+export default withCors(
     withAuthentication(async (request, response) => {
 
         const { user } = await auth0.getSession(request);
