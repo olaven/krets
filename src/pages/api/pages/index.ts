@@ -6,6 +6,7 @@ import { PageModel } from "../../../models";
 import { NextApiResponse, NextApiRequest } from "next";
 import { withCors } from "../../../middleware/withCors";
 import { withAuthentication } from "../../../middleware/withAuthentication";
+import { withErrorHandling } from "../../../middleware/withErrorHandling";
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
@@ -18,42 +19,34 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
         .json(pagesInDatabase);
 }
 
-const post = async (request: NextApiRequest, response: NextApiResponse) => {
+const post = withErrorHandling(
+    async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const { user } = await auth0.getSession(request);
+        const { user } = await auth0.getSession(request);
 
-    const page = request.body as PageModel;
-    page.owner_id = user.sub;
-    page.color = randomColor();
+        const page = request.body as PageModel;
+        page.owner_id = user.sub;
+        page.color = randomColor();
 
-    const exists = await pages.pageExists(page.id);
-    if (exists) {
+        const exists = await pages.pageExists(page.id);
+        if (exists) {
 
-        response
-            .status(CONFLICT)
-            .send(null);
-        return;
-    }
-
-    try {
+            response
+                .status(CONFLICT)
+                .send(null);
+        }
 
         const result = await pages.createPage(page);
-
         response
             .status(CREATED)
             .json(result)
-    } catch (error) {
 
-        console.log("Page with error: ", page, "error", error);
-        throw error
     }
-
-}
+);
 
 
 export default withCors(
-
-    withAuthentication(async function pagesHandler(request, response) {
+    withAuthentication(async (request, response) => {
 
         if (request.method === "GET") {
 
