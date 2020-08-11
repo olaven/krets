@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, SetStateAction } from "react";
 import { get, OK } from "node-kall";
 import { AuthModel, UserModel } from "../models";
 
@@ -13,37 +13,41 @@ export const UserContext = createContext<IUserContext>({
 });
 
 
+/**
+ * This adds negligible value apart from being fun :sweat_smile: 
+ * @param path 
+ * @param setter 
+ */
+const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetStateAction<T>>) =>
+    async () => {
+
+        const [status, retrievedData] = await get<any>(path);
+        setter(
+            status === OK ?
+                retrievedData :
+                null
+        )
+    }
+
+
 export const UserContextProvider = props => {
 
     const [authUser, setAuthUser] = useState<AuthModel>(null);
     const [databaseUser, setDatabaseuser] = useState<UserModel>(null);
 
-    const updateUser = async () => {
+    //scoped in function, as it should be provided to consumers
+    const updateUser =
+        getAndSet<AuthModel>('/api/auth/me', setAuthUser);
 
-        const [status, authUser] = await get<AuthModel>('/api/auth/me');
-        setAuthUser(
-            status === OK ?
-                authUser :
-                null
-        )
-    };
 
     useEffect(() => {
         updateUser()
     }, []);
     useEffect(() => {
-        (async () => {
 
-            if (!authUser) return;
-
-            const [status, databaseUser] = await get<UserModel>(`api/users/${authUser.sub}`);
-            setDatabaseuser(
-                status === OK ?
-                    databaseUser :
-                    null
-            );
-        })();
-    }, [authUser]);
+        if (!authUser) return;
+        getAndSet<UserModel>(`api/users/${authUser.sub}`, setDatabaseuser)();
+    }, [authUser])
 
 
     return <UserContext.Provider value={{ authUser, databaseUser, updateUser }}>

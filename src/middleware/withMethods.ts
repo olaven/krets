@@ -2,7 +2,14 @@ import { BAD_REQUEST } from 'node-kall';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 type Method = 'GET' | 'PUT' | 'PATCH' | 'DELETE' | 'POST' | 'OPTION' | 'HEAD'
-//TODO: actually use :-D 
+
+/**
+ * Executes handler if and only if the request method 
+ * is in list of allowed methods. 
+ * If not, 400 BAD REQUEST is sent
+ * 
+ * @param methods list of allowed methods
+ */
 export const withMethods = (methods: Method[]) =>
     (handler: NextApiHandler) =>
         (request: NextApiRequest, response: NextApiResponse) => {
@@ -14,18 +21,3 @@ export const withMethods = (methods: Method[]) =>
                     .status(BAD_REQUEST)
                     .send(null);
         }
-
-/*
-export const example =
-    withMethods(["GET", "POST"])((request, response) => {
-
-    })
-
-export const chainedExample =
-    withAuthentication(
-        withCors(
-            withMethods(['GET'])((request, response) => {
-
-            })
-        )
-    ); */
