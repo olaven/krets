@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { getPaymentSession, createCustomer } from "../fetchers";
+import { Card } from "../components/Upgrade/Card";
 
 export default () => {
 
@@ -31,6 +32,8 @@ export default () => {
         <button
             onClick={createCustomerClick}
         >Create Custome</button>
+
+        <Card />
     </>
 }
 
