@@ -2,46 +2,37 @@ import { BAD_REQUEST, FORBIDDEN, NOT_FOUND, OK } from "node-kall";
 import { withCors } from "../../../middleware/withCors";
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
+import { withAuthentication } from "../../../middleware/withAuthentication";
+import { withMethods } from "../../../middleware/withMethods";
 
-const getId = (url: string) => {
+//FIXME: is just a workaround, shared with pages/[id].ts. 
+export const getId = (url: string) => {
 
     const split = url.split("/");
     const id = split[split.length - 1];
     return id;
 };
 
-export default withCors(
-    auth0.requireAuthentication(async (request, response) => {
+export default withAuthentication(
+    withCors(
+        withMethods(["GET"])
+            (async (request, response) => {
+
+                const { user } = await auth0.getSession(request);
+
+                if (user.sub !== getId(request.url))
+                    return response
+                        .status(FORBIDDEN)
+                        .send(null);
 
 
-        if (request.method !== "GET") {
-            response
-                .status(BAD_REQUEST)
-                .send(null);
-            return;
-        }
+                const persistedUser = await users.getUser(user.sub);
+                const [status, payload] = persistedUser ?
+                    [OK, persistedUser] :
+                    [NOT_FOUND, null]
 
-        const { user } = await auth0.getSession(request);
-        const id = getId(request.url);
-
-        if (user.sub !== id) {
-            response
-                .status(FORBIDDEN)
-                .send(null);
-            return
-        }
-
-        const persistedUser = await users.getUser(id);
-        if (!persistedUser) {
-
-            response
-                .status(NOT_FOUND)
-                .send(null);
-        } else {
-
-            response
-                .status(OK)
-                .send(persistedUser)
-        }
-    })
+                return response
+                    .status(status)
+                    .send(payload)
+            }))
 );

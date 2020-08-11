@@ -4,6 +4,7 @@ import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CO
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models";
 import { withCors } from "../../../middleware/withCors";
+import { getId } from "../users/[id]";
 
 export default withCors(
     function pageHandler(request: NextApiRequest, response: NextApiResponse) {
@@ -27,12 +28,6 @@ export default withCors(
     }
 );
 
-const getId = (url: string) => {
-
-    const split = url.split("/");
-    const id = split[split.length - 1];
-    return id;
-};
 
 const del = async (request: NextApiRequest, response: NextApiResponse) => {
 

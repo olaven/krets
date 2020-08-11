@@ -1,7 +1,5 @@
 import { BAD_REQUEST } from 'node-kall';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import { withAuthentication } from './withAuthentication';
-import { withCors } from './withCors';
 
 type Method = 'GET' | 'PUT' | 'PATCH' | 'DELETE' | 'POST' | 'OPTION' | 'HEAD'
 //TODO: actually use :-D 
