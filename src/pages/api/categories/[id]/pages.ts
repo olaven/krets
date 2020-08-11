@@ -2,7 +2,8 @@
 import auth0 from "../../../../auth/auth0";
 import { pages } from "../../../../../src/database/pages"
 import { OK } from "node-kall";
-import { KretsCors } from "../../../../middleware/KretsCors";
+import { withCors } from "../../../../middleware/withCors";
+import { withAuthentication } from "../../../../middleware/withAuthentication";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -12,8 +13,8 @@ const getId = (url: string) => {
     return split[split.length - 2];
 };
 
-export default KretsCors(
-    auth0.requireAuthentication(async function categoryPagesHandler(request, response) {
+export default withCors(
+    withAuthentication(async function categoryPagesHandler(request, response) {
 
         const { user } = await auth0.getSession(request);
         const id = getId(request.url); //useRouter().query.id as string

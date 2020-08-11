@@ -1,7 +1,8 @@
 import auth0 from '../../auth/auth0';
 import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models';
-import { KretsCors } from '../../middleware/KretsCors';
+import { withCors } from '../../middleware/withCors';
+import { withAuthentication } from '../../middleware/withAuthentication';
 
 const productionMail = {
     host: "mail.hover.com",
@@ -58,8 +59,8 @@ const send = async (email: EmailModel) => {
     logMail(info);
 }
 
-export default KretsCors(
-    auth0.requireAuthentication(async (request, response) => {
+export default withCors(
+    withAuthentication(async (request, response) => {
 
         const { user } = await auth0.getSession(request);
 
@@ -70,9 +71,8 @@ export default KretsCors(
         }
 
         const email = request.body as EmailModel;
-        email.text = `${email.text} - ${user.name}`; //TODO: remove in favour of user email as `.from`
         email.to = process.env.CONTACT_EMAIL;
-        email.from = process.env.CONTACT_EMAIL; //TODO: should be user email? 
+        email.from = user.email;
 
         try {
 

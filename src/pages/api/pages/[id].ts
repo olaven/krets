@@ -3,9 +3,9 @@ import { pages } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
 
-export default KretsCors(
+export default withCors(
     function pageHandler(request: NextApiRequest, response: NextApiResponse) {
 
         const { method } = request;

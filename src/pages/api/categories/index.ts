@@ -3,7 +3,8 @@ import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "node-kall";
 import { CategoryModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "../../../database/categories";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
+import { withAuthentication } from "../../../middleware/withAuthentication";
 
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -44,8 +45,8 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
     }
 };
 
-export default KretsCors(
-    auth0.requireAuthentication(async (request, response) => {
+export default withCors(
+    withAuthentication(async (request, response) => {
 
         if (request.method === "GET") {
 

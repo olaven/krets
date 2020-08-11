@@ -87,6 +87,18 @@ describe("The pages endpoint", () => {
             const [first, second] = await getPages(url, user.id);
             expect(first.color).not.toEqual(second.color);
         });
+
+        it("Returns 409 on conflict", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = randomPage(user.id);
+
+            const first = await postPage(page, url, user.id);
+            const second = await postPage(page, url, user.id);
+
+            expect(first.status).toEqual(201);
+            expect(second.status).toEqual(409);
+        });
     })
 
     describe("Retrieving pages", () => {
