@@ -46,3 +46,11 @@ export interface EmailModel {
     from?: string,
     text: string
 }
+
+
+// Payment API 
+export interface PaymentRequestModel {
+    customerId: string,
+    paymentMethodId: string,
+    priceId: string
+};

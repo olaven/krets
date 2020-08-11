@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel } from "./models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel } from "./models";
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
@@ -30,3 +30,7 @@ export const getOverallAverage = (pageId: string) =>
 
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);
+
+
+export const postSubscription = (paymentRequest: PaymentRequestModel) =>
+    post<any>(`/api/payment/subscription`, paymentRequest); 

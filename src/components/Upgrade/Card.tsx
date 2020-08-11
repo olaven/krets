@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { CREATED } from "node-kall"
 import {
     CardElement,
@@ -8,11 +8,16 @@ import {
 import { Box, Flex, Button, Text } from 'rebass';
 import './Card.module.css'
 import { StripeError } from '@stripe/stripe-js';
+import { postSubscription } from '../../fetchers';
+import { PaymentRequestModel } from '../../models';
+import { UserContext } from '../../context/UserContext';
 
 
 export function Card() {
 
     const [error, setError] = useState<StripeError>(null);
+
+    const { user } = useContext(UserContext);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -37,11 +42,10 @@ export function Card() {
         }
     }
 
-    const createSubscription = (customerId: string, paymentMethodId: string, priceId: string) =>
+    const createSubscription = (paymentRequest: PaymentRequestModel) =>
         withStripeErrorHandling(async () => {
 
-            //@ts-ignore //TODO: implement
-            const [status, subscription] = await postSubscription(customerId, paymentMethodId, priceId)
+            const [status, subscription] = await postSubscription(paymentRequest)
             if (status === CREATED) {
 
                 console.log("Created a subscription");
@@ -58,7 +62,13 @@ export function Card() {
 
         if (error) {
             setError(error);
-            return;
+        } else {
+
+            await createSubscription({
+                customerId: user.customer_id,
+                paymentMethodId: paymentMethod.id,
+                priceId: "SOME_MAGIC_PRICE_ID"
+            })
         }
 
         console.error("error: ", error);
