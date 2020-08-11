@@ -1,5 +1,5 @@
 import { BAD_REQUEST, FORBIDDEN, NOT_FOUND, OK } from "node-kall";
-import { KretsCors } from "../../../middleware/KretsCors";
+import { withCors } from "../../../middleware/withCors";
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
 
@@ -10,7 +10,7 @@ const getId = (url: string) => {
     return id;
 };
 
-export default KretsCors(
+export default withCors(
     auth0.requireAuthentication(async (request, response) => {
 
 
