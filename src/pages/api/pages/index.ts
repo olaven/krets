@@ -29,18 +29,13 @@ const post = withErrorHandling(
         page.color = randomColor();
 
         const exists = await pages.pageExists(page.id);
-        if (exists) {
+        const [status, body] = exists ?
+            [CONFLICT, null] :
+            [CREATED, await pages.createPage(page)]
 
-            response
-                .status(CONFLICT)
-                .send(null);
-        }
-
-        const result = await pages.createPage(page);
         response
-            .status(CREATED)
-            .json(result)
-
+            .status(status)
+            .send(body)
     }
 );
 

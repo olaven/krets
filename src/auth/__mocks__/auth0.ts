@@ -70,7 +70,6 @@ export default ({
             return;
         }
 
-        console.info("Mock authenticated as ", req.headers["x-mock-is-authenticated"]);
         await apiRoute(req, res);
     },
 
