@@ -4,6 +4,7 @@ import { CategoryModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "../../../database/categories";
 import { KretsCors } from "../../../middleware/KretsCors";
+import { withAuthentication } from "../../../middleware/withAuthentication";
 
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -45,7 +46,7 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 export default KretsCors(
-    auth0.requireAuthentication(async (request, response) => {
+    withAuthentication(async (request, response) => {
 
         if (request.method === "GET") {
 
