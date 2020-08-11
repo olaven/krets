@@ -71,9 +71,8 @@ export default withCors(
         }
 
         const email = request.body as EmailModel;
-        email.text = `${email.text} - ${user.name}`; //TODO: remove in favour of user email as `.from`
         email.to = process.env.CONTACT_EMAIL;
-        email.from = process.env.CONTACT_EMAIL; //TODO: should be user email? 
+        email.from = user.email;
 
         try {
 
