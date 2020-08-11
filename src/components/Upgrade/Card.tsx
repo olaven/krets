@@ -17,7 +17,7 @@ export function Card() {
 
     const [error, setError] = useState<StripeError>(null);
 
-    const { user } = useContext(UserContext);
+    const { databaseUser } = useContext(UserContext);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -65,7 +65,7 @@ export function Card() {
         } else {
 
             await createSubscription({
-                customerId: user.customer_id,
+                customerId: databaseUser.customer_id,
                 paymentMethodId: paymentMethod.id,
                 priceId: "SOME_MAGIC_PRICE_ID"
             })

@@ -5,11 +5,11 @@ import { IntroSection } from "../components/Home/IntroSection/IntroSection";
 
 const IndexPage = () => {
 
-    const { user } = React.useContext(UserContext);
+    const { authUser } = React.useContext(UserContext);
 
-    if (user) {
+    if (authUser) {
 
-        return <PageSection user={user} />
+        return <PageSection user={authUser} />
     } else {
 
         return <IntroSection />

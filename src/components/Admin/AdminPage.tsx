@@ -57,7 +57,7 @@ const AdminContent = () => <Flex flexWrap="wrap">
 
 export const AdminPage = () => {
 
-    const { user } = useContext(UserContext);
+    const { authUser } = useContext(UserContext);
     const { page, pageLoading } = useContext(AdminPageContext);
 
     if (pageLoading) {
@@ -66,11 +66,11 @@ export const AdminPage = () => {
         </AdminBox>
     }
 
-    if (!user) {
+    if (!authUser) {
         return <LoginButton />
     }
 
-    if (page && user.sub !== page.owner_id)
+    if (page && authUser.sub !== page.owner_id)
         return <AdminBox>
             {text.adminPage.notOwning}
         </AdminBox>;

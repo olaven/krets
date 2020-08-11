@@ -12,14 +12,14 @@ import { CategoriesContext } from "../../context/CategoriesContext";
 export const CategoryCreator = () => {
 
     const [name, setName] = useState("");
-    const { user } = useContext(UserContext);
+    const { authUser } = useContext(UserContext);
     const { refreshCategories } = useContext(CategoriesContext);
 
     const onCreateCategory = async () => {
 
         const category: CategoryModel = {
             name,
-            owner_id: user.sub
+            owner_id: authUser.sub
         };
 
         const [status] = await postCategory(category);
