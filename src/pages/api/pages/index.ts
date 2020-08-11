@@ -1,11 +1,12 @@
 import randomColor from "randomcolor"
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/database";
-import { CREATED, OK } from "node-kall";
+import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel } from "../../../models";
 import { NextApiResponse, NextApiRequest } from "next";
 import { withCors } from "../../../middleware/withCors";
 import { withAuthentication } from "../../../middleware/withAuthentication";
+import { withErrorHandling } from "../../../middleware/withErrorHandling";
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
@@ -18,33 +19,29 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
         .json(pagesInDatabase);
 }
 
-const post = async (request: NextApiRequest, response: NextApiResponse) => {
+const post = withErrorHandling(
+    async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const { user } = await auth0.getSession(request);
+        const { user } = await auth0.getSession(request);
 
-    const page = request.body as PageModel;
-    page.owner_id = user.sub;
-    page.color = randomColor();
+        const page = request.body as PageModel;
+        page.owner_id = user.sub;
+        page.color = randomColor();
 
-    try {
-
-        const result = await pages.createPage(page);
+        const exists = await pages.pageExists(page.id);
+        const [status, body] = exists ?
+            [CONFLICT, null] :
+            [CREATED, await pages.createPage(page)]
 
         response
-            .status(CREATED)
-            .json(result)
-    } catch (error) {
-
-        console.log("Page with error: ", page, "error", error);
-        throw error
+            .status(status)
+            .send(body)
     }
-
-}
+);
 
 
 export default withCors(
-
-    withAuthentication(async function pagesHandler(request, response) {
+    withAuthentication(async (request, response) => {
 
         if (request.method === "GET") {
 

@@ -131,13 +131,15 @@ export const pageCreator = strings({
         preview: "Your page:",
         placeholder: "Enter the page name",
         button: "Create page",
-        error: "An error occured😐"
+        error: "An error occured😐",
+        conflict: "A page with this ID already exists"
     },
     no: {
         preview: "Din side:",
         placeholder: "Sidens navn",
         button: "Lag side",
-        error: "En feil oppsto😐"
+        error: "En feil oppsto😐",
+        conflict: "En side med denne ID-en finnes alt"
     }
 });
 

@@ -201,5 +201,18 @@ describe("Database interface for pages", () => {
             expect(updated.color).toEqual(newColor);
             expect(updated.color).not.toEqual(page.color);
         });
+
+        it("Can check wether a page exists or not", async () => {
+
+            const owner = await users.createUser(randomUser());
+            const page = randomPage(owner.id); //NOTE: not persisted 
+
+            const before = await pages.pageExists(page.id);
+            await pages.createPage(page)
+            const after = await pages.pageExists(page.id);
+
+            expect(before).toEqual(false);
+            expect(after).toEqual(true);
+        });
     });
 });

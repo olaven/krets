@@ -4,6 +4,7 @@ import { users, categories, pages } from "../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages/[id]";
+import { PageModel } from "../../../src/models";
 
 
 
@@ -170,7 +171,7 @@ describe("Endpoints for specific page", () => {
         });
     });
 
-    describe("The deletion endpoint", () => {
+    describe("The DELTE endpoint of pages", () => {
 
         const deleteFetch = (pageId: string, userId: string) =>
             authenticatedFetch(userId, fullUrl(pageId), { method: "DELETE" });
