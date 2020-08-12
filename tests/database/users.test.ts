@@ -1,6 +1,7 @@
 import { users } from "../../src/database/database";
 import * as faker from "faker";
 import { randomUser } from "./databaseTestUtils";
+import { uid } from "../api/apiTestUtils";
 
 describe("User repository", () => {
 
@@ -32,7 +33,7 @@ describe("User repository", () => {
         expect(after).toBeTruthy();
     });
 
-    test("Can update user id", async () => {
+    test("Can update customer id", async () => {
 
         const original = await users.createUser(randomUser());
         const NEW_CUSTOMER_ID = faker.random.uuid();
@@ -45,5 +46,20 @@ describe("User repository", () => {
         expect(updated.id).toEqual(original.id);
         expect(updated.customer_id).not.toEqual(original.customer_id);
         expect(updated.customer_id).toEqual(NEW_CUSTOMER_ID);
+    });
+
+    test("Can update payment information", async () => {
+
+        const NEW_PRODUCT_ID = uid();
+        const NEW_SUBSCRIPTION_ID = uid();
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updatePaymentInformation(original.id, NEW_PRODUCT_ID, NEW_SUBSCRIPTION_ID);
+
+        expect(updated.id).toEqual(original.id);
+        expect(updated.product_id).not.toEqual(original.product_id);
+        expect(updated.subscription_id).not.toEqual(original.subscription_id);
+        expect(updated.product_id).toEqual(NEW_PRODUCT_ID);
+        expect(updated.subscription_id).toEqual(NEW_SUBSCRIPTION_ID);
     });
 });

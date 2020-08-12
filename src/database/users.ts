@@ -16,6 +16,17 @@ const updateUser = (user: UserModel) => first<UserModel>(
    [user.id, user.customer_id]
 )
 
+/**
+ * Updates payment information for given user. 
+ * 
+ * //THINKABOUT: keeping this as a separate function for now, but that breaks with the established updateX-semantics. 
+ * The idea is that I want to be super explicit when updating anything that has to do with payments. 
+ */
+const updatePaymentInformation = (user_id: string, product_id: string, subscription_id: string) => first<UserModel>(
+   "update users set product_id = $2, subscription_id = $3 where id = $1 returning *",
+   [user_id, product_id, subscription_id]
+)
+
 const userExists = async (id: string) => {
 
    const result = await first<{ count: string }>(
@@ -27,5 +38,5 @@ const userExists = async (id: string) => {
 };
 
 export const users = ({
-   getUser, createUser, updateUser, userExists
+   getUser, createUser, updateUser, updatePaymentInformation, userExists,
 });
