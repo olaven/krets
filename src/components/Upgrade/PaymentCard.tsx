@@ -14,9 +14,10 @@ import { UserContext } from '../../context/UserContext';
 
 
 type Props = { priceId: string }
-export function PaymentCard({ priceId }) {
+export function PaymentCard({ priceId }: Props) {
 
     const [error, setError] = useState<StripeError>(null);
+
 
     const { databaseUser } = useContext(UserContext);
 
