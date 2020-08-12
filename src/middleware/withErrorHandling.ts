@@ -15,6 +15,8 @@ export const withErrorHandling = (handler: NextApiHandler) =>
         } catch (error) {
 
             console.error(error);
-            response.status(error.status || BAD_REQUEST).end(error.message);
+            response
+                .status(error.status || BAD_REQUEST)
+                .send(error.message);
         }
     } 

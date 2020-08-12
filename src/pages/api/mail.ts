@@ -3,6 +3,9 @@ import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models';
 import { withCors } from '../../middleware/withCors';
 import { withAuthentication } from '../../middleware/withAuthentication';
+import { withErrorHandling } from '../../middleware/withErrorHandling';
+import { withMethods } from '../../middleware/withMethods';
+import { IApiRoute } from '@auth0/nextjs-auth0/dist/handlers/require-authentication';
 
 const productionMail = {
     host: "mail.hover.com",
@@ -59,32 +62,24 @@ const send = async (email: EmailModel) => {
     logMail(info);
 }
 
-export default withCors(
-    withAuthentication(async (request, response) => {
+const withMiddleware = (handler: IApiRoute) =>
+    withCors(
+        withErrorHandling(
+            withMethods(["POST"])(
+                withAuthentication(handler))));
 
-        const { user } = await auth0.getSession(request);
 
-        if (request.method !== "POST") {
+export default withMiddleware(async (request, response) => {
 
-            response.status(404);
-            return;
-        }
+    const { user } = await auth0.getSession(request);
 
-        const email = request.body as EmailModel;
-        email.to = process.env.CONTACT_EMAIL;
-        email.from = user.email;
+    const email = request.body as EmailModel;
+    email.to = process.env.CONTACT_EMAIL;
+    email.from = user.email;
 
-        try {
+    await send(email);
 
-            await send(email);
-            response
-                .status(201)
-                .send(null);
-        } catch {
-
-            response
-                .status(400)
-                .send(null);
-        }
-    })
-);
+    response
+        .status(201)
+        .send(null);
+}); 
