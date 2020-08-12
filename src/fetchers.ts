@@ -37,4 +37,7 @@ export const postSubscription = (paymentRequest: PaymentRequestModel) =>
     post<any>(`/api/payment/subscription`, paymentRequest);
 
 export const getProducts = () =>
-    get<Stripe.Product[]>(`/api/payment/products`); 
+    get<Stripe.Product[]>(`/api/payment/products`);
+
+export const getPrices = (productId: string) =>
+    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`); 
