@@ -6,6 +6,8 @@ import { withCors } from "../../../middleware/withCors";
 import { withMethods } from "../../../middleware/withMethods";
 import { withErrorHandling } from "../../../middleware/withErrorHandling";
 import { IApiRoute } from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
+import { users } from "../../../database/users";
+import auth0 from "../../../auth/auth0";
 
 const withMiddleware = (handler: IApiRoute) =>
     withCors(
@@ -13,9 +15,6 @@ const withMiddleware = (handler: IApiRoute) =>
             withMethods(["POST"])(
                 withAuthentication(handler))))
 
-//TODO: 
-// STORE subscription.items[0].price.id // or sothing like it 
-// STORE subscription.id // or sothing like it 
 export default withMiddleware(async (request, response) => {
 
     const { customerId, paymentMethodId, priceId } = request.body as PaymentRequestModel
@@ -34,9 +33,12 @@ export default withMiddleware(async (request, response) => {
         expand: ['latest_invoice.payment_intent']
     });
 
+    const { user } = await auth0.getSession(request);
+    const product_id = subscription.plan.product as string;
 
+    await users.updatePaymentInformation(user.sub, product_id, subscription.id);
 
-    response
+    return response
         .status(CREATED)
         .send(subscription);
 });
