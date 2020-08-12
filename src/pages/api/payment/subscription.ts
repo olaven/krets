@@ -36,7 +36,7 @@ export default withMiddleware(async (request, response) => {
     const { user } = await auth0.getSession(request);
     const product_id = subscription.plan.product as string;
 
-    await users.updatePaymentInformation(user.sub, product_id, subscription.id);
+    await users.updatePaymentInformation(user.sub, product_id, subscription.id, true);
 
     return response
         .status(CREATED)

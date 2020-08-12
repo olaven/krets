@@ -52,14 +52,31 @@ describe("User repository", () => {
 
         const NEW_PRODUCT_ID = uid();
         const NEW_SUBSCRIPTION_ID = uid();
+        const NEW_INVOICE_PAID = true;
 
         const original = await users.createUser(randomUser());
-        const updated = await users.updatePaymentInformation(original.id, NEW_PRODUCT_ID, NEW_SUBSCRIPTION_ID);
+        const updated = await users.updatePaymentInformation(original.id, NEW_PRODUCT_ID, NEW_SUBSCRIPTION_ID, NEW_INVOICE_PAID);
 
         expect(updated.id).toEqual(original.id);
+
         expect(updated.product_id).not.toEqual(original.product_id);
         expect(updated.subscription_id).not.toEqual(original.subscription_id);
+        expect(updated.invoice_paid).not.toEqual(original.invoice_paid);
+
         expect(updated.product_id).toEqual(NEW_PRODUCT_ID);
         expect(updated.subscription_id).toEqual(NEW_SUBSCRIPTION_ID);
+        expect(updated.invoice_paid).toEqual(NEW_INVOICE_PAID);
+    });
+
+    test("Can get user by customer id", async () => {
+
+        const CUSTOMER_ID = uid();
+        const user = await users.createUser(randomUser());
+
+        user.customer_id = CUSTOMER_ID;
+        await users.updateUser(user)
+
+        const retrieved = await users.getUserByCustomerId(CUSTOMER_ID);
+        expect(retrieved.id).toEqual(user.id);
     });
 });

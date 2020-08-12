@@ -1,9 +1,12 @@
 import { buffer } from "micro";
 import { NextApiRequest, NextApiResponse } from "next";
 //import Cors from 'micro-cors'
-import { NOT_IMPLEMENTED, BAD_REQUEST } from "node-kall"
+import { NO_CONTENT, NOT_IMPLEMENTED, BAD_REQUEST } from "node-kall"
 import { stripe } from "../../../payment/stripe";
 import { withCors } from "../../../middleware/withCors";
+import Stripe from "stripe";
+import { useResponses } from "../../../effects/useResponses";
+import { users } from "../../../database/users";
 
 
 // Stripe requires the raw body to construct the event.
@@ -33,37 +36,53 @@ const getHookEvent = async (request: NextApiRequest) => {
     }
 }
 
-export default withCors(async (request: NextApiRequest, response: NextApiResponse) => {
+export default withCors(
+    async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const event = await getHookEvent(request);
-    if (!event) return response
-        .status(BAD_REQUEST)
-        .send(null);
+        const event = await getHookEvent(request);
+        if (!event) return response
+            .status(BAD_REQUEST)
+            .send(null);
 
 
-    const eventData = event.data.object;
+        const handler = {
+            "invoice.paid": handleInvoicePaid,
+            "invoice.payment_succeeded": handleInvoicePaid,
+            "invoice.payment_failed": handleInvoiceFailed
+        }[event.type];
 
-    if (event.type === "invoice.paid") {
-        handleInvoicePaid(eventData, request, response);
-    } else if (event.type === "invoice.payment_failed") {
-        handleInvoiceFailed(eventData, request, response);
-    } else {
-
-        response
+        if (handler) handler(event, request, response);
+        else response
             .status(NOT_IMPLEMENTED)
             .send(null);
     }
-});
+);
 
+const getCustomerId = (event: Stripe.Event) =>
+    (event.data.object as any).customer as string
 
+const setActiveSubscription = async (active: boolean) => {
 
-const handleInvoicePaid = (eventData: any, request: NextApiRequest, response: NextApiResponse) => {
-
-
-    throw "handleInvoicePaid not implemented";
+    const customerId = getCustomerId(event);
+    //THINKABOUT: having just : UserModel instaed of updatePaymentInformation would make this a lot cleaner 
+    const user = await users.getUserByCustomerId(customerId)
+    await users.updatePaymentInformation(user.id, user.product_id, user.subscription_id, active);
 }
 
-const handleInvoiceFailed = (eventData: any, request: NextApiRequest, response: NextApiResponse) => {
+const handleInvoicePaid = async (event: Stripe.Event, request: NextApiRequest, response: NextApiResponse) => {
 
-    throw "handleInvoiceFailed not implemented";
+    setActiveSubscription(true)
+
+    response
+        .status(NO_CONTENT)
+        .send(null)
+}
+
+const handleInvoiceFailed = async (event: Stripe.Event, request: NextApiRequest, response: NextApiResponse) => {
+
+    setActiveSubscription(false);
+
+    response
+        .status(NO_CONTENT)
+        .send(null);
 }
