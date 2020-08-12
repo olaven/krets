@@ -1,4 +1,4 @@
-import { CREATED, BAD_REQUEST } from "node-kall";
+import { CREATED } from "node-kall";
 import { stripe } from "../../../payment/stripe";
 import { PaymentRequestModel } from "../../../models";
 import { withAuthentication } from "../../../middleware/withAuthentication";
@@ -33,6 +33,8 @@ export default withMiddleware(async (request, response) => {
         items: [{ price: priceId }],
         expand: ['latest_invoice.payment_intent']
     });
+
+
 
     response
         .status(CREATED)
