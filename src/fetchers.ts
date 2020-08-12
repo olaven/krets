@@ -1,5 +1,6 @@
 import { get, put, del, post } from "node-kall";
 import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel } from "./models";
+import Stripe from "stripe";
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
@@ -33,4 +34,10 @@ export const postEmail = (email: EmailModel) =>
 
 
 export const postSubscription = (paymentRequest: PaymentRequestModel) =>
-    post<any>(`/api/payment/subscription`, paymentRequest); 
+    post<any>(`/api/payment/subscription`, paymentRequest);
+
+export const getProducts = () =>
+    get<Stripe.Product[]>(`/api/payment/products`);
+
+export const getPrices = (productId: string) =>
+    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`); 

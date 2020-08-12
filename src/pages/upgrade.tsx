@@ -1,16 +1,41 @@
-import { PaymentCard } from "../components/Upgrade/PaymentCard";
 import { Heading } from "rebass";
 import { useState } from "react";
+import { useProducts } from "../effects/useProducts";
+import { PaymentCard } from "../components/Upgrade/PaymentCard";
+import { usePrices } from "../effects/usePrices";
 
-export default () => {
 
-    const [selectedPriceId, setSelectedPriceId] = useState("price_1HDYIqIDSMRX0WhP3nTJKOGI")
+const PriceRepresentation = ({ productId, setSelectedPrice }) => {
+
+    const prices = usePrices(productId);
+    console.log(prices)
+    return <>{prices.map(price => <>
+        Pris: {price.id}
+        <button onClick={() => { setSelectedPrice(price.id) }}>velg</button>
+    </>)}</>
+}
+
+
+const Upgrade = () => {
+
+    const [selectedPriceId, setSelectedPriceId] = useState("");
+    const products = useProducts();
 
     return <>
-        <Heading fontSize={[3, 4, 5]} textAlign="center">Oppgrader Krets!</Heading>
 
-        <PaymentCard priceId={selectedPriceId} />
-        {/* <PaymentCard priceId={"price_1HDYN5IDSMRX0WhPU0HbyKfg"} /> */}
+        <Heading fontSize={[3, 4, 5]} textAlign="center">Oppgrader Krets!</Heading>
+        {products.map(product => <>
+            {product.name}
+            <PriceRepresentation
+                productId={product.id}
+                setSelectedPrice={setSelectedPriceId}
+            />
+            <br />
+        </>)}
+        {
+            selectedPriceId && <PaymentCard priceId={"price_1HDYIqIDSMRX0WhP3nTJKOGI"} />
+        }
     </>
 }
 
+export default Upgrade; 
