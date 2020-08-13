@@ -61,17 +61,16 @@ export default withCors(
 const getCustomerId = (event: Stripe.Event) =>
     (event.data.object as any).customer as string
 
-const setActiveSubscription = async (active: boolean) => {
+const setActiveSubscription = async (event: Stripe.Event, active: boolean) => {
 
     const customerId = getCustomerId(event);
-    //THINKABOUT: having just : UserModel instaed of updatePaymentInformation would make this a lot cleaner 
     const user = await users.getUserByCustomerId(customerId)
-    await users.updatePaymentInformation(user.id, user.product_id, user.subscription_id, active);
+    await users.updateInvoicePaid(user.id, active);
 }
 
 const handleInvoicePaid = async (event: Stripe.Event, request: NextApiRequest, response: NextApiResponse) => {
 
-    setActiveSubscription(true)
+    setActiveSubscription(event, true)
 
     response
         .status(NO_CONTENT)
@@ -80,7 +79,7 @@ const handleInvoicePaid = async (event: Stripe.Event, request: NextApiRequest, r
 
 const handleInvoiceFailed = async (event: Stripe.Event, request: NextApiRequest, response: NextApiResponse) => {
 
-    setActiveSubscription(false);
+    setActiveSubscription(event, false);
 
     response
         .status(NO_CONTENT)

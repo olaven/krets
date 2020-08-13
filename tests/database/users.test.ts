@@ -55,7 +55,13 @@ describe("User repository", () => {
         const NEW_INVOICE_PAID = true;
 
         const original = await users.createUser(randomUser());
-        const updated = await users.updatePaymentInformation(original.id, NEW_PRODUCT_ID, NEW_SUBSCRIPTION_ID, NEW_INVOICE_PAID);
+        const updated = await users.updateUser({
+            id: original.id,
+            customer_id: original.customer_id,
+            product_id: NEW_PRODUCT_ID,
+            subscription_id: NEW_SUBSCRIPTION_ID,
+            invoice_paid: NEW_INVOICE_PAID
+        });
 
         expect(updated.id).toEqual(original.id);
 

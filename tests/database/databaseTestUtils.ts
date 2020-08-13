@@ -3,7 +3,8 @@ import { PageModel, ResponseModel, Emotion, UserModel } from "../../src/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
-    customer_id: faker.random.uuid()
+    customer_id: faker.random.uuid(),
+    invoice_paid: false
 });
 
 export const randomPage = (ownerId: string, color: string = null, categoryId: string = null): PageModel => ({
