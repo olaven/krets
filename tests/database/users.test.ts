@@ -2,6 +2,7 @@ import { users } from "../../src/database/database";
 import * as faker from "faker";
 import { randomUser } from "./databaseTestUtils";
 import { uid } from "../api/apiTestUtils";
+import { random } from "faker";
 
 describe("User repository", () => {
 
@@ -52,27 +53,43 @@ describe("User repository", () => {
 
         const NEW_PRODUCT_ID = uid();
         const NEW_SUBSCRIPTION_ID = uid();
-        const NEW_INVOICE_PAID = true;
 
         const original = await users.createUser(randomUser());
         const updated = await users.updateUser({
             id: original.id,
             customer_id: original.customer_id,
             product_id: NEW_PRODUCT_ID,
-            subscription_id: NEW_SUBSCRIPTION_ID,
-            invoice_paid: NEW_INVOICE_PAID
+            subscription_id: NEW_SUBSCRIPTION_ID
         });
 
         expect(updated.id).toEqual(original.id);
 
         expect(updated.product_id).not.toEqual(original.product_id);
         expect(updated.subscription_id).not.toEqual(original.subscription_id);
-        expect(updated.invoice_paid).not.toEqual(original.invoice_paid);
 
         expect(updated.product_id).toEqual(NEW_PRODUCT_ID);
         expect(updated.subscription_id).toEqual(NEW_SUBSCRIPTION_ID);
-        expect(updated.invoice_paid).toEqual(NEW_INVOICE_PAID);
     });
+
+    test("Can _not_ update invoice with regular update method", async () => {
+
+        const original = await users.createUser(randomUser());
+        expect(original.invoice_paid).toBeFalsy();
+
+        const updated = await users.updateUser({
+            ...original, invoice_paid: true //trying to set 'true'
+        });
+        expect(updated.invoice_paid).toBeFalsy(); //i.e. still 'false' -> no change 
+    })
+
+    test("Can update invoice paid with separate method", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateInvoicePaid(original.id, true);
+
+        expect(original.invoice_paid).toBeFalsy();
+        expect(updated.invoice_paid).toBeTruthy();
+    })
 
     test("Can get user by customer id", async () => {
 
