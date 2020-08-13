@@ -1,18 +1,9 @@
-import { Heading } from "rebass";
+import { Heading, Flex, Box } from "rebass";
 import { useState } from "react";
 import { useProducts } from "../effects/useProducts";
 import { PaymentCard } from "../components/Upgrade/PaymentCard";
-import { usePrices } from "../effects/usePrices";
+import { ProductCard } from "../components/Upgrade/ProductCard";
 
-
-const PriceRepresentation = ({ productId, setSelectedPrice }) => {
-
-    const prices = usePrices(productId);
-    return <>{prices.map(price => <>
-        Pris: {price.id}
-        <button onClick={() => { setSelectedPrice(price.id) }}>velg</button>
-    </>)}</>
-}
 
 
 const Upgrade = () => {
@@ -23,17 +14,19 @@ const Upgrade = () => {
     return <>
 
         <Heading fontSize={[3, 4, 5]} textAlign="center">Oppgrader Krets!</Heading>
-        {products.map(product => <>
-            {product.name}
-            <PriceRepresentation
-                productId={product.id}
-                setSelectedPrice={setSelectedPriceId}
-            />
-            <br />
-        </>)}
-        {
-            selectedPriceId && <PaymentCard priceId={"price_1HDYIqIDSMRX0WhP3nTJKOGI"} />
-        }
+        <Flex>
+            {products.map(product => <ProductCard
+                product={product}
+                selectedPriceId={selectedPriceId}
+                setSelectedPriceId={setSelectedPriceId} />
+            )}
+        </Flex>
+        <Box>
+            {
+                selectedPriceId && <PaymentCard priceId={selectedPriceId} />
+            }
+        </Box>
+
     </>
 }
 
