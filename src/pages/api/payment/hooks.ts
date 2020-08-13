@@ -3,9 +3,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 //import Cors from 'micro-cors'
 import { NO_CONTENT, NOT_IMPLEMENTED, BAD_REQUEST } from "node-kall"
 import { stripe } from "../../../payment/stripe";
-import { withCors } from "../../../middleware/withCors";
+import { withCors } from "../../../middleware/middleware";
 import Stripe from "stripe";
-import { useResponses } from "../../../effects/useResponses";
 import { users } from "../../../database/users";
 
 

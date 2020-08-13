@@ -4,9 +4,7 @@ import { pages } from "../../../database/database";
 import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel } from "../../../models";
 import { NextApiResponse, NextApiRequest } from "next";
-import { withCors } from "../../../middleware/withCors";
-import { withAuthentication } from "../../../middleware/withAuthentication";
-import { withErrorHandling } from "../../../middleware/withErrorHandling";
+import { withCors, withAuthentication, withErrorHandling } from "../../../middleware/middleware";
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 

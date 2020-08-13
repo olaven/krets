@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { pages, responses } from "../../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
-import { withCors } from "../../../../middleware/withCors";
+import { withCors } from "../../../../middleware/middleware";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505

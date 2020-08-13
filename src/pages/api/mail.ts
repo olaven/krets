@@ -1,11 +1,8 @@
 import auth0 from '../../auth/auth0';
+import { IApiRoute } from '@auth0/nextjs-auth0/dist/handlers/require-authentication';
 import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models';
-import { withCors } from '../../middleware/withCors';
-import { withAuthentication } from '../../middleware/withAuthentication';
-import { withErrorHandling } from '../../middleware/withErrorHandling';
-import { withMethods } from '../../middleware/withMethods';
-import { IApiRoute } from '@auth0/nextjs-auth0/dist/handlers/require-authentication';
+import { withCors, withAuthentication, withErrorHandling, withMethods } from "../../middleware/middleware";
 
 const productionMail = {
     host: "mail.hover.com",

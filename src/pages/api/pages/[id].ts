@@ -3,7 +3,7 @@ import { pages } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models";
-import { withCors } from "../../../middleware/withCors";
+import { withCors } from "../../../middleware/middleware";
 import { getId } from "../users/[id]";
 
 export default withCors(

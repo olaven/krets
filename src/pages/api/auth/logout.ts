@@ -1,7 +1,6 @@
 
 import auth0 from '../../../auth/auth0';
-import { withErrorHandling } from '../../../middleware/withErrorHandling';
-import { withCors } from '../../../middleware/withCors';
+import { withErrorHandling, withCors } from '../../../middleware/middleware';
 
 export default withCors(
     withErrorHandling(auth0.handleLogout)

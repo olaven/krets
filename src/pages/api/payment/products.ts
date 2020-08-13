@@ -1,9 +1,7 @@
 import { OK } from "node-kall";
 //import { getProducts } from "../../../payment/products"; 
 import { stripe } from "../../../payment/stripe"
-import { withCors } from "../../../middleware/withCors";
-import { withMethods } from "../../../middleware/withMethods";
-import { withErrorHandling } from "../../../middleware/withErrorHandling";
+import { withCors, withMethods, withErrorHandling } from "../../../middleware/middleware";
 
 export default withCors(
     withErrorHandling(

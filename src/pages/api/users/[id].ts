@@ -1,9 +1,7 @@
-import { BAD_REQUEST, FORBIDDEN, NOT_FOUND, OK } from "node-kall";
-import { withCors } from "../../../middleware/withCors";
+import { FORBIDDEN, NOT_FOUND, OK } from "node-kall";
+import { withCors, withAuthentication, withMethods } from "../../../middleware/middleware";
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
-import { withAuthentication } from "../../../middleware/withAuthentication";
-import { withMethods } from "../../../middleware/withMethods";
 
 //FIXME: is just a workaround, shared with pages/[id].ts. 
 export const getId = (url: string) => {
