@@ -4,7 +4,7 @@ import { OK } from "node-kall";
 import { getProducts } from "../fetchers";
 
 // TODO: Give this a more suitable home and reuse it 
-export const asyncEffect = (action: any, on: any[]) =>
+export const asyncEffect = (action: () => Promise<any>, on: any[]) =>
     useEffect(() => {
         action()
     }, on);

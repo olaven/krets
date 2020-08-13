@@ -32,7 +32,8 @@ export interface UserModel {
     customer_id: string,
     subscription_id?: string,
     product_id?: string,
-    free_premium?: boolean
+    free_premium?: boolean,
+    invoice_paid?: boolean
 }
 
 //from Auth0

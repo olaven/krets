@@ -33,10 +33,18 @@ export default withMiddleware(async (request, response) => {
         expand: ['latest_invoice.payment_intent']
     });
 
-    const { user } = await auth0.getSession(request);
     const product_id = subscription.plan.product as string;
+    const subscription_id = subscription.id;
 
-    await users.updatePaymentInformation(user.sub, product_id, subscription.id);
+    const { user } = await auth0.getSession(request);
+    const persistedUser = await users.getUser(user.sub);
+
+    await users.updateUser({
+        ...persistedUser,
+        subscription_id,
+        product_id
+    });
+    await users.updateInvoicePaid(user.id, true);
 
     return response
         .status(CREATED)
