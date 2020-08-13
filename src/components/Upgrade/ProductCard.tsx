@@ -1,19 +1,26 @@
-import { Heading, Card, Text, Flex, Box, Button } from "rebass";
+import { Heading, Card, Text, Box, Button } from "rebass";
 import { Stripe } from "stripe";
 import { usePrices } from "../../effects/usePrices";
+import * as text from "../../text";
 
 
-const PriceRepresentation = ({ price, selectedPriceId, setSelectedPrice }) => {
+type PriceProps = { price: Stripe.Price, selectedPriceId: string, setSelectedPrice: any }
+const PriceRepresentation = ({ price, selectedPriceId, setSelectedPrice }: PriceProps) => {
 
     const isSelected = selectedPriceId === price.id;
 
-    return <>
+
+    const [firstTier, secondTier] = price.tiers;
+
+    return <Box>
         <Text>{price.nickname}</Text>
+        <Text>{firstTier.flat_amount / 100},- inkludert {firstTier.up_to} svar!</Text>
+        <Text>{secondTier.unit_amount / 100} per svar etter det</Text>
         <Button
             onClick={isSelected ? null : () => { setSelectedPrice(price.id) }}>
-            {isSelected ? "Valgt" : "Velg pris"}
+            {isSelected ? text.upgrade.priceChosen : text.upgrade.choosePrice}
         </Button>
-    </>
+    </Box>
 }
 
 type CardProps = { product: Stripe.Product, selectedPriceId: string, setSelectedPriceId: any }
