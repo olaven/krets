@@ -41,16 +41,6 @@ export default withMiddleware(async (request, response) => {
         invoice_paid: true
     });
 
-
-    /* const persistedUser = await users.getUser(user.sub);
-
-    await users.updateUser({
-        ...persistedUser,
-        subscription_id,
-        product_id
-    });
-    await users.updateInvoicePaid(user.id, true); */
-
     return response
         .status(CREATED)
         .send(subscription);
