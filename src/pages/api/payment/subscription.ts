@@ -31,17 +31,25 @@ export default withMiddleware(async (request, response) => {
     });
 
     const product_id = subscription.plan.product as string;
-    const subscription_id = subscription.id;
+
 
     const { user } = await auth0.getSession(request);
-    const persistedUser = await users.getUser(user.sub);
+    await users.updatePaymentInformation({
+        id: user.sub,
+        subscription_id: subscription.id,
+        product_id: product_id,
+        invoice_paid: true
+    });
+
+
+    /* const persistedUser = await users.getUser(user.sub);
 
     await users.updateUser({
         ...persistedUser,
         subscription_id,
         product_id
     });
-    await users.updateInvoicePaid(user.id, true);
+    await users.updateInvoicePaid(user.id, true); */
 
     return response
         .status(CREATED)
