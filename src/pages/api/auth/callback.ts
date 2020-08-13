@@ -3,7 +3,8 @@ import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
-import { withCors } from '../../../middleware/middleware';
+import { withCors, withErrorHandling } from '../../../middleware/middleware';
+import { NextApiHandler } from 'next';
 
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
@@ -23,30 +24,24 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
   }
 };
 
-export default withCors(
-  async function callback(req, res) {
-    try {
-      await auth0.handleCallback(req, res, {
-        onUserLoaded: async (req, res, session, state) => {
+const withMiddleware = (handler: NextApiHandler) =>
+  withCors(
+    withErrorHandling(handler))
 
-          const { user } = session;
+export default withMiddleware(async (req, res) => {
+  await auth0.handleCallback(req, res, {
+    onUserLoaded: async (req, res, session, state) => {
 
+      const { user } = session;
+      await createIfNotPresent(user as AuthModel);
 
-          //TODO: handle if user has default customer id. Or migrate every user. Not sure.
-          await createIfNotPresent(user as AuthModel);
-
-          return {
-            ...session,
-            user: {
-              ...session.user,
-            },
-            redirectTo: "/"
-          };
-        }
-      });
-    } catch (error) {
-
-      res.status(error.status || BAD_REQUEST).end(error.message);
+      return {
+        ...session,
+        user: {
+          ...session.user,
+        },
+        redirectTo: "/"
+      };
     }
-  }
-) 
+  });
+});
