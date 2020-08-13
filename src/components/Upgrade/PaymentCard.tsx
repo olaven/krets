@@ -17,8 +17,6 @@ type Props = { priceId: string }
 export function PaymentCard({ priceId }: Props) {
 
     const [error, setError] = useState<StripeError>(null);
-
-
     const { databaseUser } = useContext(UserContext);
 
     const stripe = useStripe();
@@ -57,7 +55,6 @@ export function PaymentCard({ priceId }: Props) {
 
     const onPay = async () => {
 
-        console.log("on pay");
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: elements.getElement(CardElement)

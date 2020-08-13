@@ -1,5 +1,5 @@
 import auth0 from "../../../auth/auth0";
-import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "node-kall";
+import { CREATED, OK, FORBIDDEN } from "node-kall";
 import { CategoryModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "../../../database/categories";
@@ -24,10 +24,9 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
 
     if (category.owner_id !== user.sub) {
 
-        response
+        return response
             .status(FORBIDDEN)
             .send("You don't own this category.");
-        return;
     }
 
     const persisted = await categories.createCategory(category);
