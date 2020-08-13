@@ -5,12 +5,13 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
-import { Box, Flex, Button, Text } from 'rebass';
+import { Button, Text } from 'rebass';
 import './PaymentCard.module.css'
 import { StripeError } from '@stripe/stripe-js';
 import { postSubscription } from '../../fetchers';
 import { PaymentRequestModel } from '../../models';
 import { UserContext } from '../../context/UserContext';
+import * as text from "../../text";
 
 
 type Props = { priceId: string }
@@ -74,12 +75,23 @@ export function PaymentCard({ priceId }: Props) {
     }
 
     return <>
-        <Box>
-            <Box width={[1, 1 / 4]}>
-                <CardElement />
-            </Box>
-            <Button width={[1, 1 / 4]} onClick={onPay}>Pay</Button>
-            {error && <Text color="failure">{error.message}</Text>}
-        </Box>
+        <CardElement
+            options={{
+                style: {
+                    base: {
+                        fontSize: '26px',
+                        color: '#424770',
+                        '::placeholder': {
+                            color: '#aab7c4',
+                        },
+                    },
+                    invalid: {
+                        color: '#9e2146',
+                    },
+                },
+            }}
+        />
+        <Button width={[1]} onClick={onPay}>{text.upgrade.pay}</Button>
+        {error && <Text color="failure">{error.message}</Text>}
     </>
 };

@@ -1,6 +1,5 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
-import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';

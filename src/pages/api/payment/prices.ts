@@ -14,7 +14,8 @@ export default withCors(
 
             //TODO: fetching things from Stripe should probably have its own internal module
             const prices = (await stripe.prices.list({
-                product: productId
+                product: productId,
+                expand: ["data.tiers"]
             })).data
 
             response

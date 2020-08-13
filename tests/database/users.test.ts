@@ -102,4 +102,30 @@ describe("User repository", () => {
         const retrieved = await users.getUserByCustomerId(CUSTOMER_ID);
         expect(retrieved.id).toEqual(user.id);
     });
+
+    test("Can update payment information with custom function", async () => {
+
+        const NEW_PRODUCT_ID = uid();
+        const NEW_SUBSCRIPTION_ID = uid();
+        const NEW_INVOICE_PAID = true;
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updatePaymentInformation({
+            id: original.id,
+            product_id: NEW_PRODUCT_ID,
+            subscription_id: NEW_SUBSCRIPTION_ID,
+            invoice_paid: NEW_INVOICE_PAID
+        });
+
+
+        expect(updated.id).toEqual(original.id);
+
+        expect(updated.product_id).not.toEqual(original.product_id);
+        expect(updated.subscription_id).not.toEqual(original.subscription_id);
+        expect(updated.invoice_paid).not.toEqual(original.invoice_paid);
+
+        expect(updated.product_id).toEqual(NEW_PRODUCT_ID);
+        expect(updated.subscription_id).toEqual(NEW_SUBSCRIPTION_ID);
+        expect(updated.invoice_paid).toEqual(NEW_INVOICE_PAID);
+    });
 });

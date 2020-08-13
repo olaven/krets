@@ -251,4 +251,21 @@ export const responseList = strings({
         loading: "Laster responser..",
         noResponses: "Ingen responser enda"
     }
+});
+
+export const upgrade = strings({
+    en: {
+        heading: "Upgrade Krets!",
+        inDevelopmentWarning: "Paying users will have access to more features than non-paying users in the future",
+        choosePrice: "Velg denne 💡",
+        priceChosen: "Chosen 🙌",
+        pay: "Pay now",
+    },
+    no: {
+        heading: "Oppgrader Krets!",
+        inDevelopmentWarning: "I fremtiden vil oppgraderte brukere ha flere muligheter enn ikke-betalende.",
+        choosePrice: "Velg denne prisen 💡",
+        priceChosen: "Valgt  🙌",
+        pay: "Betal nå",
+    }
 })

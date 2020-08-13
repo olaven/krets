@@ -1,5 +1,6 @@
 import { first } from "./helpers/helpers";
 import { UserModel } from "../models";
+import subscription from "../pages/api/payment/subscription";
 
 const getUser = (id: string) =>
    first<UserModel>(
@@ -25,6 +26,18 @@ const updateUser = (user: UserModel) =>
       [user.id, user.customer_id, user.product_id, user.subscription_id]
    );
 
+/**
+ * Added this in order to avoid 
+ * fetchin databaseuser in subscription.ts
+ */
+const updatePaymentInformation =
+   ({ id, subscription_id, product_id, invoice_paid }: { id: string, subscription_id: String, product_id: string, invoice_paid: boolean }) =>
+      first<UserModel>(
+         "update users set subscription_id = $2, product_id = $3, invoice_paid = $4 where id = $1 returning *",
+         [id, subscription_id, product_id, invoice_paid]
+      );
+
+
 const updateInvoicePaid = (userId: string, invoicePaid: boolean) =>
    first<UserModel>(
       `update users set invoice_paid = $2 where id = $1 returning *`,
@@ -47,6 +60,7 @@ export const users = ({
    getUserByCustomerId,
    createUser,
    updateUser,
+   updatePaymentInformation,
    updateInvoicePaid,
    userExists,
 });
