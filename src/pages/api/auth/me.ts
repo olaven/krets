@@ -1,6 +1,5 @@
 import auth0 from '../../../auth/auth0';
-import { withCors } from '../../../middleware/withCors';
-import { withAuthentication } from '../../../middleware/withAuthentication';
+import { withAuthentication, withCors } from '../../../middleware/middleware';
 
 export default withCors(
     withAuthentication(async function me(request, response) {

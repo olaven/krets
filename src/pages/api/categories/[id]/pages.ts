@@ -2,8 +2,7 @@
 import auth0 from "../../../../auth/auth0";
 import { pages } from "../../../../../src/database/pages"
 import { OK } from "node-kall";
-import { withCors } from "../../../../middleware/withCors";
-import { withAuthentication } from "../../../../middleware/withAuthentication";
+import { withCors, withAuthentication } from "../../../../middleware/middleware";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505

@@ -3,8 +3,7 @@ import { CREATED, OK, FORBIDDEN, BAD_REQUEST } from "node-kall";
 import { CategoryModel } from "../../../models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "../../../database/categories";
-import { withCors } from "../../../middleware/withCors";
-import { withAuthentication } from "../../../middleware/withAuthentication";
+import { withAuthentication, withCors, withErrorHandling } from "../../../middleware/middleware";
 
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -31,30 +30,24 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
         return;
     }
 
-    try {
-
-        const persisted = await categories.createCategory(category);
-        response
-            .status(CREATED)
-            .send(persisted);
-    } catch {
-
-        response
-            .status(BAD_REQUEST)
-            .send("Malformed category.");
-    }
+    const persisted = await categories.createCategory(category);
+    response
+        .status(CREATED)
+        .send(persisted);
 };
 
 export default withCors(
-    withAuthentication(async (request, response) => {
+    withErrorHandling(
+        withAuthentication(async (request, response) => {
 
-        if (request.method === "GET") {
+            if (request.method === "GET") {
 
-            await get(request, response);
-        } else if (request.method === "POST") {
+                await get(request, response);
+            } else if (request.method === "POST") {
 
-            await post(request, response);
-        }
-    })
+                await post(request, response);
+            }
+        })
+    )
 );
 

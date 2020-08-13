@@ -3,7 +3,7 @@ import { users } from "../../../database/database";
 import { BAD_REQUEST } from 'node-kall';
 import { registerCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
-import { withCors } from '../../../middleware/withCors';
+import { withCors } from '../../../middleware/middleware';
 
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
@@ -14,6 +14,7 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
     await users.createUser({ id: sub, customer_id });
   }
   else if (user.customer_id === "default_customer_id") {
+
     //NOTE: "on demand migration" from old system where customer_id did not exist. TODO: migrate all existing users to some customer_id, remove default value on column and remove this code section
     const customer_id = await registerCustomer(email);
     await users.updateUser({

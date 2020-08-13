@@ -8,7 +8,6 @@ import { usePrices } from "../effects/usePrices";
 const PriceRepresentation = ({ productId, setSelectedPrice }) => {
 
     const prices = usePrices(productId);
-    console.log(prices)
     return <>{prices.map(price => <>
         Pris: {price.id}
         <button onClick={() => { setSelectedPrice(price.id) }}>velg</button>

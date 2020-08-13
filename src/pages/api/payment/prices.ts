@@ -1,8 +1,6 @@
 import { OK, BAD_REQUEST } from "node-kall";
-import { withCors } from "../../../middleware/withCors";
-import { withMethods } from "../../../middleware/withMethods";
+import { withCors, withErrorHandling, withMethods } from "../../../middleware/middleware";
 import { stripe } from "../../../payment/stripe";
-import { withErrorHandling } from "../../../middleware/withErrorHandling";
 
 export default withCors(
     withErrorHandling(
