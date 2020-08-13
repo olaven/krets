@@ -75,7 +75,22 @@ export function PaymentCard({ priceId }: Props) {
     }
 
     return <>
-        <CardElement />
+        <CardElement
+            options={{
+                style: {
+                    base: {
+                        fontSize: '26px',
+                        color: '#424770',
+                        '::placeholder': {
+                            color: '#aab7c4',
+                        },
+                    },
+                    invalid: {
+                        color: '#9e2146',
+                    },
+                },
+            }}
+        />
         <Button width={[1]} onClick={onPay}>{text.upgrade.pay}</Button>
         {error && <Text color="failure">{error.message}</Text>}
     </>

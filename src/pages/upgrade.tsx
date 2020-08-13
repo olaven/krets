@@ -25,7 +25,7 @@ const Upgrade = () => {
         </Flex>
         <Flex width={1} m={[2, 3, 4]}>
             <Box width={[0, 1 / 3]} />
-            <Box width={1} backgroundColor="orange">
+            <Box width={1}>
                 {selectedPriceId &&
                     <PaymentCard priceId={selectedPriceId} />}
             </Box>
