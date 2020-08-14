@@ -79,8 +79,4 @@ describe("The callback endpoint", () => {
         expect(before.customer_id).toEqual(default_customer_id);
         expect(after.customer_id).not.toEqual(default_customer_id);
     });
-
-
-
-    it("Does create a customer id on a user without customer id")
 });
