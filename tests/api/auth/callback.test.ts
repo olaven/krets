@@ -62,8 +62,7 @@ describe("The callback endpoint", () => {
         expect(user.customer_id).not.toEqual("default_customer_id");
     });
 
-    //NOTE: `customer_id` was introduced after users were added to production system. 
-    // this tests a "on-demand migration"
+    //NOTE: The 'default_customer_id' that this apprently tests is replaced by checking stripe store
     it("Does create a new customer ID if not already created", async () => {
 
         const default_customer_id = "default_customer_id";
@@ -80,4 +79,8 @@ describe("The callback endpoint", () => {
         expect(before.customer_id).toEqual(default_customer_id);
         expect(after.customer_id).not.toEqual(default_customer_id);
     });
+
+
+
+    it("Does create a customer id on a user without customer id")
 });
