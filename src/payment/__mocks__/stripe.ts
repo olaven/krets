@@ -16,7 +16,9 @@ export const stripe = {
         },
         retrieve: (id: string) => {
 
-            customers.includes(id);
+            if (customers.includes(id))
+                return customers[customers.indexOf(id)];
+            throw "Customer does not exist"
         }
     }
 }

@@ -1,6 +1,6 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
-import { registerCustomer, getCustomer } from '../../../payment/customer';
+import { registerCustomer, customerExists } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
 import { NextApiHandler } from 'next';
@@ -16,8 +16,8 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
     await users.createUser({ id: sub, customer_id });
   }
 
-  const customer = await getCustomer(user.customer_id);
-  if (!customer) {
+  const customerRegistered = await customerExists(user.customer_id);
+  if (user && !customerRegistered) {
 
     const customer_id = await registerCustomer(email);
     await users.updateUser({ ...user, customer_id });
