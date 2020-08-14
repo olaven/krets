@@ -12,11 +12,15 @@ import { postSubscription } from '../../fetchers';
 import { PaymentRequestModel } from '../../models';
 import { UserContext } from '../../context/UserContext';
 import * as text from "../../text";
+import Stripe from 'stripe';
+import { Thanks } from '../tiny/Thanks';
 
 
 type Props = { priceId: string }
 export function PaymentCard({ priceId }: Props) {
 
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<StripeError>(null);
     const { databaseUser } = useContext(UserContext);
 
@@ -45,9 +49,11 @@ export function PaymentCard({ priceId }: Props) {
         withStripeErrorHandling(async () => {
 
             const [status, subscription] = await postSubscription(paymentRequest)
+
+            setLoading(false);
             if (status === CREATED) {
 
-                console.log("Created a subscription", subscription);
+                setSuccess(true);
             } else {
 
                 console.error("status when creating subscription:", status);
@@ -56,6 +62,7 @@ export function PaymentCard({ priceId }: Props) {
 
     const onPay = async () => {
 
+        setLoading(true);
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: elements.getElement(CardElement)
@@ -74,24 +81,28 @@ export function PaymentCard({ priceId }: Props) {
         }
     }
 
-    return <>
-        <CardElement
-            options={{
-                style: {
-                    base: {
-                        fontSize: '26px',
-                        color: '#424770',
-                        '::placeholder': {
-                            color: '#aab7c4',
+    return success ?
+        <Thanks /> :
+        <>
+            <CardElement
+                options={{
+                    style: {
+                        base: {
+                            fontSize: '26px',
+                            color: '#424770',
+                            '::placeholder': {
+                                color: '#aab7c4',
+                            },
+                        },
+                        invalid: {
+                            color: '#9e2146',
                         },
                     },
-                    invalid: {
-                        color: '#9e2146',
-                    },
-                },
-            }}
-        />
-        <Button width={[1]} onClick={onPay}>{text.upgrade.pay}</Button>
-        {error && <Text color="failure">{error.message}</Text>}
-    </>
+                }}
+            />
+            {loading ?
+                <Text>{text.upgrade.loading}</Text> :
+                <Button width={[1]} onClick={onPay}>{text.upgrade.pay}</Button>}
+            {error && <Text color="failure">{error.message}</Text>}
+        </>;
 };
