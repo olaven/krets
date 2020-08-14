@@ -1,10 +1,12 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
-import { registerCustomer } from '../../../payment/customer';
+import { registerCustomer, getCustomer } from '../../../payment/customer';
 import { AuthModel } from '../../../models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
 import { NextApiHandler } from 'next';
 
+
+//TODO: Refactor: this function is messy and does several things
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
   const user = await users.getUser(sub);
@@ -13,13 +15,12 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
     const customer_id = await registerCustomer(email);
     await users.createUser({ id: sub, customer_id });
   }
-  else if (user.customer_id === "default_customer_id") {
 
-    //NOTE: "on demand migration" from old system where customer_id did not exist. TODO: migrate all existing users to some customer_id, remove default value on column and remove this code section
+  const customer = await getCustomer(user.customer_id);
+  if (!customer) {
+
     const customer_id = await registerCustomer(email);
-    await users.updateUser({
-      id: sub, customer_id
-    });
+    await users.updateUser({ ...user, customer_id });
   }
 };
 
