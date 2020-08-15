@@ -260,6 +260,7 @@ export const upgrade = strings({
         choosePrice: "Velg denne 💡",
         priceChosen: "Chosen 🙌",
         pay: "Pay now",
+        loading: "Registering.. Thanks for our patience!"
     },
     no: {
         heading: "Oppgrader Krets!",
@@ -267,5 +268,6 @@ export const upgrade = strings({
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
         pay: "Betal nå",
+        loading: "Registrerer.. Takk for tålmodigheten!"
     }
 })
