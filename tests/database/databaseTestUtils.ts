@@ -1,5 +1,6 @@
 import * as faker from "faker";
 import { users, pages, responses } from "../../src/database/database";
+import { first, run } from "../../src/database/helpers/query";
 import { PageModel, ResponseModel, Emotion, UserModel } from "../../src/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
@@ -25,6 +26,12 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
         contact_details: contactDetails
     });
 
+
+export const fakeCreationDate = (response: ResponseModel) => first<ResponseModel>(
+    `update responses set created_at = $2 where id = $1 returning *`,
+    [response.id, faker.date.past(1)]
+);
+
 export const blindSetup = async (): Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await users.createUser(randomUser());
@@ -34,7 +41,9 @@ export const blindSetup = async (): Promise<[PageModel, UserModel, ResponseModel
     const responseCount = faker.random.number({ min: 1, max: 30 });
     for (let i = 0; i < responseCount; i++) {
 
-        const response = await responses.createResponse(randomResponse(page.id));
+        const response = await fakeCreationDate(
+            (await responses.createResponse(randomResponse(page.id)))
+        );
         createdResonses.push(response);
     }
 

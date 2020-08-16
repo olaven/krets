@@ -1,6 +1,6 @@
 import { withDatabase, rows, first } from "./helpers/helpers";
-import { ResponseModel, Emotion, CoordinateModel } from "../models";
-import { createWatchCompilerHost } from "typescript";
+import { ResponseModel, Emotion, CoordinateModel, PageModel } from "../models";
+import { pages } from "./pages";
 
 /**
 * The database expects `emotion` to have type `integer`, while 
@@ -36,7 +36,7 @@ const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async cli
 const createResponse = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
-    return first(
+    return first<ResponseModel>(
         "insert into responses(emotion, text, page_id, contact_details) values($1, $2, $3, $4) RETURNING *",
         [emotion, response.text, response.page_id, response.contact_details]
     );
@@ -54,6 +54,9 @@ const getAverageEmotionByPage = async (pageId: string) => {
         0 // If there are no responses
 }
 
+//FIXME: fugly function. 
+//THINKABOUT: calucate chart separately from data fetching 
+//THINKABOUT: perhaps should be calculated differently than "all on-demand"
 export const getLineCoordinates = async (pageId: string) => {
 
     const responses = await rows<ResponseModel>(
@@ -67,27 +70,37 @@ export const getLineCoordinates = async (pageId: string) => {
 
     const coordinates: CoordinateModel[] = [];
 
-    outer:
     for (const limit of responses) {
 
         const relevant: ResponseModel[] = []
         for (const response of responses) {
 
             if (new Date(response.created_at) > new Date(limit.created_at))
-                continue outer;
+                continue; //continue outer? 
 
             relevant.push(response);
         }
 
+        let sum = 0
+        for (const response of relevant) {
+
+            sum += response.emotion as any as number;
+        }
+
+        const average = sum / responses.length
         const coordinate = {
-            x: "TODO", y: "TODO"
+            x: new Date(limit.created_at),
+            y: average,
+            label: responses[responses.length - 1].id === limit.id ?
+                (await pages.getPage(pageId)).name :
+                null
         }
 
         coordinates.push(coordinate)
     }
 
     return coordinates;
-}
+};
 
 export const responses = ({
     getResponses,

@@ -4,6 +4,14 @@ import { withAuthentication, withCors, withErrorHandling, withMethodHandlers, wi
 import { responses, pages } from '../../../../../database/database';
 import auth0 from "../../../../../auth/auth0";
 
+
+//NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
+const getId = (url: string) => {
+
+    const split = url.split("/");
+    return split[split.length - 3];
+};
+
 const withMiddleware = (handler: NextApiHandler) =>
     withErrorHandling(
         withCors(
@@ -14,14 +22,6 @@ const withMiddleware = (handler: NextApiHandler) =>
             )
         )
     );
-
-
-//NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
-const getId = (url: string) => {
-
-    const split = url.split("/");
-    return split[split.length - 3];
-};
 
 export default withMiddleware(async (request, response) => {
 

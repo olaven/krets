@@ -59,5 +59,59 @@ describe("The endpoint for average all-time score", () => {
             const { status } = await authenticatedFetch(other.id, fullURL(page.id));
             expect(status).toEqual(403)
         });
+
+        it("Returns something looking like coordinates", async () => {
+
+            const [page, user, responses] = await blindSetup();
+            const response = await authenticatedFetch(user.id, fullURL(page.id));
+
+            const coordinates = await response.json();
+
+            expect(coordinates.length).toEqual(responses.length);
+            for (const coordinate of coordinates) {
+
+                expect(coordinate.x).toBeDefined();
+                expect(coordinate.y).toBeDefined();
+            };
+        });
+
+        it("Returns a label on the last coordinate", async () => {
+
+            const [page, user] = await blindSetup();
+            const response = await authenticatedFetch(user.id, fullURL(page.id));
+            const coordinates = await response.json();
+
+            const coordinate = coordinates[coordinates.length - 1];
+            expect(coordinate.label).toBeDefined();
+        });
+
+        it("Does _not_ return a label on first coordinate", async () => {
+
+            const [page, user] = await blindSetup();
+            const response = await authenticatedFetch(user.id, fullURL(page.id));
+            const coordinates = await response.json();
+
+            if (coordinates.length === 1) return; //NOTE: May happen due to randomness 
+
+            const coordinate = coordinates[0];
+            expect(coordinate.label).not.toBeDefined();
+        });
+
+        it("Only returns label on the last coordinage", async () => {
+
+            const [page, user, responses] = await blindSetup();
+            const response = await authenticatedFetch(user.id, fullURL(page.id));
+            const coordinates = await response.json();
+
+            const last = coordinates[coordinates.length - 1];
+            expect(last.label).toBeDefined();
+
+
+            coordinates.pop();
+            for (const coordinate of coordinates) {
+
+                expect(coordinate.label).not.toBeDefined();
+            }
+        });
     });
 });

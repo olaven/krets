@@ -1,7 +1,8 @@
 import * as faker from "faker";
-import { randomResponse, randomUser, randomPage, blindSetup } from "./databaseTestUtils";
+import { randomResponse, randomUser, randomPage, blindSetup, fakeCreationDate } from "./databaseTestUtils";
 import { convertEmotion } from "../../src/database/responses";
 import { users, pages, responses } from "../../src/database/database";
+import { ResponseModel } from "../../src/models";
 
 
 describe("Database repository for pages", () => {
@@ -133,7 +134,7 @@ describe("Database repository for pages", () => {
 
         it("Returns the same amount of responses as perssited", async () => {
 
-            const [page, user, persisted] = await blindSetup();
+            const [page, _, persisted] = await blindSetup();
             const coordinates = await responses.getLineCoordinates(page.id);
 
             expect(persisted.length).toBeGreaterThan(0);
@@ -148,6 +149,45 @@ describe("Database repository for pages", () => {
 
             expect(coordinate.x).toBeDefined();
             expect(coordinate.y).toBeDefined();
+        });
+
+        it("Does calculate correctly", async () => {
+
+            const owner = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(owner.id));
+
+            const testResponses: ResponseModel[] = [
+                {
+                    emotion: ":-)", // 2
+                    text: "",
+                    page_id: page.id,
+                },
+                {
+                    emotion: ":-|", // 1
+                    text: "",
+                    page_id: page.id
+                },
+                {
+                    emotion: ":-(", // 0
+                    text: "",
+                    page_id: page.id
+                }
+            ];
+
+            for (const response of testResponses) {
+
+                await responses.createResponse(
+                    await fakeCreationDate(
+                        response
+                    )
+                )
+            }
+
+            const coordinates = responses.getLineCoordinates(page.id)
+            expect(coordinates).toEqual([{
+
+
+            }]) //TODO: fill inn 
         });
     });
 });
