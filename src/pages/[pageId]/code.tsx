@@ -24,33 +24,37 @@ export const DownloadQR = ({ page }) => {
     </Flex>
 }
 
-export default () => {
+const QRImage = ({ page }) => {
 
-
-
-    const pageId = useRouter().query.pageId as string;
-    const [page, _] = usePage(pageId as string);
-    const pageLink = `https://krets.app/${pageId}`;
+    const pageLink = `https://krets.app/${page?.id}`;
 
     const headingText = page ?
         `${text.page.header} ${page.name}` :
         text.page.loading;
 
+    return <Flex m={"auto"}>
+        <Box
+            m={"auto"}
+            p={[1, 2, 3]}
+            style={{ textAlign: "center" }}
+            sx={{
+                bg: "primary",
+            }}>
+            <div className={"qr-code"}>
+                <QRCode value={pageLink} enableCORS={false} size={350} fgColor={'teal'} />
+            </div>
+            <Heading my={[0, 1, 2]} m="auto" color={"secondary"}>{headingText}</Heading>
+        </Box>
+    </Flex>
+}
+
+export default () => {
+
+    const pageId = useRouter().query.pageId as string;
+    const [page, _] = usePage(pageId as string);
+
     return <Box m={"auto"} py={[4, 8, 16]}>
-        <Flex m={"auto"}>
-            <Box
-                m={"auto"}
-                p={[1, 2, 3]}
-                style={{ textAlign: "center" }}
-                sx={{
-                    bg: "primary",
-                }}>
-                <div className={"qr-code"}>
-                    <QRCode value={pageLink} enableCORS={false} size={350} fgColor={'teal'} />
-                </div>
-                <Heading my={[0, 1, 2]} m="auto" color={"secondary"}>{headingText}</Heading>
-            </Box>
-        </Flex>
+        <QRImage page={page} />
         <DownloadQR page={page} />
     </Box>
 }
