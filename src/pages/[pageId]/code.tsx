@@ -7,20 +7,34 @@ import * as text from "../../text"
 import { Download } from "../../components/Code/download";
 import { UserContext } from "../../context/UserContext";
 
-export default () => {
+export const DownloadQR = ({ page }) => {
 
     const { authUser } = useContext(UserContext);
+    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
+
+    return <Flex>
+        <Box
+            m="auto"
+            p={[1, 2, 3]}
+        >
+            {userOwnsThePage && <Download
+                fileName={`${page?.name}-QR.png`}
+                querySelector=".qr-code > canvas" />}
+        </Box>
+    </Flex>
+}
+
+export default () => {
+
+
 
     const pageId = useRouter().query.pageId as string;
     const [page, _] = usePage(pageId as string);
-
     const pageLink = `https://krets.app/${pageId}`;
-    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
 
     const headingText = page ?
         `${text.page.header} ${page.name}` :
         text.page.loading;
-
 
     return <Box m={"auto"} py={[4, 8, 16]}>
         <Flex m={"auto"}>
@@ -37,15 +51,6 @@ export default () => {
                 <Heading my={[0, 1, 2]} m="auto" color={"secondary"}>{headingText}</Heading>
             </Box>
         </Flex>
-        <Flex>
-            <Box
-                m="auto"
-                p={[1, 2, 3]}
-            >
-                {userOwnsThePage && <Download
-                    fileName={`${page?.name}-QR.png`}
-                    querySelector=".qr-code > canvas" />}
-            </Box>
-        </Flex>
+        <DownloadQR page={page} />
     </Box>
 }
