@@ -1,5 +1,6 @@
 import { BAD_REQUEST } from 'node-kall';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { ResponseSection } from '../components/Page/ResponseSection';
 
 type Method = 'GET' | 'PUT' | 'PATCH' | 'DELETE' | 'POST' | 'OPTION' | 'HEAD'
 

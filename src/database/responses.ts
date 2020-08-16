@@ -1,5 +1,6 @@
 import { withDatabase, rows, first } from "./helpers/helpers";
-import { ResponseModel, Emotion } from "../models";
+import { ResponseModel, Emotion, CoordinateModel } from "../models";
+import { createWatchCompilerHost } from "typescript";
 
 /**
 * The database expects `emotion` to have type `integer`, while 
@@ -53,9 +54,44 @@ const getAverageEmotionByPage = async (pageId: string) => {
         0 // If there are no responses
 }
 
+export const getLineCoordinates = async (pageId: string) => {
+
+    const responses = await rows<ResponseModel>(
+        `select * from responses where page_id = $1 order by created_at asc`,
+        [pageId]
+    );
+
+    //NOTE: non-functional loops for performance reasons, as the above query could return a lot of data
+    // https://stackoverflow.com/questions/43031988/javascript-efficiency-for-vs-foreach/43032526#43032526
+    // https://medium.com/tech-tajawal/loops-performances-in-node-js-9fbccf2d6aa6
+
+    const coordinates: CoordinateModel[] = [];
+
+    outer:
+    for (const limit of responses) {
+
+        const relevant: ResponseModel[] = []
+        for (const response of responses) {
+
+            if (new Date(response.created_at) > new Date(limit.created_at))
+                continue outer;
+
+            relevant.push(response);
+        }
+
+        const coordinate = {
+            x: "TODO", y: "TODO"
+        }
+
+        coordinates.push(coordinate)
+    }
+
+    return coordinates;
+}
 
 export const responses = ({
     getResponses,
     createResponse,
-    getAverageEmotionByPage
+    getAverageEmotionByPage,
+    getLineCoordinates
 });

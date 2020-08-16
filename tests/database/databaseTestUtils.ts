@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import { users, pages, responses } from "../../src/database/database";
 import { PageModel, ResponseModel, Emotion, UserModel } from "../../src/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
@@ -23,3 +24,19 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
         emotion: emotion,
         contact_details: contactDetails
     });
+
+export const blindSetup = async (): Promise<[PageModel, UserModel, ResponseModel[]]> => {
+
+    const user = await users.createUser(randomUser());
+    const page = await pages.createPage(randomPage(user.id));
+    const createdResonses = [];
+
+    const responseCount = faker.random.number({ min: 1, max: 30 });
+    for (let i = 0; i < responseCount; i++) {
+
+        const response = await responses.createResponse(randomResponse(page.id));
+        createdResonses.push(response);
+    }
+
+    return [page, user, createdResonses];
+}

@@ -49,6 +49,12 @@ export interface EmailModel {
     text: string
 }
 
+// Charts 
+export interface CoordinateModel {
+    y: number | string,
+    x: number | string,
+    label?: string
+}
 
 // Payment API 
 export interface PaymentRequestModel {
