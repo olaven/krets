@@ -43,7 +43,7 @@ describe("The endpoint for average all-time score", () => {
             for (let method of ["POST", "PUT", "PATCH", "OPTIONS", "HEAD"]) {
 
                 const { status } = await authenticatedFetch(user.id, fullURL(page.id), { method })
-                expect(status).toEqual(400);
+                expect(status).toEqual(405);
             }
 
             const { status } = await authenticatedFetch(user.id, fullURL(page.id), { method: "GET" })

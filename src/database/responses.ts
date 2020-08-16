@@ -91,13 +91,13 @@ export const getLineCoordinates = async (pageId: string) => {
         const coordinate = {
             x: new Date(limit.created_at),
             y: average,
-            label: responses[responses.length - 1].id === limit.id ?
-                (await pages.getPage(pageId)).name :
-                null
         }
 
         coordinates.push(coordinate)
     }
+
+    const page = await pages.getPage(pageId)
+    coordinates[coordinates.length - 1].label = page.name
 
     return coordinates;
 };

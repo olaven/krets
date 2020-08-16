@@ -1,7 +1,7 @@
 import { OK } from "node-kall";
 //import { useRouter } from "next/router"; //TODO: use this once workaround not needed
 import { responses } from "../../../../database/database";
-import { withAuthentication, withCors } from "../../../../middleware/middleware";
+import { withAuthentication, withCors, withMethods } from "../../../../middleware/middleware";
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
 const getId = (url: string) => {
@@ -12,14 +12,16 @@ const getId = (url: string) => {
 };
 
 export default withCors(
-    withAuthentication(async function average(request, response) {
+    withAuthentication(
+        withMethods(["GET"])(async function average(request, response) {
 
-        const id = getId(request.url)
-        const average = await responses.getAverageEmotionByPage(id);
+            const id = getId(request.url)
+            const average = await responses.getAverageEmotionByPage(id);
 
-        response
-            .status(OK)
-            .send(average)
-    })
+            response
+                .status(OK)
+                .send(average)
+        })
+    )
 );
 
