@@ -1,10 +1,10 @@
 import { Button } from "rebass";
 import { useState, useEffect } from "react";
+import * as text from "../../text";
 
 export const Download = ({ querySelector, fileName }) => {
 
     const [canvas, setCanvas] = useState<HTMLCanvasElement>(null);
-    const [href, setHref] = useState("")
 
     useEffect(() => {
         const canvas = document.querySelector(querySelector) as HTMLCanvasElement;
@@ -13,8 +13,11 @@ export const Download = ({ querySelector, fileName }) => {
 
 
     return <Button href={canvas?.toDataURL()} download={fileName}>
-        <a href={canvas?.toDataURL()} download={fileName}>
-            Last ned!
+        <a
+            href={canvas?.toDataURL()}
+            download={fileName}
+            style={{ color: "inherit" }}>
+            {text.page.download}
         </a>
     </Button>
 }

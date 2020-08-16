@@ -59,12 +59,14 @@ export const response = strings({
 
 export const page = strings({
     en: {
-        header: "Give feedback to",
-        loading: "(Loading...)"
+        header: "Scan and give feedback to",
+        loading: "(Loading...)",
+        download: "Download!"
     },
     no: {
-        header: "Gi tilbakemelding til",
-        loading: "(Laster...)"
+        header: "Scan og gi tilbakemelding til",
+        loading: "(Laster...)",
+        download: "Last ned"
     }
 })
 

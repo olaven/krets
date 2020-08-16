@@ -1,18 +1,21 @@
 import { useRouter } from "next/router";
 import { QRCode } from "react-qrcode-logo";
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Flex, Heading } from "rebass";
 import { usePage } from "../../effects/usePage";
 import * as text from "../../text"
 import { Download } from "../../components/Code/download";
+import { UserContext } from "../../context/UserContext";
 
 export default () => {
 
-    const router = useRouter();
-    const { pageId } = router.query;
-    //TODO: use pagecontext to pull correct page 
-    const pageLink = `https://krets.app/${pageId}`;
+    const { authUser } = useContext(UserContext);
+
+    const pageId = useRouter().query.pageId as string;
     const [page, _] = usePage(pageId as string);
+
+    const pageLink = `https://krets.app/${pageId}`;
+    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
 
     const headingText = page ?
         `${text.page.header} ${page.name}` :
@@ -33,9 +36,16 @@ export default () => {
                 </div>
                 <Heading my={[0, 1, 2]} m="auto" color={"secondary"}>{headingText}</Heading>
             </Box>
-            <Download
-                fileName={`${page?.name}-QR.png`}
-                querySelector=".qr-code > canvas" />
+        </Flex>
+        <Flex>
+            <Box
+                m="auto"
+                p={[1, 2, 3]}
+            >
+                {userOwnsThePage && <Download
+                    fileName={`${page?.name}-QR.png`}
+                    querySelector=".qr-code > canvas" />}
+            </Box>
         </Flex>
     </Box>
 }
