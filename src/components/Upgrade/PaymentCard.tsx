@@ -12,7 +12,6 @@ import { postSubscription } from '../../fetchers';
 import { PaymentRequestModel } from '../../models';
 import { UserContext } from '../../context/UserContext';
 import * as text from "../../text";
-import Stripe from 'stripe';
 import { Thanks } from '../tiny/Thanks';
 
 
@@ -48,16 +47,12 @@ export function PaymentCard({ priceId }: Props) {
     const createSubscription = (paymentRequest: PaymentRequestModel) =>
         withStripeErrorHandling(async () => {
 
-            const [status, subscription] = await postSubscription(paymentRequest)
+            const [status] = await postSubscription(paymentRequest)
 
             setLoading(false);
-            if (status === CREATED) {
-
-                setSuccess(true);
-            } else {
-
+            setSuccess(status === CREATED);
+            if (status !== CREATED)
                 console.error("status when creating subscription:", status);
-            }
         })
 
     const onPay = async () => {
