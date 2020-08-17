@@ -8,8 +8,6 @@ type PriceProps = { price: Stripe.Price, selectedPriceId: string, setSelectedPri
 const PriceRepresentation = ({ price, selectedPriceId, setSelectedPrice }: PriceProps) => {
 
     const isSelected = selectedPriceId === price.id;
-
-
     const [firstTier, secondTier] = price.tiers;
 
     return <Box>
