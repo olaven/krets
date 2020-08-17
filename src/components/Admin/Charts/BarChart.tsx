@@ -1,8 +1,12 @@
+import { OK } from "node-kall"
 import { VictoryChart, VictoryBar, VictoryAxis, Box } from "victory";
 import { ResponseModel } from "../../../models";
 import { PageInformation } from "../../../context/CompareContext";
 import { emotionToNumeric } from "./ChartUtils";
 import * as text from "../../../text";
+import { getOverallAverage } from "../../../fetchers";
+import { useState } from "react";
+import { asyncEffect } from "../../../effects/asyncEffect";
 
 const responsesToAverage = (responses: ResponseModel[]) =>
     responses.length === 0 ?
@@ -29,6 +33,27 @@ const Axis = () => <>
         }} />
 </>
 
+const Bar = ({ page }) => {
+
+    const [average, setAverage] = useState(0);
+
+    asyncEffect(async () => {
+
+        const [status, average] = await getOverallAverage(page.id);
+        if (status === OK) {
+
+            setAverage(average);
+        }
+    }, []);
+
+    console.log(average);
+
+    //NOTE: Related issue: https://github.com/FormidableLabs/victory/issues/1667
+    return <VictoryBar
+        data={[{ x: page.name, y: average }]}
+        style={{ data: { fill: page.color || "orange", opacity: 0.7 } }} />
+}
+
 export const BarChart = ({ pageInformations }) => <span aria-label="bar-chart-label">
     <VictoryChart
         animate={{
@@ -37,9 +62,9 @@ export const BarChart = ({ pageInformations }) => <span aria-label="bar-chart-la
         }}
         domainPadding={{ x: 15 }}
     >
-        <VictoryBar
-            data={toChartData(pageInformations)}
-            style={{ data: { fill: "orange", opacity: 0.7 } }} />
+        {pageInformations.map(({ page }) =>
+            <Bar page={page} />
+        )}
         <Axis />
     </VictoryChart>
 </span>
