@@ -41,7 +41,7 @@ describe("Endpoints for database user data", () => {
             for (let method of ["PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
 
                 const { status } = await authenticatedFetch(id, fullUrl(id), { method });
-                expect(status).toEqual(400);
+                expect(status).toEqual(405);
             }
         });
 
