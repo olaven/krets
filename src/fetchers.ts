@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel } from "./models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel } from "./models";
 import Stripe from "stripe";
 
 export const putPage = (page: PageModel) =>
@@ -28,6 +28,9 @@ export const postCategory = (category: CategoryModel) =>
 
 export const getOverallAverage = (pageId: string) =>
     get<number>(`/api/pages/${pageId}/average`);
+
+export const getLineCoordinates = (pageId: string) =>
+    get<CoordinateModel>(`/api/pages/${pageId}/charts/line`);
 
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);

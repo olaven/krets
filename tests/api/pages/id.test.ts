@@ -159,7 +159,7 @@ describe("Endpoints for specific page", () => {
 
 
             //NOTE: category id does not exist (may fail due to randomness, but very unlikely)
-            page.category_id = faker.random.number({ min: 3000, max: 10000 }).toString()
+            page.category_id = uid();
 
             const pageBeforeUpdate = await pages.getPage(page.id);
             const { status } = await putFetch(user.id, page.id, page);

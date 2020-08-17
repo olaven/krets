@@ -41,7 +41,7 @@
     "tippy.js": "^6.2.3",
     "tooltip-help-react": "^0.0.1",
     "typescript": "^3.9.5",
-    "victory": "^34.3.12"
+    "victory": "^35.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",

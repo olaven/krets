@@ -1,7 +1,7 @@
 import { OK } from "node-kall";
 import { useState } from "react";
 import Stripe from "stripe"
-import { asyncEffect } from "./useProducts";
+import { asyncEffect } from "./asyncEffect";
 import { getPrices } from "../fetchers";
 
 export const usePrices = (productId: string) => {

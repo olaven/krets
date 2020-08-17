@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { randomResponse, randomUser, randomPage } from "./databaseTestUtils";
+import { randomResponse, randomUser, randomPage, blindSetup } from "./databaseTestUtils";
 import { convertEmotion } from "../../src/database/responses";
 import { users, pages, responses } from "../../src/database/database";
 
@@ -107,5 +107,35 @@ describe("Database repository for pages", () => {
             const [response] = retrieved;
             expect(response.contact_details).toEqual(contact_details)
         });
-    })
+    });
+
+    describe("Calculation of line chart data", () => {
+
+        test("Does return an array", async () => {
+
+            const [page] = await blindSetup();
+            const coordinates = await responses.getLineCoordinates(page.id);
+
+            expect(coordinates).toBeInstanceOf(Array);
+        });
+
+        it("Returns the same amount of responses as perssited", async () => {
+
+            const [page, _, persisted] = await blindSetup();
+            const coordinates = await responses.getLineCoordinates(page.id);
+
+            expect(persisted.length).toBeGreaterThan(0);
+            expect(coordinates.length).toEqual(persisted.length)
+        });
+
+        it("Returns coordinates", async () => {
+
+            const [page] = await blindSetup();
+            const [coordinate] = await responses.getLineCoordinates(page.id);
+
+
+            expect(coordinate.x).toBeDefined();
+            expect(coordinate.y).toBeDefined();
+        });
+    });
 });

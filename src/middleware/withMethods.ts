@@ -1,4 +1,3 @@
-import { BAD_REQUEST } from 'node-kall';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 type Method = 'GET' | 'PUT' | 'PATCH' | 'DELETE' | 'POST' | 'OPTION' | 'HEAD'
@@ -18,6 +17,6 @@ export const withMethods = (methods: Method[]) =>
             included ?
                 handler(request, response) :
                 response
-                    .status(BAD_REQUEST)
+                    .status(405)
                     .send(null);
         }

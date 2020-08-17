@@ -37,6 +37,16 @@ describe("The endpoint for average all-time score", () => {
 
     describe("The actual endpoint", () => {
 
+        it("Returns 405 on methods other than GET", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
+            for (const method of ["PUT", "PATCH", "POST", "OPTIONS", "HEAD", "DELETE"]) {
+
+                const { status } = await authenticatedFetch(user.id, fullURL(page.id), { method });
+                expect(status).toEqual(405);
+            }
+        });
 
         it("Returns 401 if not authenticated", async () => {
 

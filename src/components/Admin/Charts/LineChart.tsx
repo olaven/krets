@@ -1,64 +1,47 @@
-import { ResponseModel, PageModel } from "../../../models";
 import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis } from "victory";
-import { emotionToNumeric } from "./ChartUtils";
+import { useState } from "react";
+import { filterBody } from "node-kall"
 import { PageInformation } from "../../../context/CompareContext";
-import { response } from "../../../text";
+import { getLineCoordinates } from "../../../fetchers";
+import { asyncEffect } from "../../../effects/asyncEffect";
 
-const getRelevant = (response: ResponseModel, responses: ResponseModel[]) =>
-    responses.filter(r => new Date(r.created_at).getTime() <= new Date(response.created_at).getTime());
 
-//TODO: this should be done in an SQL query backend 
-const sumEmotions = (responses: ResponseModel[]) => responses
-    .map(({ emotion }) => emotionToNumeric(emotion))
-    .reduce((a, b) => a + b)
+export const LineChart = ({ pageInformations }: { pageInformations: PageInformation[] }) => {
 
-const isLast = (element: any, array: any[]) =>
-    array.indexOf(element) === (array.length - 1)
+    const [pageWithCoordinates, setPageWithCoordinates] = useState([]);
 
-const toDateCoordinates = (page: PageModel, response: ResponseModel, responses: ResponseModel[]) => {
+    asyncEffect(async () => {
 
-    const relevant = getRelevant(response, responses);
-    const sum = sumEmotions(relevant);
-    const average = sum / relevant.length;
+        const pageWithCoordinates = await Promise.all(
+            pageInformations.map(({ page }) => page)
+                .map(async page => ({ page, coordinates: await filterBody(getLineCoordinates(page.id)) }))
+        )
 
-    return {
-        y: average,
-        x: new Date(response.created_at),
-        label: isLast(response, responses) ?
-            page.name : null
-    }
+        setPageWithCoordinates(pageWithCoordinates);
+    }, [pageInformations.length]);
+
+    return <span
+        aria-label="line-chart-label">
+        <VictoryChart
+            domainPadding={{ y: 10 }}
+            domain={{ y: [0, 2] }}
+        >
+            <VictoryAxis
+                dependentAxis
+                tickValues={[0, 1, 2]}
+                tickFormat={tick => [":-(", ":-|", ":-)"][tick]} //TODO: Proper emoji
+            />
+
+            {pageWithCoordinates.map(({ page, coordinates }) => <VictoryLine
+                name={`line_${page.id}`}
+                style={{
+                    data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 }
+                }}
+                data={coordinates}
+                labelComponent={< VictoryLabel dx={10} dy={15} renderInPortal />}
+                interpolation={"natural"}
+            />)}
+        </VictoryChart>
+    </span>
+
 }
-
-const toLines = (pageInformations: PageInformation[]) => pageInformations.map(({ page, responses }) => {
-
-    const chartData = responses
-        .map(response => toDateCoordinates(page, response, responses))
-
-    return (
-        <VictoryLine
-            key={page.id}
-            name={`line_${page.id}`}
-            style={{
-                data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 } //TODO: page.color
-            }}
-            data={chartData}
-            labelComponent={<VictoryLabel dx={10} dy={15} renderInPortal />}
-        />
-    );
-});
-
-export const LineChart = ({ pageInformations }: { pageInformations: PageInformation[] }) => <span
-    aria-label="line-chart-label">
-    <VictoryChart
-        domainPadding={{ y: 10 }}
-        domain={{ y: [0, 2] }}
-    >
-        <VictoryAxis
-            dependentAxis
-            tickValues={[0, 1, 2]}
-            tickFormat={tick => [":-(", ":-|", ":-)"][tick]} //TODO: Proper emoji
-        />
-        {toLines(pageInformations)}
-    </VictoryChart>
-</span>
-

@@ -54,7 +54,7 @@ export const DeletePage = () => {
     const WantsToDeleteToggle = () => <Button
         onClick={() => { setWantsToDelete(!wantsToDelete) }}
         backgroundColor={wantsToDelete ? "grey" : "failure"}>
-        {text.settings.deleteButton}
+        {text.settings.deletePageButton}
     </Button>
 
     const Confirmation = () => <Box>
