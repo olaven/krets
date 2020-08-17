@@ -1,8 +1,6 @@
-import { OK, filterBody } from "node-kall"
+import { filterBody } from "node-kall"
 import { VictoryChart, VictoryBar, VictoryAxis, Box } from "victory";
-import { ResponseModel } from "../../../models";
 import { PageInformation } from "../../../context/CompareContext";
-import { emotionToNumeric } from "./ChartUtils";
 import * as text from "../../../text";
 import { getOverallAverage } from "../../../fetchers";
 import { useState } from "react";
