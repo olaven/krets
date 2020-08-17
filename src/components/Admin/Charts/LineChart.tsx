@@ -1,9 +1,9 @@
 import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis } from "victory";
-import { PageInformation } from "../../../context/CompareContext";
+import { useEffect, useState } from "react";
 import { OK } from "node-kall"
+import { PageInformation } from "../../../context/CompareContext";
 import { getLineCoordinates } from "../../../fetchers";
-import { useState } from "react";
-import { asyncEffect } from "../../../effects/useProducts";
+import { asyncEffect } from "../../../effects/asyncEffect";
 
 
 const PageLine = ({ page }) => {
@@ -23,16 +23,24 @@ const PageLine = ({ page }) => {
         }
     }, []);
 
-    console.log("coordinates rendering: ", coordinates)
-    return <VictoryLine
-        name={`line_${page.id}`}
-        style={{
-            data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 }
-        }}
-        data={coordinates}
-        labelComponent={<VictoryLabel dx={10} dy={15} renderInPortal />}
-        interpolation={"natural"}
-    />
+    /*
+        NOTE: Lines not getting updated. 
+        I have posted [an issue](https://github.com/FormidableLabs/victory/issues/1667). 
+        Waiting for awhile, seeing if the Victory-maintainer sees something I don't. 
+    */
+    console.log("GOing for coordinatse", coordinates);
+    return coordinates.length === 0 ?
+        null :
+        <VictoryLine
+            name={`line_${page.id}`}
+            style={{
+                data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 }
+            }}
+            data={coordinates}
+            labelComponent={< VictoryLabel dx={10} dy={15} renderInPortal />}
+            interpolation={"natural"}
+        />
+
 }
 
 export const LineChart = ({ pageInformations }: { pageInformations: PageInformation[] }) => <span
