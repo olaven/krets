@@ -165,7 +165,7 @@ describe("Endpoints for specific page", () => {
             const { status } = await putFetch(user.id, page.id, page);
             const pageAfterUpdate = await pages.getPage(page.id);
 
-            expect(status).toEqual(400);
+            expect(status).toEqual(405);
             expect(pageBeforeUpdate.category_id).toBeNull();
             expect(pageAfterUpdate.category_id).toBeNull();
         });
