@@ -56,14 +56,14 @@ export const PageCreator = () => {
     };
 
     return <>
-        <HelpButton />
         <Flex py={[1, 2, 3]}>
 
             <Box width={[0, 1 / 3]} />
             <Box as='form' onSubmit={e => e.preventDefault()} width={[1, 1 / 3]}>
 
-                <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
+                <HelpButton />
 
+                <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
                 <Flex>
                     <Tooltip content={text.tooltips.pageCreatorInput}>
                         <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
