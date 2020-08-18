@@ -32,13 +32,12 @@ export const fakeCreationDate = (response: ResponseModel) => first<ResponseModel
     [response.id, faker.date.past(1)]
 );
 
-export const blindSetup = async (): Promise<[PageModel, UserModel, ResponseModel[]]> => {
+export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 })): Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await users.createUser(randomUser());
     const page = await pages.createPage(randomPage(user.id));
     const createdResonses = [];
 
-    const responseCount = faker.random.number({ min: 1, max: 30 });
     for (let i = 0; i < responseCount; i++) {
 
         const response = await fakeCreationDate(
@@ -47,5 +46,7 @@ export const blindSetup = async (): Promise<[PageModel, UserModel, ResponseModel
         createdResonses.push(response);
     }
 
+    //NOTE: as `fakeCreationDate` messes with sorting
+    createdResonses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [page, user, createdResonses];
 }

@@ -1,5 +1,5 @@
-import { withDatabase, rows, first } from "./helpers/helpers";
-import { ResponseModel, Emotion, CoordinateModel, PageModel } from "../models/models";
+import { rows, first } from "./helpers/helpers";
+import { ResponseModel, Emotion, CoordinateModel } from "../models/models";
 import { pages } from "./pages";
 
 /**
@@ -19,13 +19,25 @@ export const convertEmotion = {
 }
 
 
-const getResponses = async (pageId: string) => {
+type PaginationOptions = {
+    amount: number,
+    key?: string
+}
+const defaultOptions: PaginationOptions = {
+    amount: 10,
+    //key: null
+}
+const getResponses = async (pageId: string, options = defaultOptions) => {
 
+    //THINKABOUT: how to handle absence of options.key in a cleaner way 
+
+    const args = [pageId, options.amount]
     const responses = await rows(`
         select distinct * from responses 
-        where page_id = $1
-        order by created_at desc`,
-        [pageId]
+        where page_id = $1 ${options.key ? `and created_at < $3` : ``}
+        order by created_at desc
+        limit $2`,
+        options.key ? [...args, options.key] : args
     ) as ResponseModel[];
 
     responses.forEach((response) => {

@@ -107,6 +107,72 @@ describe("Database repository for pages", () => {
             const [response] = retrieved;
             expect(response.contact_details).toEqual(contact_details)
         });
+
+
+        describe("Pagination behaviour", async () => {
+
+            it("Reading returns 10 responses by default", async () => {
+
+                const pageSize = 10;
+                //NOTE: persisting more than pageSize
+                const [page, owner, persisted] = await blindSetup(pageSize + 5)
+                const retrieved = await responses.getResponses(page.id)
+
+                expect(persisted.length).toBeGreaterThan(pageSize)
+                expect(retrieved.length).toEqual(pageSize);
+            });
+
+            it("Is possible to specify other pageSize", async () => {
+
+                const pageSize = 2;
+                const [page] = await blindSetup(pageSize + 3);
+
+                const retrieved = await responses.getResponses(page.id, {
+                    amount: pageSize
+                });
+                expect(retrieved.length).toEqual(pageSize);
+            });
+
+            it("Returns only after given creation date key", async () => {
+
+                const pageSize = 5;
+                const [page, _, persisted] = await blindSetup(pageSize);
+
+                const [first, second, third] = persisted;
+
+                const retrieved = (await responses.getResponses(page.id, {
+                    amount: pageSize,
+                    key: second.created_at //NOTE: everything _after_ second
+                })).map(r => r.id);
+
+                expect(retrieved).not.toContain(first.id);//as comes before key 
+                expect(retrieved).not.toContain(second.id);//as is equal to key 
+                expect(retrieved).toContain(third.id);
+
+                expect(persisted.length).toEqual(pageSize) //all should be in the database
+                expect(retrieved.length).toEqual(pageSize - 2) // all, but first and second was excluded 
+            });
+
+            it("Returns only after given creation date key, limited by pageSize", async () => {
+
+                const pageSize = 2;
+                const [page, _, persisted] = await blindSetup(8); //NOTE: four times page size
+
+                const [first, second] = persisted;
+
+                const retrieved = (await responses.getResponses(page.id, {
+                    amount: pageSize,
+                    key: first.created_at //NOTE: everything _after_ first
+                })).map(r => r.id);
+
+                expect(retrieved).not.toContain(first.id);//as comes before key 
+                expect(retrieved).toContain(second.id);
+
+                expect(retrieved.length).toEqual(pageSize);
+                expect(persisted.length).toEqual(8)
+
+            });
+        })
     });
 
     describe("Calculation of line chart data", () => {
