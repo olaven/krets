@@ -3,6 +3,7 @@ import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
 import querystring from "querystring";
 import { pages, responses } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers } from "../../../../middleware/middleware";
+import { ResponseModel, PaginatedModel } from "../../../../models/models";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -26,7 +27,7 @@ const getKey = (url: string) => {
 const getResponses = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getId(request.url);
-    const key = getKey(request.url) as string;
+    const requestKey = getKey(request.url) as string;
 
     const page = await pages.getPage(id);
 
@@ -40,13 +41,17 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
     }
 
 
-    const responseResult = await responses.getResponses(id, {
-        key,
+    const data = await responses.getResponses(id, {
+        key: requestKey,
         amount: 10
     });
+    const responseKey = data[data.length - 1]?.created_at;
 
     response
-        .json(responseResult);
+        .json({
+            data,
+            next: `/api/pages/${page.id}/responses?key=${responseKey}`
+        });
 }
 
 const postResponses = async (request: NextApiRequest, response: NextApiResponse) => {

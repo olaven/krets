@@ -1,7 +1,6 @@
-import { authenticatedFetch, setupServer, teardownServer, uid } from "../../apiTestUtils";
+import { authenticatedFetch, setupServer, teardownServer } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
-import querystring from "querystring";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
@@ -64,7 +63,7 @@ describe("The endpoint for responses", () => {
         const fetchResponse = await fetch(fullURL(page.id));
         expect(fetchResponse.status).toEqual(200);
 
-        const receivedResponses = await fetchResponse.json();
+        const receivedResponses = (await fetchResponse.json()).data;
         expect(receivedResponses.length).toEqual(2);
     });
 
@@ -97,7 +96,7 @@ describe("The endpoint for responses", () => {
         expect(fetchResponse.status).toEqual(201);
 
 
-        const retrievedResponses = await (await fetch(fullURL(page.id))).json();
+        const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
         const hasCorrect = retrievedResponses.find(r =>
             r.text === response.text &&
             r.emotion === response.emotion &&
@@ -141,7 +140,7 @@ describe("The endpoint for responses", () => {
             const [page, user, persisted] = await blindSetup(15);
 
             const response = await authenticatedFetch(user.id, fullURL(page.id))
-            const retrieved = await response.json();
+            const retrieved = (await response.json()).data;
 
             expect(retrieved.length).toEqual(10) //NOTE: 15 was persisted
         });
@@ -153,11 +152,10 @@ describe("The endpoint for responses", () => {
 
             expect(excluded.created_at).not.toContain("GMT");
             const response = await authenticatedFetch(user.id, fullURL(page.id, excluded.created_at));
-            const [firstRetrieved] = await response.json() as ResponseModel[];
+            const [firstRetrieved] = ((await response.json()).data) as ResponseModel[];
 
             expect(firstRetrieved.id).toEqual(firstExpected.id);
         });
-
 
 
         it("Returns responses wrapped in a PaginationModel", async () => {
