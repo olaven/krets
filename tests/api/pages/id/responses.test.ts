@@ -1,6 +1,7 @@
 import { authenticatedFetch, setupServer, teardownServer, uid } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
+import querystring from "querystring";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
@@ -16,6 +17,8 @@ describe("The endpoint for responses", () => {
 
     const fullURL = (pageId: string, paginationKey: string = null) =>
         `${url}/${pageId}/responses?key=${paginationKey}`;
+
+
 
     beforeAll(async () => {
 
@@ -148,10 +151,10 @@ describe("The endpoint for responses", () => {
             const [page, user, persisted] = await blindSetup(15);
             const [excluded, firstExpected] = persisted;
 
+            expect(excluded.created_at).not.toContain("GMT");
             const response = await authenticatedFetch(user.id, fullURL(page.id, excluded.created_at));
             const [firstRetrieved] = await response.json() as ResponseModel[];
 
-            //NOTE: perhaps query does not work
             expect(firstRetrieved.id).toEqual(firstExpected.id);
         });
 

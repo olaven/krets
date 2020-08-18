@@ -40,10 +40,10 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
 
     for (let i = 0; i < responseCount; i++) {
 
-        const response = await fakeCreationDate(
-            (await responses.createResponse(randomResponse(page.id)))
-        );
-        createdResonses.push(response);
+        const original = await responses.createResponse(randomResponse(page.id))
+        const alteredDate = await fakeCreationDate(original);
+
+        createdResonses.push(alteredDate);
     }
 
     //NOTE: as `fakeCreationDate` messes with sorting

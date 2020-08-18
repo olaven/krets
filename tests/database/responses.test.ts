@@ -109,7 +109,7 @@ describe("Database repository for pages", () => {
         });
 
 
-        describe("Pagination behaviour", async () => {
+        describe("Pagination behaviour", () => {
 
             it("Reading returns 10 responses by default", async () => {
 
