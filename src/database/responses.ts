@@ -1,5 +1,5 @@
 import { withDatabase, rows, first } from "./helpers/helpers";
-import { ResponseModel, Emotion, CoordinateModel, PageModel } from "../models";
+import { ResponseModel, Emotion, CoordinateModel, PageModel } from "../models/models";
 import { pages } from "./pages";
 
 /**

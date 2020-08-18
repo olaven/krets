@@ -5,7 +5,7 @@
 import React from "react";
 import CodePage from "../../src/pages/[pageId]/code"
 import { waitFor, render } from "@testing-library/react"
-import { PageModel } from "../../src/models";
+import { PageModel } from "../../src/models/models";
 import * as text from "../../src/text"
 import '@testing-library/jest-dom/extend-expect'
 import { mockFetch, mockRouter } from "./frontendTestUtils"

@@ -1,4 +1,4 @@
-import { CategoryModel } from "../models";
+import { CategoryModel } from "../models/models";
 import { first, rows } from "./helpers/helpers";
 
 const getByOwner = (ownerId: string) => rows<CategoryModel[]>(

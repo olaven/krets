@@ -1,5 +1,5 @@
 import { first } from "./helpers/helpers";
-import { UserModel } from "../models";
+import { UserModel } from "../models/models";
 import subscription from "../pages/api/payment/subscription";
 
 const getUser = (id: string) =>

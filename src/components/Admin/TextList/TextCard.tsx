@@ -1,6 +1,6 @@
 import { Card, Box, Flex, Text } from "rebass";
 import Emoji from "react-emoji-render";
-import { ResponseModel } from "../../../models";
+import { ResponseModel } from "../../../models/models";
 import * as text from "../../../text";
 
 

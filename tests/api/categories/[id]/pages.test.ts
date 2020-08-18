@@ -4,7 +4,7 @@ import handler from "../../../../src/pages/api/categories/[id]/pages";
 import faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { PageModel } from "../../../../src/models";
+import { PageModel } from "../../../../src/models/models";
 import { users, categories, pages } from "../../../../src/database/database";
 import { randomUser } from "../../../database/databaseTestUtils";
 

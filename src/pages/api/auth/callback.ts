@@ -1,7 +1,7 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
 import { registerCustomer, customerExists } from '../../../payment/customer';
-import { AuthModel } from '../../../models';
+import { AuthModel } from '../../../models/models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
 import { NextApiHandler } from 'next';
 

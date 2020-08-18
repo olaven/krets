@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, SetStateAction } from "react";
 import { get, OK } from "node-kall";
-import { AuthModel, UserModel } from "../models";
+import { AuthModel, UserModel } from "../models/models";
 
 interface IUserContext {
     databaseUser: UserModel,

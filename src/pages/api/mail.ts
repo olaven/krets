@@ -1,7 +1,7 @@
 import auth0 from '../../auth/auth0';
 import { IApiRoute } from '@auth0/nextjs-auth0/dist/handlers/require-authentication';
 import * as nodemailer from "nodemailer";
-import { EmailModel } from '../../models';
+import { EmailModel } from '../../models/models';
 import { withCors, withAuthentication, withErrorHandling, withMethods } from "../../middleware/middleware";
 
 const productionMail = {
