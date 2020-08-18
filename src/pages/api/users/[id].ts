@@ -31,6 +31,6 @@ export default withAuthentication(
 
                 return response
                     .status(status)
-                    .send(payload)
+                    .json(payload)
             }))
 );
