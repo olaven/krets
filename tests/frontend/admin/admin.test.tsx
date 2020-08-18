@@ -6,7 +6,7 @@ import React from "react";
 import { AdminPage } from "../../../src/components/Admin/AdminPage"
 import { TextList } from "../../../src/components/Admin/TextList/TextList";
 import { waitFor, render } from "@testing-library/react"
-import { ResponseModel } from "../../../src/models";
+import { Emotion, ResponseModel } from "../../../src/models";
 import * as text from "../../../src/text"
 import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
@@ -15,10 +15,16 @@ import { AdminPageContext } from "../../../src/context/AdminPageContext";
 import { UserContext } from "../../../src/context/UserContext";
 import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
 
+const randomEmotion = () => {
+
+    const emotions: Emotion[] = [":-)", ":-|", ":-("];
+    return emotions[faker.random.number({ min: 0, max: 2 })];
+}
+
 const fakeResponses = (amount: number): ResponseModel[] => new Array(amount).fill(0)
     .map(() => ({
         id: faker.random.uuid(),
-        emotion: ":-)", //TODO: make random
+        emotion: randomEmotion(),
         text: faker.random.alphaNumeric(10),
         page_id: faker.random.uuid(),
         created_at: faker.date.past(2).toString(),
@@ -116,6 +122,31 @@ describe("Conversion between emotins and numeric values", () => {
 
                 expect(rendered.getByText(response.text)).toBeInTheDocument();
             }
-        })
+        });
+
+        // As per issue #168
+        it("Renders sad responses", async () => {
+
+            //NOTE: sad emotion
+            const emotion: Emotion = ":-(";
+            const text = "Text of sad emotion";
+
+            const responses = [{
+                emotion,
+                text,
+                id: faker.random.uuid(),
+                page_id: faker.random.uuid(),
+                created_at: faker.date.past(2).toString(),
+            }]
+
+            mockRouter("some-id");
+            const rendered = render(
+                <AdminPageContext.Provider value={{ responses, responsesLoading: false, page: null, pageLoading: false }}>
+                    <TextList />
+                </AdminPageContext.Provider>
+            );
+
+            expect(rendered.getByText(text)).toBeInTheDocument();
+        });
     });
 });  
