@@ -128,6 +128,20 @@ describe("Database repository for pages", () => {
             expect(coordinates.length).toEqual(persisted.length)
         });
 
+        it("Returns responses sorted by date, with newest first", async () => {
+
+            const [page] = await blindSetup();
+            const retrieved = await responses.getResponses(page.id);
+
+            for (let i = 1; i < retrieved.length; i++) {
+
+                const previous = new Date(retrieved[i - 1].created_at).getTime();
+                const current = new Date(retrieved[i].created_at).getTime();
+
+                expect(previous).toBeGreaterThan(current);
+            }
+        });
+
         it("Returns coordinates", async () => {
 
             const [page] = await blindSetup();
