@@ -8,23 +8,20 @@ const FilterButton = ({ emotion, selected, setSelected }) => {
 
     useEffect(() => {
 
-        if (active && !selected.includes(emotion)) {
-
-            setSelected(
-                [emotion, ...selected]
-            );
-        } else {
-
-            setSelected(
+        setSelected(
+            active ?
+                [emotion, ...selected] :
                 selected.filter(e => e !== emotion)
-            );
-        }
-
+        )
     }, [active]);
 
-    return <Button onClick={
-        () => { setActive(!active) }
+    const onClick = () => {
+
+        setActive(!active);
+
     }
+
+    return <Button onClick={onClick}
         backgroundColor={active ? "primary" : "inactive"}
         m={[0, 1, 2]} >
         <Emoji text={emotion} />

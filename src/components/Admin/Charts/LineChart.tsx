@@ -33,6 +33,7 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
             />
 
             {pageWithCoordinates.map(({ page, coordinates }) => <VictoryLine
+                key={page.id}
                 name={`line_${page.id}`}
                 style={{
                     data: { stroke: page.color ? page.color : "cyan", strokeWidth: 5 }
