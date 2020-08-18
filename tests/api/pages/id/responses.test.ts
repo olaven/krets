@@ -1,10 +1,11 @@
-import { setupServer, teardownServer, uid } from "../../apiTestUtils";
+import { authenticatedFetch, setupServer, teardownServer, uid } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
-import { randomUser, randomPage, randomResponse } from "../../../database/databaseTestUtils";
+import { randomUser, randomPage, randomResponse, blindSetup } from "../../../database/databaseTestUtils";
+import { PaginatedModel, ResponseModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -13,8 +14,8 @@ describe("The endpoint for responses", () => {
     let server: Server;
     let url: string;
 
-    const fullURL = (brandId: string) =>
-        `${url}/${brandId}/responses`;
+    const fullURL = (pageId: string, paginationKey: string = null) =>
+        `${url}/${pageId}/responses?key=${paginationKey}`;
 
     beforeAll(async () => {
 
@@ -128,5 +129,43 @@ describe("The endpoint for responses", () => {
 
         const [retrievedResponse] = after;
         expect(retrievedResponse.contact_details).toEqual(contactDetails);
-    })
+    });
+
+    describe("Pagination functionality", () => {
+
+        it("Has a page size of 10", async () => {
+
+            const [page, user, persisted] = await blindSetup(15);
+
+            const response = await authenticatedFetch(user.id, fullURL(page.id))
+            const retrieved = await response.json();
+
+            expect(retrieved.length).toEqual(10) //NOTE: 15 was persisted
+        });
+
+        it("Returns persisted _after_ given key", async () => {
+
+            const [page, user, persisted] = await blindSetup(15);
+            const [excluded, firstExpected] = persisted;
+
+            const response = await authenticatedFetch(user.id, fullURL(page.id, excluded.created_at));
+            const [firstRetrieved] = await response.json() as ResponseModel[];
+
+            //NOTE: perhaps query does not work
+            expect(firstRetrieved.id).toEqual(firstExpected.id);
+        });
+
+
+
+        it("Returns responses wrapped in a PaginationModel", async () => {
+
+            const [page, user] = await blindSetup();
+            const response = await authenticatedFetch(user.id, fullURL(page.id));
+            const pagiantedModel = await response.json() as PaginatedModel<ResponseModel>;
+
+
+            expect(pagiantedModel.data).toBeDefined();
+            expect(pagiantedModel.next).toBeDefined();
+        })
+    });
 });

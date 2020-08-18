@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { pages, responses } from "../../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
+import querystring from "querystring";
+import { pages, responses } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers } from "../../../../middleware/middleware";
 
 
@@ -9,13 +10,24 @@ const getId = (url: string) => {
 
     const split = url.split("/");
     return split[split.length - 2];
-
 };
+
+//NOTE: same kind of workaround as `getId`
+//FIXME: super-naive. Update once tests are fixed as per #161
+const getKey = (url: string) => {
+    const parsed = querystring.decode(url.split("?")[1]);
+    return parsed.key === "null" ?
+        null :
+        parsed.key
+}
+
 
 //TODO: auth protection? 
 const getResponses = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getId(request.url);
+    const key = getKey(request.url) as string;
+
     const page = await pages.getPage(id);
 
     if (!page) {
@@ -27,7 +39,11 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
         return;
     }
 
-    const responseResult = await responses.getResponses(id);
+
+    const responseResult = await responses.getResponses(id, {
+        key,
+        amount: 10
+    });
 
     response
         .json(responseResult);

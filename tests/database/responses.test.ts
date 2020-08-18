@@ -170,7 +170,6 @@ describe("Database repository for pages", () => {
 
                 expect(retrieved.length).toEqual(pageSize);
                 expect(persisted.length).toEqual(8)
-
             });
         })
     });
