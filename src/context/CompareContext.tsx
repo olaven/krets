@@ -31,7 +31,7 @@ export const CompareContextProvider = ({ children }) => {
         const pageInformations = await Promise.all(
             selected.map(async id => ({
 
-                responses: await filterBody(getResponses(id)),
+                responses: (await filterBody(getResponses(id))).data,
                 page: await filterBody(getPage(id))
             }))
         );

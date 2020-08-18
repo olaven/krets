@@ -14,10 +14,11 @@ export const useResponses = (pageId: string): [ResponseModel[], boolean] => {
     useEffect(() => {
         (async () => {
 
-            const [status, responses] = await getResponses(pageId)
+            const [status, responsePage] = await getResponses(pageId)
             if (status === OK) {
 
-                setResponses(responses);
+                //console.log("Fetched responses", responsePage.data);
+                setResponses(responsePage.data);
             } else {
 
                 console.warn(`received ${status} when fetching responses for ${pageId}`);
