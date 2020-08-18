@@ -22,7 +22,7 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
 
         response
             .status(NOT_FOUND)
-            .send("No brand found");
+            .send("No page found");
 
         return;
     }

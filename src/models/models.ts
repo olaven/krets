@@ -8,3 +8,4 @@ export type { AuthModel } from "./AuthModel";
 export type { EmailModel } from "./EmailModel";
 export type { CoordinateModel } from "./CoordinateModel";
 export type { PaymentRequestModel } from "./PaymentModel"
+export type { PaginatedModel } from "./PaginatedModel";

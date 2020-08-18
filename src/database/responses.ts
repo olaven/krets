@@ -13,26 +13,27 @@ export const convertEmotion = {
         ":-|": 1,
         ":-(": 0
     })[emotion],
-    toModel: (emotion: number) => [
+    toModel: (emotion: number): Emotion => [
         ":-(", ":-|", ":-)"
-    ][emotion]
+    ][emotion] as Emotion
 }
 
-//TODO: should figure out a way to convert this over to `helper/query`-functions
-const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async client => {
 
-    const result = await client
-        .query(`
-            select distinct * from responses 
-            where page_id = $1
-            order by created_at desc
-        `, [
-            pageId]);
+const getResponses = async (pageId: string) => {
 
-    result.rows
-        .forEach(row => row.emotion = convertEmotion.toModel(row.emotion))
-    return result.rows;
-});
+    const responses = await rows(`
+        select distinct * from responses 
+        where page_id = $1
+        order by created_at desc`,
+        [pageId]
+    ) as ResponseModel[];
+
+    responses.forEach((response) => {
+        response.emotion = convertEmotion.toModel(response.emotion as any as number);
+    })
+
+    return responses;
+}
 
 const createResponse = async (response: ResponseModel) => {
 
