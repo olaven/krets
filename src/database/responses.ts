@@ -25,6 +25,7 @@ const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async cli
         .query(`
             select distinct * from responses 
             where page_id = $1
+            order by created_at desc
         `, [
             pageId]);
 
