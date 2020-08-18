@@ -46,6 +46,7 @@ export const BarChart = ({ pageInformations }: { pageInformations: PageInformati
         >
             {pageWithAverage.map(({ page, average }) =>
                 <VictoryBar
+                    key={page.id}
                     data={[{ x: page.name, y: average }]}
                     style={{ data: { fill: page.color || "orange", opacity: 0.7 } }} />
             )}

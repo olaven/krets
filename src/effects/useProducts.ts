@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Stripe } from "stripe";
 import { OK } from "node-kall";
 import { getProducts } from "../fetchers";
