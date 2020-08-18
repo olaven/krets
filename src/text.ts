@@ -247,11 +247,13 @@ export const moodGraph = strings({
 export const responseList = strings({
     en: {
         loading: "Loading responses..",
-        noResponses: "No responses yet"
+        noResponses: "No responses yet",
+        loadMore: "Load more responses",
     },
     no: {
         loading: "Laster responser..",
-        noResponses: "Ingen responser enda"
+        noResponses: "Ingen responser enda",
+        loadMore: "Last flere svar",
     }
 });
 

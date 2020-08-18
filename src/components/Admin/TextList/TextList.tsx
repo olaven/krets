@@ -42,6 +42,6 @@ export const TextList = () => {
         />
         <Divider />
         {cards}
-        <Button onClick={getNextResponses}>Last flere</Button>
+        <Button onClick={getNextResponses}>{text.responseList.loadMore}</Button>
     </Flex>
 }
