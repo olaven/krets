@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { PageModel, ResponseModel } from "../models";
+import { PageModel, ResponseModel } from "../models/models";
 import { usePage } from "../effects/usePage";
 import { useResponses } from "../effects/useResponses";
 

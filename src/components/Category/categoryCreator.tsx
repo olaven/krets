@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { Input } from "@rebass/forms";
 import * as text from "../../text"
-import { CategoryModel } from "../../models";
+import { CategoryModel } from "../../models/models";
 import { UserContext } from "../../context/UserContext";
 import { postCategory } from "../../fetchers";
 import { CREATED } from "node-kall";

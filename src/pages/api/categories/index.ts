@@ -1,6 +1,6 @@
 import auth0 from "../../../auth/auth0";
 import { CREATED, OK, FORBIDDEN } from "node-kall";
-import { CategoryModel } from "../../../models";
+import { CategoryModel } from "../../../models/models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "../../../database/categories";
 import { withAuthentication, withCors, withErrorHandling } from "../../../middleware/middleware";

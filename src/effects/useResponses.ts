@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { ResponseModel } from "../models"
+import { ResponseModel } from "../models/models"
 import { OK } from "node-kall";
 import { getResponses } from "../fetchers";
 

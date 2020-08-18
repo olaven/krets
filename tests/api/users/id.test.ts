@@ -3,7 +3,7 @@ import { users } from "../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
 import userHandler from "../../../src/pages/api/users/[id]";
-import { UserModel } from "../../../src/models";
+import { UserModel } from "../../../src/models/models";
 
 
 

@@ -9,7 +9,7 @@ import { Button, Text } from 'rebass';
 import './PaymentCard.module.css'
 import { StripeError } from '@stripe/stripe-js';
 import { postSubscription } from '../../fetchers';
-import { PaymentRequestModel } from '../../models';
+import { PaymentRequestModel } from '../../models/models';
 import { UserContext } from '../../context/UserContext';
 import * as text from "../../text";
 import { Thanks } from '../tiny/Thanks';

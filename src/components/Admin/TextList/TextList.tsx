@@ -1,7 +1,7 @@
 import { Flex, Box } from "rebass";
 import { AdminPageContext } from "../../../context/AdminPageContext"
 import { useContext, useState } from "react";
-import { Emotion } from "../../../models";
+import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
 import { TextCard } from "./TextCard";

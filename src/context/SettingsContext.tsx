@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import { usePage } from "../effects/usePage";
-import { PageModel } from "../models";
+import { PageModel } from "../models/models";
 
 
 

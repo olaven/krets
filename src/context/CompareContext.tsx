@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, SetStateAction } from "react";
-import { PageModel, ResponseModel } from "../models";
+import { PageModel, ResponseModel } from "../models/models";
 import { filterBody } from "node-kall";
 import { getResponses, getPage } from "../fetchers";
 import { asyncEffect } from "../effects/asyncEffect";

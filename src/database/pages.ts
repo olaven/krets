@@ -1,5 +1,5 @@
 import { first, rows, run } from "./helpers/helpers";
-import { PageModel } from "../models";
+import { PageModel } from "../models/models";
 
 
 const createPage = (page: PageModel) => first<PageModel>(

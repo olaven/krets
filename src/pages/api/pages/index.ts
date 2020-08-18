@@ -2,7 +2,7 @@ import randomColor from "randomcolor"
 import auth0 from "../../../auth/auth0";
 import { pages } from "../../../database/database";
 import { CREATED, OK, CONFLICT } from "node-kall";
-import { PageModel } from "../../../models";
+import { PageModel } from "../../../models/models";
 import { NextApiResponse, NextApiRequest } from "next";
 import { withCors, withAuthentication, withErrorHandling } from "../../../middleware/middleware";
 

@@ -4,7 +4,7 @@ import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
 import { CREATED } from "node-kall";
-import { Emotion } from "../../models";
+import { Emotion } from "../../models/models";
 import * as uiText from "../../text";
 import { postResponse } from "../../fetchers";
 import { Thanks } from "../tiny/Thanks";

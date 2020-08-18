@@ -1,7 +1,7 @@
 import * as faker from "faker";
 import * as nextRouter from 'next/router';
 import { ReactElement } from 'react';
-import { PageModel } from '../../src/models';
+import { PageModel } from '../../src/models/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
 import { PageTooltipProvider } from '../../src/components/Home/PageSection/PageSection';

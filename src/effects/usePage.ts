@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PageModel } from "../models";
+import { PageModel } from "../models/models";
 import { OK } from "node-kall";
 import { getPage } from "../fetchers";
 

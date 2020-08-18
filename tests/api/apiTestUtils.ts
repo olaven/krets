@@ -5,7 +5,7 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { PageModel, CategoryModel } from '../../src/models';
+import { PageModel, CategoryModel } from '../../src/models/models';
 
 
 //TODO: this is duplicate of function in databaseTestUtils. This should probably be removed in favour of databaseTestUtils-version

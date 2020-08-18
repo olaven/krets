@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getCategories } from "../fetchers";
-import { CategoryModel } from "../models";
+import { CategoryModel } from "../models/models";
 import { OK } from "node-kall";
 
 

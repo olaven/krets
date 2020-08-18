@@ -1,4 +1,4 @@
-import { Emotion } from "../../../models";
+import { Emotion } from "../../../models/models";
 
 export const emotionToNumeric = (emotion: Emotion) => ({
     ":-)": 2,

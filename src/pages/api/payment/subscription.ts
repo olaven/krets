@@ -1,6 +1,6 @@
 import { CREATED } from "node-kall";
 import { stripe } from "../../../payment/stripe";
-import { PaymentRequestModel } from "../../../models";
+import { PaymentRequestModel } from "../../../models/models";
 import { withCors, withMethods, withErrorHandling, withAuthentication } from "../../../middleware/middleware";
 import { IApiRoute } from "@auth0/nextjs-auth0/dist/handlers/require-authentication";
 import { users } from "../../../database/users";
