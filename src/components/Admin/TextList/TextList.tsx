@@ -1,4 +1,4 @@
-import { Flex, Box } from "rebass";
+import { Flex, Box, Button } from "rebass";
 import { AdminPageContext } from "../../../context/AdminPageContext"
 import { useContext, useState } from "react";
 import { Emotion } from "../../../models/models";
@@ -18,10 +18,10 @@ const Divider = () => <Box
 
 export const TextList = () => {
 
-    const { responses, responsesLoading } = useContext(AdminPageContext);
+    const { responses, getNextResponses } = useContext(AdminPageContext);
     const [selectedEmotions, setSelectedEmotions] = useState<Emotion[]>([":-)", ":-|", ":-("]);
 
-    if (responsesLoading || !responses)
+    if (!responses)
         return <div>{text.responseList.loading}</div>
 
     if (!responses.length)
@@ -42,5 +42,6 @@ export const TextList = () => {
         />
         <Divider />
         {cards}
+        <Button onClick={getNextResponses}>Last flere</Button>
     </Flex>
 }

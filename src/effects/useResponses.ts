@@ -1,33 +1,22 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { ResponseModel } from "../models/models"
-import { OK } from "node-kall";
-import { getResponses } from "../fetchers";
+import { usePagination } from "./usePagination";
 
 
-//NOTE: Response fetching in this file is a common pattern. Should have common, fitting abstraction
+/**
+ * Forwards `usePagination` + Keeps old responses in a local 'buffer'
+ */
+export const useResponses = (pageId: string): [ResponseModel[], () => void] => {
 
-export const useResponses = (pageId: string): [ResponseModel[], boolean] => {
+    const [page, getNext] = usePagination<ResponseModel>(`/api/pages/${pageId}/responses`);
 
+    //A buffer keeping old `.data`
     const [responses, setResponses] = useState<ResponseModel[]>([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        (async () => {
 
-            const [status, responsePage] = await getResponses(pageId)
-            if (status === OK) {
+        setResponses([...responses, ...page.data])
+    }, [page.next]);
 
-                //console.log("Fetched responses", responsePage.data);
-                setResponses(responsePage.data);
-            } else {
-
-                console.warn(`received ${status} when fetching responses for ${pageId}`);
-                setResponses(null);
-            }
-
-            setLoading(false);
-        })()
-    }, [pageId])
-
-    return [responses, loading];
+    return [responses, getNext];
 }
