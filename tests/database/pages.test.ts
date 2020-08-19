@@ -1,6 +1,6 @@
 import * as faker from "faker";
 import { pages, categories, responses, users } from "../../src/database/database";
-import { randomUser } from "../database/databaseTestUtils";
+import { randomUser, setupPages } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 
 
@@ -215,4 +215,59 @@ describe("Database interface for pages", () => {
             expect(after).toEqual(true);
         });
     });
+
+    describe("Pagination behaviour of pages", () => {
+
+        it("Default return limit is 15", async () => {
+
+            const pageSize = 15;
+            const amountPersisted = pageSize + 5;
+
+            const [owner, persisted] = await setupPages(amountPersisted);
+            const retrieved = await pages.getByOwner(owner.id);
+
+            expect(pageSize).toBeLessThan(amountPersisted);
+            expect(retrieved.length).toEqual(pageSize);
+            expect(persisted.length).toEqual(amountPersisted);
+        });
+
+        it("Returns pages ordered by creation date", async () => {
+
+            const [owner] = await setupPages(3);
+            const [first, second, third] = (await pages.getByOwner(owner.id))
+                .map(page => new Date(page.created_at).getTime());
+
+            expect(first).toBeGreaterThan(second);
+            expect(second).toBeGreaterThan(third);
+        });
+
+        it("Only returns pages created after given 'key'-date", async () => {
+
+            const [owner, [first, second, third]] = await setupPages(3);
+
+            const retrieved = (await pages.getByOwner(owner.id, {
+                amount: 15,
+                key: first.created_at
+            })).map(page => page.id);
+
+            expect(retrieved).not.toContain(first.id); //not returned, as equal to key
+            expect(retrieved).toContain(second.id); // returned, as after key
+            expect(retrieved).toContain(third.id); // returned, as after key
+        });
+
+        it("Contraints both by page size and key", async () => {
+
+
+            const [owner, [first, second, third, fourth]] = await setupPages(4);
+            const retrieved = (await pages.getByOwner(owner.id, {
+                amount: 1,
+                key: second.created_at
+            })).map(page => page.id);
+
+            expect(retrieved).not.toContain(first.id); // as before key
+            expect(retrieved).not.toContain(second.id); // as equal to key 
+            expect(retrieved).toContain(third.id); // as after key and before amount-limit
+            expect(retrieved).not.toContain(fourth.id); // as after amount-limit
+        });
+    })
 });

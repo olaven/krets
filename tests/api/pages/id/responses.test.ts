@@ -18,7 +18,6 @@ describe("The endpoint for responses", () => {
         `${url}/${pageId}/responses?key=${paginationKey}`;
 
 
-
     beforeAll(async () => {
 
         [server, url] = await setupServer(handler, "/api/pages");

@@ -1,6 +1,7 @@
 import { rows, first } from "./helpers/helpers";
 import { ResponseModel, Emotion, CoordinateModel } from "../models/models";
 import { pages } from "./pages";
+import { PaginationOptions } from "./helpers/PaginationOptions";
 
 /**
 * The database expects `emotion` to have type `integer`, while 
@@ -18,14 +19,9 @@ export const convertEmotion = {
     ][emotion] as Emotion
 }
 
-
-type PaginationOptions = {
-    amount: number,
-    key?: string
-}
+//THINKABOUT: not sure what the value of this defualt is, as `amount` has to be passed manually when key is passed either way 
 const defaultOptions: PaginationOptions = {
     amount: 10,
-    //key: null
 }
 const getResponses = async (pageId: string, options = defaultOptions) => {
 
