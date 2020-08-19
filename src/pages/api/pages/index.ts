@@ -10,7 +10,7 @@ import querystring from "querystring";
 
 //NOTE: same kind of workaround as `getId`
 //FIXME: super-naive. Update once tests are fixed as per #161
-const getKey = (url: string) => {
+export const getKey = (url: string) => {
     const parsed = querystring.decode(url.split("?")[1]);
     return parsed.key === "null" ?
         null :
