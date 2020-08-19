@@ -13,10 +13,11 @@ type ReturnType = [
  * old paged data in a buffer. 
  * 
  * THINKABOUT: use this or context? 
+ * FIXME: remove if not used 
  */
 export const usePages = (): ReturnType => {
 
-    const [page, getNextPages, resetPages] = usePagination<PageModel>(`/api/pages`);
+    const [page, loaded, getNextPages, resetPages] = usePagination<PageModel>(`/api/pages`);
 
     //A buffer keeping old `.data`
     const [pages, setPages] = useState<PageModel[]>([]);
