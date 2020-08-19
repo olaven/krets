@@ -53,5 +53,5 @@ export const ToSettings = ({ id }) =>
 
 export const LoadMoreButton = ({ onClick, active }) =>
     active ?
-        <Button width={1} onClick={onClick}>{text.responseList.loadMore}</Button> :
+        <Button width={1} onClick={onClick}>{text.buttons.loadMore}</Button> :
         null;
