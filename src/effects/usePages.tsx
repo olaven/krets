@@ -3,9 +3,9 @@ import { PageModel } from "../models/models";
 import { usePagination } from "../effects/usePagination";
 
 type ReturnType = [
-    pages: PageModel[],
-    getNextPages: () => void,
-    resetPages: () => void
+    PageModel[],
+    () => void,
+    () => void
 ]
 
 /**

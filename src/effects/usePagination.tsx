@@ -13,7 +13,10 @@ import { PaginatedModel } from "../models/models";
  * 
  * Adapted from [this file](https://github.com/olaven/exam-pg6101/blob/master/frontend/src/utils/PaginationFetcher.jsx)
  */
-export const usePagination = function <T>(basePath: string): [page: PaginatedModel<T>, getNext: () => void, reset: () => void] {
+export const usePagination = function <T>(basePath: string): [
+    PaginatedModel<T>,
+    () => void,
+    () => void] {
 
     const [next, setNext] = useState(basePath)
     const [page, setPage] = useState<PaginatedModel<T>>({
