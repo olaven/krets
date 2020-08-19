@@ -19,7 +19,7 @@ const Divider = () => <Box
 
 export const TextList = () => {
 
-    const { responses, getNextResponses } = useContext(AdminPageContext);
+    const { responses, getNextResponses, moreResponsesAvailable } = useContext(AdminPageContext);
     const [selectedEmotions, setSelectedEmotions] = useState<Emotion[]>([":-)", ":-|", ":-("]);
 
     if (!responses)
@@ -43,6 +43,6 @@ export const TextList = () => {
         />
         <Divider />
         {cards}
-        <LoadMoreButton onClick={getNextResponses} active={true} /> {/* TODO: `active` depending on more available */}
+        {responses.length > 0 && <LoadMoreButton onClick={getNextResponses} active={moreResponsesAvailable} />}
     </Flex>
 }
