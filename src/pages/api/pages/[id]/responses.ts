@@ -13,7 +13,6 @@ const getId = (url: string) => {
 };
 
 
-
 //TODO: auth protection? 
 const getResponses = async (request: NextApiRequest, response: NextApiResponse) => {
 
