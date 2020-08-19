@@ -21,7 +21,7 @@ const PageCard = ({ id, name }) =>
 
 export const PageList = () => {
 
-    const { pages, getNextPages } = useContext(PagesContext);
+    const { pages, moreAvailable, getNextPages } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp)
 
     return <>
@@ -35,7 +35,7 @@ export const PageList = () => {
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
                     .map(page => <PageCard key={page.id} {...page} />)}
-                <LoadMoreButton onClick={getNextPages} active={true} />  {/* TODO: `active` depending on more available */}
+                {pages.length > 0 && <LoadMoreButton onClick={getNextPages} active={moreAvailable} />}
             </Box>
             <Box width={[0, 0, 1 / 4]}></Box>
         </Flex>

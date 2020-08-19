@@ -4,12 +4,14 @@ import { usePagination } from "../effects/usePagination";
 
 type Type = {
     pages: PageModel[],
+    moreAvailable: boolean,
     getNextPages: () => void,
     addPage: (page: PageModel) => void
 }
 
 export const PagesContext = createContext<Type>({
     pages: [],
+    moreAvailable: true,
     getNextPages: () => { },
     addPage: (page: PageModel) => { }
 });
@@ -26,7 +28,7 @@ export const PagesContextProvider = ({ user, children }) => {
 
     if (!user) throw "Should not see this if not logged in!";
 
-    const [page, getNextPages] = usePagination<PageModel>(`/api/pages`);
+    const [page, moreAvailable, getNextPages] = usePagination<PageModel>(`/api/pages`);
 
     //A buffer keeping old `.data`
     const [pages, setPages] = useState<PageModel[]>([]);
@@ -45,7 +47,7 @@ export const PagesContextProvider = ({ user, children }) => {
     }
 
 
-    return <PagesContext.Provider value={{ pages, getNextPages, addPage }}>
+    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage }}>
         {children}
     </PagesContext.Provider>
 };
