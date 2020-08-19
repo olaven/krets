@@ -5,6 +5,7 @@ import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
 import { TextCard } from "./TextCard";
+import { LoadMoreButton } from "../../tiny/buttons";
 
 
 const Divider = () => <Box
@@ -42,6 +43,6 @@ export const TextList = () => {
         />
         <Divider />
         {cards}
-        <Button onClick={getNextResponses}>{text.responseList.loadMore}</Button>
+        <LoadMoreButton onClick={getNextResponses} active={true} /> {/* TODO: `active` depending on more available */}
     </Flex>
 }

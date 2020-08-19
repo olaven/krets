@@ -1,5 +1,5 @@
 import { Box, Button, Card, Flex, Heading } from "rebass";
-import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
+import { ToAdmin, ToQR, ToPage, ToSettings, LoadMoreButton } from "../../tiny/buttons";
 import React, { useContext } from "react";
 import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
@@ -35,7 +35,7 @@ export const PageList = () => {
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
                     .map(page => <PageCard key={page.id} {...page} />)}
-                <Button onClick={getNextPages}>Last flere</Button> {/* TODO: SHARE WITH RESPONSE LOADING */}
+                <LoadMoreButton onClick={getNextPages} active={true} />  {/* TODO: `active` depending on more available */}
             </Box>
             <Box width={[0, 0, 1 / 4]}></Box>
         </Flex>
