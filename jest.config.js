@@ -11,4 +11,6 @@ module.exports = {
   transform: {
     '^.+\\.tsx?$': 'babel-jest',
   },
+  globalSetup: "./tests/globalSetup.js",
+  globalTeardown: "./tests/globalTeardown.js",
 };
