@@ -9,14 +9,16 @@ type Type = {
 }
 
 export const PagesContext = createContext<Type>({
-    pages: [], getNextPages: () => { }, resetPagess: () => { }
+    pages: [], getNextPages: () => { }, resetPages: () => { }
 });
 
 /**
  * Essentially a Wrapper for `usePagination`, keeping 
  * old paged data in a buffer. 
  * 
- * THINKABOUT: make this an effect? 
+ * //NOTE: concidered moving to effect, but kept as context because 
+ * it's state needs to be shared between multiple components, and 
+ * I don't want to prop-drill. 
  */
 export const PagesContextProvider = ({ user, children }) => {
 
@@ -30,9 +32,8 @@ export const PagesContextProvider = ({ user, children }) => {
 
     useEffect(() => {
 
-        setPages([...pages, ...page.data]);
+        setPages([...page.data, ...pages]);
     }, [page.next]);
-
 
     return <PagesContext.Provider value={{ pages, getNextPages, resetPages }}>
         {children}
