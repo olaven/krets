@@ -27,25 +27,47 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
     });
 
 
-export const fakeCreationDate = (response: ResponseModel) => first<ResponseModel>(
-    `update responses set created_at = $2 where id = $1 returning *`,
-    [response.id, faker.date.past(1)]
+//IMPORTANT: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
+const fakeCreation = <T>(tableName: string, id: string) => first<T>(
+    `update ${tableName} set created_at = $2 where id = $1 returning *`,
+    [id, faker.date.past(1)]
 );
 
-export const blindSetup = async (): Promise<[PageModel, UserModel, ResponseModel[]]> => {
+
+
+export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 })): Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await users.createUser(randomUser());
     const page = await pages.createPage(randomPage(user.id));
     const createdResonses = [];
 
-    const responseCount = faker.random.number({ min: 1, max: 30 });
     for (let i = 0; i < responseCount; i++) {
 
-        const response = await fakeCreationDate(
-            (await responses.createResponse(randomResponse(page.id)))
-        );
-        createdResonses.push(response);
+        const original = await responses.createResponse(randomResponse(page.id))
+        const alteredDate = await fakeCreation<ResponseModel>("responses", original.id);
+
+        createdResonses.push(alteredDate);
     }
 
+    //NOTE: as `fakeCreationDate` messes with sorting
+    createdResonses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [page, user, createdResonses];
+}
+
+export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 })): Promise<[UserModel, PageModel[]]> => {
+
+    const user = await users.createUser(randomUser());
+
+
+    const persisted = []
+    for (let i = 0; i < amount; i++) {
+
+        const original = await pages.createPage(randomPage(user.id));
+        const alteredDate = await fakeCreation<PageModel>("pages", original.id);
+        persisted.push(alteredDate);
+    }
+
+    //NOTE: as `fakeCreationDate` messes with sorting
+    persisted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    return [user, persisted];
 }

@@ -18,7 +18,7 @@ export const nameToId = (name: string) => name
 
 export const PageCreator = () => {
 
-    const { refreshPages } = useContext(PagesContext);
+    const { addPage } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp);
 
     const [name, setName] = useState("");
@@ -34,16 +34,14 @@ export const PageCreator = () => {
     //TODO: this function should not be part of UI logic 
     const postPage = async () => {
 
-        const page = {
+        const [status, page] = await post(`/api/pages`, {
             id, name
-        };
-
-        const [status] = await post(`/api/pages`, page);
+        });
 
         if (status === CREATED) {
 
             setName("");
-            refreshPages();
+            addPage(page);
         } else if (status === CONFLICT) {
 
             alert(text.pageCreator.conflict);

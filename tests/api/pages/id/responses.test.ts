@@ -1,10 +1,11 @@
-import { setupServer, teardownServer, uid } from "../../apiTestUtils";
+import { authenticatedFetch, setupServer, teardownServer } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
-import { randomUser, randomPage, randomResponse } from "../../../database/databaseTestUtils";
+import { randomUser, randomPage, randomResponse, blindSetup } from "../../../database/databaseTestUtils";
+import { PaginatedModel, ResponseModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -13,8 +14,9 @@ describe("The endpoint for responses", () => {
     let server: Server;
     let url: string;
 
-    const fullURL = (brandId: string) =>
-        `${url}/${brandId}/responses`;
+    const fullURL = (pageId: string, paginationKey: string = null) =>
+        `${url}/${pageId}/responses?key=${paginationKey}`;
+
 
     beforeAll(async () => {
 
@@ -60,7 +62,7 @@ describe("The endpoint for responses", () => {
         const fetchResponse = await fetch(fullURL(page.id));
         expect(fetchResponse.status).toEqual(200);
 
-        const receivedResponses = await fetchResponse.json();
+        const receivedResponses = (await fetchResponse.json()).data;
         expect(receivedResponses.length).toEqual(2);
     });
 
@@ -93,7 +95,7 @@ describe("The endpoint for responses", () => {
         expect(fetchResponse.status).toEqual(201);
 
 
-        const retrievedResponses = await (await fetch(fullURL(page.id))).json();
+        const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
         const hasCorrect = retrievedResponses.find(r =>
             r.text === response.text &&
             r.emotion === response.emotion &&
@@ -128,5 +130,42 @@ describe("The endpoint for responses", () => {
 
         const [retrievedResponse] = after;
         expect(retrievedResponse.contact_details).toEqual(contactDetails);
-    })
+    });
+
+    describe("Pagination functionality", () => {
+
+        it("Has a page size of 10", async () => {
+
+            const [page, user, persisted] = await blindSetup(15);
+
+            const response = await authenticatedFetch(user.id, fullURL(page.id))
+            const retrieved = (await response.json()).data;
+
+            expect(retrieved.length).toEqual(10) //NOTE: 15 was persisted
+        });
+
+        it("Returns persisted _after_ given key", async () => {
+
+            const [page, user, persisted] = await blindSetup(15);
+            const [excluded, firstExpected] = persisted;
+
+            expect(excluded.created_at).not.toContain("GMT");
+            const response = await authenticatedFetch(user.id, fullURL(page.id, excluded.created_at));
+            const [firstRetrieved] = ((await response.json()).data) as ResponseModel[];
+
+            expect(firstRetrieved.id).toEqual(firstExpected.id);
+        });
+
+
+        it("Returns responses wrapped in a PaginationModel", async () => {
+
+            const [page, user] = await blindSetup();
+            const response = await authenticatedFetch(user.id, fullURL(page.id));
+            const pagiantedModel = await response.json() as PaginatedModel<ResponseModel>;
+
+
+            expect(pagiantedModel.data).toBeDefined();
+            expect(pagiantedModel.next).toBeDefined();
+        })
+    });
 });

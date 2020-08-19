@@ -79,6 +79,7 @@ export const buttons = strings({
         toQR: "QR-code",
         toPage: "Landing page",
         toSettings: "Settings",
+        loadMore: "Load more",
     },
     no: {
         logout: "Logg ut",
@@ -88,6 +89,7 @@ export const buttons = strings({
         toQR: "QR-kode",
         toPage: "Landingsside",
         toSettings: "Instillinger",
+        loadMore: "Last flere",
     }
 });
 
@@ -247,11 +249,11 @@ export const moodGraph = strings({
 export const responseList = strings({
     en: {
         loading: "Loading responses..",
-        noResponses: "No responses yet"
+        noResponses: "No responses yet",
     },
     no: {
         loading: "Laster responser..",
-        noResponses: "Ingen responser enda"
+        noResponses: "Ingen responser enda",
     }
 });
 

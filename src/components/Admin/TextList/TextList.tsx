@@ -1,10 +1,11 @@
-import { Flex, Box } from "rebass";
+import { Flex, Box, Button } from "rebass";
 import { AdminPageContext } from "../../../context/AdminPageContext"
 import { useContext, useState } from "react";
 import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
 import { TextCard } from "./TextCard";
+import { LoadMoreButton } from "../../tiny/buttons";
 
 
 const Divider = () => <Box
@@ -18,10 +19,10 @@ const Divider = () => <Box
 
 export const TextList = () => {
 
-    const { responses, responsesLoading } = useContext(AdminPageContext);
+    const { responses, getNextResponses } = useContext(AdminPageContext);
     const [selectedEmotions, setSelectedEmotions] = useState<Emotion[]>([":-)", ":-|", ":-("]);
 
-    if (responsesLoading || !responses)
+    if (!responses)
         return <div>{text.responseList.loading}</div>
 
     if (!responses.length)
@@ -42,5 +43,6 @@ export const TextList = () => {
         />
         <Divider />
         {cards}
+        <LoadMoreButton onClick={getNextResponses} active={true} /> {/* TODO: `active` depending on more available */}
     </Flex>
 }

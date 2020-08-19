@@ -1,38 +1,49 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getPages } from "../fetchers";
-import { OK } from "node-kall";
 import { PageModel } from "../models/models";
+import { usePagination } from "../effects/usePagination";
 
-
-
-export const PagesContext = createContext<{
+type Type = {
     pages: PageModel[],
-    refreshPages: () => Promise<any>
-}>({
-    pages: [], refreshPages: async () => { }
+    getNextPages: () => void,
+    addPage: (page: PageModel) => void
+}
+
+export const PagesContext = createContext<Type>({
+    pages: [], getNextPages: () => { }, addPage: (page: PageModel) => { throw "not implemented" }
 });
 
+/**
+ * Essentially a Wrapper for `usePagination`, keeping 
+ * old paged data in a buffer. 
+ * 
+ * //NOTE: concidered moving to effect, but kept as context because 
+ * it's state needs to be shared between multiple components, and 
+ * I don't want to prop-drill. 
+ */
 export const PagesContextProvider = ({ user, children }) => {
 
     if (!user) throw "Should not see this if not logged in!";
 
+    const [page, getNextPages] = usePagination<PageModel>(`/api/pages`);
+
+    //A buffer keeping old `.data`
     const [pages, setPages] = useState<PageModel[]>([]);
 
-    const refreshPages = async () => {
+    useEffect(() => {
 
-        const [status, pages] = await getPages()
-        if (status === OK) {
+        setPages(
+            [...page.data, ...pages]
+        )
 
-            setPages(pages)
-        } else {
+    }, [page.next]);
 
-            console.warn(`receieved ${status} when fetching brands`);
-        }
+    const addPage = (page: PageModel) => {
+
+        setPages([page, ...pages]);
     }
 
-    useEffect(() => { refreshPages() }, [user]);
 
-    return <PagesContext.Provider value={{ pages, refreshPages }}>
+    return <PagesContext.Provider value={{ pages, getNextPages, addPage }}>
         {children}
     </PagesContext.Provider>
 };

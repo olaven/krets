@@ -49,4 +49,9 @@ export const ToPage = ({ id }) =>
     ListButton(`/${id}`, text.buttons.toPage);
 
 export const ToSettings = ({ id }) =>
-    ListButton(`/${id}/settings`, text.buttons.toSettings); 
+    ListButton(`/${id}/settings`, text.buttons.toSettings);
+
+export const LoadMoreButton = ({ onClick, active }) =>
+    active ?
+        <Button width={1} onClick={onClick}>{text.buttons.loadMore}</Button> :
+        null;

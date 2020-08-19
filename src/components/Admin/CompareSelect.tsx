@@ -20,7 +20,7 @@ const SelectContent = ({ options, selectedLabel, setSelectedLabel }) => <>
 export const CompareSelect = () => {
 
     const { page } = useContext(AdminPageContext);
-    const { pages } = useContext(PagesContext);
+    const { pages } = useContext(PagesContext); //TODO: this component does not handle pagination
     const { setSelected } = useContext(CompareContext);
 
     const [selectedLabel, setSelectedLabel] = useState<Option[]>([])

@@ -1,6 +1,7 @@
-import { withDatabase, rows, first } from "./helpers/helpers";
-import { ResponseModel, Emotion, CoordinateModel, PageModel } from "../models/models";
+import { rows, first } from "./helpers/helpers";
+import { ResponseModel, Emotion, CoordinateModel } from "../models/models";
 import { pages } from "./pages";
+import { PaginationOptions } from "./helpers/PaginationOptions";
 
 /**
 * The database expects `emotion` to have type `integer`, while 
@@ -13,26 +14,34 @@ export const convertEmotion = {
         ":-|": 1,
         ":-(": 0
     })[emotion],
-    toModel: (emotion: number) => [
+    toModel: (emotion: number): Emotion => [
         ":-(", ":-|", ":-)"
-    ][emotion]
+    ][emotion] as Emotion
 }
 
-//TODO: should figure out a way to convert this over to `helper/query`-functions
-const getResponses = (pageId: string) => withDatabase<ResponseModel[]>(async client => {
+//THINKABOUT: not sure what the value of this defualt is, as `amount` has to be passed manually when key is passed either way 
+const defaultOptions: PaginationOptions = {
+    amount: 10,
+}
+const getResponses = async (pageId: string, options = defaultOptions) => {
 
-    const result = await client
-        .query(`
-            select distinct * from responses 
-            where page_id = $1
-            order by created_at desc
-        `, [
-            pageId]);
+    //THINKABOUT: how to handle absence of options.key in a cleaner way 
 
-    result.rows
-        .forEach(row => row.emotion = convertEmotion.toModel(row.emotion))
-    return result.rows;
-});
+    const args = [pageId, options.amount]
+    const responses = await rows(`
+        select distinct * from responses 
+        where page_id = $1 ${options.key ? `and created_at < $3` : ``}
+        order by created_at desc
+        limit $2`,
+        options.key ? [...args, options.key] : args
+    ) as ResponseModel[];
+
+    responses.forEach((response) => {
+        response.emotion = convertEmotion.toModel(response.emotion as any as number);
+    })
+
+    return responses;
+}
 
 const createResponse = async (response: ResponseModel) => {
 

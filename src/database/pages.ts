@@ -1,5 +1,6 @@
 import { first, rows, run } from "./helpers/helpers";
 import { PageModel } from "../models/models";
+import { PaginationOptions } from "./helpers/PaginationOptions";
 
 
 const createPage = (page: PageModel) => first<PageModel>(
@@ -8,13 +9,21 @@ const createPage = (page: PageModel) => first<PageModel>(
 )
 
 
-const getByOwner = (ownerId: string) =>
+const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }) =>
     rows<PageModel>(
-        "select * from pages where owner_id = $1",
-        [ownerId]
+        `
+            select * from pages 
+            where owner_id = $1 ${options.key ? `and created_at < $3` : ''}
+            order by created_at desc
+            limit $2
+        `,
+        options.key ?
+            [ownerId, options.amount, options.key] :
+            [ownerId, options.amount]
     );
 
 
+//THINKABOUT: implement pagination before categories are pushed as a feature
 const getByOwnerAndCategory = (ownerId: string, categoryId: string) =>
     rows<PageModel>(
         `select * from pages where owner_id = $1 and category_id = $2`,

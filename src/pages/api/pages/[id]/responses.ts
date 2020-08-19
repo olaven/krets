@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { pages, responses } from "../../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
+import { getKey } from "..";
+import { pages, responses } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers } from "../../../../middleware/middleware";
 
 
@@ -9,28 +10,38 @@ const getId = (url: string) => {
 
     const split = url.split("/");
     return split[split.length - 2];
-
 };
+
 
 //TODO: auth protection? 
 const getResponses = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getId(request.url);
+    const requestKey = getKey(request.url) as string;
+
     const page = await pages.getPage(id);
 
     if (!page) {
 
         response
             .status(NOT_FOUND)
-            .send("No brand found");
+            .send("No page found");
 
         return;
     }
 
-    const responseResult = await responses.getResponses(id);
+
+    const data = await responses.getResponses(id, {
+        key: requestKey,
+        amount: 10
+    });
+    const responseKey = data[data.length - 1]?.created_at;
 
     response
-        .json(responseResult);
+        .json({
+            data,
+            next: `/api/pages/${page.id}/responses?key=${responseKey}`
+        });
 }
 
 const postResponses = async (request: NextApiRequest, response: NextApiResponse) => {

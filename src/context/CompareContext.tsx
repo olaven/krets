@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, SetStateAction } from "react";
+import React, { createContext, useState, SetStateAction } from "react";
 import { PageModel, ResponseModel } from "../models/models";
 import { filterBody } from "node-kall";
 import { getResponses, getPage } from "../fetchers";
@@ -31,7 +31,7 @@ export const CompareContextProvider = ({ children }) => {
         const pageInformations = await Promise.all(
             selected.map(async id => ({
 
-                responses: await filterBody(getResponses(id)),
+                responses: (await filterBody(getResponses(id))).data,
                 page: await filterBody(getPage(id))
             }))
         );
