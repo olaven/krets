@@ -1,38 +1,40 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getPages } from "../fetchers";
-import { OK } from "node-kall";
 import { PageModel } from "../models/models";
+import { usePagination } from "../effects/usePagination";
 
-
-
-export const PagesContext = createContext<{
+type Type = {
     pages: PageModel[],
-    refreshPages: () => Promise<any>
-}>({
-    pages: [], refreshPages: async () => { }
+    getNextPages: () => void,
+    resetPages: () => void
+}
+
+export const PagesContext = createContext<Type>({
+    pages: [], getNextPages: () => { }, resetPagess: () => { }
 });
 
+/**
+ * Essentially a Wrapper for `usePagination`, keeping 
+ * old paged data in a buffer. 
+ * 
+ * THINKABOUT: make this an effect? 
+ */
 export const PagesContextProvider = ({ user, children }) => {
 
     if (!user) throw "Should not see this if not logged in!";
 
+    const base = `/api/pages`;
+    const [page, getNextPages, resetPages] = usePagination<PageModel>(base);
+
+    //A buffer keeping old `.data`
     const [pages, setPages] = useState<PageModel[]>([]);
 
-    const refreshPages = async () => {
+    useEffect(() => {
 
-        const [status, pages] = await getPages()
-        if (status === OK) {
+        setPages([...pages, ...page.data]);
+    }, [page.next]);
 
-            setPages(pages)
-        } else {
 
-            console.warn(`receieved ${status} when fetching brands`);
-        }
-    }
-
-    useEffect(() => { refreshPages() }, [user]);
-
-    return <PagesContext.Provider value={{ pages, refreshPages }}>
+    return <PagesContext.Provider value={{ pages, getNextPages, resetPages }}>
         {children}
     </PagesContext.Provider>
 };

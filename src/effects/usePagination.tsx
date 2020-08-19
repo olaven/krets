@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { get, OK } from "node-kall"
+import { get, filterBody } from "node-kall"
 import { asyncEffect } from "./asyncEffect";
 import { PaginatedModel } from "../models/models";
 
@@ -9,31 +9,27 @@ import { PaginatedModel } from "../models/models";
  * returning `PaginatedModel<T>`
  * 
  * @param basePath The initial path of the endpoint 
- * @returns [ page, setNext ] -> [ 'current page', 'link to next page' ]
+ * @returns [ page, setNext, reset ] -> [ 'current page', 'update page to next page', 'reset to first page' ]
  * 
  * Adapted from [this file](https://github.com/olaven/exam-pg6101/blob/master/frontend/src/utils/PaginationFetcher.jsx)
  */
-export const usePagination = function <T>(basePath: string): [PaginatedModel<T>, () => void] {
-
-    const defaultPage = {
-        data: [], next: null
-    }
+export const usePagination = function <T>(basePath: string): [PaginatedModel<T>, () => void, () => void] {
 
     const [next, setNext] = useState(basePath)
-    const [page, setPage] = useState<PaginatedModel<T>>(defaultPage);
+    const [page, setPage] = useState<PaginatedModel<T>>({
+        data: [], next: null
+    });
+
+    const applyNext = (path: string) =>
+        () => setNext(path);
 
     asyncEffect(async () => {
 
-        const [status, page] = await get<PaginatedModel<T>>(next);
-        setPage(status === OK ?
-            page :
-            defaultPage)
+        const page = await filterBody(
+            get<PaginatedModel<T>>(next)
+        );
+        setPage(page);
     }, [next]);
 
-    const getNext = () => {
-
-        setNext(page.next);
-    }
-
-    return [page, getNext];
+    return [page, applyNext(page.next), applyNext(basePath)];
 };

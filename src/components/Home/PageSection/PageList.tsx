@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Heading } from "rebass";
+import { Box, Button, Card, Flex, Heading } from "rebass";
 import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
 import React, { useContext } from "react";
 import { PagesContext } from "../../../context/PagesContext";
@@ -21,7 +21,7 @@ const PageCard = ({ id, name }) =>
 
 export const PageList = () => {
 
-    const { pages } = useContext(PagesContext);
+    const { pages, getNextPages } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp)
 
     return <>
@@ -35,6 +35,7 @@ export const PageList = () => {
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
                     .map(page => <PageCard key={page.id} {...page} />)}
+                <Button onClick={getNextPages}>Last flere</Button> {/* TODO: SHARE WITH RESPONSE LOADING */}
             </Box>
             <Box width={[0, 0, 1 / 4]}></Box>
         </Flex>

@@ -18,7 +18,7 @@ export const nameToId = (name: string) => name
 
 export const PageCreator = () => {
 
-    const { refreshPages } = useContext(PagesContext);
+    const { resetPages } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp);
 
     const [name, setName] = useState("");
@@ -43,7 +43,7 @@ export const PageCreator = () => {
         if (status === CREATED) {
 
             setName("");
-            refreshPages();
+            resetPages();
         } else if (status === CONFLICT) {
 
             alert(text.pageCreator.conflict);

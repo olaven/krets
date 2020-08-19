@@ -23,7 +23,7 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
     const requestKey = getKey(request.url) as string;
 
     const data = await pages.getByOwner(user.sub, {
-        amount: 15,
+        amount: 2, //15,
         key: requestKey
     });
     const paginated: PaginatedModel<PageModel> = {
