@@ -9,7 +9,9 @@ type Type = {
 }
 
 export const PagesContext = createContext<Type>({
-    pages: [], getNextPages: () => { }, addPage: (page: PageModel) => { throw "not implemented" }
+    pages: [],
+    getNextPages: () => { },
+    addPage: (page: PageModel) => { }
 });
 
 /**
@@ -47,4 +49,3 @@ export const PagesContextProvider = ({ user, children }) => {
         {children}
     </PagesContext.Provider>
 };
-
