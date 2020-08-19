@@ -4,7 +4,7 @@ import * as faker from "faker";
 import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages";
 import { users } from "../../../src/database/database";
-import { randomUser } from "../../database/databaseTestUtils";
+import { randomUser, setupPages } from "../../database/databaseTestUtils";
 
 jest.mock("../../../src/auth/auth0");
 
@@ -59,7 +59,7 @@ describe("The pages endpoint", () => {
 
             expect(page.color).toBeNull();
             await postPage(page, url, user.id);
-            const [retrieved] = await getPages(`${url}/${page.id}`, user.id);
+            const [retrieved] = (await getPages(`${url}/${page.id}`, user.id)).data;
 
             expect(retrieved.id).toEqual(page.id);
             expect(retrieved.color).toBeDefined();
@@ -71,7 +71,7 @@ describe("The pages endpoint", () => {
             const page = randomPage(user.id);
 
             await postPage(randomPage(user.id), url, user.id);
-            const [retrieved] = await getPages(`${url}/${page.id}`, user.id);
+            const [retrieved] = (await getPages(`${url}/${page.id}`, user.id)).data;
 
             expect(retrieved.color.length).toEqual(7);
             expect(retrieved.color[0]).toEqual("#");
@@ -84,7 +84,7 @@ describe("The pages endpoint", () => {
             await postPage(randomPage(user.id), url, user.id);
             await postPage(randomPage(user.id), url, user.id);
 
-            const [first, second] = await getPages(url, user.id);
+            const [first, second] = (await getPages(url, user.id)).data;
             expect(first.color).not.toEqual(second.color);
         });
 
@@ -108,7 +108,7 @@ describe("The pages endpoint", () => {
             const n = 5;
             const user = await users.createUser(randomUser());
 
-            const before = await getPages(url, user.id);
+            const before = (await getPages(url, user.id)).data;
 
             for (let i = 0; i < n; i++) {
 
@@ -117,9 +117,40 @@ describe("The pages endpoint", () => {
                 }, url, user.id);
             }
 
-            const after = await getPages(url, user.id);
+            const after = (await getPages(url, user.id)).data;
             //expect(before.length).toEqual(0);
             expect(after.length).toEqual(before.length + n);
+        });
+
+        it("Returns PaginatedModel as response", async () => {
+
+            const [user] = await setupPages(20)
+            const retrieved = await getPages(url, user.id);
+
+            expect(retrieved.data).toBeDefined();
+            expect(retrieved.next).toBeDefined();
+        });
+
+        it("Returns a page size of 15 elements", async () => {
+
+            const [user, persisted] = await setupPages(20) //NOTE: > pageSize
+            const retrieved = await getPages(url, user.id);
+
+            expect(retrieved.data.length).toEqual(15);
+            expect(retrieved.data.length).toBeLessThan(persisted.length);
+        });
+
+        it("Returns a `next`-link to more resources", async () => {
+
+            const [user] = await setupPages(35); // two full pages + one page with 5
+
+            const firstPage = await getPages(url, user.id);
+            const secondPage = await getPages(`${url}${firstPage.next}`, user.id);
+            const thirdPage = await getPages(`${url}${secondPage.next}`, user.id);
+
+            expect(firstPage.data.length).toEqual(15);
+            expect(secondPage.data.length).toEqual(15);
+            expect(thirdPage.data.length).toEqual(5); // i.e. the remaining ones 
         });
     });
 });
