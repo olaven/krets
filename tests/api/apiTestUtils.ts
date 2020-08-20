@@ -8,7 +8,6 @@ import fetch from "cross-fetch";
 import { PageModel, CategoryModel, PaginatedModel } from '../../src/models/models';
 
 
-
 //TODO: this is duplicate of function in databaseTestUtils. This should probably be removed in favour of databaseTestUtils-version
 export const randomPage = (ownerId: string, color: string = null, categoryId: string = null): PageModel => ({
     id: faker.random.uuid(),
