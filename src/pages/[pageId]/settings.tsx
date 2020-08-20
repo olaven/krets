@@ -104,7 +104,6 @@ export const SettingsContent = () => {
                 {text.settings.heading} {page.name}
             </Heading>
             <UpdateName />
-            <UpdateCategory />
             <DeletePage />
         </Box>
 }
