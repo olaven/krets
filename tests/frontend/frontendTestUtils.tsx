@@ -11,12 +11,13 @@ import Stripe from "stripe";
 export const renderWithPagesContext = (
     Component: ReactElement,
     pages: PageModel[] = [],
+    hasLoaded: false,
     moreAvailable: true,
     getNextPages = jest.fn(() => { }),
     addPage = jest.fn((page) => { })
 ) => render(<PagesContext.Provider
     value={{
-        pages, moreAvailable, getNextPages, addPage
+        pages, hasLoaded, moreAvailable, getNextPages, addPage
     }}>
     <PageTooltipProvider pageCount={0}>
         {Component}
