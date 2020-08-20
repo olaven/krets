@@ -1,15 +1,17 @@
 import { createContext, useState, useEffect, SetStateAction } from "react";
 import { get, OK } from "node-kall";
 import { AuthModel, UserModel } from "../models/models";
+import { asyncEffect } from "../effects/asyncEffect";
 
 interface IUserContext {
     databaseUser: UserModel,
     authUser: AuthModel,
+    loading: boolean,
     updateUser: (user: AuthModel) => void
 }
 
 export const UserContext = createContext<IUserContext>({
-    databaseUser: null, authUser: null, updateUser: () => { }
+    databaseUser: null, loading: true, authUser: null, updateUser: () => { }
 });
 
 
@@ -20,7 +22,7 @@ export const UserContext = createContext<IUserContext>({
  * @param setter 
  *
  * NOTE: This adds negligible value apart from being fun :sweat_smile: 
- * TODO: Furthermore, as it its use is not specific to `UserContext.tsx` 
+ * TODO: Generalize and reuse, as its use is not specific to `UserContext.tsx` 
  */
 const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetStateAction<T>>) =>
     async () => {
@@ -38,14 +40,17 @@ export const UserContextProvider = props => {
 
     const [authUser, setAuthUser] = useState<AuthModel>(null);
     const [databaseUser, setDatabaseuser] = useState<UserModel>(null);
+    const [loading, setLoading] = useState(true);
 
     //scoped in function, as it should be provided to consumers
     const updateUser =
         getAndSet<AuthModel>('/api/auth/me', setAuthUser);
 
 
-    useEffect(() => {
-        updateUser()
+    asyncEffect(async () => {
+
+        await updateUser();
+        setLoading(false);
     }, []);
     useEffect(() => {
 
@@ -54,7 +59,7 @@ export const UserContextProvider = props => {
     }, [authUser])
 
 
-    return <UserContext.Provider value={{ authUser, databaseUser, updateUser }}>
+    return <UserContext.Provider value={{ authUser, loading, databaseUser, updateUser }}>
         {props.children}
     </UserContext.Provider>
 };
