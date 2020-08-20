@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { PagesContext } from "../../../context/PagesContext";
 import * as text from "../../../text"
 import { TooltipHelp } from "tooltip-help-react";
+import { Loader } from "../../tiny/loader";
 
 const PageCard = ({ id, name }) =>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
@@ -21,7 +22,7 @@ const PageCard = ({ id, name }) =>
 
 export const PageList = () => {
 
-    const { pages, moreAvailable, getNextPages } = useContext(PagesContext);
+    const { pages, hasLoaded, moreAvailable, getNextPages } = useContext(PagesContext);
     const { Tooltip, HelpButton } = useContext(TooltipHelp)
 
     return <>
@@ -32,6 +33,7 @@ export const PageList = () => {
                     <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
                 </Tooltip>
                 <HelpButton />
+                {!hasLoaded && <Loader size={10} />}
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
                     .map(page => <PageCard key={page.id} {...page} />)}

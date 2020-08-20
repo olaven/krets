@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { AdminPage } from "../../components/Admin/AdminPage";
+import { Loader } from "../../components/tiny/loader";
 import { AdminPageContextProvider } from "../../context/AdminPageContext";
 import { CompareContextProvider } from "../../context/CompareContext";
 import { PagesContextProvider } from "../../context/PagesContext";
@@ -14,7 +15,7 @@ export default () => {
     const router = useRouter();
     const pageId = router.query.pageId as string; //NOTE: sometimes undefined figure out 
 
-    if (!pageId || !authUser) return <div>waiting</div>
+    if (!pageId || !authUser) return <Loader size={150} />
 
     return <AdminPageContextProvider pageId={pageId}>
         <CompareContextProvider>

@@ -32,10 +32,10 @@ const fakeResponses = (amount: number): ResponseModel[] => new Array(amount).fil
 
 describe("Admin page", () => {
 
-    it("Displays message about loading", () => {
+    it("Displays loader before content is available", () => {
 
-        const { getByText } = render(<AdminPage />);
-        expect(getByText(text.adminPage.loading)).toBeInTheDocument();
+        const { getByLabelText } = render(<AdminPage />);
+        expect(getByLabelText("loader-label")).toBeInTheDocument();
     });
 
     it("Shows message if you are not the owner", () => {
