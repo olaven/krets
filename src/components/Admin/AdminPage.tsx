@@ -9,6 +9,7 @@ import { Charts } from "./Charts/Charts";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
 import { getOverallAverage } from "../../fetchers";
+import { Loader } from "../tiny/loader";
 
 const AdminBox = props => <Box
     width={props.width ? props.width : [1, 1 / 2]}
@@ -61,9 +62,7 @@ export const AdminPage = () => {
     const { page, pageLoading } = useContext(AdminPageContext);
 
     if (pageLoading) {
-        return <AdminBox>
-            {text.adminPage.loading}
-        </AdminBox>
+        return <Loader size={150} />
     }
 
     if (!authUser) {

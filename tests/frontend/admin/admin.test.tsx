@@ -34,8 +34,8 @@ describe("Admin page", () => {
 
     it("Displays message about loading", () => {
 
-        const { getByText } = render(<AdminPage />);
-        expect(getByText(text.adminPage.loading)).toBeInTheDocument();
+        const { getByLabelText } = render(<AdminPage />);
+        expect(getByLabelText("loader-label")).toBeInTheDocument();
     });
 
     it("Shows message if you are not the owner", () => {
