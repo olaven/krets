@@ -33,7 +33,6 @@ describe("The datbase interface for answers", () => {
         const retrieved = await answers.getByResponse(response.id);
 
         expect(retrieved).toEqual(persisted);
-        expect("FAIL HERE").toBeFalsy();
     });
 
     it("Returns an empty array if requesting from response that does not exist", async () => {
