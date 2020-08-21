@@ -16,7 +16,7 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
     await users.createUser({ id: sub, customer_id });
   }
 
-  const customerRegistered = await customerExists(user.customer_id);
+  const customerRegistered = await customerExists(user?.customer_id);
   if (user && !customerRegistered) {
 
     const customer_id = await registerCustomer(email);

@@ -47,8 +47,8 @@ const createResponse = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
     return first<ResponseModel>(
-        "insert into responses(emotion, text, page_id, contact_details) values($1, $2, $3, $4) RETURNING *",
-        [emotion, response.text, response.page_id, response.contact_details]
+        "insert into responses(emotion, page_id, contact_details) values($1, $2, $3) RETURNING *",
+        [emotion, response.page_id, response.contact_details]
     );
 }
 

@@ -1,5 +1,5 @@
-import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel } from "./models/models";
+import { get, put, del, post, filterStatus, OK } from "node-kall";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel } from "./models/models";
 import Stripe from "stripe";
 
 export const putPage = (page: PageModel) =>
@@ -19,6 +19,10 @@ export const getResponses = (pageId: string) =>
 
 export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
+
+//FIXME: This endpoint is not actually implemented
+export const postAnswer = (answer: AnswerModel) =>
+    post<AnswerModel>(`/api/pages/${answer.response_id}/responses/answers`, answer);
 
 export const getCategories = () =>
     get<CategoryModel>(`/api/categories`);
