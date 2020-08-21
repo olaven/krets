@@ -1,6 +1,6 @@
 export interface AnswerModel {
     id?: number,
-    response_id: number,
-    question_id?: string,
+    response_id: string,
     text: string
+    question_id?: string,
 }

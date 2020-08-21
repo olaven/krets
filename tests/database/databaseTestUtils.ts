@@ -1,7 +1,7 @@
 import * as faker from "faker";
-import { users, pages, responses } from "../../src/database/database";
+import { users, pages, responses, answers } from "../../src/database/database";
 import { first, run } from "../../src/database/helpers/query";
-import { PageModel, ResponseModel, Emotion, UserModel } from "../../src/models/models";
+import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel } from "../../src/models/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
@@ -26,6 +26,11 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
         contact_details: contactDetails
     });
 
+export const randomAnswer = (responseId: string): AnswerModel => ({
+    response_id: responseId,
+    text: faker.lorem.lines(1)
+})
+
 
 //IMPORTANT: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
 const fakeCreation = <T>(tableName: string, id: string) => first<T>(
@@ -33,7 +38,22 @@ const fakeCreation = <T>(tableName: string, id: string) => first<T>(
     [id, faker.date.past(1)]
 );
 
+export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 25 }))
+    : Promise<[ResponseModel, AnswerModel[]]> => {
 
+    const user = await users.createUser(randomUser());
+    const page = await pages.createPage(randomPage(user.id));
+    const response = await responses.createResponse(randomResponse(page.id));
+
+    const persisted = [];
+    for (let i = 0; i < amount; i++) {
+
+        const answer = await answers.createAnswer(randomAnswer(response.id));
+        persisted.push(answer);
+    }
+
+    return [response, persisted];
+}
 
 export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 })): Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
@@ -53,6 +73,7 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
     createdResonses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [page, user, createdResonses];
 }
+
 
 export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 })): Promise<[UserModel, PageModel[]]> => {
 

@@ -95,11 +95,9 @@ export const ResponseSection = ({ page }) => {
 
         const [status, response] = await postResponse({
             emotion,
-            //text,
             page_id: page.id,
             contact_details: contactDetails ? contactDetails : null
         });
-
 
         if (status === CREATED) {
 
