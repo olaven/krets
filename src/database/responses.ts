@@ -44,6 +44,12 @@ const getResponses = async (pageId: string, options = defaultOptions) => {
     return responses;
 }
 
+const getResponse = (id: string) =>
+    first<ResponseModel>(
+        `select * from responses where id = $1`,
+        [id]
+    );
+
 const createResponse = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
@@ -115,6 +121,7 @@ export const getLineCoordinates = async (pageId: string) => {
 
 export const responses = ({
     getResponses,
+    getResponse,
     createResponse,
     getAverageEmotionByPage,
     getLineCoordinates

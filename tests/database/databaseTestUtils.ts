@@ -39,7 +39,7 @@ const fakeCreation = <T>(tableName: string, id: string) => first<T>(
 );
 
 export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 25 }))
-    : Promise<[ResponseModel, AnswerModel[]]> => {
+    : Promise<[UserModel, PageModel, ResponseModel, AnswerModel[]]> => {
 
     const user = await users.createUser(randomUser());
     const page = await pages.createPage(randomPage(user.id));
@@ -52,7 +52,7 @@ export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 2
         persisted.push(answer);
     }
 
-    return [response, persisted];
+    return [user, page, response, persisted];
 }
 
 export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 })): Promise<[PageModel, UserModel, ResponseModel[]]> => {

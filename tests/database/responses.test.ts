@@ -108,6 +108,20 @@ describe("Database repository for pages", () => {
             expect(response.contact_details).toEqual(contact_details)
         });
 
+        test("Can get specific responses", async () => {
+
+            const [_u, _uu, [first, second, third]] = await blindSetup(3);
+
+            const retrievedFirst = await responses.getResponse(first.id);
+            expect(retrievedFirst).toEqual(first);
+
+            const retrievedSecond = await responses.getResponse(second.id);
+            expect(retrievedSecond).toEqual(second);
+
+            const retrievedThird = await responses.getResponse(third.id)
+            expect(retrievedThird).toEqual(third);
+        });
+
 
         describe("Pagination behaviour", () => {
 

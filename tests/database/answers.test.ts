@@ -6,7 +6,7 @@ import { randomAnswer, setupAnswers } from "./databaseTestUtils";
 describe("The datbase interface for answers", () => {
     it("Is possible to create an answer", async () => {
 
-        const [response] = await setupAnswers(0);
+        const [_, __, response] = await setupAnswers(0);
 
         const before = await randomAnswer(response.id)
         const persisted = await answers.createAnswer(before);
@@ -29,7 +29,7 @@ describe("The datbase interface for answers", () => {
 
     it("Is possible to retrieve answers by response id", async () => {
 
-        const [response, persisted] = await setupAnswers();
+        const [_, __, response, persisted] = await setupAnswers();
         const retrieved = await answers.getByResponse(response.id);
 
         expect(retrieved).toEqual(persisted);
@@ -43,7 +43,7 @@ describe("The datbase interface for answers", () => {
 
     it("Retrieving does not timeout or crash on its own", async () => {
 
-        const [response] = await setupAnswers();
+        const [_, __, response] = await setupAnswers();
         await answers.getByResponse(response.id);
         expect(true).toBeTruthy(); //NOTEjust asserting something at the ned 
     });
