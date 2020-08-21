@@ -103,7 +103,7 @@ export const ResponseSection = ({ page }) => {
 
             const postedAnswers = (await Promise.all( //TODO: list of answers, when supported
                 [{ text, response_id: response.id }]
-                    .map(answer => filterStatus(postAnswer(answer)))
+                    .map(answer => filterStatus(postAnswer(page.id, answer)))
 
             )).every(status => status === CREATED);
 

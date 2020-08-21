@@ -35,9 +35,9 @@ export const getAnswers = async (request: NextApiRequest, response: NextApiRespo
 
     const responseId = getId(request.url, 2);
     const retrieved = await answers.getByResponse(responseId);
+
     return response
-        .status(OK)
-        .send(retrieved);
+        .json(retrieved)
 }
 
 export const postAnswers = async (request: NextApiRequest, response: NextApiResponse) => {

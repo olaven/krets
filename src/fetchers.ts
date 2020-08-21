@@ -20,9 +20,11 @@ export const getResponses = (pageId: string) =>
 export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
 
-//FIXME: This endpoint is not actually implemented
-export const postAnswer = (answer: AnswerModel) =>
-    post<AnswerModel>(`/api/pages/${answer.response_id}/responses/answers`, answer);
+export const postAnswer = (pageId: string, answer: AnswerModel) =>
+    post<AnswerModel>(`/api/pages/${pageId}/responses/${answer.response_id}/answers`, answer);
+
+export const getAnswers = (pageId: string, responseId: string) =>
+    get<AnswerModel[]>(`/api/pages/${pageId}/responses/${responseId}/answers`);
 
 export const getCategories = () =>
     get<CategoryModel>(`/api/categories`);

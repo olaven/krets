@@ -1,11 +1,11 @@
-import { Flex, Box, Button } from "rebass";
+import { Flex, Box } from "rebass";
 import { AdminPageContext } from "../../../context/AdminPageContext"
 import { useContext, useState } from "react";
 import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
-import { TextCard } from "./TextCard";
 import { LoadMoreButton } from "../../tiny/buttons";
+import { TextCards } from "./TextCards";
 
 
 const Divider = () => <Box
@@ -28,13 +28,7 @@ export const TextList = () => {
     if (!responses.length)
         return <div>{text.responseList.noResponses}</div>
 
-    const cards = responses
-        .filter(({ text }) => text)
-        .filter(({ emotion }) => selectedEmotions.includes(emotion))
-        .map(response => <TextCard
-            key={response.id}
-            response={response}
-        />)
+
 
     return <Flex flexDirection={"column"} my={[1, 2, 3]}>
         <FilterButtons
@@ -42,7 +36,7 @@ export const TextList = () => {
             setSelected={setSelectedEmotions}
         />
         <Divider />
-        {cards}
+        <TextCards selectedEmotions={selectedEmotions} />
         {responses.length > 0 && <LoadMoreButton onClick={getNextResponses} active={moreResponsesAvailable} />}
     </Flex>
 }
