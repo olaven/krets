@@ -1,7 +1,6 @@
 import * as faker from "faker";
-import { users, pages, responses, answers } from "../../src/database/database";
+import { users, pages, responses, answers, questions } from "../../src/database/database";
 import { first, run } from "../../src/database/helpers/query";
-import { questions } from "../../src/database/questions";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({

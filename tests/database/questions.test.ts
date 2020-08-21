@@ -1,6 +1,4 @@
-import { pages } from "../../src/database/pages";
-import { questions } from "../../src/database/questions";
-import { users } from "../../src/database/users";
+import { pages, users, questions } from "../../src/database/database";
 import { randomPage } from "../api/apiTestUtils";
 import { randomQuestion, randomUser, setupQuestions } from "./databaseTestUtils";
 
