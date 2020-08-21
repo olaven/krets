@@ -3,10 +3,10 @@ import { Box, Button, Flex, Heading } from "rebass"
 import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
-import { CREATED } from "node-kall";
+import { filterStatus, CREATED } from "node-kall";
 import { Emotion } from "../../models/models";
 import * as uiText from "../../text";
-import { postResponse } from "../../fetchers";
+import { postAnswer, postResponse } from "../../fetchers";
 import { Thanks } from "../tiny/Thanks";
 
 
@@ -103,6 +103,14 @@ export const ResponseSection = ({ page }) => {
 
         if (status === CREATED) {
 
+            const postedAnswers = (await Promise.all( //TODO: list of answers, when supported
+                [{ text, response_id: response.id }]
+                    .map(answer => filterStatus(postAnswer(answer)))
+
+            )).every(status => status === CREATED);
+
+            //TODO: improve this code -> messy and error-prone feedback (as failed answer posts are not accounted for)
+            console.log("POSTED ANSWERS", postedAnswers);
             setPublished(true);
         } else {
 

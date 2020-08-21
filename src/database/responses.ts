@@ -7,6 +7,7 @@ import { PaginationOptions } from "./helpers/PaginationOptions";
 * The database expects `emotion` to have type `integer`, while 
 * the TS model stores them as strings of enum Emotion (":-)", ":-|", ":-(")
 * @param emotion Emotion from mode
+* //THINKABOUT: have the model storing nubers as well, and converting to smileys on the client 
 */
 export const convertEmotion = {
     toSQL: (emotion: Emotion) => ({

@@ -25,6 +25,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "tests/globalTeardown.js",
+    "tests/globalSetup.js"
   ]
 }
