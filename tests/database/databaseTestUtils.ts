@@ -1,7 +1,8 @@
 import * as faker from "faker";
 import { users, pages, responses, answers } from "../../src/database/database";
 import { first, run } from "../../src/database/helpers/query";
-import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel } from "../../src/models/models";
+import { questions } from "../../src/database/questions";
+import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
@@ -29,7 +30,12 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
 export const randomAnswer = (responseId: string): AnswerModel => ({
     response_id: responseId,
     text: faker.lorem.lines(1)
-})
+});
+
+export const randomQuestion = (pageId: string): QuestionModel => ({
+    page_id: pageId,
+    text: faker.lorem.lines(1)
+});
 
 
 //IMPORTANT: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
@@ -55,7 +61,24 @@ export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 2
     return [user, page, response, persisted];
 }
 
-export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 })): Promise<[PageModel, UserModel, ResponseModel[]]> => {
+export const setupQuestions = async (amount = faker.random.number({ min: 1, max: 25 }))
+    : Promise<[UserModel, PageModel, QuestionModel[]]> => {
+
+    const user = await users.createUser(randomUser());
+    const page = await pages.createPage(randomPage(user.id));
+
+    const persisted = [];
+    for (let i = 0; i < amount; i++) {
+
+        const question = await questions.createQuestion(randomQuestion(page.id));
+        persisted.push(question);
+    }
+
+    return [user, page, persisted];
+}
+
+export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))
+    : Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await users.createUser(randomUser());
     const page = await pages.createPage(randomPage(user.id));
