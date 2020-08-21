@@ -17,5 +17,6 @@
 		"github.vscode-pull-request-github",
 		"orta.vscode-jest",
 		"donjayamanne.githistory",
+		"vstirbu.vscode-mermaid-preview",
 	],
 }
