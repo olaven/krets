@@ -7,7 +7,6 @@ import { randomUser, randomPage } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");
 
-//TODO: Skipped as not relevant to db work. Unskip once working on API 
 describe("The endpoint for average all-time score", () => {
 
     let server: Server;
