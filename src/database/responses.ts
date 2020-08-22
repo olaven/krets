@@ -7,6 +7,7 @@ import { PaginationOptions } from "./helpers/PaginationOptions";
 * The database expects `emotion` to have type `integer`, while 
 * the TS model stores them as strings of enum Emotion (":-)", ":-|", ":-(")
 * @param emotion Emotion from mode
+* //THINKABOUT: have the model storing nubers as well, and converting to smileys on the client 
 */
 export const convertEmotion = {
     toSQL: (emotion: Emotion) => ({
@@ -43,12 +44,18 @@ const getResponses = async (pageId: string, options = defaultOptions) => {
     return responses;
 }
 
+const getResponse = (id: string) =>
+    first<ResponseModel>(
+        `select * from responses where id = $1`,
+        [id]
+    );
+
 const createResponse = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
     return first<ResponseModel>(
-        "insert into responses(emotion, text, page_id, contact_details) values($1, $2, $3, $4) RETURNING *",
-        [emotion, response.text, response.page_id, response.contact_details]
+        "insert into responses(emotion, page_id, contact_details) values($1, $2, $3) RETURNING *",
+        [emotion, response.page_id, response.contact_details]
     );
 }
 
@@ -114,6 +121,7 @@ export const getLineCoordinates = async (pageId: string) => {
 
 export const responses = ({
     getResponses,
+    getResponse,
     createResponse,
     getAverageEmotionByPage,
     getLineCoordinates

@@ -7,8 +7,7 @@ exports.up = pgm => {
     page_id: {
 
       type: 'varchar(800)',
-      notNull: true
-
+      notNull: true,
     }
   })
 }

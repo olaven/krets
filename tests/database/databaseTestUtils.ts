@@ -1,7 +1,7 @@
 import * as faker from "faker";
-import { users, pages, responses } from "../../src/database/database";
+import { users, pages, responses, answers, questions } from "../../src/database/database";
 import { first, run } from "../../src/database/helpers/query";
-import { PageModel, ResponseModel, Emotion, UserModel } from "../../src/models/models";
+import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
@@ -21,10 +21,20 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
     ({
         id: faker.random.uuid(),
         page_id: pageId,
-        text: faker.lorem.lines(1),
+        // text: faker.lorem.lines(1),
         emotion: emotion,
         contact_details: contactDetails
     });
+
+export const randomAnswer = (responseId: string): AnswerModel => ({
+    response_id: responseId,
+    text: faker.lorem.lines(1)
+});
+
+export const randomQuestion = (pageId: string): QuestionModel => ({
+    page_id: pageId,
+    text: faker.lorem.lines(1)
+});
 
 
 //IMPORTANT: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
@@ -33,9 +43,41 @@ const fakeCreation = <T>(tableName: string, id: string) => first<T>(
     [id, faker.date.past(1)]
 );
 
+export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 25 }))
+    : Promise<[UserModel, PageModel, ResponseModel, AnswerModel[]]> => {
 
+    const user = await users.createUser(randomUser());
+    const page = await pages.createPage(randomPage(user.id));
+    const response = await responses.createResponse(randomResponse(page.id));
 
-export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 })): Promise<[PageModel, UserModel, ResponseModel[]]> => {
+    const persisted = [];
+    for (let i = 0; i < amount; i++) {
+
+        const answer = await answers.createAnswer(randomAnswer(response.id));
+        persisted.push(answer);
+    }
+
+    return [user, page, response, persisted];
+}
+
+export const setupQuestions = async (amount = faker.random.number({ min: 1, max: 25 }))
+    : Promise<[UserModel, PageModel, QuestionModel[]]> => {
+
+    const user = await users.createUser(randomUser());
+    const page = await pages.createPage(randomPage(user.id));
+
+    const persisted = [];
+    for (let i = 0; i < amount; i++) {
+
+        const question = await questions.createQuestion(randomQuestion(page.id));
+        persisted.push(question);
+    }
+
+    return [user, page, persisted];
+}
+
+export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))
+    : Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await users.createUser(randomUser());
     const page = await pages.createPage(randomPage(user.id));
@@ -53,6 +95,7 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
     createdResonses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [page, user, createdResonses];
 }
+
 
 export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 })): Promise<[UserModel, PageModel[]]> => {
 

@@ -1,5 +1,5 @@
-import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel } from "./models/models";
+import { get, put, del, post, filterStatus, OK } from "node-kall";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel } from "./models/models";
 import Stripe from "stripe";
 
 export const putPage = (page: PageModel) =>
@@ -19,6 +19,12 @@ export const getResponses = (pageId: string) =>
 
 export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
+
+export const postAnswer = (pageId: string, answer: AnswerModel) =>
+    post<AnswerModel>(`/api/pages/${pageId}/responses/${answer.response_id}/answers`, answer);
+
+export const getAnswers = (pageId: string, responseId: string) =>
+    get<AnswerModel[]>(`/api/pages/${pageId}/responses/${responseId}/answers`);
 
 export const getCategories = () =>
     get<CategoryModel>(`/api/categories`);

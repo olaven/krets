@@ -1,12 +1,11 @@
-import Emoji from "react-emoji-render";
 import { Box, Button, Flex, Heading } from "rebass"
 import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
 import { KretsEmoji } from "../tiny/emoji";
-import { CREATED } from "node-kall";
+import { filterStatus, CREATED } from "node-kall";
 import { Emotion } from "../../models/models";
 import * as uiText from "../../text";
-import { postResponse } from "../../fetchers";
+import { postAnswer, postResponse } from "../../fetchers";
 import { Thanks } from "../tiny/Thanks";
 
 
@@ -93,15 +92,21 @@ export const ResponseSection = ({ page }) => {
             return;
         }
 
-        const [status] = await postResponse({
+        const [status, response] = await postResponse({
             emotion,
-            text,
             page_id: page.id,
             contact_details: contactDetails ? contactDetails : null
         });
 
         if (status === CREATED) {
 
+            //FIXME: currently only one answer possible 
+            const answers = [{ text, response_id: response.id }]
+            await Promise.all(answers.map(answer =>
+                postAnswer(page.id, answer)
+            ));
+
+            //FIXME: succsess regardless of wether answers were acepted or not
             setPublished(true);
         } else {
 

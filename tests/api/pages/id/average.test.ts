@@ -7,7 +7,6 @@ import { randomUser, randomPage } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");
 
-//TODO: Skipped as not relevant to db work. Unskip once working on API 
 describe("The endpoint for average all-time score", () => {
 
     let server: Server;
@@ -87,13 +86,13 @@ describe("The endpoint for average all-time score", () => {
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
-                text: ""
+                //text: ""
             }); // 2
 
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-|",
-                text: ""
+                //text: ""
             }); // 1
 
             const url = fullURL(page.id);
@@ -114,25 +113,25 @@ describe("The endpoint for average all-time score", () => {
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-|",
-                text: ""
+                //text: ""
             }); // 1
 
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
-                text: ""
+                //text: ""
             }); // 2
 
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
-                text: ""
+                //text: ""
             }); // 2
 
             await responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
-                text: ""
+                //text: ""
             }); // 2
 
             const url = fullURL(page.id);

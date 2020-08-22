@@ -48,13 +48,11 @@ describe("The endpoint for responses", () => {
         });
 
         await responses.createResponse({
-            text: "OK",
             emotion: ':-|',
             page_id: page.id
         });
 
         await responses.createResponse({
-            text: "Good!",
             emotion: ':-)',
             page_id: page.id
         });
@@ -78,7 +76,6 @@ describe("The endpoint for responses", () => {
         });
 
         const response = {
-            text: "OK",
             emotion: ':-|',
             page_id: page.id
         };
@@ -97,7 +94,6 @@ describe("The endpoint for responses", () => {
 
         const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
         const hasCorrect = retrievedResponses.find(r =>
-            r.text === response.text &&
             r.emotion === response.emotion &&
             r.page_id === response.page_id)
 

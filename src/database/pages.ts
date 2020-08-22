@@ -6,8 +6,7 @@ import { PaginationOptions } from "./helpers/PaginationOptions";
 const createPage = (page: PageModel) => first<PageModel>(
     "insert into pages(id, owner_id, name, category_id ,color) values($1, $2, $3, $4, $5) returning *",
     [page.id, page.owner_id, page.name, page.category_id, page.color]
-)
-
+);
 
 const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }) =>
     rows<PageModel>(
@@ -31,7 +30,10 @@ const getByOwnerAndCategory = (ownerId: string, categoryId: string) =>
     );
 
 const getPage = (id: string) =>
-    first<PageModel>("select * from pages where id = $1", [id])
+    first<PageModel>(
+        "select * from pages where id = $1",
+        [id]
+    );
 
 const updatePage = (page: PageModel) =>
     first<PageModel>(

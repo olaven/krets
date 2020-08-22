@@ -16,6 +16,7 @@
 		"firefox-devtools.vscode-firefox-debug",
 		"github.vscode-pull-request-github",
 		"orta.vscode-jest",
-		"donjayamanne.githistory",
+		"vstirbu.vscode-mermaid-preview",
+		"mhutchie.git-graph"
 	],
 }

@@ -3,31 +3,8 @@ import { pages } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models/models";
-import { withCors } from "../../../middleware/middleware";
+import { withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { getId } from "../users/[id]";
-
-export default withCors(
-    function pageHandler(request: NextApiRequest, response: NextApiResponse) {
-
-        const { method } = request;
-        if (method === "GET") {
-
-            get(request, response);
-        } else if (method === "PUT") {
-
-            put(request, response);
-        } else if (method === "DELETE") {
-
-            del(request, response);
-        } else {
-
-            response
-                .status(BAD_REQUEST)
-                .send("Method not supported")
-        }
-    }
-);
-
 
 const del = async (request: NextApiRequest, response: NextApiResponse) => {
 
@@ -127,3 +104,13 @@ const put = async (request, response) => {
             .send("Page was not properly formatted")
     }
 };
+
+export default withCors(
+    withErrorHandling(
+        withMethodHandlers({
+            GET: get,
+            PUT: put,
+            DELETE: del
+        })
+    )
+);

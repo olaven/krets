@@ -22,7 +22,9 @@ export const withMethodHandlers = (handlers: Handlers) =>
         const handler = handlers[method]
 
         if (handler) handler(request, response);
-        else throw `${method} not supported`;
+        else return response
+            .status(405)
+            .end();
     }
 
 

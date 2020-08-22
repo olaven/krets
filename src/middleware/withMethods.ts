@@ -20,3 +20,4 @@ export const withMethods = (methods: Method[]) =>
                     .status(405)
                     .send(null);
         }
+

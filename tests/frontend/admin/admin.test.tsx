@@ -6,14 +6,16 @@ import React from "react";
 import { AdminPage } from "../../../src/components/Admin/AdminPage"
 import { TextList } from "../../../src/components/Admin/TextList/TextList";
 import { waitFor, render } from "@testing-library/react"
-import { Emotion, ResponseModel } from "../../../src/models/models";
+import { AnswerModel, Emotion, ResponseModel } from "../../../src/models/models";
 import * as text from "../../../src/text"
 import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
-import { mockRouter } from "../frontendTestUtils";
+import { mockFetch, mockRouter } from "../frontendTestUtils";
 import { AdminPageContext } from "../../../src/context/AdminPageContext";
 import { UserContext } from "../../../src/context/UserContext";
 import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
+import { randomAnswer } from "../../database/databaseTestUtils";
+import { randomPage } from "../../api/apiTestUtils";
 
 const randomEmotion = () => {
 
@@ -51,7 +53,8 @@ describe("Admin page", () => {
                 sub: userID
             },
             databaseUser: null,
-            updateUser: () => { }
+            updateUser: () => { },
+            loading: false
         }
 
         const adminContext = {
@@ -63,6 +66,8 @@ describe("Admin page", () => {
             pageLoading: false,
             responses: [],
             responsesLoading: false,
+            moreResponsesAvailable: true,
+            getNextResponses: () => { },
         }
 
         const { getByText } = render(<UserContext.Provider value={userContext}>
@@ -110,17 +115,22 @@ describe("Conversion between emotins and numeric values", () => {
         it("renders every response with text", async () => {
 
             const responses = fakeResponses(10);
+            const fakeAnswer = randomAnswer("RESPONSE-ID-DOES-NOT-MATTER-TO-TEST");
+            mockFetch(fakeAnswer, 200);
 
             mockRouter("some-id");
             const rendered = render(
-                <AdminPageContext.Provider value={{ responses, responsesLoading: false, page: null, pageLoading: false }}>
+                <AdminPageContext.Provider value={{ responses, moreResponsesAvailable: false, page: randomPage("OWNER-NOT-REELVANT"), pageLoading: false, getNextResponses: () => { }, }}>
                     <TextList />
                 </AdminPageContext.Provider>
             );
 
             for (const response of responses) {
 
-                expect(rendered.getByText(response.text)).toBeInTheDocument();
+                waitFor(() => {
+
+                    expect(rendered.getByText(fakeAnswer.text)).toBeInTheDocument();
+                });
             }
         });
 
@@ -129,7 +139,10 @@ describe("Conversion between emotins and numeric values", () => {
 
             //NOTE: sad emotion
             const emotion: Emotion = ":-(";
-            const text = "Text of sad emotion";
+            const answer: AnswerModel = {
+                text: "Text of sad emotion",
+                response_id: "NOT-RELEVANT"
+            }
 
             const responses = [{
                 emotion,
@@ -141,12 +154,14 @@ describe("Conversion between emotins and numeric values", () => {
 
             mockRouter("some-id");
             const rendered = render(
-                <AdminPageContext.Provider value={{ responses, responsesLoading: false, page: null, pageLoading: false }}>
+                <AdminPageContext.Provider value={{ responses, moreResponsesAvailable: false, page: randomPage("OWNER-NOT-RELEVANT"), pageLoading: false, getNextResponses: () => { }, }}>
                     <TextList />
                 </AdminPageContext.Provider>
             );
 
-            expect(rendered.getByText(text)).toBeInTheDocument();
+            waitFor(() => {
+                expect(rendered.getByText(answer.text)).toBeInTheDocument();
+            });
         });
     });
 });  
