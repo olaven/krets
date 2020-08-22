@@ -1,32 +1,53 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { withAuthentication, withMethodHandlers } from "../../../../middleware/middleware";
+import auth0 from "../../../../auth/auth0";
+import { pages, questions } from "../../../../../src/database/database"
+import { withAuthentication, withErrorHandling, withMethodHandlers } from "../../../../middleware/middleware";
 import { withCors } from "../../../../middleware/withCors";
+import { getId } from "./average";
+import { QuestionModel } from "../../../../models/models";
+import { CREATED, FORBIDDEN, BAD_REQUEST } from "node-kall";
 
-const getQuestions = (request: NextApiRequest, response: NextApiResponse) => {
+const getQuestions = async (request: NextApiRequest, response: NextApiResponse) => {
 
-    response.status(504).end();
+    const pageId = getId(request.url);
+    const retrieved = await questions.getByPage(pageId);
+
+    response.json(retrieved);
 };
 
-const postQuesiton = withAuthentication((request, response) => {
+const postQuestion = withErrorHandling(withAuthentication(async (request, response) => {
 
-    response.status(504).end();
-});
+    const { user } = await auth0.getSession(request);
+    const page = await pages.getPage(getId(request.url));
 
-const putQuestion = withAuthentication((request, response) => {
+    const question = request.body as QuestionModel;
 
-    response.status(504).end();
-});
+    if (page?.owner_id !== user.sub || question.page_id !== page?.id)
+        return response.status(FORBIDDEN).end();
 
-export const deleteQuestion = withAuthentication((request, response) => {
+    try {
+        const persisted = await questions.createQuestion(question);
+        return response
+            .status(CREATED)
+            .send(persisted);
+    } catch {
 
-    response.status(504).end();
-});
+        //TODO: figure out why this is not done by `withErrorHandling`
+        return response
+            .status(BAD_REQUEST)
+            .end();
+    }
+
+
+}));
 
 export default withCors(
-    withMethodHandlers({
-        GET: getQuestions,
-        POST: postQuesiton,
-        PUT: putQuestion,
-        DELETE: deleteQuestion,
-    })
+    withErrorHandling(
+        withMethodHandlers({
+            GET: getQuestions,
+            POST: postQuestion,
+            /* PUT: putQuestion, //TODO: implement on endpoint for specific question, i.e. pages/questions/[questionId]
+            DELETE: deleteQuestion, */
+        })
+    )
 )

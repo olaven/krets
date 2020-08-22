@@ -6,7 +6,7 @@ const createQuestion = (question: QuestionModel) =>
     first<QuestionModel>(
         `insert into questions (page_id, text) values ($1, $2) returning *`,
         [question.page_id, question.text]
-    )
+    );
 
 const getByPage = (pageId: string) =>
     rows<QuestionModel>(
