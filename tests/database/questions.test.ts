@@ -6,7 +6,7 @@ describe("The API interface for questions", () => {
 
     it("Is possible to create questions", async () => {
 
-        const [page] = await setupQuestions();
+        const [_, page] = await setupQuestions();
         const question = await randomQuestion(page.id);
         const persisted = await questions.createQuestion(question);
 
