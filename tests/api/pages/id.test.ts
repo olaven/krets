@@ -83,8 +83,8 @@ describe("Endpoints for specific page", () => {
             const postStatus = await statusFromFetch("POST");
             const patchtStatus = await statusFromFetch("PATCH");
 
-            expect(postStatus).toEqual(400);
-            expect(patchtStatus).toEqual(400);
+            expect(postStatus).toEqual(405);
+            expect(patchtStatus).toEqual(405);
         });
     })
 
