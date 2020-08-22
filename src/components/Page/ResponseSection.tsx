@@ -1,4 +1,3 @@
-import Emoji from "react-emoji-render";
 import { Box, Button, Flex, Heading } from "rebass"
 import { Input, Checkbox, Label } from '@rebass/forms'
 import React, { useState } from "react";
@@ -101,14 +100,13 @@ export const ResponseSection = ({ page }) => {
 
         if (status === CREATED) {
 
-            const postedAnswers = (await Promise.all( //TODO: list of answers, when supported
-                [{ text, response_id: response.id }]
-                    .map(answer => filterStatus(postAnswer(page.id, answer)))
+            //FIXME: currently only one answer possible 
+            const answers = [{ text, response_id: response.id }]
+            await Promise.all(answers.map(answer =>
+                postAnswer(page.id, answer)
+            ));
 
-            )).every(status => status === CREATED);
-
-            //TODO: improve this code -> messy and error-prone feedback (as failed answer posts are not accounted for)
-            console.log("POSTED ANSWERS", postedAnswers);
+            //FIXME: succsess regardless of wether answers were acepted or not
             setPublished(true);
         } else {
 
