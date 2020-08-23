@@ -1,11 +1,11 @@
 import { QuestionModel } from "../models/models"
-import { first, rows } from "./helpers/query"
+import { first, rows, run } from "./helpers/query"
 
 
-const createQuestion = (question: QuestionModel) =>
+const getQuestion = (id: string) =>
     first<QuestionModel>(
-        `insert into questions (page_id, text) values ($1, $2) returning *`,
-        [question.page_id, question.text]
+        `select * from questions where id = $1`,
+        [id]
     );
 
 const getByPage = (pageId: string) =>
@@ -14,7 +14,21 @@ const getByPage = (pageId: string) =>
         [pageId]
     );
 
+const createQuestion = (question: QuestionModel) =>
+    first<QuestionModel>(
+        `insert into questions (page_id, text) values ($1, $2) returning *`,
+        [question.page_id, question.text]
+    );
+
+const updateQuestion = (question: QuestionModel) =>
+    run(
+        `update questions set text = $2 where id = $1`,
+        [question.id, question.text]
+    )
+
 export const questions = {
+    getQuestion,
     getByPage,
-    createQuestion
+    createQuestion,
+    updateQuestion
 }
