@@ -37,7 +37,7 @@ describe("The endpoint for average all-time score", () => {
     });
 
 
-    describe("The endpoint for updating pages", async () => {
+    describe("The endpoint for updating pages", () => {
 
         const putQuestion = (ownerId: string, question: QuestionModel, pageId = question.page_id, questionId = question.id) => authenticatedFetch(
             ownerId,

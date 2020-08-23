@@ -27,7 +27,7 @@ const putQuestion = async (request: NextApiRequest, response: NextApiResponse) =
 
     if (question.id.toString() !== givenQuestionId || question.page_id !== givenPageId)
         return response
-            .status(BAD_REQUEST) //FORBIDDEN or CONFLCIT more appropriate? 
+            .status(BAD_REQUEST) //THINKABOUT FORBIDDEN or CONFLCIT more appropriate? 
             .end();
 
     const { user } = await auth0.getSession(request);
@@ -36,7 +36,6 @@ const putQuestion = async (request: NextApiRequest, response: NextApiResponse) =
         return response
             .status(FORBIDDEN)
             .end();
-
 
     await questions.updateQuestion(question);
 
@@ -47,6 +46,7 @@ const putQuestion = async (request: NextApiRequest, response: NextApiResponse) =
 
 const deleteQuestion = async (request: NextApiRequest, response: NextApiResponse) => {
 
+    //TODO: Implement
     response.status(504).end();
 }
 
