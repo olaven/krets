@@ -11,8 +11,8 @@ export const QuestionsList = () => {
 
     return loading ?
         <Loader size={150} /> :
-        <>
+        <div>
             {questions.map(question =>
-                <QuestionCard question={question} />)}
-        </>
+                <QuestionCard key={question.id} question={question} />)}
+        </div>
 }
