@@ -10,7 +10,7 @@ const getQuestion = (id: string) =>
 
 const getByPage = (pageId: string) =>
     rows<QuestionModel>(
-        `select * from questions where page_id = $1`,
+        `select * from questions where page_id = $1 order by created_at desc`,
         [pageId]
     );
 

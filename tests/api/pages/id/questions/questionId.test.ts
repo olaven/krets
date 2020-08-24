@@ -80,7 +80,7 @@ describe("The endpoint for average all-time score", () => {
             const before = await questions.getQuestion(question.id);
             await putQuestion(owner.id, {
                 ...question,
-                text: faker.lorem.text()
+                text: faker.lorem.word()
             });
             const after = await questions.getQuestion(question.id);
             //TODO 

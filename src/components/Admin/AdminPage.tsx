@@ -5,7 +5,7 @@ import { Box, Flex, Text } from "rebass";
 import { OK } from "node-kall";
 import { LoginButton } from "../tiny/buttons";
 import { TextList } from "./TextList/TextList";
-import { Charts } from "./Charts/Charts";
+import { Charts } from "../Charts";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
 import { getOverallAverage } from "../../fetchers";

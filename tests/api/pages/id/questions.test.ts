@@ -70,15 +70,18 @@ describe("The endpoint for questions", () => {
 
         it("Only returns questions from given page", async () => {
 
+            const sort = (questions: QuestionModel[]) =>
+                questions.sort((a, b) => a.id < b.id ? -1 : 1);
+
             const [_, firstPage, firstPersisted] = await setupQuestions();
             const [__, secondPage, secondPersisted] = await setupQuestions();
 
             const firstRetrieved = await (await fetch(fullURL(firstPage.id))).json() as QuestionModel[];
             const secondRetrieved = await (await fetch(fullURL(secondPage.id))).json() as QuestionModel[];
 
-            expect(firstPersisted).not.toEqual(secondPersisted);
-            expect(firstRetrieved).toEqual(firstPersisted);
-            expect(secondRetrieved).toEqual(secondPersisted);
+            expect(sort(firstPersisted)).not.toEqual(sort(secondPersisted));
+            expect(sort(firstRetrieved)).toEqual(sort(firstPersisted));
+            expect(sort(secondRetrieved)).toEqual(sort(secondPersisted));
         });
     });
 

@@ -6,7 +6,8 @@ import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
-import { ManageQuestions } from "./ManageQuestions";
+import { ManageQuestions } from "../../components/Settings/ManageQuestions/ManageQuestions";
+import { Collapsible } from "../../components/Collapsible";
 
 const UpdateName = () => {
 
@@ -107,9 +108,15 @@ export const SettingsContent = () => {
             <Heading fontSize={[3, 4, 5]}>
                 {text.settings.heading} {page.name}
             </Heading>
-            <UpdateName />
-            <ManageQuestions />
-            <DeletePage />
+            <Collapsible text={text.settings.changeNameHeader}>
+                <UpdateName />
+            </Collapsible>
+            <Collapsible text={text.settings.questions.heading}>
+                <ManageQuestions />
+            </Collapsible>
+            <Collapsible text={text.settings.deletePageButton}>
+                <DeletePage />
+            </Collapsible>
         </Box>
 }
 

@@ -30,6 +30,8 @@ export const response = strings({
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
+        prefixCustomQuestionCheckbox: "I want to answer",
+        suffixCustomQuestionCheckbox: "questions",
         contactCheckbox: "I want to be contacted",
         contactPlaceholder: "Email or phone number",
         copyButton: {
@@ -48,6 +50,8 @@ export const response = strings({
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
+        prefixCustomQuestionCheckbox: "Jeg vil svare på",
+        suffixCustomQuestionCheckbox: "spørsmål",
         contactCheckbox: "Jeg vil bli kontaktet igjen",
         contactPlaceholder: "Epost eller telefonnummer",
         copyButton: {
@@ -186,7 +190,15 @@ export const settings = strings({
         deleteWarning: "Are you sure? This permanently deletes this page, including all responses. Deletion cannot be undone.",
         deleteConfirmation: "I am sure about this.",
         deleteCancelation: "Don't delete.",
-        deleteError: "An error occured when deleting.."
+        deleteError: "An error occured when deleting..",
+        questions: {
+            heading: "Create upto 3 custom questions",
+            placeholder: "Enter question",
+            createButton: "Create new",
+            updateButton: "Update",
+            deleteButton: "Delete.",
+            unstable: "Custom questions an unstable feature - it may change"
+        }
     },
     no: {
         heading: "Instillinger for",
@@ -198,7 +210,15 @@ export const settings = strings({
         deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",
         deleteConfirmation: "Jeg er helt sikker.",
         deleteCancelation: "Ikke slett.",
-        deleteError: "En feil oppsto med slettingen.."
+        deleteError: "En feil oppsto med slettingen..",
+        questions: {
+            heading: "Lag inntil 3 egne spørsmål",
+            placeholder: "Enter question",
+            createButton: "Opprett",
+            updateButton: "Oppdater",
+            deleteButton: "Slett.",
+            unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
+        }
     }
 })
 
