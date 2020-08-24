@@ -8,7 +8,7 @@ import { useState } from "react";
 
 type QuestionProps = { placeholder: string, onClick: (text: string) => void };
 const Question = ({ onClick, placeholder }: QuestionProps) =>
-    <Flex p={[1, 2, 3]}>
+    <Flex p={[1]}>
         <Input
             aria-label="response-text-input"
             placeholder={placeholder}
@@ -56,19 +56,23 @@ export const CustomQuestions = ({ answers, setAnswers, questions }: CustomQuesti
 
     const [checked, setChecked] = useState(false);
 
-    return checked ?
-        questions.map(question =>
-            <CustomQuestion
-                key={question.id}
-                question={question}
-                answers={answers}
-                setAnswers={setAnswers} />
-        ) :
+
+    return <>
         <Label width={[]} fontSize={[1]} p={[1, 2]}>
             <Checkbox
                 onChange={() => { setChecked(!checked) }}
                 checked={checked}
             />
-            Her er litt labelteskst
+            {uiText.response.prefixCustomQuestionCheckbox} {questions.length} {uiText.response.suffixCustomQuestionCheckbox}
         </Label >
+        {checked && questions.map(question =>
+            <CustomQuestion
+                key={question.id}
+                question={question}
+                answers={answers}
+                setAnswers={setAnswers} />
+        )}
+    </>
+
+
 }

@@ -1,4 +1,4 @@
-import { Heading } from "rebass";
+import { Heading, Text } from "rebass";
 import * as uiText from "../../../text";
 import { useContext } from "react";
 import { QuestionsContextProvider } from "../../../context/QuestionsContext";
@@ -19,6 +19,7 @@ export const ManageQuestions = () => {
 
     return <QuestionsContextProvider pageId={page.id}>
         <Heading>{uiText.settings.questions.heading}</Heading>
+        <Text color={"attention"}>{uiText.settings.questions.unstable}</Text>
         <QuestionCreator />
         <QuestionsList />
     </QuestionsContextProvider >

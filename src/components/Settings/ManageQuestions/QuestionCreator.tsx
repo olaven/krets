@@ -29,8 +29,7 @@ export const QuestionCreator = () => {
     }
 
     //TODO: Different message if more questions aren't allowed 
-    return moreQuestionsAreAllowed && <Flex py={[1, 2, 3]}>
-        <Box width={1 / 3} />
+    return moreQuestionsAreAllowed &&
         <Box as='form' onSubmit={e => e.preventDefault()} width={2 / 4}>
 
             <Flex>
@@ -41,6 +40,7 @@ export const QuestionCreator = () => {
                         setText(value);
                     }}
                     value={text}
+                    mx={1}
                 />
                 <Button
                     onClick={onCreateQuestion}
@@ -51,6 +51,5 @@ export const QuestionCreator = () => {
             </Flex>
 
         </Box>
-        <Box width={1 / 3} />
-    </Flex>
+
 }

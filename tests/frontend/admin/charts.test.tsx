@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { Charts } from "../../../src/components/Admin/Charts/Charts"
+import { Charts } from "../../../src/components/Charts"
 import { render, waitFor, fireEvent, getByLabelText } from "@testing-library/react"
 import * as text from "../../../src/text"
 import '@testing-library/jest-dom/extend-expect'

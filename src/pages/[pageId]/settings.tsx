@@ -114,7 +114,9 @@ export const SettingsContent = () => {
             <Collapsible text={text.settings.questions.heading}>
                 <ManageQuestions />
             </Collapsible>
-            <DeletePage />
+            <Collapsible text={text.settings.deletePageButton}>
+                <DeletePage />
+            </Collapsible>
         </Box>
 }
 

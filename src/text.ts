@@ -30,6 +30,8 @@ export const response = strings({
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
+        prefixCustomQuestionCheckbox: "I want to answer",
+        suffixCustomQuestionCheckbox: "questions",
         contactCheckbox: "I want to be contacted",
         contactPlaceholder: "Email or phone number",
         copyButton: {
@@ -48,6 +50,8 @@ export const response = strings({
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
+        prefixCustomQuestionCheckbox: "Jeg vil svare på",
+        suffixCustomQuestionCheckbox: "spørsmål",
         contactCheckbox: "Jeg vil bli kontaktet igjen",
         contactPlaceholder: "Epost eller telefonnummer",
         copyButton: {
@@ -193,6 +197,7 @@ export const settings = strings({
             createButton: "Create new",
             updateButton: "Update",
             deleteButton: "Delete.",
+            unstable: "Custom questions an unstable feature - it may change"
         }
     },
     no: {
@@ -212,6 +217,7 @@ export const settings = strings({
             createButton: "Opprett",
             updateButton: "Oppdater",
             deleteButton: "Slett.",
+            unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
         }
     }
 })
