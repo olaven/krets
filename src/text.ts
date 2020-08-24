@@ -192,7 +192,7 @@ export const settings = strings({
         deleteCancelation: "Don't delete.",
         deleteError: "An error occured when deleting..",
         questions: {
-            heading: "Custom questions",
+            heading: "Create upto 3 custom questions",
             placeholder: "Enter question",
             createButton: "Create new",
             updateButton: "Update",
@@ -212,7 +212,7 @@ export const settings = strings({
         deleteCancelation: "Ikke slett.",
         deleteError: "En feil oppsto med slettingen..",
         questions: {
-            heading: "Egne spørsmål",
+            heading: "Lag inntil 3 egne spørsmål",
             placeholder: "Enter question",
             createButton: "Opprett",
             updateButton: "Oppdater",

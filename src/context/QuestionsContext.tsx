@@ -29,13 +29,9 @@ export const QuestionsContextProvider = ({ pageId, children }) => {
     const refreshQuestions = async () => {
 
         const [status, questions] = await getQuestions(pageId);
-        if (status === OK) {
 
-            setQuestions(questions);
-        } else {
-
-            console.error(`${status} when fetching questions..`);
-        }
+        if (status === OK) setQuestions(questions);
+        else console.error(`${status} when fetching questions..`);
 
         setLoading(false);
     }
@@ -44,7 +40,7 @@ export const QuestionsContextProvider = ({ pageId, children }) => {
         setMoreQuestionsAreAllowed(
             questions.length < 3
         );
-    }, [questions.length])
+    }, [questions.length]);
 
 
     useEffect(() => {

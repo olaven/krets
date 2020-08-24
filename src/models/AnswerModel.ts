@@ -3,4 +3,5 @@ export interface AnswerModel {
     response_id?: string, //NOTE: required in database, assigned in backend
     text: string
     question_id?: string,
+    created_at?: string
 }
