@@ -191,6 +191,8 @@ export const settings = strings({
             heading: "Custom questions",
             placeholder: "Enter question",
             createButton: "Create new",
+            updateButton: "Update",
+            deleteButton: "Delete.",
         }
     },
     no: {
@@ -208,6 +210,8 @@ export const settings = strings({
             heading: "Egne spørsmål",
             placeholder: "Enter question",
             createButton: "Opprett",
+            updateButton: "Oppdater",
+            deleteButton: "Slett.",
         }
     }
 })

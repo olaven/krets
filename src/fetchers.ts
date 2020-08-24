@@ -59,4 +59,7 @@ export const getQuestions = (pageId: string) =>
     get<QuestionModel[]>(`/api/pages/${pageId}/questions`);
 
 export const postQuestion = (question: QuestionModel) =>
-    post<QuestionModel>(`/api/pages/${question.page_id}/questions`, question); 
+    post<QuestionModel>(`/api/pages/${question.page_id}/questions`, question);
+
+export const updateQuestion = (question: QuestionModel) =>
+    put<QuestionModel>(`/api/pages/${question.page_id}/questions/${question.id}`, question); 
