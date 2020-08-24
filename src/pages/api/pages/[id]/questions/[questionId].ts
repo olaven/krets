@@ -6,6 +6,7 @@ import { pages } from "../../../../../database/pages";
 import { withErrorHandling, withAuthentication, withMethodHandlers } from "../../../../../middleware/middleware";
 import { QuestionModel } from "../../../../../models/models";
 
+//TODO: share this generic workaround between all files and use it like this: getPageId = (url: string) => getId(url, 2); 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
 export const getId = (url: string, splitAt: number) => {
 

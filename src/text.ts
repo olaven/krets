@@ -179,7 +179,8 @@ export const settings = strings({
     en: {
         heading: "Settings page for",
         loading: "Loading settings page..",
-        changeNameButton: "Change name",
+        changeNameHeader: "Update page name",
+        changeNameButton: "Update name",
         changeNameError: "Something wrong happened when updating the name..",
         deletePageButton: "Delete page.",
         deleteWarning: "Are you sure? This permanently deletes this page, including all responses. Deletion cannot be undone.",
@@ -190,7 +191,8 @@ export const settings = strings({
     no: {
         heading: "Instillinger for",
         loading: "Laster instillinger..",
-        changeNameButton: "Endre navn",
+        changeNameHeader: "Oppdater sidens navn",
+        changeNameButton: "Oppdater navn",
         changeNameError: "Det skjedde en feil med oppdatering av navn..",
         deletePageButton: "Slett side.",
         deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",

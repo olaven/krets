@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
+import { ManageQuestions } from "./ManageQuestions";
 
 const UpdateName = () => {
 
@@ -26,10 +27,13 @@ const UpdateName = () => {
         }
     }
 
-    return <Flex>
-        <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
-        <Button onClick={updateName}>{text.settings.changeNameButton}</Button>
-    </Flex>
+    return <Box py={[1, 2, 3]}>
+        <Heading>{text.settings.changeNameHeader}</Heading>
+        <Flex width={[1, 1 / 2]}>
+            <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
+            <Button onClick={updateName}>{text.settings.changeNameButton}</Button>
+        </Flex>
+    </Box >
 }
 
 
@@ -104,6 +108,7 @@ export const SettingsContent = () => {
                 {text.settings.heading} {page.name}
             </Heading>
             <UpdateName />
+            <ManageQuestions />
             <DeletePage />
         </Box>
 }
