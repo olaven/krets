@@ -186,7 +186,12 @@ export const settings = strings({
         deleteWarning: "Are you sure? This permanently deletes this page, including all responses. Deletion cannot be undone.",
         deleteConfirmation: "I am sure about this.",
         deleteCancelation: "Don't delete.",
-        deleteError: "An error occured when deleting.."
+        deleteError: "An error occured when deleting..",
+        questions: {
+            heading: "Custom questions",
+            placeholder: "Enter question",
+            createButton: "Create new",
+        }
     },
     no: {
         heading: "Instillinger for",
@@ -198,7 +203,12 @@ export const settings = strings({
         deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",
         deleteConfirmation: "Jeg er helt sikker.",
         deleteCancelation: "Ikke slett.",
-        deleteError: "En feil oppsto med slettingen.."
+        deleteError: "En feil oppsto med slettingen..",
+        questions: {
+            heading: "Egne spørsmål",
+            placeholder: "Enter question",
+            createButton: "Opprett",
+        }
     }
 })
 

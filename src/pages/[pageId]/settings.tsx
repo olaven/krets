@@ -6,7 +6,7 @@ import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
-import { ManageQuestions } from "./ManageQuestions";
+import { ManageQuestions } from "../../components/Settings/ManageQuestions";
 
 const UpdateName = () => {
 
@@ -108,7 +108,7 @@ export const SettingsContent = () => {
                 {text.settings.heading} {page.name}
             </Heading>
             <UpdateName />
-            {/* <ManageQuestions /> */}
+            <ManageQuestions />
             <DeletePage />
         </Box>
 }
