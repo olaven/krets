@@ -66,14 +66,6 @@ describe("The endpoint for average all-time score", () => {
             expect(status).toEqual(401);
         });
 
-        it("Does _not_ respond with 401 if authenticated", async () => {
-
-            const { status } = await authenticatedFetch(uid(), fullURL("somePage", "someQuestion"), {
-                method: "PUT"
-            });
-            expect(status).not.toEqual(401);
-        });
-
         it("Returns 204 on successful request", async () => {
 
             const [owner, _, [question]] = await setupQuestions();
