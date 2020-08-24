@@ -17,6 +17,7 @@
 		"github.vscode-pull-request-github",
 		"orta.vscode-jest",
 		"vstirbu.vscode-mermaid-preview",
-		"mhutchie.git-graph"
+		"mhutchie.git-graph", 
+		"eamodio.gitlens",
 	],
 }

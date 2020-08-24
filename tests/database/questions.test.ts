@@ -1,3 +1,4 @@
+import * as faker from "faker";
 import { pages, users, questions } from "../../src/database/database";
 import { randomPage } from "../api/apiTestUtils";
 import { randomQuestion, randomUser, setupQuestions } from "./databaseTestUtils";
@@ -31,5 +32,29 @@ describe("The API interface for questions", () => {
 
         expect(retrievedFirst).toEqual(firstQuestion);
         expect(retrievedSecond).toEqual(secondQuestion);
+    });
+
+    it("Is possible to get a single question", async () => {
+
+        const [_, __, [question]] = await setupQuestions();
+
+        const retrieved = await questions.getQuestion(question.id);
+        expect(retrieved).toEqual(question);
+    });
+
+    it("Is possible to update text of question", async () => {
+
+        const [_, __, [question]] = await setupQuestions();
+
+        const before = await questions.getQuestion(question.id);
+        await questions.updateQuestion({
+            ...before,
+            text: faker.lorem.text()
+        });
+        const after = await questions.getQuestion(question.id);
+
+        expect(before.id).toEqual(after.id);
+        expect(before.page_id).toEqual(after.page_id);
+        expect(before.text).not.toEqual(after.text);
     });
 });

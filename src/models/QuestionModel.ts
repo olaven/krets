@@ -1,5 +1,5 @@
 export interface QuestionModel {
-    id?: number,
+    id?: string,
     page_id: string,
     text: string
 }

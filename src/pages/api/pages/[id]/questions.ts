@@ -46,8 +46,6 @@ export default withCors(
         withMethodHandlers({
             GET: getQuestions,
             POST: postQuestion,
-            /* PUT: putQuestion, //TODO: implement on endpoint for specific question, i.e. pages/questions/[questionId]
-            DELETE: deleteQuestion, */
         })
     )
 )
