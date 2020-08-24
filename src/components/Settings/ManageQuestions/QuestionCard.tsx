@@ -8,7 +8,11 @@ import { updateQuestion } from "../../../fetchers";
 
 const DeleteQuestion = () => {
 
-    const onDelete = async () => { console.error("Not implemented") }
+    const onDelete = async () => {
+        //TODO: implement
+        console.error("Not implemented");
+        alert("Sletting er ikke implementert enda. Men du kan oppdatere :-)");
+    }
     return <Button width={[1 / 4, 1 / 8]} mx={[1]} backgroundColor="failure" onClick={onDelete}>
         {uiText.settings.questions.deleteButton}
     </Button>

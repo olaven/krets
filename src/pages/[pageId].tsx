@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import React, { useContext } from "react";
 import { ErrorLoadingPage } from "../components/Page/ErrorLoadingPage";
-import { ResponseSection } from "../components/Page/ResponseSection";
+import { ResponseSection } from "../components/Page/ReseponseSection/ResponseSection";
 import { Flex, Box } from "rebass";
 import { usePage } from "../effects/usePage";
 import { UserContext } from '../context/UserContext';
 import { CopyURLButton } from '../components/Page/CopyURLButton';
 import { Loader } from '../components/tiny/loader';
+import { QuestionsContextProvider } from '../context/QuestionsContext';
 
 export default () => {
 
@@ -23,7 +24,9 @@ export default () => {
             {loading ?
                 <Loader size={150} /> :
                 page ?
-                    <ResponseSection page={page} /> :
+                    <QuestionsContextProvider pageId={page.id}>
+                        <ResponseSection page={page} />
+                    </QuestionsContextProvider> :
                     <ErrorLoadingPage />
             }
         </Flex>
