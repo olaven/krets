@@ -7,6 +7,7 @@ import { AdminPageContext } from "../../../context/AdminPageContext";
 import { useContext, useState } from "react";
 import { asyncEffect } from "../../../effects/asyncEffect";
 import { getAnswers } from "../../../fetchers";
+import { QuestionsContext } from "../../../context/QuestionsContext";
 
 
 const formatDate = (dateString: string) => {
@@ -23,21 +24,42 @@ const formatDate = (dateString: string) => {
         }`
 }
 
-const ActualCard = ({ response, answers }) =>
+const RenderAnswer = ({ answer }: { answer: AnswerModel }) => {
+
+    const { questions } = useContext(QuestionsContext);
+    const question = questions //somewhat inefficient, but perhaps acceptible there are few questions? 
+        .find(question => question.id === answer.question_id);
+
+
+    return (answer.question_id) ?
+        <>
+            {question && <Card> {/* Waiting for load */}
+                <Text opacity={0.8} fontSize={"15px"}>{question.text}</Text>
+                <Text fontSize={[1, 2, 3]}>{answer.text}</Text>
+            </Card>}
+        </> :
+        <Text fontSize={[1, 2, 3]}>{answer.text}</Text>
+}
+
+const ActualCard = ({ response, answers }:
+    { response: ResponseModel, answers: AnswerModel[] }) =>
     <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color={"secondary"}>
         <Flex flexDirection="column">
             <Flex>
                 <Emoji text={response.emotion} />
                 <Text mx={[1]} opacity={0.5} fontSize={[1, 2, 3]}>{formatDate(response.created_at)}</Text>
-                {answers.map(answer => //TODO: expand once more questions (and thus more answers) are actually something that happens
-                    <Text fontSize={[1, 2, 3]}> {answer.text}</Text>
-                )}
-
+                <Box>
+                    {answers.map(answer => //TODO: expand once more questions (and thus more answers) are actually something that happens
+                        <RenderAnswer answer={answer} />
+                    )}
+                </Box>
             </Flex>
-            {response.contact_details &&
+            {
+                response.contact_details &&
                 <Text width={1} my={[0, 1, 2]}>
                     {text.adminPage.contactDetails}: {response.contact_details}
-                </Text>}
+                </Text>
+            }
         </Flex>
     </Card>
 
@@ -52,7 +74,6 @@ export const TextCard = ({ response }: { response: ResponseModel }) => {
         const [status, answers] = await getAnswers(page.id, response.id);
         if (status === OK) {
 
-            console.log("received answers:", answers);
             setAnswers(answers)
         } else {
 
