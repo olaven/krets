@@ -1,10 +1,15 @@
 import { Flex, Button, Heading, Box } from "rebass";
 import { Input } from "@rebass/forms";
 import * as uiText from "../../text";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { QuestionsContext, QuestionsContextProvider } from "../../context/QuestionsContext";
+import { SettingsContent } from "../../pages/[pageId]/settings";
+import { SettingsContext } from "../../context/SettingsContext";
+import { Loader } from "../tiny/loader";
 
 const QuestionCreator = () => {
 
+    const { questions } = useContext(QuestionsContext);
     const [text, setText] = useState("");
 
     const onCreateQuestion = async () => {
@@ -38,6 +43,20 @@ const QuestionCreator = () => {
     </Flex>
 }
 
+const QuestionList = () => {
+
+    const { loading, questions } = useContext(QuestionsContext);
+
+    return loading ?
+        <Loader size={150} /> :
+        <>
+            {questions.map(question =>
+                <div key={question.id}>
+                    {question.text}
+                </div>)}
+        </>
+}
+
 /**
  * SHould provide functionality for: 
  * * create questions for the page (max 3?)
@@ -46,10 +65,12 @@ const QuestionCreator = () => {
  */
 export const ManageQuestions = () => {
 
+    const { page } = useContext(SettingsContext);
 
-    return <>
+    return <QuestionsContextProvider pageId={page.id}>
         <Heading>{uiText.settings.questions.heading}</Heading>
         <QuestionCreator />
-    </>
+        <QuestionList />
+    </QuestionsContextProvider >
 
 }

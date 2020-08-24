@@ -14,7 +14,6 @@ export const UserContext = createContext<IUserContext>({
     databaseUser: null, loading: true, authUser: null, updateUser: () => { }
 });
 
-
 /**
  * Runs a HTTP GET on the given path and 
  * updates state with returned value, if it was successful
@@ -22,6 +21,7 @@ export const UserContext = createContext<IUserContext>({
  * @param setter 
  *
  * NOTE: This adds negligible value apart from being fun :sweat_smile: 
+ * NOTE: Be slightly careful here, this does not report errors. 
  * TODO: Generalize and reuse, as its use is not specific to `UserContext.tsx` 
  */
 const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetStateAction<T>>) =>

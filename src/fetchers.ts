@@ -1,6 +1,11 @@
-import { get, put, del, post, filterStatus, OK } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel } from "./models/models";
+import { get, put, del, post, OK } from "node-kall";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel } from "./models/models";
 import Stripe from "stripe";
+
+/*
+ * Contains functions for fetching API endpoints. 
+ * THINKABOUT: Consider splitting this up. 
+*/
 
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
@@ -41,7 +46,6 @@ export const getLineCoordinates = (pageId: string) =>
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);
 
-
 export const postSubscription = (paymentRequest: PaymentRequestModel) =>
     post<any>(`/api/payment/subscription`, paymentRequest);
 
@@ -49,4 +53,7 @@ export const getProducts = () =>
     get<Stripe.Product[]>(`/api/payment/products`);
 
 export const getPrices = (productId: string) =>
-    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`); 
+    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`);
+
+export const getQuestions = (pageId: string) =>
+    get<QuestionModel[]>(`/api/pages/${pageId}/questions`)
