@@ -4,7 +4,7 @@ import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch, uid } from "../../../apiTestUtils";
 import questionHandler from "../../../../../src/pages/api/pages/[id]/questions/[questionId]"
 import { QuestionModel } from "../../../../../src/models/models";
-import { randomQuestion, setupQuestions } from "../../../../database/databaseTestUtils";
+import { setupQuestions } from "../../../../database/databaseTestUtils";
 import { questions } from "../../../../../src/database/database";
 
 jest.mock("../../../../../src/auth/auth0");
@@ -37,7 +37,7 @@ describe("The endpoint for average all-time score", () => {
     });
 
 
-    describe("The endpoint for updating pages", () => {
+    describe("The endpoint for deleting pages", () => {
 
         const putQuestion = (ownerId: string, question: QuestionModel, pageId = question.page_id, questionId = question.id) => authenticatedFetch(
             ownerId,
@@ -95,7 +95,7 @@ describe("The endpoint for average all-time score", () => {
             expect(before.id).toEqual(after.id);
             expect(before.page_id).toEqual(after.page_id);
             expect(before.text).not.toEqual(after.text);
-        })
+        });
 
         it("Returns 400 if question page is not the same as actual page", async () => {
 
@@ -128,9 +128,16 @@ describe("The endpoint for average all-time score", () => {
 
 
     //TODO: This endpoint is not fully implemented
-    describe("The endpoint for deleting pages", async () => {
+    describe("The endpoint for deleting pages", () => {
 
-
+        const deleteQuestion = (ownerId: string, question: QuestionModel, pageId = question.page_id, questionId = question.id) =>
+            authenticatedFetch(ownerId, fullURL(pageId, questionId), {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(question)
+            });
         it("Does not respond with 405", async () => {
 
             const { status } = await fetch(fullURL("somePage", "someQuestion"), {
@@ -148,12 +155,77 @@ describe("The endpoint for average all-time score", () => {
             expect(status).toEqual(401);
         });
 
-        it("Does _not_ respond with 401 if authenticated", async () => {
+        it("Returns 200 on succesful deletion", async () => {
 
-            const { status } = await authenticatedFetch(uid(), fullURL("somePage", "someQuestion"), {
-                method: "DELETE"
-            });
-            expect(status).not.toEqual(401);
+            const [owner, _, [question]] = await setupQuestions();
+            const { status } = await deleteQuestion(owner.id, question);
+
+            expect(status).toEqual(200);
+        });
+
+        it("Returns deleted question on succesful deletion", async () => {
+
+            const [owner, _, [question]] = await setupQuestions();
+            const retrieved = await (await deleteQuestion(owner.id, question)).json();
+
+            expect(retrieved).toEqual(question);
+        });
+
+        it("Actually deletes", async () => {
+
+            const [owner, _, [question]] = await setupQuestions();
+
+            const before = await questions.getQuestion(question.id);
+            await deleteQuestion(owner.id, question);
+            const after = await questions.getQuestion(question.id);
+
+            expect(before).toBeDefined();
+            expect(before).toEqual(question);
+
+            expect(after).toBeNull();
+        });
+
+
+        it("only deletes that single question", async () => {
+
+            const [owner, _, [firstQuestion, secondQuestion]] = await setupQuestions(2);
+            await deleteQuestion(owner.id, firstQuestion);
+
+            const firstAfter = await questions.getQuestion(firstQuestion.id);
+            const secondAfter = await questions.getQuestion(secondQuestion.id);
+
+            expect(firstAfter).toBeNull();
+            expect(secondAfter).not.toBeNull();
+            expect(secondAfter).toEqual(secondQuestion);
+        });
+
+
+        it("Returns 400 if question page is not the same as actual page", async () => {
+
+            const [owner, page, [question]] = await setupQuestions();
+            question.page_id = uid();
+
+            expect(question.page_id).not.toEqual(page.id);
+
+            const { status } = await deleteQuestion(owner.id, question, page.id);
+            expect(status).toEqual(400);
+        });
+
+        it("returns 400 if given question id does not match actual question", async () => {
+
+            const [owner, page, [question, otherQuestion]] = await setupQuestions(2);
+            const { status } = await deleteQuestion(owner.id, question, page.id, otherQuestion.id);
+
+            expect(status).toEqual(400);
+        });
+
+        it("Returns 403 if user is not the page owner", async () => {
+
+            const [_, __, [question]] = await setupQuestions();
+            const [other] = await setupQuestions();
+
+            const { status } = await deleteQuestion(other.id, question);
+            expect(status).toEqual(403);
         });
     });
 });

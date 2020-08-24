@@ -14,6 +14,7 @@ const getByPage = (pageId: string) =>
         [pageId]
     );
 
+
 const createQuestion = (question: QuestionModel) =>
     first<QuestionModel>(
         `insert into questions (page_id, text) values ($1, $2) returning *`,
@@ -26,9 +27,16 @@ const updateQuestion = (question: QuestionModel) =>
         [question.id, question.text]
     )
 
+const deleteQuestion = (id: string) =>
+    first<QuestionModel>(
+        `delete from questions where id = $1 returning *`,
+        [id]
+    )
+
 export const questions = {
     getQuestion,
     getByPage,
     createQuestion,
-    updateQuestion
+    updateQuestion,
+    deleteQuestion,
 }
