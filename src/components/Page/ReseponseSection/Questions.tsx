@@ -26,53 +26,38 @@ const getDefaultPlaceholder = (emotion: Emotion) => ({
 }[emotion]);
 
 
-type DefaultProps = { answers: Map<string, AnswerModel>, emotion: Emotion };
-export const DefaultQuestion = ({ answers, emotion }: DefaultProps) =>
+type DefaultProps = { setAnswers: (answers: Map<string, AnswerModel>) => void, answers: Map<string, AnswerModel>, emotion: Emotion };
+export const DefaultQuestion = ({ setAnswers, answers, emotion }: DefaultProps) =>
     <Question
         placeholder={getDefaultPlaceholder(emotion)}
         onChange={text => {
 
-            answers.set("DEFAULT", {
+            const updated = new Map<string, AnswerModel>();
+            updated.set("DEFAULT", {
                 text
             });
+            setAnswers(updated);
         }}
     />
 
-type CustomProps = { answers: Map<string, AnswerModel>, question: QuestionModel, }
-const CustomQuestion = ({ answers, question, }: CustomProps) =>
+type CustomProps = { setAnswers: (answers: Map<string, AnswerModel>) => void, answers: Map<string, AnswerModel>, question: QuestionModel, }
+const CustomQuestion = ({ setAnswers, answers, question, }: CustomProps) =>
     <Question
         placeholder={question.text}
         onChange={text => {
 
-            console.log("updating", answers);
-            answers.set(question.id, {
+            const copy = new Map(answers.entries())
+            copy.set(question.id, {
                 text,
                 question_id: question.id
             })
+            setAnswers(copy);
         }} />
 
-type CustomQuestionsProps = { answers: Map<string, AnswerModel>, questions: QuestionModel[] }
-export const CustomQuestions = ({ answers, questions }: CustomQuestionsProps) => {
+type CustomQuestionsProps = { setAnswers: (answers: Map<string, AnswerModel>) => void, answers: Map<string, AnswerModel>, questions: QuestionModel[] }
+export const CustomQuestions = ({ setAnswers, answers, questions }: CustomQuestionsProps) => {
 
     const [checked, setChecked] = useState(false);
-
-    useEffect(() => {
-
-        if (checked) return;
-
-        /**
-         * As I am not using React State (but a map)
-         * I have to clean it up automatically. In other words, 
-         * it is not tied to the input, as normal "primitive" state 
-         * values whould have been. 
-         * 
-         * This is not ideal
-         * //THINKABOUT: how to solve the problem of multiple questions
-         */
-        Array.from(answers.keys()).forEach(key => {
-            answers.delete(key);
-        });
-    }, [checked])
 
     return <>
         <Label width={[]} fontSize={[1]} p={[1, 2]}>
@@ -87,6 +72,7 @@ export const CustomQuestions = ({ answers, questions }: CustomQuestionsProps) =>
                 key={question.id}
                 question={question}
                 answers={answers}
+                setAnswers={setAnswers}
             />
         )}
     </>

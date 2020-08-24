@@ -16,7 +16,6 @@ export const PageTooltipProvider = ({ pageCount, children }) => <TooltipHelpProv
     predicate={() => {
 
         const { pages, hasLoaded } = useContext(PagesContext);
-        console.log("has laoded", hasLoaded);
         return hasLoaded && pages.length === pageCount
     }}
     renderButton={(visible) => <Button

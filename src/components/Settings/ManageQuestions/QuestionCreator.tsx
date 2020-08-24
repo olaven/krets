@@ -23,7 +23,7 @@ export const QuestionCreator = () => {
 
         if (status === CREATED) {
 
-            console.log("Created question", question.text);
+            setText("");
             refreshQuestions();
         }
     }

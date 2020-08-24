@@ -9,7 +9,7 @@ const createAnswer = (answer: AnswerModel) =>
 
 const getByResponse = (responseId: string) =>
     rows<AnswerModel>(
-        `select * from answers where response_id = $1`,
+        `select * from answers where response_id = $1 order by created_at asc`,
         [responseId]
     );
 

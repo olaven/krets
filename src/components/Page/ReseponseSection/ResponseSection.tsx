@@ -16,22 +16,10 @@ export const ResponseSection = ({ page }) => {
 
     const { questions } = useContext(QuestionsContext);
 
-    const [answers] = useState(new Map<string, AnswerModel>());//NOTE: not sure if this has to be kep
+    const [answers, setAnswers] = useState(new Map<string, AnswerModel>());//NOTE: not sure if this has to be kep
     const [published, setPublished] = useState(false);
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [contactDetails, setContactDetails] = useState("");
-
-    const RenderedQuestions = () => questions.length <= 0 ?
-
-        <DefaultQuestion
-            answers={answers}
-            emotion={emotion} /> :
-        <CustomQuestions
-            answers={answers}
-            questions={questions}
-        />
-
-
 
     const onPostResponse = async () => {
 
@@ -79,7 +67,17 @@ export const ResponseSection = ({ page }) => {
                     <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
                 </Flex>
                 {emotion && <>
-                    <RenderedQuestions />
+                    {questions.length === 0 ?
+                        <DefaultQuestion
+                            answers={answers}
+                            emotion={emotion}
+                            setAnswers={setAnswers} /> :
+                        <CustomQuestions
+                            answers={answers}
+                            questions={questions}
+                            setAnswers={setAnswers}
+                        />
+                    }
                     <ContactInput
                         setContactDetails={setContactDetails} />
                     <Button
