@@ -6,7 +6,7 @@ import { useState, useContext } from "react";
 import { NO_CONTENT } from "node-kall";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
-import { ManageQuestions } from "../../components/Settings/ManageQuestions";
+import { ManageQuestions } from "../../components/Settings/ManageQuestions/ManageQuestions";
 
 const UpdateName = () => {
 

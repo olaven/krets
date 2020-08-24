@@ -6,11 +6,15 @@ import { getQuestions } from "../fetchers";
 interface IQuestionsContext {
     loading: boolean,
     questions: QuestionModel[]
+    moreQuestionsAreAllowed: boolean,
+    refreshQuestions: () => Promise<void>,
 }
 
 export const QuestionsContext = createContext<IQuestionsContext>({
     loading: true,
-    questions: []
+    questions: [],
+    moreQuestionsAreAllowed: true,
+    refreshQuestions: async () => { }
 });
 
 
@@ -19,6 +23,7 @@ export const QuestionsContextProvider = ({ pageId, children }) => {
 
     const [questions, setQuestions] = useState<QuestionModel[]>([]);
     const [loading, setLoading] = useState(true);
+    const [moreQuestionsAreAllowed, setMoreQuestionsAreAllowed] = useState(true);
 
     //scoped in function, as it should be provided to consumers
     const refreshQuestions = async () => {
@@ -35,6 +40,12 @@ export const QuestionsContextProvider = ({ pageId, children }) => {
         setLoading(false);
     }
 
+    useEffect(() => {
+        setMoreQuestionsAreAllowed(
+            questions.length < 3
+        );
+    }, [questions.length])
+
 
     useEffect(() => {
 
@@ -42,7 +53,7 @@ export const QuestionsContextProvider = ({ pageId, children }) => {
     }, [pageId]);
 
 
-    return <QuestionsContext.Provider value={{ questions, loading }}>
+    return <QuestionsContext.Provider value={{ questions, loading, moreQuestionsAreAllowed, refreshQuestions }}>
         {children}
     </QuestionsContext.Provider>
 };

@@ -56,4 +56,7 @@ export const getPrices = (productId: string) =>
     get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`);
 
 export const getQuestions = (pageId: string) =>
-    get<QuestionModel[]>(`/api/pages/${pageId}/questions`)
+    get<QuestionModel[]>(`/api/pages/${pageId}/questions`);
+
+export const postQuestion = (question: QuestionModel) =>
+    post<QuestionModel>(`/api/pages/${question.page_id}/questions`, question); 
