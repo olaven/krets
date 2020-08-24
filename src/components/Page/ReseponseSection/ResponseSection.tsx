@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Box, Button, Flex, Heading } from "rebass"
 import { KretsEmoji } from "../../tiny/emoji";
-import { CREATED } from "node-kall";
+import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion } from "../../../models/models";
 import * as uiText from "../../../text";
 import { postAnswer, postResponse } from "../../../fetchers";
@@ -16,19 +16,18 @@ export const ResponseSection = ({ page }) => {
 
     const { questions } = useContext(QuestionsContext);
 
+    const [answers] = useState(new Map<string, AnswerModel>());//NOTE: not sure if this has to be kep
     const [published, setPublished] = useState(false);
     const [emotion, setEmotion] = useState<Emotion>(null);
-    const [answers, setAnswers] = useState<AnswerModel[]>([]);
     const [contactDetails, setContactDetails] = useState("");
 
     const RenderedQuestions = () => questions.length <= 0 ?
 
         <DefaultQuestion
-            setAnswers={setAnswers}
+            answers={answers}
             emotion={emotion} /> :
         <CustomQuestions
             answers={answers}
-            setAnswers={setAnswers}
             questions={questions}
         />
 
@@ -50,11 +49,15 @@ export const ResponseSection = ({ page }) => {
 
         if (status === CREATED) {
 
-            //FIXME: currently only one answer possible 
-            const answers = [{ text, response_id: response.id }]
-            await Promise.all(answers.map(answer =>
-                postAnswer(page.id, answer)
-            ));
+            console.log(Array.from(answers.values()));
+
+            await Promise.all(
+                Array.from(answers.values()).map(answer =>
+                    filterStatus(
+                        postAnswer(page.id, response.id, answer)
+                    )
+                )
+            );
 
             //FIXME: succsess regardless of wether answers were acepted or not
             setPublished(true);

@@ -3,8 +3,8 @@ import { first, rows } from "./helpers/query"
 
 const createAnswer = (answer: AnswerModel) =>
     first<AnswerModel>(
-        'insert into answers (response_id, text) values ($1, $2) returning *',
-        [answer.response_id, answer.text]
+        'insert into answers (response_id, text, question_id) values ($1, $2, $3) returning *',
+        [answer.response_id, answer.text, answer.question_id]
     );
 
 const getByResponse = (responseId: string) =>

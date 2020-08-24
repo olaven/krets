@@ -25,8 +25,8 @@ export const getResponses = (pageId: string) =>
 export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
 
-export const postAnswer = (pageId: string, answer: AnswerModel) =>
-    post<AnswerModel>(`/api/pages/${pageId}/responses/${answer.response_id}/answers`, answer);
+export const postAnswer = (pageId: string, responseId: string, answer: AnswerModel) =>
+    post<AnswerModel>(`/api/pages/${pageId}/responses/${responseId}/answers`, answer);
 
 export const getAnswers = (pageId: string, responseId: string) =>
     get<AnswerModel[]>(`/api/pages/${pageId}/responses/${responseId}/answers`);
