@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Box, Text, Image } from "rebass";
+import { Flex, Box, Text, Image, Link } from "rebass";
 import { LoginButton, GetStartedButton } from "../../tiny/buttons";
 import { intro } from "../../../text";
 
@@ -43,8 +43,9 @@ export const IntroSection = () => {
             alignItems: "center",
             justifyContent: "center",
         }}>
+
             <Text fontSize={[0, 1, 2]} textAlign="center">
-                {intro.earlyVersionDisclaimer}
+                {intro.earlyVersionDisclaimer} {intro.acceptPrefix} <Link href={"/legal/terms-and-conditions.html"}>{intro.termsOfUse}</Link> {intro.acceptInfix} <Link href={"/legal/privacy-policy.html"}>{intro.privacyPolicy} {intro.acceptSuffix}</Link>
             </Text>
         </section>
     </Box>
