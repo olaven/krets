@@ -1,4 +1,6 @@
+import Stripe from "stripe";
 import * as NextLink from 'next/link'
+import { OK } from "node-kall";
 import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext, useState } from "react";
 import { useProducts } from "../effects/useProducts";
@@ -6,8 +8,13 @@ import { PaymentCard } from "../components/Upgrade/PaymentCard";
 import { ProductCard } from "../components/Upgrade/ProductCard";
 import * as text from "../text"
 import { UserContext } from "../context/UserContext";
+import { deleteSubscription, getSubscription } from '../fetchers';
+import Loader from 'react-spinners/BounceLoader';
+import { asyncEffect } from '../effects/asyncEffect';
 
 const PriceAlternatives = () => {
+
+    const { updateUser } = useContext(UserContext);
 
     const [selectedPriceId, setSelectedPriceId] = useState("");
     const products = useProducts();
@@ -33,16 +40,68 @@ const PriceAlternatives = () => {
     </>
 }
 
-const Thanks = () => {
+const CancelSubscription = () => {
 
-    const { databaseUser, authUser } = useContext(UserContext);
-
+    const { updateUser } = useContext(UserContext);
+    const [triggered, setTriggered] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const onCancel = async () => {
 
+        setLoading(true);
 
+        const [status] = await deleteSubscription();
+        if (status === OK) updateUser();
+        else setError(true);
+
+        setLoading(false);
     }
 
-    console.log("nextlink: ", NextLink.default)
+    if (loading) {
+        return <Loader size={50} />
+    }
+
+    if (error) {
+        return <Text fontSize={[2, 3, 4]}>
+            {text.upgrade.cancellationError} <Link href={"mailto:post@krets.app"}>{text.upgrade.cancelContact}</Link>{text.upgrade.cancelSuffix}
+        </Text>
+    }
+
+    return triggered ?
+        <Flex>
+            <Button width={[1 / 2, 1 / 4]} onClick={() => { setTriggered(false) }} backgroundColor="primary" m={[1]}>
+                <Text>{text.upgrade.notSure}</Text>
+            </Button>
+            <Button width={[1 / 2, 1 / 4]} onClick={onCancel} backgroundColor="failure" m={[1]}>
+                <Text>{text.upgrade.sure}</Text>
+            </Button>
+        </Flex > :
+        <Button width={[1, 0.5]} onClick={() => { setTriggered(true) }} backgroundColor="failure" m={[1]} >
+            <Text>{text.upgrade.cancel}</Text>
+        </Button >
+
+
+}
+
+const SubscriptionInfo = () => {
+
+    const { authUser } = useContext(UserContext);
+
+    //THINKABOUT: Not fetch entire subscription? Only fetch name? Name of sub? name of price? 
+    const [subscription, setSubscription] = useState<Stripe.Subscription>(null);
+
+    asyncEffect(async () => {
+
+        const [status, subscription] = await getSubscription();
+        if (status === OK)
+            setSubscription(subscription)
+        else
+            console.error(`${status} when fetching subscription`);
+
+    }, [authUser.sub]);
+
+    console.log("subscription", subscription);
+
     const TextBox = ({ children }) => <Text fontSize={[2, 3, 4]} my={[1, 2, 3]}>
         {children}
     </Text>
@@ -50,35 +109,33 @@ const Thanks = () => {
     return <Flex>
         <Box width={[0, 1 / 3]} />
         <Box>
-            <Heading as="h1">Tusen takk, {authUser.name.split(" ")[0]} 🙌</Heading>
-            <TextBox>Du har dette abbonnemenetet: <span style={{
+            <Heading as="h1">{text.upgrade.thanks.heading} {authUser.name.split(" ")[0]} 🙌</Heading>
+            <TextBox>{text.upgrade.thanks.subscription} <span style={{
                 borderColor: "teal",
                 borderStyle: "solid",
                 padding: "5px"
-            }}>grunder</span> </TextBox>
+            }}>gründeren</span> </TextBox>
             <TextBox>
-                Tilbakemeldinger er det eneste som muliggjør forbedring 👊
+                {text.upgrade.thanks.aboutFeedback}
             </TextBox>
             <TextBox>
-                Krets er et lite og uavhengig selskap som ønsker å gjøre tilbakemelding så enkelt som mulig, for så mange som mulig.
+                {text.upgrade.thanks.aboutKrets}
             </TextBox>
             <TextBox>
-                Ta kontakt på <Link href={"mailto:post@krets.app"}>post@krets.app</Link>👋
+                {text.upgrade.thanks.contactPrefix} <Link href={"mailto:post@krets.app"}>post@krets.app</Link>{text.upgrade.thanks.contactSuffix}
             </TextBox>
             <TextBox>
-                - <Link href="https://olaven.org">Olav</Link> - daglig leder, utvikler, 👨‍💻 og alt annet.
+                - <Link href="https://olaven.org">Olav</Link> {text.upgrade.thanks.greetings}
             </TextBox>
 
             <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
                 <NextLink.default href={"/"} prefetch={true}>
                     <a style={{ textDecoration: "none" }}>
-                        <Text color="secondary">Tilbake til Krets</Text>
+                        <Text color="secondary">{text.upgrade.back}</Text>
                     </a>
                 </NextLink.default>
             </Button>
-            <Button width={[1, 0.5]} onClick={onCancel} backgroundColor="failure" m={[1]}>
-                <Text>Kanseller</Text>
-            </Button>
+            <CancelSubscription />
         </Box>
         <Box width={[0, 1 / 3]} />
     </Flex >
@@ -90,7 +147,7 @@ const Upgrade = () => {
 
     const isSubscriber = databaseUser?.free_premium || databaseUser?.subscription_id
     return isSubscriber ?
-        <Thanks /> :
+        <SubscriptionInfo /> :
         <PriceAlternatives />
 }
 
