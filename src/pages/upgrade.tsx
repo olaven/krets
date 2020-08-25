@@ -1,11 +1,11 @@
-import { Heading, Text, Flex, Box, Button } from "rebass";
+import * as NextLink from 'next/link'
+import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext, useState } from "react";
 import { useProducts } from "../effects/useProducts";
 import { PaymentCard } from "../components/Upgrade/PaymentCard";
 import { ProductCard } from "../components/Upgrade/ProductCard";
 import * as text from "../text"
 import { UserContext } from "../context/UserContext";
-import { database } from "faker";
 
 const PriceAlternatives = () => {
 
@@ -33,7 +33,7 @@ const PriceAlternatives = () => {
     </>
 }
 
-const Downgrade = () => {
+const Thanks = () => {
 
     const { databaseUser, authUser } = useContext(UserContext);
 
@@ -42,19 +42,46 @@ const Downgrade = () => {
 
     }
 
-    return <Box>
-        <Heading>Thank you, {authUser.name}</Heading>
-        Du har _dette_ abbonnemenetet
-        HVORFOR KRETS ER FINT OG HVORFOR DET ER SAA FLOTT AT DE BRUKER DET
-        MORSOM GIF?
+    console.log("nextlink: ", NextLink.default)
+    const TextBox = ({ children }) => <Text fontSize={[2, 3, 4]} my={[1, 2, 3]}>
+        {children}
+    </Text>
 
-        Kanseller-knapp
+    return <Flex>
+        <Box width={[0, 1 / 3]} />
+        <Box>
+            <Heading as="h1">Tusen takk, {authUser.name.split(" ")[0]} 🙌</Heading>
+            <TextBox>Du har dette abbonnemenetet: <span style={{
+                borderColor: "teal",
+                borderStyle: "solid",
+                padding: "5px"
+            }}>grunder</span> </TextBox>
+            <TextBox>
+                Tilbakemeldinger er det eneste som muliggjør forbedring 👊
+            </TextBox>
+            <TextBox>
+                Krets er et lite og uavhengig selskap som ønsker å gjøre tilbakemelding så enkelt som mulig, for så mange som mulig.
+            </TextBox>
+            <TextBox>
+                Ta kontakt på <Link href={"mailto:post@krets.app"}>post@krets.app</Link>👋
+            </TextBox>
+            <TextBox>
+                - <Link href="https://olaven.org">Olav</Link> - daglig leder, utvikler, 👨‍💻 og alt annet.
+            </TextBox>
 
-
-        <Button onClick={onCancel} backgroundColor="failure">
-            Kanseller
-        </Button>
-    </Box>
+            <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
+                <NextLink.default href={"/"} prefetch={true}>
+                    <a style={{ textDecoration: "none" }}>
+                        <Text color="secondary">Tilbake til Krets</Text>
+                    </a>
+                </NextLink.default>
+            </Button>
+            <Button width={[1, 0.5]} onClick={onCancel} backgroundColor="failure" m={[1]}>
+                <Text>Kanseller</Text>
+            </Button>
+        </Box>
+        <Box width={[0, 1 / 3]} />
+    </Flex >
 }
 
 const Upgrade = () => {
@@ -63,7 +90,7 @@ const Upgrade = () => {
 
     const isSubscriber = databaseUser?.free_premium || databaseUser?.subscription_id
     return isSubscriber ?
-        <Downgrade /> :
+        <Thanks /> :
         <PriceAlternatives />
 }
 
