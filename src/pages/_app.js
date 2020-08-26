@@ -39,6 +39,11 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE, NEXT_
       <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800' rel='stylesheet' />
       <link rel='icon' href='logo.svg' sizes='any' type='image/svg+xml' />
 
+      <meta property="og:title" content="Krets Feedback" />
+      <meta property="og:type" content="text/html" />
+      <meta property="og:image:type" content="image/svg+xml" />
+      <meta property="og:image" content="https://krets.app/logo.svg" />
+
       <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} />
 
     </Head>
