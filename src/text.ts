@@ -296,7 +296,23 @@ export const upgrade = strings({
         choosePrice: "Velg denne 💡",
         priceChosen: "Chosen 🙌",
         pay: "Pay now",
-        loading: "Registering.. Thanks for our patience!"
+        loading: "Updating.. Thanks for our patience!",
+        thanks: {
+            heading: "Thank you,",
+            subscription: "You have this subscription: ",
+            aboutFeedback: "Feedback is the only way to improve👊",
+            aboutKrets: "Krets is a small and independent company, working to make feedback as accessible as possible, for as many people as possible.",
+            contactPrefix: "Reach out at",
+            contactSuffix: "👋",
+            greetings: "- founder, developer, 👨‍💻 and everything in between"
+        },
+        back: "Back to Krets",
+        cancel: "Cancel subscription",
+        sure: "I am sure",
+        notSure: "Back",
+        cancellationError: "Something wrong happened 🤕 ",
+        cancelContact: "Reach out",
+        cancelSuffix: ", we'll get things right!"
     },
     no: {
         heading: "Oppgrader Krets!",
@@ -304,6 +320,22 @@ export const upgrade = strings({
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
         pay: "Betal nå",
-        loading: "Registrerer.. Takk for tålmodigheten!"
+        loading: "Oppgraderer.. Takk for tålmodigheten!",
+        thanks: {
+            heading: "Tusen takk,",
+            subscription: "Du har dette abonnementet: ",
+            aboutFeedback: "Tilbakemeldinger er det eneste som muliggjør forbedring 👊",
+            aboutKrets: "Krets er et lite og uavhengig selskap som ønsker å gjøre tilbakemelding så enkelt som mulig, for så mange som mulig.",
+            contactPrefix: "Ta kontakt på",
+            contactSuffix: "👋",
+            greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet"
+        },
+        back: "Tilbake til Krets",
+        cancel: "Kanseller abonnement",
+        sure: "Jeg er sikker",
+        notSure: "Tilbake",
+        cancellationError: "Noe galt skjedde 🤕 ",
+        cancelContact: "Ta kontakt",
+        cancelSuffix: ", dette skal ordnes opp i!"
     }
 })
