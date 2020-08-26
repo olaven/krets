@@ -6,13 +6,20 @@ export const createSubscription = async (customerId: string, paymentMethodId, pr
     await stripe.customers.update(customerId, {
         invoice_settings: {
             default_payment_method: paymentMethodId
-        }
+        },
     });
+
+    //NOTE: assumes only one tax rate present in backend 
+    const [taxRate] = (await stripe.taxRates.list()).data.
+        filter(rate => rate.active); //should remove archived rates 
 
     const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: priceId }],
-        expand: ['latest_invoice.payment_intent']
+        expand: ['latest_invoice.payment_intent'],
+        default_tax_rates: [
+            taxRate.id
+        ]
     });
 
     const product_id = subscription.plan.product as string;
@@ -21,6 +28,3 @@ export const createSubscription = async (customerId: string, paymentMethodId, pr
 
 export const cancelSubscription = (user: UserModel) =>
     stripe.subscriptions.del(user.subscription_id);
-
-export const retrieveSubscription = (user: UserModel) =>
-    stripe.subscriptions.retrieve(user.subscription_id); 
