@@ -1,4 +1,4 @@
-import { first } from "./helpers/helpers";
+import { first, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
 import subscription from "../pages/api/payment/subscription";
 
@@ -55,6 +55,25 @@ const userExists = async (id: string) => {
    return result.count === '1';
 };
 
+/**
+ * DANGER: permanently deletes given user record
+ * and __all__ pages, repsonses, questions and answers, that are related. 
+ */
+const deleteUser = async (id: string) => {
+
+   //TODO: delete everything that has a foreign key to user, directly or indirectly 
+   /* await run(
+      `delete from answers where answer in `, 
+   ) */
+
+   await run(
+      `delete from users where id = $1`,
+      [id]
+   );
+}
+
+
+
 export const users = ({
    getUser,
    getUserByCustomerId,
@@ -63,4 +82,5 @@ export const users = ({
    updatePaymentInformation,
    updateInvoicePaid,
    userExists,
+   deleteUser,
 });
