@@ -12,11 +12,11 @@ export default withCors(
                     .status(BAD_REQUEST)
                     .send(null)
 
-            //TODO: fetching things from Stripe should probably have its own internal module
+            //TODO: Move to internal stripe-module
             const prices = (await stripe.prices.list({
                 product: productId,
                 expand: ["data.tiers"]
-            })).data
+            })).data.filter(price => price.active);
 
             response
                 .status(OK)

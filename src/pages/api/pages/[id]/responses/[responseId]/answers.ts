@@ -5,20 +5,15 @@ import { withCors } from "../../../../../../middleware/withCors";
 import { answers, pages, responses } from "../../../../../../database/database";
 import auth0 from "../../../../../../auth/auth0";
 import { AnswerModel } from "../../../../../../models/models";
+import { getPathParam } from "../../../../../../workarounds";
 
-//NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
-const getId = (url: string, index: number) => {
-
-    const split = url.split("/");
-    return split[split.length - index];
-};
 
 //THINKABOUT: how to better solve the amount of dabase reads in this function 
 //THINKABOUT: generalize and share this middlware somehow? 
 const actuallyOwns = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
-        const pageId = getId(request.url, 4);
+        const pageId = getPathParam(request.url, 4);
         const { user } = await auth0.getSession(request);
 
         const page = await pages.getPage(pageId);
@@ -33,7 +28,7 @@ const actuallyOwns = (handler: NextApiHandler) =>
 
 export const getAnswers = async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const responseId = getId(request.url, 2);
+    const responseId = getPathParam(request.url, 2);
     const retrieved = await answers.getByResponse(responseId);
 
     return response
@@ -42,7 +37,7 @@ export const getAnswers = async (request: NextApiRequest, response: NextApiRespo
 
 export const postAnswers = async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const responseId = getId(request.url, 2);
+    const responseId = getPathParam(request.url, 2);
     const persistedResponse = await responses.getResponse(responseId);
 
     const answer = request.body as AnswerModel;

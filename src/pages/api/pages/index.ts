@@ -5,17 +5,9 @@ import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel, PaginatedModel } from "../../../models/models";
 import { NextApiResponse, NextApiRequest } from "next";
 import { withCors, withAuthentication, withErrorHandling } from "../../../middleware/middleware";
-import querystring from "querystring";
+import { getKey } from "../../../workarounds";
 
 
-//NOTE: same kind of workaround as `getId`
-//FIXME: super-naive. Update once tests are fixed as per #161
-export const getKey = (url: string) => {
-    const parsed = querystring.decode(url.split("?")[1]);
-    return parsed.key === "null" ?
-        null :
-        parsed.key
-}
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 

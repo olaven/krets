@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CREATED } from "node-kall"
 import {
     CardElement,
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
-import { Button, Text } from 'rebass';
+import { Box, Button, Text } from 'rebass';
 import './PaymentCard.module.css'
 import { StripeError } from '@stripe/stripe-js';
 import { postSubscription } from '../../fetchers';
@@ -13,6 +13,7 @@ import { PaymentRequestModel } from '../../models/models';
 import { UserContext } from '../../context/UserContext';
 import * as text from "../../text";
 import { Thanks } from '../tiny/Thanks';
+import { Loader } from '../tiny/loader';
 
 
 type Props = { priceId: string }
@@ -21,10 +22,15 @@ export function PaymentCard({ priceId }: Props) {
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<StripeError>(null);
-    const { databaseUser } = useContext(UserContext);
+    const { databaseUser, updateUser } = useContext(UserContext);
 
     const stripe = useStripe();
     const elements = useElements();
+
+    useEffect(() => {
+
+        if (success) updateUser();
+    }, [success])
 
     const withStripeErrorHandling = async (action: () => Promise<any>) => {
 
@@ -47,12 +53,15 @@ export function PaymentCard({ priceId }: Props) {
     const createSubscription = (paymentRequest: PaymentRequestModel) =>
         withStripeErrorHandling(async () => {
 
-            const [status] = await postSubscription(paymentRequest)
+            const [status, subscription] = await postSubscription(paymentRequest)
 
             setLoading(false);
             setSuccess(status === CREATED);
+
             if (status !== CREATED)
                 console.error("status when creating subscription:", status);
+            else
+                console.log("created subscription", subscription);
         })
 
     const onPay = async () => {
@@ -96,7 +105,10 @@ export function PaymentCard({ priceId }: Props) {
                 }}
             />
             {loading ?
-                <Text>{text.upgrade.loading}</Text> :
+                <Box>
+                    <Text fontSize={[1, 2, 3]} textAlign="center">{text.upgrade.loading}</Text>
+                    <Loader size={50} />
+                </Box > :
                 <Button width={[1]} onClick={onPay}>{text.upgrade.pay}</Button>}
             {error && <Text color="failure">{error.message}</Text>}
         </>;

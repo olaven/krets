@@ -4,11 +4,14 @@ import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CO
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models/models";
 import { withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
-import { getId } from "../users/[id]";
+import { getPathParam } from "../../../workarounds";
+
+
+const getId = (url: string) => getPathParam(url, 1);
 
 const del = async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const id = getId(request.url);
+    const id = getId(request.url)
     const { user } = await auth0.getSession(request);
 
     if (!user.sub) {

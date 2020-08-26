@@ -49,8 +49,14 @@ export const postEmail = (email: EmailModel) =>
 export const postSubscription = (paymentRequest: PaymentRequestModel) =>
     post<any>(`/api/payment/subscription`, paymentRequest);
 
+export const deleteSubscription = () =>
+    del(`/api/payment/subscription`);
+
 export const getProducts = () =>
     get<Stripe.Product[]>(`/api/payment/products`);
+
+export const getProductByUser = (userId: string) =>
+    get<Stripe.Product>(`/api/users/${userId}/product`);
 
 export const getPrices = (productId: string) =>
     get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`);

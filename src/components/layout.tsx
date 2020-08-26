@@ -2,7 +2,7 @@ import { UserContext, UserContextProvider } from "../context/UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
-import { LoginButton, LogoutButton } from "./tiny/buttons";
+import { LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
 
 const HeaderLogo = () =>
     <Flex color='primary' my={[1, 1, 2]} width={[1]}>
@@ -18,10 +18,10 @@ const HeaderLogo = () =>
     </Flex>
 
 /**
- * Shows the authbutton unless on 
+ * Shows the CornerButtons unless on 
  * specified pages (code / feedback)
  */
-const AuthButton = () => {
+const CornerButtons = () => {
 
     const router = useRouter();
     const { authUser } = useContext(UserContext);
@@ -34,7 +34,10 @@ const AuthButton = () => {
 
 
     return authUser ?
-        <LogoutButton /> :
+        <>
+            <MyPageButton />
+            <LogoutButton />
+        </> :
         <LoginButton />;
 }
 
@@ -55,7 +58,7 @@ export const Layout = (props) => {
             alignItems='center'>
 
             <HeaderLogo />
-            <AuthButton />
+            <CornerButtons />
         </Flex>
         {props.children}
         {/*<div>

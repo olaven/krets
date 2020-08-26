@@ -7,7 +7,7 @@ interface IUserContext {
     databaseUser: UserModel,
     authUser: AuthModel,
     loading: boolean,
-    updateUser: (user: AuthModel) => void
+    updateUser: () => void
 }
 
 export const UserContext = createContext<IUserContext>({

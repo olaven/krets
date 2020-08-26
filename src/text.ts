@@ -88,6 +88,7 @@ export const buttons = strings({
     en: {
         logout: "Log out",
         login: "Log in",
+        myPage: "Account",
         getStarted: "Get started!",
         toAdmin: "Overview",
         toQR: "QR-code",
@@ -98,6 +99,7 @@ export const buttons = strings({
     no: {
         logout: "Logg ut",
         login: "Logg inn",
+        myPage: "Konto",
         getStarted: "Kom i gang!",
         toAdmin: "Oversikt",
         toQR: "QR-kode",
@@ -296,14 +298,60 @@ export const upgrade = strings({
         choosePrice: "Velg denne 💡",
         priceChosen: "Chosen 🙌",
         pay: "Pay now",
-        loading: "Registering.. Thanks for our patience!"
+        vat: "VAT included.",
+        included: "included",
+        responses: "responses",
+        afterTier: "per response afterwards",
+        loading: "Updating.. Thanks for our patience!",
+        button: "Upgrade Krets",
+        salesArgument: "That's why Krets has a low price for everyone creating something by themselves!",
+        includedAsSubscriber: "for more functionality",
+        thanks: {
+            heading: "Thank you,",
+            subscription: "You have this subscription: ",
+            aboutFeedback: "Feedback is the only way to improve👊",
+            aboutKrets: "Krets is a small and independent company, working to make feedback as accessible as possible, for as many people as possible.",
+            contactPrefix: "Reach out at",
+            contactSuffix: "👋",
+            greetings: "- founder, developer, 👨‍💻 and everything in between"
+        },
+        back: "Back to Krets",
+        cancel: "Cancel subscription",
+        sure: "I am sure",
+        notSure: "Back",
+        cancellationError: "Something wrong happened 🤕 ",
+        cancelContact: "Reach out",
+        cancelSuffix: ", we'll get things right!"
     },
     no: {
         heading: "Oppgrader Krets!",
         inDevelopmentWarning: "I fremtiden vil oppgraderte brukere ha flere muligheter enn ikke-betalende.",
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
+        included: "inkludert",
+        responses: "svar",
+        afterTier: "per svar etter det",
+        vat: "Inkl. mva.",
         pay: "Betal nå",
-        loading: "Registrerer.. Takk for tålmodigheten!"
+        loading: "Oppgraderer.. Takk for tålmodigheten!",
+        button: "Oppgrader Krets",
+        salesArgument: "Derfor er Krets ekstra rimelig for alle som skaper noe på egenhånd!",
+        includedAsSubscriber: "for mer funksjonalitet",
+        thanks: {
+            heading: "Tusen takk,",
+            subscription: "Du har dette abonnementet: ",
+            aboutFeedback: "Tilbakemeldinger er det eneste som muliggjør forbedring 👊",
+            aboutKrets: "Krets er et lite og uavhengig selskap som ønsker å gjøre tilbakemelding så enkelt som mulig, for så mange som mulig.",
+            contactPrefix: "Ta kontakt på",
+            contactSuffix: "👋",
+            greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet"
+        },
+        back: "Tilbake til Krets",
+        cancel: "Kanseller abonnement",
+        sure: "Jeg er sikker",
+        notSure: "Tilbake",
+        cancellationError: "Noe galt skjedde 🤕 ",
+        cancelContact: "Ta kontakt",
+        cancelSuffix: ", dette skal ordnes opp i!"
     }
 })

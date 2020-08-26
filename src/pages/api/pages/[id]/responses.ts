@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
-import { getKey } from "..";
 import { pages, responses } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers } from "../../../../middleware/middleware";
+import { getKey } from "../../../../workarounds";
 
 
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
