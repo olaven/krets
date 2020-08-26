@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Box, Button, Flex, Heading } from "rebass"
 import { KretsEmoji } from "../../tiny/emoji";
 import { CREATED, filterStatus } from "node-kall";
-import { AnswerModel, Emotion } from "../../../models/models";
+import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
 import { postAnswer, postResponse } from "../../../fetchers";
 import { Thanks } from "../../tiny/Thanks";
@@ -12,7 +12,7 @@ import { ContactInput } from "./ContactInput";
 
 
 
-export const ResponseSection = ({ page }) => {
+export const ResponseSection = ({ page }: { page: PageModel }) => {
 
     const { questions } = useContext(QuestionsContext);
 
@@ -56,11 +56,15 @@ export const ResponseSection = ({ page }) => {
     };
 
 
+    const headerText = page.custom_title ?
+        page.custom_title :
+        `${uiText.response.header} ${page.name}`
+
     return <Box m={"auto"} py={[4, 8, 16]}>
         {published ?
             <Thanks /> :
             <>
-                <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{uiText.response.header} {page.name}</Heading>
+                <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
                 <Flex>
                     <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                     <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />

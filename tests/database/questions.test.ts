@@ -49,7 +49,7 @@ describe("The API interface for questions", () => {
         const before = await questions.getQuestion(question.id);
         await questions.updateQuestion({
             ...before,
-            text: faker.lorem.text()
+            text: faker.lorem.words(10)
         });
         const after = await questions.getQuestion(question.id);
 

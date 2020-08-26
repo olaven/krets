@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-
+import * as faker from "faker";
 import { waitFor, fireEvent, render } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
 import { ResponseSection } from "../../../src/components/Page/ReseponseSection/ResponseSection"
@@ -59,6 +59,18 @@ describe("The component for creating new responses", () => {
             waitFor(() => {
 
                 expect(findByLabelText("response-contact-input")).toBeInTheDocument();
+            });
+        });
+
+        it("Does render custom header if present", () => {
+
+            const customPage = page()
+            customPage.custom_title = faker.lorem.words(4);
+            const { findByText } = launch(customPage)
+
+            waitFor(() => {
+
+                expect(findByText(customPage.custom_title)).toBeInTheDocument();
             });
         });
     });

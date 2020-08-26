@@ -269,5 +269,21 @@ describe("Database interface for pages", () => {
             expect(retrieved).toContain(third.id); // as after key and before amount-limit
             expect(retrieved).not.toContain(fourth.id); // as after amount-limit
         });
+
+        it("Is possible to create a custom title", async () => {
+
+            const [_, [original]] = await setupPages(1);
+            const NEW_TITLE = faker.random.words(10);
+
+            const updated = await pages.updatePage({
+                ...original,
+                custom_title: NEW_TITLE
+            });
+
+            expect(NEW_TITLE).not.toEqual(original.custom_title);
+            expect(updated.custom_title).toEqual(NEW_TITLE);
+            expect(updated.id).toEqual(original.id);
+            expect(updated.name).toEqual(original.name);
+        });
     })
 });
