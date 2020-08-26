@@ -88,6 +88,7 @@ export const buttons = strings({
     en: {
         logout: "Log out",
         login: "Log in",
+        myPage: "Account",
         getStarted: "Get started!",
         toAdmin: "Overview",
         toQR: "QR-code",
@@ -98,6 +99,7 @@ export const buttons = strings({
     no: {
         logout: "Logg ut",
         login: "Logg inn",
+        myPage: "Konto",
         getStarted: "Kom i gang!",
         toAdmin: "Oversikt",
         toQR: "QR-kode",
@@ -301,6 +303,9 @@ export const upgrade = strings({
         responses: "responses",
         afterTier: "per response afterwards",
         loading: "Updating.. Thanks for our patience!",
+        button: "Upgrade Krets",
+        salesArgument: "That's why Krets has a low price for everyone creating something by themselves!",
+        includedAsSubscriber: "for more functionality",
         thanks: {
             heading: "Thank you,",
             subscription: "You have this subscription: ",
@@ -329,6 +334,9 @@ export const upgrade = strings({
         vat: "Inkl. mva.",
         pay: "Betal nå",
         loading: "Oppgraderer.. Takk for tålmodigheten!",
+        button: "Oppgrader Krets",
+        salesArgument: "Derfor er Krets ekstra rimelig for alle som skaper noe på egenhånd!",
+        includedAsSubscriber: "for mer funksjonalitet",
         thanks: {
             heading: "Tusen takk,",
             subscription: "Du har dette abonnementet: ",

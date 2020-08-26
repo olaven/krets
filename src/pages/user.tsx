@@ -44,15 +44,17 @@ const CancelSubscription = () => {
         action={onCancel}
         text={uiText.upgrade.cancel}
     />
-
-
 }
 
 const DeleteAccount = () => {
 
+    const onDelete = () => {
 
-    const onDelete = () => { throw "not implemented" }
-    return <DoubleConfirmationButton text="SLETT BRUKER" action={onDelete} />
+        alert("Automatic deletion is not supported. Please contact post@krets.app and you'll be deleted as quickly as possible!")
+    }
+
+    //FIXME: actually implement
+    return <DoubleConfirmationButton text="DELET USER" action={onDelete} />
 }
 
 //TODO: use elsewhere? 
@@ -94,7 +96,7 @@ const NonSubscriber = () => {
     const { authUser } = useContext(UserContext);
 
     return <>
-        <TextBox>Hei, {authUser.name.split(" ")[0]} 👋</TextBox>
+        <TextBox>Hey, {authUser.name.split(" ")[0]} 👋</TextBox>
         <TextBox>
             {uiText.upgrade.thanks.aboutFeedback}
         </TextBox>
@@ -102,8 +104,8 @@ const NonSubscriber = () => {
             {uiText.upgrade.thanks.aboutKrets}
         </TextBox>
         <TextBox>
-            Derfor er Krets ekstra rimelig for alle som skaper noe på egenhånd!
-            <Link href="/upgrade"> Oppgrader Krets</Link> for mer funksjonalitet
+            {uiText.upgrade.salesArgument}
+            <Link href="/upgrade"> {uiText.upgrade.button}</Link> {uiText.upgrade.includedAsSubscriber}
         </TextBox>
     </>
 }
@@ -123,7 +125,7 @@ const ProfileInfo = () => {
             <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
                 <NextLink.default href={"/upgrade"} prefetch={true}>
                     <a style={{ textDecoration: "none" }}>
-                        <Text color="secondary">OPPGRADER KRETS</Text>
+                        <Text color="secondary">{uiText.upgrade.button}</Text>
                     </a>
                 </NextLink.default>
             </Button>
