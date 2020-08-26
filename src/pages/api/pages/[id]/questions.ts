@@ -3,9 +3,12 @@ import auth0 from "../../../../auth/auth0";
 import { pages, questions } from "../../../../../src/database/database"
 import { withAuthentication, withErrorHandling, withMethodHandlers } from "../../../../middleware/middleware";
 import { withCors } from "../../../../middleware/withCors";
-import { getId } from "./average";
 import { QuestionModel } from "../../../../models/models";
 import { CREATED, FORBIDDEN, BAD_REQUEST } from "node-kall";
+import { getPathParam } from "../../../../workarounds";
+
+
+const getId = (url: string) => getPathParam(url, 2);
 
 const getQuestions = async (request: NextApiRequest, response: NextApiResponse) => {
 

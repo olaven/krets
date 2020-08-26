@@ -8,9 +8,10 @@ import { PaymentCard } from "../components/Upgrade/PaymentCard";
 import { ProductCard } from "../components/Upgrade/ProductCard";
 import * as text from "../text"
 import { UserContext } from "../context/UserContext";
-import { deleteSubscription, getSubscription } from '../fetchers';
+import { deleteSubscription } from '../fetchers';
 import Loader from 'react-spinners/BounceLoader';
 import { asyncEffect } from '../effects/asyncEffect';
+import { useProduct } from "../effects/useProduct";
 
 const PriceAlternatives = () => {
 
@@ -86,21 +87,7 @@ const CancelSubscription = () => {
 const SubscriptionInfo = () => {
 
     const { authUser } = useContext(UserContext);
-
-    //THINKABOUT: Not fetch entire subscription? Only fetch name? Name of sub? name of price? 
-    const [subscription, setSubscription] = useState<Stripe.Subscription>(null);
-
-    asyncEffect(async () => {
-
-        const [status, subscription] = await getSubscription();
-        if (status === OK)
-            setSubscription(subscription)
-        else
-            console.error(`${status} when fetching subscription`);
-
-    }, [authUser.sub]);
-
-    console.log("subscription", subscription);
+    const product = useProduct(authUser.sub);
 
     const TextBox = ({ children }) => <Text fontSize={[2, 3, 4]} my={[1, 2, 3]}>
         {children}
@@ -114,7 +101,7 @@ const SubscriptionInfo = () => {
                 borderColor: "teal",
                 borderStyle: "solid",
                 padding: "5px"
-            }}>gründeren</span> </TextBox>
+            }}>{product?.name}</span> </TextBox>
             <TextBox>
                 {text.upgrade.thanks.aboutFeedback}
             </TextBox>

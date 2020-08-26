@@ -1,10 +1,10 @@
 import { CREATED, CONFLICT, OK, NOT_FOUND } from "node-kall";
 import { PaymentRequestModel } from "../../../models/models";
-import { withCors, withMethods, withErrorHandling, withAuthentication, withMethodHandlers } from "../../../middleware/middleware";
+import { withCors, withErrorHandling, withAuthentication, withMethodHandlers } from "../../../middleware/middleware";
 import { users } from "../../../database/users";
 import auth0 from "../../../auth/auth0";
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { createSubscription, cancelSubscription, retrieveSubscription } from "../../../payment/subscription";
+import { NextApiRequest, NextApiResponse } from "next";
+import { createSubscription, cancelSubscription } from "../../../payment/subscription";
 
 
 
@@ -49,29 +49,12 @@ const deleteSubscription = async (request: NextApiRequest, response: NextApiResp
         .send(subscription);
 }
 
-const getSubscription = async (request: NextApiRequest, response: NextApiResponse) => {
-
-    const { user } = await auth0.getSession(request);
-    const dbUser = await users.getUser(user.sub);
-
-    const subscription = await retrieveSubscription(dbUser);
-
-    return subscription ?
-        response
-            .json(subscription) :
-        response
-            .status(NOT_FOUND)
-            .end()
-
-}
-
 export default withCors(
     withErrorHandling(
         withAuthentication(
             withMethodHandlers({
                 POST: postSubscription,
                 DELETE: deleteSubscription,
-                GET: getSubscription
             })
         )
     )

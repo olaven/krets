@@ -5,18 +5,11 @@ import { questions } from "../../../../../database/database";
 import { pages } from "../../../../../database/pages";
 import { withErrorHandling, withAuthentication, withMethodHandlers } from "../../../../../middleware/middleware";
 import { QuestionModel } from "../../../../../models/models";
+import { getPathParam } from "../../../../../workarounds";
 
-//TODO: share this generic workaround between all files and use it like this: getPageId = (url: string) => getId(url, 2); 
-//NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
-export const getId = (url: string, splitAt: number) => {
 
-    const split = url.split("/");
-    return split[split.length - splitAt];
-};
-
-const getPageId = (url: string) => getId(url, 3);
-const getQuestionId = (url: string) => getId(url, 1);
-
+const getPageId = (url: string) => getPathParam(url, 3);
+const getQuestionId = (url: string) => getPathParam(url, 1);
 
 /**
  * Verifies that the user actually ows the given question and 

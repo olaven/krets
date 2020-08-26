@@ -296,6 +296,10 @@ export const upgrade = strings({
         choosePrice: "Velg denne 💡",
         priceChosen: "Chosen 🙌",
         pay: "Pay now",
+        vat: "VAT included.",
+        included: "included",
+        responses: "responses",
+        afterTier: "per response afterwards",
         loading: "Updating.. Thanks for our patience!",
         thanks: {
             heading: "Thank you,",
@@ -319,6 +323,10 @@ export const upgrade = strings({
         inDevelopmentWarning: "I fremtiden vil oppgraderte brukere ha flere muligheter enn ikke-betalende.",
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
+        included: "inkludert",
+        responses: "svar",
+        afterTier: "per svar etter det",
+        vat: "Inkl. mva.",
         pay: "Betal nå",
         loading: "Oppgraderer.. Takk for tålmodigheten!",
         thanks: {
