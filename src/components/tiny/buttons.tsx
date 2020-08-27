@@ -16,6 +16,11 @@ export const MyPageButton = () => <Button backgroundColor={"secondary"} minWidth
     <Link color={"primary"} href="/user">{uiText.buttons.myPage}</Link>
 </Button>;
 
+export const AboutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
+    <Link color={"primary"} href="/about">{uiText.buttons.aboutPage}</Link>
+</Button>;
+
+
 export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
     <Box width={[0, 0, 1 / 3]}></Box>
     <Button
