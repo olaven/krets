@@ -43,11 +43,22 @@ const updatePage = (page: PageModel) =>
 
 
 /**
- * DANGER: will delete responses as well! 
+ * DANGER: Permanently deletes
+ * * page 
+ * * all responses 
+ * * all questions 
  * @param id id of page
  */
 const deletePage = async (id: string) => {
 
+    await run(
+        `delete from answers 
+            where response_id in (
+                select id from responses where page_id = $1
+            )
+        `,
+        [id]);
+    await run(`delete from questions where page_id = $1`, [id]);
     await run(`delete from responses where page_id = $1`, [id]);
     return first<PageModel>("delete from pages where id = $1", [id]);
 }

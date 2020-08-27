@@ -9,6 +9,7 @@ import * as text from "../../text"
 import { UpdateTitle } from "../../components/Settings/UpdateTitle";
 import { ManageQuestions } from "../../components/Settings/ManageQuestions/ManageQuestions";
 import { Collapsible } from "../../components/Collapsible";
+import { DoubleConfirmationButton } from "../../components/tiny/buttons";
 
 const UpdateName = () => {
 
@@ -56,24 +57,29 @@ export const DeletePage = () => {
         }
     }
 
-    const WantsToDeleteToggle = () => <Button
-        onClick={() => { setWantsToDelete(!wantsToDelete) }}
-        backgroundColor={wantsToDelete ? "grey" : "failure"}>
-        {text.settings.deletePageButton}
-    </Button>
+    return <DoubleConfirmationButton
+        text={text.settings.deletePageButton}
+        action={performDeletion}
+    />
+
+    {/* const WantsToDeleteToggle = () => <Button
+            onClick={() => { setWantsToDelete(!wantsToDelete) }}
+            backgroundColor={wantsToDelete ? "grey" : "failure"}>
+            {text.settings.deletePageButton}
+        </Button>
 
     const Confirmation = () => <Box>
-        <Text my={[1, 2, 3]} fontSize={[1, 2, 3]}>{text.settings.deleteWarning}</Text>
-        <Flex>
-            <Button onClick={() => setWantsToDelete(!wantsToDelete)}>{text.settings.deleteCancelation}</Button>
-            <Button onClick={performDeletion} backgroundColor="failure">{text.settings.deleteConfirmation}</Button>
-        </Flex>
-    </Box>
+            <Text my={[1, 2, 3]} fontSize={[1, 2, 3]}>{text.settings.deleteWarning}</Text>
+            <Flex>
+                <Button onClick={() => setWantsToDelete(!wantsToDelete)}>{text.settings.deleteCancelation}</Button>
+                <Button onClick={performDeletion} backgroundColor="failure">{text.settings.deleteConfirmation}</Button>
+            </Flex>
+        </Box>
 
     return <Box my={[1, 2, 3]}>
-        <WantsToDeleteToggle />
-        {wantsToDelete && <Confirmation />}
-    </Box>
+            <WantsToDeleteToggle />
+            {wantsToDelete && <Confirmation />}
+        </Box> */}
 }
 
 //TODO: actually pull categories (from context etc.)
