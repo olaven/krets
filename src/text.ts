@@ -358,4 +358,24 @@ export const upgrade = strings({
         cancelContact: "Ta kontakt",
         cancelSuffix: ", dette skal ordnes opp i!"
     }
+});
+
+export const about = strings({
+    en: {
+        heading: "Hello, there 👋 ",
+        first: `
+            Feedback from as many people as possible is essential for someone wanting to improve 👊
+            Most tools are just large, detailed forms 🥱 
+        `,
+        second: "Large forms = no feedback = no improvement 😔",
+        third: "Krets is a new alternative.",
+        fourth: "Krets is a small company working to make feedback frictionless.",
+        greetings: " - founder, developer, 👨‍💻 and everything in between.",
+        badAlternative: "Traditional 🗒️",
+        goodAlternative: "Krets 🎉",
+
+    },
+    no: {
+        heading: "Heisann 👋 ",
+    }
 })
