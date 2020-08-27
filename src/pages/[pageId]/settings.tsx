@@ -63,6 +63,7 @@ export const DeletePage = () => {
     />
 }
 
+//TODO: actually when/if categories are used 
 //TODO: actually pull categories (from context etc.)
 const UpdateCategory = () => {
 

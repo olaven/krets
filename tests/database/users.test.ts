@@ -128,4 +128,28 @@ describe("User repository", () => {
         expect(updated.subscription_id).toEqual(NEW_SUBSCRIPTION_ID);
         expect(updated.invoice_paid).toEqual(NEW_INVOICE_PAID);
     });
+
+    test("Can delete user after creation", async () => {
+
+        const before = await users.createUser(randomUser());
+        await users.deleteUser(before.id);
+        const after = await users.getUser(before.id);
+
+        expect(before).toBeDefined();
+        expect(after).toBeNull();
+    });
+
+    test("Deleting a user ownly deletes that single user", async () => {
+
+        const user = await users.createUser(randomUser());
+        const other = await users.createUser(randomUser());
+
+        await users.deleteUser(user.id);
+
+        const userAfter = await users.getUser(user.id);
+        const otherAfter = await users.getUser(other.id);
+
+        expect(userAfter).toBeNull();
+        expect(otherAfter).toEqual(other);
+    });
 });

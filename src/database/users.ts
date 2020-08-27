@@ -61,6 +61,8 @@ const userExists = async (id: string) => {
  */
 const deleteUser = async (id: string) => {
 
+   //NOTE: could I just reference pages here? 
+
    //TODO: delete everything that has a foreign key to user, directly or indirectly 
    /* await run(
       `delete from answers where answer in `, 

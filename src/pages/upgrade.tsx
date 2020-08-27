@@ -16,11 +16,13 @@ const PriceAlternatives = () => {
         <Heading fontSize={[3, 4, 5]} textAlign="center">{text.upgrade.heading}</Heading>
         <Text fontSize={[1, 2, 3]} textAlign="center">{text.upgrade.inDevelopmentWarning}</Text>
         <Flex p={[2, 3, 4]}>
+            <Box width={[0, 1 / 5]}></Box>
             {products.map(product => <ProductCard
                 product={product}
                 selectedPriceId={selectedPriceId}
                 setSelectedPriceId={setSelectedPriceId} />
             )}
+            <Box width={[0, 1 / 5]}></Box>
         </Flex>
         <Flex width={1} m={[2, 3, 4]}>
             <Box width={[0, 1 / 3]} />
