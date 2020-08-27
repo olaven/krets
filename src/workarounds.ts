@@ -5,7 +5,8 @@ import querystring from "querystring"
 export const getPathParam = (url: string, splitAt: number) => {
 
     const split = url.split("/");
-    return split[split.length - splitAt];
+    const param = split[split.length - splitAt];
+    return decodeURIComponent(param)
 };
 
 
