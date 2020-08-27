@@ -379,5 +379,15 @@ export const about = strings({
     },
     no: {
         heading: "Heisann 👋 ",
+        first: `
+            Tilbakemelding er essensielt for deg som vil bli bedre 👊
+            De fleste verktøy er bare store, detaljerte skjemaer 🥱 
+        `,
+        second: "Store skjemaer = lite tilbakemelding = ingen forbedring 😔",
+        third: "Krets er et nytt alternativ.",
+        fourth: "Krets er et lite, uavhengig selskap som jobber for friksjonsfri tilbakemelding.",
+        greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet",
+        badAlternative: "Tradisjonell 🗒️",
+        goodAlternative: "Krets 🎉",
     }
 })
