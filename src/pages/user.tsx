@@ -142,6 +142,7 @@ const ProfileInfo = () => {
                 <DeleteAccount />
             </>
 
+    console.log("loading, ", loading, "databseruser", databaseUser);
     return loading || !databaseUser ?
         <Loader size={150} /> :
         <Flex>
