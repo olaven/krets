@@ -1,7 +1,8 @@
 import * as faker from "faker";
-import { pages, categories, responses, users } from "../../src/database/database";
-import { randomUser, setupPages } from "../database/databaseTestUtils";
+import { pages, categories, responses, users, questions, answers } from "../../src/database/database";
+import { randomUser, setupAnswers, setupPages, setupQuestions } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
+import { deletePage } from "../../src/fetchers";
 
 
 describe("Database interface for pages", () => {
@@ -74,9 +75,9 @@ describe("Database interface for pages", () => {
 
         await responses.createResponse({
             emotion: ":-(",
-            text: faker.lorem.sentence(),
             page_id: page.id
         });
+
 
 
         const responsesBefore = await responses.getResponses(page.id);
@@ -86,6 +87,60 @@ describe("Database interface for pages", () => {
 
         const responsesAfter = await responses.getResponses(page.id);
         expect(responsesAfter.length).toEqual(0);
+    });
+
+    it("Deletes questions along with page", async () => {
+
+        const [_, page, [firstBefore, secondBefore]] = await setupQuestions(2);
+
+        await pages.deletePage(page.id);
+
+        const firstAfter = await questions.getQuestion(firstBefore.id);
+        const secondAfter = await questions.getQuestion(secondBefore.id);
+
+        expect(firstBefore).toBeDefined();
+        expect(secondBefore).toBeDefined();
+
+        expect(firstAfter).toBeNull();
+        expect(secondAfter).toBeNull();
+    });
+
+
+    it("Deletes only questions relevant to the page", async () => {
+
+        const [_, page, [question]] = await setupQuestions(1);
+        const [__, ___, [otherQuestion]] = await setupQuestions(1);
+
+        await pages.deletePage(page.id);
+
+        const questionAfter = await questions.getQuestion(question.id);
+        const otherAfter = await questions.getQuestion(otherQuestion.id);
+
+        expect(questionAfter).toBeNull();
+        expect(otherAfter).toEqual(otherQuestion);
+    });
+
+    it("Deletes answers along with page", async () => {
+
+        const [_, page, response, [answer]] = await setupAnswers(1);
+
+        await pages.deletePage(page.id);
+        const after = await answers.getAnswer(answer.id);
+        expect(after).toBeNull();
+    });
+
+    it("Only deletes relevant answers", async () => {
+
+        const [_, __, ___, [unrelated]] = await setupAnswers(1);
+        const [____, page, _____, [answer]] = await setupAnswers(1);
+
+        await pages.deletePage(page.id);
+
+        const unrelatedAfter = await answers.getAnswer(unrelated.id);
+        const answerAfter = await answers.getAnswer(answer.id);
+
+        expect(unrelatedAfter).toEqual(unrelated);
+        expect(answerAfter).toEqual(null);
     });
 
     it("Can set category", async () => {

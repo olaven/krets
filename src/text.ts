@@ -89,6 +89,7 @@ export const buttons = strings({
         logout: "Log out",
         login: "Log in",
         myPage: "Account",
+        aboutPage: "About",
         getStarted: "Get started!",
         toAdmin: "Overview",
         toQR: "QR-code",
@@ -100,6 +101,7 @@ export const buttons = strings({
         logout: "Logg ut",
         login: "Logg inn",
         myPage: "Konto",
+        aboutPage: "Om",
         getStarted: "Kom i gang!",
         toAdmin: "Oversikt",
         toQR: "QR-kode",
@@ -357,5 +359,35 @@ export const upgrade = strings({
         cancellationError: "Noe galt skjedde 🤕 ",
         cancelContact: "Ta kontakt",
         cancelSuffix: ", dette skal ordnes opp i!"
+    }
+});
+
+export const about = strings({
+    en: {
+        heading: "Hello, there 👋 ",
+        first: `
+            Feedback from as many people as possible is essential for someone wanting to improve 👊
+            Most tools are just large, detailed forms 🥱 
+        `,
+        second: "Large forms = no feedback = no improvement 😔",
+        third: "Krets is a new alternative.",
+        fourth: "Krets is a small company working to make feedback frictionless.",
+        greetings: " - founder, developer, 👨‍💻 and everything in between.",
+        badAlternative: "Traditional 🗒️",
+        goodAlternative: "Krets 🎉",
+
+    },
+    no: {
+        heading: "Heisann 👋 ",
+        first: `
+            Tilbakemelding er essensielt for deg som vil bli bedre 👊
+            De fleste verktøy er bare store, detaljerte skjemaer 🥱 
+        `,
+        second: "Store skjemaer = lite tilbakemelding = ingen forbedring 😔",
+        third: "Krets er et nytt alternativ.",
+        fourth: "Krets er et lite, uavhengig selskap som jobber for friksjonsfri tilbakemelding.",
+        greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet",
+        badAlternative: "Tradisjonell 🗒️",
+        goodAlternative: "Krets 🎉",
     }
 })

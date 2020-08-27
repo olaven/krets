@@ -1,6 +1,12 @@
 import { AnswerModel } from "../models/models"
 import { first, rows } from "./helpers/query"
 
+const getAnswer = (id: number) =>
+    first<AnswerModel>(
+        `select * from answers where id = $1`,
+        [id]
+    );
+
 const createAnswer = (answer: AnswerModel) =>
     first<AnswerModel>(
         'insert into answers (response_id, text, question_id) values ($1, $2, $3) returning *',
@@ -14,6 +20,7 @@ const getByResponse = (responseId: string) =>
     );
 
 export const answers = {
+    getAnswer,
     createAnswer,
     getByResponse
 }
