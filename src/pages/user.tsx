@@ -1,6 +1,5 @@
 import * as uiText from "../text";
 import * as NextLink from 'next/link'
-import { useRouter } from "next/router"
 import { OK } from "node-kall";
 import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext, useState } from "react";
@@ -9,10 +8,9 @@ import { deleteSubscription } from '../fetchers';
 import Loader from 'react-spinners/BounceLoader';
 import { useProduct } from "../effects/useProduct";
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
+import { TextBox } from "../components/tiny/TextBox";
 
 const CancelSubscription = () => {
-
-    const router = useRouter();
 
     const { updateUser } = useContext(UserContext);
 
@@ -57,10 +55,6 @@ const DeleteAccount = () => {
     return <DoubleConfirmationButton text="DELET USER" action={onDelete} />
 }
 
-//TODO: use elsewhere? 
-const TextBox = ({ children }) => <Text fontSize={[2, 3, 4]} my={[1, 2, 3]}>
-    {children}
-</Text>
 
 
 const SubscriberInfo = () => {
