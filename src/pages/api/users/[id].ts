@@ -18,15 +18,12 @@ export default withAuthentication(
             (async (request, response) => {
 
                 const { user } = await auth0.getSession(request);
+                const id = getPathParam(request.url, 1);
 
-                console.log("user", user);
-                console.log("id from URL", getPathParam(request.url, 1));
-
-                if (user.sub !== getPathParam(request.url, 1))
+                if (user.sub !== id)
                     return response
                         .status(FORBIDDEN)
                         .send(null);
-
 
                 const persistedUser = await users.getUser(user.sub);
                 const [status, payload] = persistedUser ?
