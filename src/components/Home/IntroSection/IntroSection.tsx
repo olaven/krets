@@ -1,7 +1,8 @@
 import React from "react";
-import { Flex, Box, Text, Image, Link } from "rebass";
+import { Flex, Box, Text, Image, Link, Heading } from "rebass";
 import { LoginButton, GetStartedButton } from "../../tiny/buttons";
 import { intro } from "../../../text";
+import { TextBox } from "../../tiny/TextBox";
 
 export const IntroSection = () => {
 
@@ -32,11 +33,8 @@ export const IntroSection = () => {
 
     </IntroBox >
 
-    //TODO: remove when warning is no longer appropriate (ready to take customers)
     const DisclaimerBox = () => <Box
-        width={1}
-        height={[150, 300, 300]}
-        p={4}>
+        width={1}>
         <section style={{
             display: "flex",
             margin: "auto",
@@ -45,26 +43,55 @@ export const IntroSection = () => {
         }}>
 
             <Text fontSize={[0, 1, 2]} textAlign="center">
+                {/* //TODO: remove earlyverison when warning is no longer appropriate (ready to take customers) */}
                 {intro.earlyVersionDisclaimer} {intro.acceptPrefix} <Link href={"/legal/terms-and-conditions.html"}>{intro.termsOfUse}</Link> {intro.acceptInfix} <Link href={"/legal/privacy-policy.html"}>{intro.privacyPolicy} {intro.acceptSuffix}</Link>
             </Text>
         </section>
     </Box>
 
 
-    return <Flex width={1} flexWrap="wrap">
+    return <Box >
+
+        <Flex py={1}>
+            <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.about}</Text>
+            <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.aim}</Text>
+        </Flex>
+
         <GetStartedButton />
         <DisclaimerBox />
-        <IntroTextBox>
-            {intro.create}
-        </IntroTextBox>
-        <IntroImageBox source="/creation.svg" />
-        <IntroImageBox source="/feedback.svg" />
-        <IntroTextBox>
-            {intro.visiting}
-        </IntroTextBox>
-        <IntroTextBox>
-            {intro.insight}
-        </IntroTextBox>
-        <IntroImageBox source="/insight.svg" />
-    </Flex>
+
+        <Flex py={4}>
+            <Box width={[0, 1 / 4]}> </Box>
+            <Box width={[1, 2 / 4]}>
+
+                <Box backgroundColor="primary" color="secondary" width={1}>
+                    <Heading textAlign="center" py={[1, 2]}>{intro.instructions}</Heading>
+                    <Flex>
+                        <Box width={[1 / 20, 1 / 6]}></Box>
+                        <Box width={[9 / 10, 4 / 6]}>
+                            <Image margin="auto auto" src="/krets-qr.png" />
+                            <Link href="https://krets.app/krets">https://krets.app/krets</Link>
+                        </Box>
+                        <Box width={[1 / 20, 1 / 6]}></Box>
+                    </Flex>
+                </Box>
+            </Box>
+            <Box width={[0, 1 / 4]}> </Box>
+        </Flex>
+
+        <Flex width={1} flexWrap="wrap">
+            <IntroTextBox>
+                {intro.create}
+            </IntroTextBox>
+            <IntroImageBox source="/creation.svg" />
+            <IntroImageBox source="/feedback.svg" />
+            <IntroTextBox>
+                {intro.visiting}
+            </IntroTextBox>
+            <IntroTextBox>
+                {intro.insight}
+            </IntroTextBox>
+            <IntroImageBox source="/insight.svg" />
+        </Flex>
+    </Box>
 };

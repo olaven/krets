@@ -5,10 +5,13 @@ const strings = (config: { en: any, no: any }) =>
 
 export const intro = strings({
     en: {
+        about: "You'll only improve through feedback 👊",
+        aim: "Krets aims to make it frictionless 😁",
+        instructions: "See how it works - Scan with your phone ✨",
         create: "Creating a page on Krets is fast!",
         visiting: "Your audience visits your site, with a link or a QR-code",
         insight: "Gain insight!",
-        earlyVersionDisclaimer: "Krets is under development, changes will occur 👨‍💻. Data may be deleted without notice.",
+        earlyVersionDisclaimer: "Krets is under development, changes will occur 👨‍💻.",
         termsOfUse: "terms of use",
         privacyPolicy: "privacy policy",
         acceptPrefix: "Users accept Krets'",
@@ -16,10 +19,13 @@ export const intro = strings({
         acceptSuffix: "📝"
     },
     no: {
+        about: "Tilbakemeldinger er nødvendig for forbedring 👊",
+        aim: "Krets ønsker å gjøre det friksjonsfritt 😁",
+        instructions: "Se hvordan det funker - Scan med telefonen ✨",
         create: "Å lage en Krets-side er kjapt!",
         visiting: "Ditt publikum besøker din side, med link eller QR-kode",
         insight: "Få innsikt!",
-        earlyVersionDisclaimer: "Krets er under utvikling, endringer vil forekomme 👨‍💻. Data kan slettes uten forvarsel.",
+        earlyVersionDisclaimer: "Krets er under utvikling, endringer vil forekomme 👨‍💻.",
         termsOfUse: "vilkår",
         privacyPolicy: "personvernserklæring",
         acceptPrefix: "Brukere aksepterer Krets'",
@@ -315,6 +321,7 @@ export const upgrade = strings({
         priceChosen: "Chosen 🙌",
         pay: "Pay now",
         vat: "VAT included.",
+        monthly: "Charged monthly",
         included: "included",
         responses: "responses",
         afterTier: "per response afterwards",
@@ -348,6 +355,7 @@ export const upgrade = strings({
         responses: "svar",
         afterTier: "per svar etter det",
         vat: "Inkl. mva.",
+        monthly: "Pris per måned",
         pay: "Betal nå",
         loading: "Oppgraderer.. Takk for tålmodigheten!",
         button: "Oppgrader Krets",

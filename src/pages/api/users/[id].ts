@@ -28,6 +28,7 @@ const getUser = async (request, response) => {
 
 const deleteUser = async (request: NextApiRequest, response: NextApiResponse) => {
 
+
     response.status(500).end();
 };
 
