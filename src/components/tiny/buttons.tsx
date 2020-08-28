@@ -77,14 +77,9 @@ export const ToPage = ({ id }) =>
 export const ToSettings = ({ id }) =>
     ListButton(`/${id}/settings`, uiText.buttons.toSettings);
 
-export const LoadMoreButton = ({ onClick, active, isLoading }) =>
-    active &&
-        (isLoading ? 
-        <Loader size={10} />
-        :
-        <Button width={1} onClick={!isLoading ? onClick : undefined}>
-            {uiText.buttons.loadMore}
-            
-        </Button> 
-        )
-       
+
+export const LoadMoreButton = ({onClick}) => 
+    <Button width={1} onClick={onClick}>
+        {uiText.buttons.loadMore}
+    </Button> 
+ 
