@@ -34,9 +34,7 @@ export const IntroSection = () => {
     </IntroBox >
 
     const DisclaimerBox = () => <Box
-        width={1}
-        height={[150, 300, 300]}
-        p={1}>
+        width={1}>
         <section style={{
             display: "flex",
             margin: "auto",
@@ -53,14 +51,21 @@ export const IntroSection = () => {
 
 
     return <Box >
+
+        <Flex py={1}>
+            <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.about}</Text>
+            <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.aim}</Text>
+        </Flex>
+
         <GetStartedButton />
         <DisclaimerBox />
-        <Flex>
+
+        <Flex py={4}>
             <Box width={[0, 1 / 4]}> </Box>
             <Box width={[1, 2 / 4]}>
-                <Text fontSize={[3, 4, 5]} textAlign="center">her er det greier og greier om krets. deles med link eller qr-kode!</Text>
+
                 <Box backgroundColor="primary" color="secondary" width={1}>
-                    <Heading textAlign="center" py={[1, 2]}>Prøv selv - scan med mobilkamera ✨</Heading>
+                    <Heading textAlign="center" py={[1, 2]}>{intro.instructions}</Heading>
                     <Flex>
                         <Box width={[1 / 20, 1 / 6]}></Box>
                         <Box width={[9 / 10, 4 / 6]}>
