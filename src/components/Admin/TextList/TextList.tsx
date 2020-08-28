@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
-import { LoadMoreButton } from "../../tiny/buttons";
+import { LoadMore } from "../../tiny/loader";
 import { TextCards } from "./TextCards";
 
 
@@ -37,6 +37,6 @@ export const TextList = () => {
         />
         <Divider />
         <TextCards selectedEmotions={selectedEmotions} />
-        {responses.length > 0 && <LoadMoreButton onClick={getNextResponses} active={moreResponsesAvailable} isLoading={pageLoading} />}
+        {responses.length > 0 && <LoadMore onClick={getNextResponses} active={moreResponsesAvailable} isLoading={pageLoading} />}
     </Flex>
 }
