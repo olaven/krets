@@ -1,6 +1,7 @@
 import { Box, Button, Link, Flex, Text } from "rebass";
 import React, { useState } from "react"
 import * as uiText from "../../text"
+import { Loader } from "./loader";
 
 export const LogoutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
     <Link color={"primary"} href="/api/auth/logout">{uiText.buttons.logout}</Link>
@@ -76,7 +77,14 @@ export const ToPage = ({ id }) =>
 export const ToSettings = ({ id }) =>
     ListButton(`/${id}/settings`, uiText.buttons.toSettings);
 
-export const LoadMoreButton = ({ onClick, active }) =>
-    active ?
-        <Button width={1} onClick={onClick}>{uiText.buttons.loadMore}</Button> :
-        null;
+export const LoadMoreButton = ({ onClick, active, isLoading }) =>
+    active &&
+        (isLoading ? 
+        <Loader size={10} />
+        :
+        <Button width={1} onClick={!isLoading ? onClick : undefined}>
+            {uiText.buttons.loadMore}
+            
+        </Button> 
+        )
+       

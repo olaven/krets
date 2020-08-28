@@ -16,6 +16,7 @@ import { PaginatedModel } from "../models/models";
 export const usePagination = function <T>(basePath: string): [
     PaginatedModel<T>,
     boolean,
+    boolean,
     () => void,
     () => void] {
 
@@ -25,21 +26,24 @@ export const usePagination = function <T>(basePath: string): [
     });
     const [moreAvailable, setMoreAvailable] = useState(true);
 
+    const [isLoading, setIsLoading] = useState(true)
+
     const applyNext = (path: string) =>
         () => setNext(path);
 
     asyncEffect(async () => {
-
+        setIsLoading(true)
         const page = await filterBody(
             get<PaginatedModel<T>>(next)
         );
+        await new Promise(resolve => setTimeout(resolve, 2000)) //TODO: REMOVE
         setPage(page);
-
+        setIsLoading(false)
         if (page.data.length === 0) {
 
             setMoreAvailable(false);
         }
     }, [next]);
 
-    return [page, moreAvailable, applyNext(page.next), applyNext(basePath)];
+    return [page, moreAvailable, isLoading, applyNext(page.next), applyNext(basePath)];
 };
