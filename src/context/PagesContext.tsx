@@ -12,7 +12,7 @@ type Type = {
      * true  -> after first load 
      */
     hasLoaded: boolean,
-    isLoading
+    pageLoading
 }
 
 export const PagesContext = createContext<Type>({
@@ -21,7 +21,7 @@ export const PagesContext = createContext<Type>({
     getNextPages: () => { },
     addPage: (page: PageModel) => { },
     hasLoaded: false,
-    isLoading: true
+    pageLoading: true
 });
 
 /**
@@ -36,7 +36,7 @@ export const PagesContextProvider = ({ user, children }) => {
 
     if (!user) throw "Should not see this if not logged in!";
 
-    const [page, moreAvailable, isLoading, getNextPages] = usePagination<PageModel>(`/api/pages`);
+    const [page, moreAvailable, pageLoading, getNextPages] = usePagination<PageModel>(`/api/pages`);
     const [hasLoaded, setHasLoaded] = useState(false);
 
     //A buffer keeping old `.data`
@@ -57,7 +57,7 @@ export const PagesContextProvider = ({ user, children }) => {
     }
 
 
-    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, hasLoaded, isLoading}}>
+    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, hasLoaded, pageLoading}}>
         {children}
     </PagesContext.Provider>
 };
