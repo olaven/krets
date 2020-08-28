@@ -6,7 +6,7 @@ export const getPathParam = (url: string, splitAt: number) => {
 
     const split = url.split("/");
     const param = split[split.length - splitAt];
-    return decodeURIComponent(param)
+    return decodeURIComponent(param);
 };
 
 
