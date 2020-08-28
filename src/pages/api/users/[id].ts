@@ -2,6 +2,7 @@ import { FORBIDDEN, NOT_FOUND, OK } from "node-kall";
 import { withCors, withAuthentication, withMethods } from "../../../middleware/middleware";
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
+import { getPathParam } from "../../../workarounds";
 
 //FIXME: is just a workaround, shared with pages/[id].ts. 
 export const getId = (url: string) => {
@@ -17,12 +18,12 @@ export default withAuthentication(
             (async (request, response) => {
 
                 const { user } = await auth0.getSession(request);
+                const id = getPathParam(request.url, 1);
 
-                if (user.sub !== getId(request.url))
+                if (user.sub !== id)
                     return response
                         .status(FORBIDDEN)
                         .send(null);
-
 
                 const persistedUser = await users.getUser(user.sub);
                 const [status, payload] = persistedUser ?
