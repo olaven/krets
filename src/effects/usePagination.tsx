@@ -21,11 +21,8 @@ export const usePagination = function <T>(basePath: string): [
     () => void] {
 
     const [next, setNext] = useState(basePath);
-
     const [moreAvailable, setMoreAvailable] = useState(true);
-
     const [pageLoading, setPageLoading] = useState(true);
-
     const [page, setPage] = useState<PaginatedModel<T>>({
         data: [], next: null
     });
@@ -36,12 +33,8 @@ export const usePagination = function <T>(basePath: string): [
     asyncEffect(async () => {
 
         setPageLoading(true)
+        const page = await filterBody(get<PaginatedModel<T>>(next));
 
-        const page = await filterBody(
-            get<PaginatedModel<T>>(next)
-        );
-
-        await new Promise(resolve => setTimeout(resolve, 2000))
         setPage(page);
         setPageLoading(false)
         setMoreAvailable(page.data.length > 0);
