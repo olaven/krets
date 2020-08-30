@@ -71,5 +71,5 @@ export const updateQuestion = (question: QuestionModel) =>
     put<QuestionModel>(`/api/pages/${question.page_id}/questions/${question.id}`, question);
 
 //DANGER: actually deletes entire user.
-export const deleteUser = () =>
-    del(`/api/users`);
+export const deleteUser = (id: string) =>
+    del(`/api/users/${id}`);
