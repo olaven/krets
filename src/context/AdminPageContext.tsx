@@ -8,20 +8,21 @@ interface ContextInterface {
     page: PageModel,
     pageLoading: boolean,
     responses: ResponseModel[],
+    responsesLoading: boolean,
     moreResponsesAvailable: boolean,
     getNextResponses: () => void,
 }
 const defaultValues: ContextInterface =
-    { page: null, pageLoading: true, responses: [], moreResponsesAvailable: true, getNextResponses: () => { } }
+    { page: null, pageLoading: true, responsesLoading: true, responses: [], moreResponsesAvailable: true, getNextResponses: () => { } }
 
 export const AdminPageContext = createContext<ContextInterface>(defaultValues);
 
 export const AdminPageContextProvider = ({ pageId, children }) => {
 
     const [page, pageLoading] = usePage(pageId);
-    const [responses, moreResponsesAvailable, getNextResponses] = useResponses(pageId);
+    const [responses, moreResponsesAvailable, responsesLoading, getNextResponses] = useResponses(pageId);
 
-    return <AdminPageContext.Provider value={{ page, pageLoading, responses, moreResponsesAvailable, getNextResponses }}>
+    return <AdminPageContext.Provider value={{ page, pageLoading, responses, moreResponsesAvailable, responsesLoading, getNextResponses }}>
         {children}
     </AdminPageContext.Provider>
 };

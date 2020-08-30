@@ -29,22 +29,22 @@ export const usePagination = function <T>(basePath: string): [
     const [page, setPage] = useState<PaginatedModel<T>>({
         data: [], next: null
     });
-    
+
     const applyNext = (path: string) =>
         () => setNext(path);
 
     asyncEffect(async () => {
+
         setPageLoading(true)
+
         const page = await filterBody(
             get<PaginatedModel<T>>(next)
         );
-        await new Promise(resolve => setTimeout(resolve, 2000)) //TODO: REMOVE
+
+        await new Promise(resolve => setTimeout(resolve, 2000))
         setPage(page);
         setPageLoading(false)
-        if (page.data.length === 0) {
-
-            setMoreAvailable(false);
-        }
+        setMoreAvailable(page.data.length > 0);
     }, [next]);
 
     return [page, moreAvailable, pageLoading, applyNext(page.next), applyNext(basePath)];
