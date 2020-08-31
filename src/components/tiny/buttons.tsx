@@ -57,13 +57,13 @@ export const DoubleConfirmationButton = ({ text, action }) => {
 }
 
 const ListButton = (href: string, text: string) =>
-    <Box m={[0, 1, 2]} width={[1, 1 / 5]}>
+    <Box m={[1]}>
         <Button width={1}>
             <Link color={"secondary"} href={href}>
                 {text}
             </Link>
         </Button>
-    </Box>;
+    </Box >;
 
 export const ToAdmin = ({ id }) =>
     ListButton(`/${id}/admin`, uiText.buttons.toAdmin);
@@ -78,8 +78,7 @@ export const ToSettings = ({ id }) =>
     ListButton(`/${id}/settings`, uiText.buttons.toSettings);
 
 
-export const LoadMoreButton = ({onClick}) => 
+export const LoadMoreButton = ({ onClick }) =>
     <Button width={1} onClick={onClick}>
         {uiText.buttons.loadMore}
-    </Button> 
- 
+    </Button>
