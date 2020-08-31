@@ -6,9 +6,9 @@ import { usePagination } from "./usePagination";
 /**
  * Forwards `usePagination` + Keeps old responses in a local 'buffer'
  */
-export const useResponses = (pageId: string): [ResponseModel[], boolean, () => void] => {
+export const useResponses = (pageId: string): [ResponseModel[], boolean, boolean, () => void] => {
 
-    const [page, moreAvailable, getNext] = usePagination<ResponseModel>(`/api/pages/${pageId}/responses`);
+    const [page, moreAvailable, responsesLoading, getNext] = usePagination<ResponseModel>(`/api/pages/${pageId}/responses`);
 
     //A buffer keeping old `.data`
     const [responses, setResponses] = useState<ResponseModel[]>([]);
@@ -18,5 +18,5 @@ export const useResponses = (pageId: string): [ResponseModel[], boolean, () => v
         setResponses([...responses, ...page.data])
     }, [page.next]);
 
-    return [responses, moreAvailable, getNext];
+    return [responses, moreAvailable, responsesLoading, getNext];
 }
