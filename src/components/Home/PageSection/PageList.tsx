@@ -10,12 +10,16 @@ const PageCard = ({ id, name }) =>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
 
         <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{name}</Heading>
-        <Flex flexWrap={"wrap"}>
+        <Flex justifyContent="center">
             {/* FIXME: Tooltips added here has wrong position */}
-            <ToAdmin id={id} />
-            <ToQR id={id} />
-            <ToPage id={id} />
-            <ToSettings id={id} />
+            <Box width={[1 / 2]}>
+                <ToAdmin id={id} />
+                <ToSettings id={id} />
+            </Box>
+            <Box width={[1 / 2]}>
+                <ToPage id={id} />
+                <ToQR id={id} />
+            </Box>
         </Flex>
     </Card>;
 
