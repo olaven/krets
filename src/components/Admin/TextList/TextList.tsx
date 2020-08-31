@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
-import { LoadMoreButton } from "../../tiny/buttons";
+import { LoadMore } from "../../tiny/loader";
 import { TextCards } from "./TextCards";
 
 
@@ -19,7 +19,7 @@ const Divider = () => <Box
 
 export const TextList = () => {
 
-    const { responses, getNextResponses, moreResponsesAvailable } = useContext(AdminPageContext);
+    const { responses, getNextResponses, moreResponsesAvailable, responsesLoading } = useContext(AdminPageContext);
     const [selectedEmotions, setSelectedEmotions] = useState<Emotion[]>([":-)", ":-|", ":-("]);
 
     if (!responses)
@@ -29,7 +29,6 @@ export const TextList = () => {
         return <div>{text.responseList.noResponses}</div>
 
 
-
     return <Flex flexDirection={"column"} my={[1, 2, 3]}>
         <FilterButtons
             selected={selectedEmotions}
@@ -37,6 +36,10 @@ export const TextList = () => {
         />
         <Divider />
         <TextCards selectedEmotions={selectedEmotions} />
-        {responses.length > 0 && <LoadMoreButton onClick={getNextResponses} active={moreResponsesAvailable} />}
+        {responses.length > 0 &&
+            <LoadMore
+                onClick={getNextResponses}
+                active={moreResponsesAvailable}
+                isLoading={responsesLoading} />}
     </Flex>
 }

@@ -9,37 +9,36 @@ import { PaginatedModel } from "../models/models";
  * returning `PaginatedModel<T>`
  * 
  * @param basePath The initial path of the endpoint 
- * @returns [ page, setNext, reset ] -> [ 'current page', 'more data is available' 'update page to next page', 'reset to first page' ]
+ * @returns [ page, moreAvailable, pageLoading, setNext, reset ] -> [ 'current page', 'more data is available', 'currently loading page', 'update page to next page', 'reset to first page' ]
  * 
  * Adapted from [this file](https://github.com/olaven/exam-pg6101/blob/master/frontend/src/utils/PaginationFetcher.jsx)
  */
 export const usePagination = function <T>(basePath: string): [
     PaginatedModel<T>,
     boolean,
+    boolean,
     () => void,
     () => void] {
 
-    const [next, setNext] = useState(basePath)
+    const [next, setNext] = useState(basePath);
+    const [moreAvailable, setMoreAvailable] = useState(true);
+    const [pageLoading, setPageLoading] = useState(true);
     const [page, setPage] = useState<PaginatedModel<T>>({
         data: [], next: null
     });
-    const [moreAvailable, setMoreAvailable] = useState(true);
 
     const applyNext = (path: string) =>
         () => setNext(path);
 
     asyncEffect(async () => {
 
-        const page = await filterBody(
-            get<PaginatedModel<T>>(next)
-        );
+        setPageLoading(true)
+        const page = await filterBody(get<PaginatedModel<T>>(next));
+
         setPage(page);
-
-        if (page.data.length === 0) {
-
-            setMoreAvailable(false);
-        }
+        setPageLoading(false)
+        setMoreAvailable(page.data.length > 0);
     }, [next]);
 
-    return [page, moreAvailable, applyNext(page.next), applyNext(basePath)];
+    return [page, moreAvailable, pageLoading, applyNext(page.next), applyNext(basePath)];
 };
