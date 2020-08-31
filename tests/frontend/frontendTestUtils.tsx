@@ -12,12 +12,13 @@ export const renderWithPagesContext = (
     Component: ReactElement,
     pages: PageModel[] = [],
     hasLoaded: false,
+    pageLoading: false,
     moreAvailable: true,
     getNextPages = jest.fn(() => { }),
     addPage = jest.fn((page) => { })
 ) => render(<PagesContext.Provider
     value={{
-        pages, hasLoaded, moreAvailable, getNextPages, addPage
+        pages, hasLoaded, pageLoading, moreAvailable, getNextPages, addPage
     }}>
     <PageTooltipProvider pageCount={0}>
         {Component}
