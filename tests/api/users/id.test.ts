@@ -4,6 +4,7 @@ import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
 import userHandler from "../../../src/pages/api/users/[id]";
 import { UserModel } from "../../../src/models/models";
+import { mockFetch } from "../../frontend/frontendTestUtils";
 
 
 
@@ -31,6 +32,8 @@ describe("Endpoints for database user data", () => {
 
 
     describe("The endpoint for user data from database", () => {
+
+        mockFetch({ access_token: "MOCKED TEST TOKEN" }, 204);
 
         it("Only responds to GET and DELETE", async () => {
 

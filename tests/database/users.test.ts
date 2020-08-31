@@ -1,6 +1,6 @@
-import { users } from "../../src/database/database";
+import { pages, users } from "../../src/database/database";
 import * as faker from "faker";
-import { randomUser } from "./databaseTestUtils";
+import { randomUser, setupPages } from "./databaseTestUtils";
 import { uid } from "../api/apiTestUtils";
 import { random } from "faker";
 
@@ -151,5 +151,19 @@ describe("User repository", () => {
 
         expect(userAfter).toBeNull();
         expect(otherAfter).toEqual(other);
+    });
+
+    test("Deleting a user also deletes the pages", async () => {
+
+        const [user, ownedPages] = await setupPages(1);
+        const before = await pages.getByOwner(user.id);
+
+        await users.deleteUser(user.id);
+
+        const after = await pages.getByOwner(user.id);
+
+        expect(before).toEqual(ownedPages);
+        expect(before).not.toEqual(after);
+        expect(after).toEqual([]);
     });
 });

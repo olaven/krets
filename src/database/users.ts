@@ -1,6 +1,6 @@
 import { first, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
-import subscription from "../pages/api/payment/subscription";
+import { pages } from "./database"
 
 const getUser = (id: string) =>
    first<UserModel>(
@@ -61,13 +61,14 @@ const userExists = async (id: string) => {
  */
 const deleteUser = async (id: string) => {
 
-   //NOTE: could I just reference pages here? 
+   //FIXME: more performant by doing things inside queries instead of loading into memory like this
+   //FIXME: either through cascade (scary..) or through more complex with-queries (safer). 
+   const pagesOwnedByUser = await pages.getByOwner(id);
+   for (const page of pagesOwnedByUser) {
 
-   //TODO: delete everything that has a foreign key to user, directly or indirectly 
-   /* await run(
-      `delete from answers where answer in `, 
-   ) */
-
+      pages.deletePage(page.id);
+   }
+   //TODO: crashes in test 
    await run(
       `delete from users where id = $1`,
       [id]

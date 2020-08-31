@@ -70,12 +70,22 @@ const deleteAuthUser = async (id: string) => {
     }
 }
 
+/**
+ * 
+ * @param request 
+ * @param response
+ * DANGER: actually deletes everything related to the calling user  
+ */
 const deleteUser = async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const id = getPathParam(request.url, 1)
+    const id = getPathParam(request.url, 1);
 
     await deleteAuthUser(id);
-    response.status(500).end();
+    await users.deleteUser(id);
+
+    response
+        .status(204)
+        .end();
 };
 
 export default withAuthentication(
