@@ -4,8 +4,10 @@ import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
 import { getPathParam } from "../../../workarounds";
 import { NextApiRequest, NextApiResponse } from "next";
-import { response } from "../../../text";
+import request from "request";
 
+
+//THINKABOUT: how to structure helper-functions in this file better. In particular, all the code for getting auth0-acccess
 
 const getUser = async (request, response) => {
 
@@ -27,39 +29,52 @@ const getUser = async (request, response) => {
         .json(payload)
 }
 
-const getAuth0Token = async () => {
 
-    const form = new FormData();
-    form.append("grant_type", "client_credentials");
-    form.append("client_id", process.env.AUTH0_CLIENT_ID);
-    form.append("client_secret", process.env.AUTH0_CLIENT_SECRET);
-    form.append("audience", `${process.env.AUTH0_DOMAIN}/api/v2/`);
+const getAuth0Token = () => new Promise((resolve, reject) => {
 
-    const response = await fetch(`${process.env.AUTH0_DOMAIN}/oauth/token`, {
-        method: "POST",
+    var options = {
+        method: 'POST',
+        url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: form
+        form: {
+            grant_type: 'client_credentials',
+            client_id: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
+            client_secret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
+            audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`
+        }
+    };
+
+    request(options, (error, response, body) => {
+
+        if (error) reject(error);
+
+        const json = JSON.parse(body)
+        resolve(json.access_token);
+    });
+});
+
+
+const deleteAuthUser = async (id: string) => {
+
+    const token = await getAuth0Token();
+    const { status, body } = await fetch(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${id}`, {
+        method: "DELETE",
+        headers: {
+            "authorization": `Bearer ${token}`,
+            "cache-control": "no-cache",
+        }
     });
 
-    if (response.status === 201) {
-
-        console.log(await response.json());
-    } else {
-
-        console.log(response);
+    if (status !== 204) {
+        throw `Error when deleting auth0 user, ${status} ${body}`;
     }
-}
-
-const deleteAuthUser = () => {
-
-    const token = getAuth0Token();
-
 }
 
 const deleteUser = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getPathParam(request.url, 1)
-    await deleteAuthUser()
+
+    await deleteAuthUser(id);
     response.status(500).end();
 };
 
