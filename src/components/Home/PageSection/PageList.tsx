@@ -1,10 +1,10 @@
-import { Box, Button, Card, Flex, Heading } from "rebass";
-import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
 import React, { useContext } from "react";
-import { PagesContext } from "../../../context/PagesContext";
-import * as text from "../../../text"
+import { Box, Card, Flex, Heading } from "rebass";
 import { TooltipHelp } from "tooltip-help-react";
 import { Loader, LoadMore } from "../../tiny/loader";
+import * as text from "../../../text"
+import { PagesContext } from "../../../context/PagesContext";
+import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
 
 const PageCard = ({ id, name }) =>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
