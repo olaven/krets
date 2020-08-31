@@ -1,6 +1,6 @@
-import { pages, users } from "../../src/database/database";
+import { pages, questions, users } from "../../src/database/database";
 import * as faker from "faker";
-import { randomUser, setupPages } from "./databaseTestUtils";
+import { randomUser, setupPages, setupQuestions } from "./databaseTestUtils";
 import { uid } from "../api/apiTestUtils";
 import { random } from "faker";
 
@@ -165,5 +165,48 @@ describe("User repository", () => {
         expect(before).toEqual(ownedPages);
         expect(before).not.toEqual(after);
         expect(after).toEqual([]);
+    });
+
+    test("Deleting a user does _not_ delete other pages", async () => {
+
+        const [user, _] = await setupPages();
+        const [otherUser, otherPages] = await setupPages();
+
+        const before = await pages.getByOwner(otherUser.id);
+        await users.deleteUser(user.id);
+        const after = await pages.getByOwner(otherUser.id);
+
+        expect(before).toEqual(otherPages);
+        expect(before).toEqual(after);
+    });
+
+    test("Deleting a user also deletes relevant questions", async () => {
+
+        const [user, page, persisted] = await setupQuestions(2);
+        const before = await questions.getByPage(page.id);
+
+        await users.deleteUser(user.id);
+
+        const after = await questions.getByPage(page.id);
+
+        expect(before).toEqual(persisted);
+        expect(after).not.toEqual(before);
+        expect(after).toEqual([]);
+    });
+
+    test("Deleting a user does _not_ delete irrelevant questions", async () => {
+
+        const [_, otherPage, otherQuestions] = await setupQuestions();
+        const [user, __, ___] = await setupQuestions(2);
+
+        const before = await questions.getByPage(otherPage.id);
+
+        await users.deleteUser(user.id);
+
+        const after = await questions.getByPage(otherPage.id);
+
+        expect(before).toEqual(otherQuestions);
+        expect(before).toEqual(after);
+        expect(after).not.toEqual([]);
     });
 });

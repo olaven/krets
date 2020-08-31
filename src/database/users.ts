@@ -62,11 +62,11 @@ const userExists = async (id: string) => {
 const deleteUser = async (id: string) => {
 
    //FIXME: more performant by doing things inside queries instead of loading into memory like this
-   //FIXME: either through cascade (scary..) or through more complex with-queries (safer). 
+   //FIXME: either through cascade (scary..) or through more complex with-queries (safer -> see beginning in `_deleteUser`). 
    const pagesOwnedByUser = await pages.getByOwner(id);
    for (const page of pagesOwnedByUser) {
 
-      pages.deletePage(page.id);
+      await pages.deletePage(page.id);
    }
    //TODO: crashes in test 
    await run(
@@ -74,6 +74,35 @@ const deleteUser = async (id: string) => {
       [id]
    );
 }
+
+//NOTE: this contains syntax errors, but something like this should replace `deleteUser` for performance reasons 
+const _deleteUser = (id: string) => run(
+   `
+      WITH pages_owned_by_user AS (
+         select * from pages 
+         where owner_id = $1
+      )
+      WITH questions_in_pages as (
+         select * from questions 
+         where page_id in pages_owned_by_user
+      )
+      WITH answers_on_questions as (
+         DELETE FROM answers
+         WHERE question_id IN (
+            SELECT id FROM questions_in_pages
+         )
+      )
+      DELETE FROM questions 
+      WHERE id IN (
+         SELECT id from questions_in_pages
+      )
+      DELETE FROM pages 
+      WHERE id IN (
+         SELECT id FROM pages_owned_by_user
+      )
+   `,
+   [id]
+)
 
 
 
