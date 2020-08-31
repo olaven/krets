@@ -1,10 +1,10 @@
-import { Box, Button, Card, Flex, Heading } from "rebass";
-import { ToAdmin, ToQR, ToPage, ToSettings} from "../../tiny/buttons";
 import React, { useContext } from "react";
-import { PagesContext } from "../../../context/PagesContext";
-import * as text from "../../../text"
+import { Box, Card, Flex, Heading } from "rebass";
 import { TooltipHelp } from "tooltip-help-react";
 import { Loader, LoadMore } from "../../tiny/loader";
+import * as text from "../../../text"
+import { PagesContext } from "../../../context/PagesContext";
+import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
 
 const PageCard = ({ id, name }) =>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
@@ -37,7 +37,7 @@ export const PageList = () => {
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
                     .map(page => <PageCard key={`${page.id}-${page.created_at}`} {...page} />)}
-                {pages.length > 0 && <LoadMore onClick={getNextPages} active={moreAvailable} isLoading={pageLoading}/>}
+                {pages.length > 0 && <LoadMore onClick={getNextPages} active={moreAvailable} isLoading={pageLoading} />}
             </Box>
             <Box width={[0, 0, 1 / 4]}></Box>
         </Flex>
