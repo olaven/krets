@@ -9,6 +9,7 @@ import { mockFetch } from "../../frontend/frontendTestUtils";
 
 
 jest.mock("../../../src/auth/auth0");
+jest.mock("../../../src/payment/stripe");
 jest.mock("request")
 
 describe("Endpoints for database user data", () => {

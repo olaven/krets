@@ -19,6 +19,9 @@ export const stripe = {
             if (customers.includes(id))
                 return customers[customers.indexOf(id)];
             throw "Customer does not exist"
+        },
+        del: async (id: string) => {
+            return "MOCK DELETED";
         }
-    }
+    },
 }
