@@ -4,10 +4,12 @@ import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
 import userHandler from "../../../src/pages/api/users/[id]";
 import { UserModel } from "../../../src/models/models";
+import { mockFetch } from "../../frontend/frontendTestUtils";
 
 
 
 jest.mock("../../../src/auth/auth0");
+jest.mock("request")
 
 describe("Endpoints for database user data", () => {
 
@@ -32,13 +34,19 @@ describe("Endpoints for database user data", () => {
 
     describe("The endpoint for user data from database", () => {
 
-        it("Only responds to GET", async () => {
+        mockFetch(null, 204);
+
+        it("Only responds to GET and DELETE", async () => {
 
             const { id } = await users.createUser(randomUser())
-            const getResponse = await authenticatedFetch(id, fullUrl(id), { method: "GET" });
-            expect(getResponse.status).toEqual(200);
 
-            for (let method of ["PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
+            const getResponse = await authenticatedFetch(id, fullUrl(id), { method: "GET" });
+            const deleteResponse = await authenticatedFetch(id, fullUrl(id), { method: "DELETE" });
+
+            expect(getResponse.status).toEqual(200);
+            expect(deleteResponse.status).not.toEqual(405);
+
+            for (let method of ["PUT", "PATCH", "HEAD", "OPTIONS"]) {
 
                 const { status } = await authenticatedFetch(id, fullUrl(id), { method });
                 expect(status).toEqual(405);

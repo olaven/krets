@@ -34,6 +34,16 @@ export const intro = strings({
     }
 });
 
+//TODO: move more of the text from `upgrade` to this section
+export const user = strings({
+    en: {
+        deleteButton: "Permanently delete account."
+    },
+    no: {
+        deleteButton: "Slett kontoen din for godt."
+    }
+})
+
 export const response = strings({
     en: {
         header: "Give feedback to",
@@ -338,7 +348,7 @@ export const upgrade = strings({
     },
     no: {
         heading: "Oppgrader Krets!",
-        inDevelopmentWarning: "I fremtiden vil oppgraderte brukere ha flere muligheter enn ikke-betalende.",
+        inDevelopmentWarning: "I fremtiden vil oppgraderte brukere ha flere funksjoner tilgjengelig.",
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
         included: "inkludert",

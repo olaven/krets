@@ -20,3 +20,9 @@ export const registerCustomer = async (email: string) => {
 
     return customer.id
 }
+
+/**
+ * DANGER: permanently deletes the customer from Stripe 
+ */
+export const deleteCustomer = (customerId: string) =>
+    stripe.customers.del(customerId); 

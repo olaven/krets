@@ -1,6 +1,6 @@
-import { first } from "./helpers/helpers";
+import { first, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
-import subscription from "../pages/api/payment/subscription";
+import { pages } from "./database"
 
 const getUser = (id: string) =>
    first<UserModel>(
@@ -55,6 +55,57 @@ const userExists = async (id: string) => {
    return result.count === '1';
 };
 
+/**
+ * DANGER: permanently deletes given user record
+ * and __all__ pages, repsonses, questions and answers, that are related. 
+ */
+const deleteUser = async (id: string) => {
+
+   //FIXME: more performant by doing things inside queries instead of loading into memory like this
+   //FIXME: either through cascade (scary..) or through more complex with-queries (safer -> see beginning in `_deleteUser`). 
+   const pagesOwnedByUser = await pages.getByOwner(id);
+   for (const page of pagesOwnedByUser) {
+
+      await pages.deletePage(page.id);
+   }
+   //TODO: crashes in test 
+   await run(
+      `delete from users where id = $1`,
+      [id]
+   );
+}
+
+//NOTE: this contains syntax errors, but something like this should replace `deleteUser` for performance reasons 
+const _deleteUser = (id: string) => run(
+   `
+      WITH pages_owned_by_user AS (
+         select * from pages 
+         where owner_id = $1
+      )
+      WITH questions_in_pages as (
+         select * from questions 
+         where page_id in pages_owned_by_user
+      )
+      WITH answers_on_questions as (
+         DELETE FROM answers
+         WHERE question_id IN (
+            SELECT id FROM questions_in_pages
+         )
+      )
+      DELETE FROM questions 
+      WHERE id IN (
+         SELECT id from questions_in_pages
+      )
+      DELETE FROM pages 
+      WHERE id IN (
+         SELECT id FROM pages_owned_by_user
+      )
+   `,
+   [id]
+)
+
+
+
 export const users = ({
    getUser,
    getUserByCustomerId,
@@ -63,4 +114,5 @@ export const users = ({
    updatePaymentInformation,
    updateInvoicePaid,
    userExists,
+   deleteUser,
 });

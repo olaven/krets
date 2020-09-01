@@ -1,10 +1,11 @@
 import * as uiText from "../text";
 import * as NextLink from 'next/link'
-import { OK } from "node-kall";
+import { useRouter } from "next/router"
+import { OK, NO_CONTENT } from "node-kall";
 import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { deleteSubscription } from '../fetchers';
+import { deleteSubscription, deleteUser } from '../fetchers';
 import Loader from 'react-spinners/BounceLoader';
 import { useProduct } from "../effects/useProduct";
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
@@ -46,13 +47,26 @@ const CancelSubscription = () => {
 
 const DeleteAccount = () => {
 
-    const onDelete = () => {
+    const { updateUser, authUser } = useContext(UserContext);
+    const router = useRouter();
 
-        alert("Automatic deletion is not supported. Please contact post@krets.app and you'll be deleted as quickly as possible!")
+    const onDelete = async () => {
+
+        const [status] = await deleteUser(authUser.sub);
+        console.log(status);
+        if (status === NO_CONTENT) {
+
+            updateUser();
+            router.replace("/")
+        } else {
+
+            alert("An error occured. Please contact post@krets.app and you'll be deleted as quickly as possible!");
+        }
     }
 
-    //FIXME: actually implement
-    return <DoubleConfirmationButton text="DELET USER" action={onDelete} />
+    return <DoubleConfirmationButton
+        text={uiText.user.deleteButton}
+        action={onDelete} />
 }
 
 

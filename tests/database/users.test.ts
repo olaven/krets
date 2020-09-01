@@ -1,6 +1,6 @@
-import { users } from "../../src/database/database";
+import { pages, questions, users } from "../../src/database/database";
 import * as faker from "faker";
-import { randomUser } from "./databaseTestUtils";
+import { randomUser, setupPages, setupQuestions } from "./databaseTestUtils";
 import { uid } from "../api/apiTestUtils";
 import { random } from "faker";
 
@@ -127,5 +127,86 @@ describe("User repository", () => {
         expect(updated.product_id).toEqual(NEW_PRODUCT_ID);
         expect(updated.subscription_id).toEqual(NEW_SUBSCRIPTION_ID);
         expect(updated.invoice_paid).toEqual(NEW_INVOICE_PAID);
+    });
+
+    test("Can delete user after creation", async () => {
+
+        const before = await users.createUser(randomUser());
+        await users.deleteUser(before.id);
+        const after = await users.getUser(before.id);
+
+        expect(before).toBeDefined();
+        expect(after).toBeNull();
+    });
+
+    test("Deleting a user ownly deletes that single user", async () => {
+
+        const user = await users.createUser(randomUser());
+        const other = await users.createUser(randomUser());
+
+        await users.deleteUser(user.id);
+
+        const userAfter = await users.getUser(user.id);
+        const otherAfter = await users.getUser(other.id);
+
+        expect(userAfter).toBeNull();
+        expect(otherAfter).toEqual(other);
+    });
+
+    test("Deleting a user also deletes the pages", async () => {
+
+        const [user, ownedPages] = await setupPages(1);
+        const before = await pages.getByOwner(user.id);
+
+        await users.deleteUser(user.id);
+
+        const after = await pages.getByOwner(user.id);
+
+        expect(before).toEqual(ownedPages);
+        expect(before).not.toEqual(after);
+        expect(after).toEqual([]);
+    });
+
+    test("Deleting a user does _not_ delete other pages", async () => {
+
+        const [user, _] = await setupPages();
+        const [otherUser, otherPages] = await setupPages();
+
+        const before = await pages.getByOwner(otherUser.id);
+        await users.deleteUser(user.id);
+        const after = await pages.getByOwner(otherUser.id);
+
+        expect(before).toEqual(otherPages);
+        expect(before).toEqual(after);
+    });
+
+    test("Deleting a user also deletes relevant questions", async () => {
+
+        const [user, page, persisted] = await setupQuestions(2);
+        const before = await questions.getByPage(page.id);
+
+        await users.deleteUser(user.id);
+
+        const after = await questions.getByPage(page.id);
+
+        expect(before).toEqual(persisted);
+        expect(after).not.toEqual(before);
+        expect(after).toEqual([]);
+    });
+
+    test("Deleting a user does _not_ delete irrelevant questions", async () => {
+
+        const [_, otherPage, otherQuestions] = await setupQuestions();
+        const [user] = await setupQuestions(2);
+
+        const before = await questions.getByPage(otherPage.id);
+
+        await users.deleteUser(user.id);
+
+        const after = await questions.getByPage(otherPage.id);
+
+        expect(before).toEqual(otherQuestions);
+        expect(before).toEqual(after);
+        expect(after).not.toEqual([]);
     });
 });

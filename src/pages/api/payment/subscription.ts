@@ -42,6 +42,7 @@ const deleteSubscription = async (request: NextApiRequest, response: NextApiResp
             .end();
 
     const subscription = await cancelSubscription(dbUser);
+
     await updateDatabase(user.sub, null, user.product_id);
 
     response
