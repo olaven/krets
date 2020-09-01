@@ -4,25 +4,33 @@ import { ReactElement } from 'react';
 import { PageModel } from '../../src/models/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
-import { PageTooltipProvider } from '../../src/components/Home/PageSection/PageSection';
+import { HomeTooltipProvider } from '../../src/components/Home/Home/HomeTooltipProvider';
 import Stripe from "stripe";
+import { UserContext } from "../../src/context/UserContext";
 
 
 export const renderWithPagesContext = (
     Component: ReactElement,
     pages: PageModel[] = [],
-    hasLoaded: false,
-    pageLoading: false,
-    moreAvailable: true,
+    hasLoaded = false,
+    pageLoading = false,
+    moreAvailable = true,
     getNextPages = jest.fn(() => { }),
     addPage = jest.fn((page) => { })
 ) => render(<PagesContext.Provider
     value={{
         pages, hasLoaded, pageLoading, moreAvailable, getNextPages, addPage
     }}>
-    <PageTooltipProvider pageCount={0}>
-        {Component}
-    </PageTooltipProvider>
+    <UserContext.Provider
+        value={{
+            //@ts-expect-error -> NOTE: not passing more context than what is needed. Typechecker should complain about this 
+            databaseUser: { subscription_id: "mock subscription id from context" }
+        }}>
+
+        <HomeTooltipProvider pageCount={0}>
+            {Component}
+        </HomeTooltipProvider>
+    </UserContext.Provider>
 </PagesContext.Provider>);
 
 

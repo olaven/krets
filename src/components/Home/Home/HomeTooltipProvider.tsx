@@ -1,24 +1,22 @@
-import React, { useContext, Children } from "react";
+import React, { useContext } from "react";
 import { TooltipHelpProvider } from "tooltip-help-react";
 import Tippy from "@tippyjs/react";
 import { Button } from "rebass";
 import * as text from "../../../text"
-import { PagesContextProvider, PagesContext } from "../../../context/PagesContext";
-import { PageCreator } from "./PageCreator";
-import { PageList } from "./PageList";
+import { PagesContext } from "../../../context/PagesContext";
 
 
 //TODO: `PageTooltipProvider` looks messy. Figure out a way to clean up.
 /**
  * A wrapper around `TooltipHelpProvider` customized for `PageSection`
  */
-export const PageTooltipProvider = ({ pageCount, children }) => <TooltipHelpProvider
+export const HomeTooltipProvider = ({ pageCount, children }) => <TooltipHelpProvider
     predicate={() => {
 
         const { pages, hasLoaded } = useContext(PagesContext);
         return hasLoaded && pages.length === pageCount
     }}
-    renderButton={(visible) => <Button
+    renderButton={visible => <Button
         width={1}
         backgroundColor="attention" >
         {visible ? text.tooltips.understoodButton : text.tooltips.helpButton}
@@ -29,13 +27,3 @@ export const PageTooltipProvider = ({ pageCount, children }) => <TooltipHelpProv
 >
     {children}
 </TooltipHelpProvider>
-
-
-export const PageSection = ({ user }) => <PagesContextProvider user={user}>
-    <PageTooltipProvider pageCount={0}>
-        <PageCreator />
-    </PageTooltipProvider>
-    <PageTooltipProvider pageCount={1}>
-        <PageList />
-    </PageTooltipProvider >
-</PagesContextProvider >; 

@@ -28,6 +28,8 @@ const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetSt
     async () => {
 
         const [status, retrievedData] = await get<any>(path);
+
+        console.log(`${status} - status, data: ${retrievedData} from ${path}`);
         setter(
             status === OK ?
                 retrievedData :
@@ -55,7 +57,7 @@ export const UserContextProvider = props => {
     useEffect(() => {
 
         if (!authUser) return;
-        getAndSet<UserModel>(`api/users/${authUser.sub}`, setDatabaseuser)();
+        getAndSet<UserModel>(`/api/users/${authUser.sub}`, setDatabaseuser)();
     }, [authUser])
 
 
