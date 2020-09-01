@@ -56,8 +56,8 @@ const DeleteAccount = () => {
         console.log(status);
         if (status === NO_CONTENT) {
 
-            updateUser();
             router.replace("/")
+            updateUser();
         } else {
 
             alert("An error occured. Please contact post@krets.app and you'll be deleted as quickly as possible!");
@@ -120,10 +120,10 @@ const NonSubscriber = () => {
 
 const ProfileInfo = () => {
 
-    const { databaseUser, loading } = useContext(UserContext);
+    const { authUser, databaseUser, loading } = useContext(UserContext);
 
     const DynamicContent =
-        databaseUser?.subscription_id || databaseUser?.free_premium ?
+        authUser && databaseUser?.subscription_id || databaseUser?.free_premium ?
             <SubscriberInfo /> :
             <NonSubscriber />
 
@@ -156,7 +156,6 @@ const ProfileInfo = () => {
                 <DeleteAccount />
             </>
 
-    console.log("loading, ", loading, "databseruser", databaseUser);
     return loading || !databaseUser ?
         <Loader size={150} /> :
         <Flex>

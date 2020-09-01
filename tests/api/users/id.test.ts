@@ -81,6 +81,16 @@ describe("Endpoints for database user data", () => {
 
             expect(status).toEqual(403);
         });
+
+        it("Does not allow to delete other users", async () => {
+
+            const actor = await users.createUser(randomUser());
+            const other = await users.createUser(randomUser());
+
+            const { status } = await authenticatedFetch(actor.id, fullUrl(other.id), { method: "DELETE" });
+
+            expect(status).toEqual(403);
+        });
     })
 });
 
