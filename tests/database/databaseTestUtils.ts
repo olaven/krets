@@ -73,7 +73,8 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
         persisted.push(question);
     }
 
-    return [user, page, persisted];
+    return [user, page, persisted //NOTE: same order as db returns them -> easier to compare in tests
+        .sort((a, b) => a.created_at < b.created_at ? 0 : -1)];
 }
 
 export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))

@@ -197,7 +197,7 @@ describe("User repository", () => {
     test("Deleting a user does _not_ delete irrelevant questions", async () => {
 
         const [_, otherPage, otherQuestions] = await setupQuestions();
-        const [user, __, ___] = await setupQuestions(2);
+        const [user] = await setupQuestions(2);
 
         const before = await questions.getByPage(otherPage.id);
 
