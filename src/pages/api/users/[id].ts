@@ -56,6 +56,7 @@ const getAuth0Token = () => new Promise((resolve, reject) => {
 const deleteAuthUser = async (id: string) => {
 
     const token = await getAuth0Token();
+    console.log("token: ", token);
     const { status, body } = await fetch(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${id}`, {
         method: "DELETE",
         headers: {
@@ -78,6 +79,7 @@ const deleteAuthUser = async (id: string) => {
 const deleteUser = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getPathParam(request.url, 1);
+    console.log("Trying to delete user", id);
 
     await deleteAuthUser(id);
     await users.deleteUser(id);
