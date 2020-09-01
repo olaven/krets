@@ -6,8 +6,6 @@ import { users } from "../../../database/database";
 import { getPathParam } from "../../../workarounds";
 import { deleteCustomer } from "../../../payment/customer";
 import { deleteAuthUser } from "../../../auth/delete";
-import { UserModel } from "../../../models/models";
-
 
 
 const withSameUser = (handler: NextApiHandler) =>
@@ -25,8 +23,8 @@ const withSameUser = (handler: NextApiHandler) =>
 const getUser = async (request, response) => {
 
     const { user } = await auth0.getSession(request);
-
     const persistedUser = await users.getUser(user.sub);
+
     const [status, payload] = persistedUser ?
         [OK, persistedUser] :
         [NOT_FOUND, null]

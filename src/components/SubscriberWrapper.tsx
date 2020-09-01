@@ -21,7 +21,7 @@ export const SubscriberWrapper = (WrappedComponent: () => ReactElement) =>
 
             console.log(databaseUser);
             setLacksSubscription(databaseUser && !databaseUser.subscription_id)
-        }, [loading]);
+        }, [databaseUser]);
 
         useEffect(() => {
 

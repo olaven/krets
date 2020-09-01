@@ -4,7 +4,7 @@ import { ReactElement } from 'react';
 import { PageModel } from '../../src/models/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
-import { PageTooltipProvider } from '../../src/components/Home/PageSection/PageSection';
+import { PageTooltipProvider } from '../../src/components/Home/Home/Home';
 import Stripe from "stripe";
 
 
