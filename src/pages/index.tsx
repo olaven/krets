@@ -1,6 +1,6 @@
 import React from "react";
 import { UserContext } from "../context/UserContext";
-import { PageSection } from "../components/Home/PageSection/PageSection";
+import { Home } from "../components/Home/Home/Home";
 import { IntroSection } from "../components/Home/IntroSection/IntroSection";
 import { Loader } from "../components/tiny/loader";
 
@@ -10,7 +10,7 @@ const IndexPage = () => {
 
     if (loading) return <Loader size={150} />
     return authUser ?
-        <PageSection user={authUser} /> :
+        <Home /> :
         <IntroSection />
 };
 

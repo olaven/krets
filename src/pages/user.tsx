@@ -129,21 +129,7 @@ const ProfileInfo = () => {
 
     const DynamicButton =
         databaseUser?.subscription_id || databaseUser?.free_premium ?
-            <CancelSubscription /> :
-            <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
-                <NextLink.default href={"/upgrade"} prefetch={true}>
-                    <a style={{ textDecoration: "none" }}>
-                        <Text color="secondary">{uiText.upgrade.button}</Text>
-                    </a>
-                </NextLink.default>
-            </Button>
-
-    const Info = () =>
-        loading || !databaseUser ?
-            <Loader size={150} /> :
             <>
-                {DynamicContent}
-
                 <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
                     <NextLink.default href={"/"} prefetch={true}>
                         <a style={{ textDecoration: "none" }}>
@@ -151,9 +137,26 @@ const ProfileInfo = () => {
                         </a>
                     </NextLink.default>
                 </Button>
+                <CancelSubscription />
+            </> :
+            <>
+                <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
+                    <NextLink.default href={"/upgrade"} prefetch={true}>
+                        <a style={{ textDecoration: "none" }}>
+                            <Text color="secondary">{uiText.upgrade.button}</Text>
+                        </a>
+                    </NextLink.default>
+                </Button>
+                <DeleteAccount />
+            </>
+
+    const Info = () =>
+        loading || !databaseUser ?
+            <Loader size={150} /> :
+            <>
+                {DynamicContent}
 
                 {DynamicButton}
-                <DeleteAccount />
             </>
 
     return loading || !databaseUser ?
