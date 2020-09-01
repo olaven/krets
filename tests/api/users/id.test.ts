@@ -9,6 +9,7 @@ import { mockFetch } from "../../frontend/frontendTestUtils";
 
 
 jest.mock("../../../src/auth/auth0");
+jest.mock("request")
 
 describe("Endpoints for database user data", () => {
 
@@ -33,7 +34,7 @@ describe("Endpoints for database user data", () => {
 
     describe("The endpoint for user data from database", () => {
 
-        mockFetch({ access_token: "MOCKED TEST TOKEN" }, 204);
+        mockFetch(null, 204);
 
         it("Only responds to GET and DELETE", async () => {
 

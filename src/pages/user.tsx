@@ -54,18 +54,19 @@ const DeleteAccount = () => {
 
         const [status] = await deleteUser(authUser.sub);
         console.log(status);
-        /* if (status === NO_CONTENT) {
+        if (status === NO_CONTENT) {
 
             updateUser();
             router.replace("/")
         } else {
 
             alert("An error occured. Please contact post@krets.app and you'll be deleted as quickly as possible!");
-        } */
+        }
     }
 
-    //FIXME: actually implement
-    return <DoubleConfirmationButton text={uiText.user.deleteButton} action={onDelete} />
+    return <DoubleConfirmationButton
+        text={uiText.user.deleteButton}
+        action={onDelete} />
 }
 
 

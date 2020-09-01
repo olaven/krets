@@ -1,10 +1,10 @@
-import { FORBIDDEN, NOT_FOUND, OK } from "node-kall";
-import { withCors, withAuthentication, withMethods, withMethodHandlers } from "../../../middleware/middleware";
+import { FORBIDDEN, NOT_FOUND, OK, NO_CONTENT } from "node-kall";
+import { NextApiRequest, NextApiResponse } from "next";
+import request from "request";
+import { withCors, withAuthentication, withMethodHandlers } from "../../../middleware/middleware";
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
 import { getPathParam } from "../../../workarounds";
-import { NextApiRequest, NextApiResponse } from "next";
-import request from "request";
 
 
 //THINKABOUT: how to structure helper-functions in this file better. In particular, all the code for getting auth0-acccess
@@ -83,7 +83,7 @@ const deleteUser = async (request: NextApiRequest, response: NextApiResponse) =>
     await users.deleteUser(id);
 
     response
-        .status(204)
+        .status(NO_CONTENT)
         .end();
 };
 
