@@ -27,9 +27,7 @@ export const UserContext = createContext<IUserContext>({
 const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetStateAction<T>>) =>
     async () => {
 
-        console.log("fetching ", path);
         const [status, retrievedData] = await get<any>(path);
-        console.log("got status", status);
         setter(
             status === OK ?
                 retrievedData :

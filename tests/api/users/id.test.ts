@@ -9,6 +9,7 @@ import { mockFetch } from "../../frontend/frontendTestUtils";
 
 
 jest.mock("../../../src/auth/auth0");
+jest.mock("../../../src/payment/stripe");
 jest.mock("request")
 
 describe("Endpoints for database user data", () => {
@@ -78,6 +79,16 @@ describe("Endpoints for database user data", () => {
             const other = await users.createUser(randomUser());
 
             const { status } = await authenticatedFetch(actor.id, fullUrl(other.id));
+
+            expect(status).toEqual(403);
+        });
+
+        it("Does not allow to delete other users", async () => {
+
+            const actor = await users.createUser(randomUser());
+            const other = await users.createUser(randomUser());
+
+            const { status } = await authenticatedFetch(actor.id, fullUrl(other.id), { method: "DELETE" });
 
             expect(status).toEqual(403);
         });
