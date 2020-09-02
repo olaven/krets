@@ -7,6 +7,7 @@ import { NextApiHandler } from 'next';
 
 
 //TODO: Refactor: this function is messy and does several things
+//FIXME: should pick up subscription id from stripe (trail users)
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
   const user = await users.getUser(sub);
