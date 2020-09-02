@@ -315,9 +315,9 @@ export const responseList = strings({
 
 export const upgrade = strings({
     en: {
-        heading: "Upgrade Krets!",
-        inDevelopmentWarning: "Paying users will have access to more features than non-paying users in the future",
-        choosePrice: "Velg denne 💡",
+        heading: "Setup subscription to Krets!",
+        trailInformation: "All plans have a 5 day free trail",
+        choosePrice: "Choose 💡",
         priceChosen: "Chosen 🙌",
         pay: "Pay now",
         vat: "VAT included.",
@@ -326,7 +326,7 @@ export const upgrade = strings({
         responses: "responses",
         afterTier: "per response afterwards",
         loading: "Updating.. Thanks for our patience!",
-        button: "Upgrade Krets",
+        button: "Setup subscription",
         salesArgument: "That's why Krets has a low price for everyone creating something by themselves!",
         includedAsSubscriber: "for more functionality",
         thanks: {
@@ -347,8 +347,8 @@ export const upgrade = strings({
         cancelSuffix: ", we'll get things right!"
     },
     no: {
-        heading: "Oppgrader Krets!",
-        inDevelopmentWarning: "I fremtiden vil oppgraderte brukere ha flere funksjoner tilgjengelig.",
+        heading: "Finn abonnementet som passer deg!",
+        trailInformation: "Det er alltid en gratis prøveperiode på 5 dager",
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
         included: "inkludert",

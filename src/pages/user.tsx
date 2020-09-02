@@ -141,7 +141,7 @@ const ProfileInfo = () => {
             </> :
             <>
                 <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
-                    <NextLink.default href={"/upgrade"} prefetch={true}>
+                    <NextLink.default href={"/subscription"} prefetch={true}>
                         <a style={{ textDecoration: "none" }}>
                             <Text color="secondary">{uiText.upgrade.button}</Text>
                         </a>
