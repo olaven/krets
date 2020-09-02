@@ -14,7 +14,12 @@ const PriceAlternatives = () => {
 
     return <>
         <Heading fontSize={[3, 4, 5]} textAlign="center">{text.upgrade.heading}</Heading>
-        <Text fontSize={[1, 2, 3]} textAlign="center">{text.upgrade.inDevelopmentWarning}</Text>
+        <Text
+            py={[1, 2]}
+            fontSize={[1, 2, 3]}
+            textAlign="center">
+            {text.upgrade.trailInformation}
+        </Text>
         <Flex p={[2, 3, 4]}>
             <Box width={[0, 1 / 5]}></Box>
             {products.map(product => <ProductCard

@@ -75,6 +75,19 @@ describe("The page creator component", () => {
         });
     });
 
+    it("Does not render if there is no active subscription id", async () => {
+
+
+        //NOTE: subscription_id = null
+        const { findByText } = renderWithPagesContext(<PageCreator />, [], null);
+
+
+        waitFor(() => {
+
+            expect(findByText(text.pageCreator.preview)).not.toBeInTheDocument();
+        });
+    });
+
     it("Updates preview on input", () => {
 
         const value = "some new value"

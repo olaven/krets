@@ -31,7 +31,7 @@ const getUser = async (request, response) => {
 
     return response
         .status(status)
-        .json(payload)
+        .json(payload);
 }
 
 

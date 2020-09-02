@@ -12,19 +12,20 @@ import { UserContext } from "../../src/context/UserContext";
 export const renderWithPagesContext = (
     Component: ReactElement,
     pages: PageModel[] = [],
-    hasLoaded = false,
-    pageLoading = false,
-    moreAvailable = true,
-    getNextPages = jest.fn(() => { }),
-    addPage = jest.fn((page) => { })
+    subscription_id = faker.random.uuid()
 ) => render(<PagesContext.Provider
     value={{
-        pages, hasLoaded, pageLoading, moreAvailable, getNextPages, addPage
+        pages,
+        hasLoaded: false,
+        pageLoading: false,
+        moreAvailable: true,
+        getNextPages: jest.fn(() => { }),
+        addPage: jest.fn((page) => { })
     }}>
     <UserContext.Provider
         value={{
             //@ts-expect-error -> NOTE: not passing more context than what is needed. Typechecker should complain about this 
-            databaseUser: { subscription_id: "mock subscription id from context" }
+            databaseUser: { subscription_id }
         }}>
 
         <HomeTooltipProvider pageCount={0}>
