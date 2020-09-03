@@ -1,3 +1,4 @@
+import Stripe from "stripe";
 import { UserModel } from "../models/models";
 import { stripe } from "./stripe"
 
@@ -24,6 +25,17 @@ export const createSubscription = async (customerId: string, paymentMethodId, pr
 
     const product_id = subscription.plan.product as string;
     return [product_id, subscription.id];
+}
+
+export const getSubscription = async (customerId: string): Promise<Stripe.Subscription | null> => {
+
+    const subscriptions = await stripe.subscriptions.list({ customer: customerId })
+    //NOTE: assumes that only one subscription is returned 
+    const [subscription] = subscriptions.data;
+
+    return subscription ?
+        subscription :
+        null
 }
 
 export const cancelSubscription = (user: UserModel) =>

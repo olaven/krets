@@ -1,13 +1,32 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
 import { registerCustomer, customerExists } from '../../../payment/customer';
-import { AuthModel } from '../../../models/models';
+import { AuthModel, UserModel } from '../../../models/models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
-import { NextApiHandler } from 'next';
+import { getSubscription } from '../../../payment/subscription';
 
+/**
+ * Syncs subscription status between Stripe and Database. 
+ * Stripe is authoriative. 
+ * @param user 
+ */
+const syncSubscriptionStatus = async (user: UserModel) => {
+
+  const subscription = await getSubscription(user.customer_id);
+  console.log(subscription);
+
+
+  console.log(`subscriptions: ${subscription?.id} - ${user.subscription_id}`)
+  if (user.subscription_id !== subscription?.id) {
+
+    await users.updateUser({
+      ...user,
+      subscription_id: subscription?.id
+    });
+  }
+}
 
 //TODO: Refactor: this function is messy and does several things
-//FIXME: should pick up subscription id from stripe (trail users)
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
   const user = await users.getUser(sub);
@@ -23,26 +42,29 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
     const customer_id = await registerCustomer(email);
     await users.updateUser({ ...user, customer_id });
   }
+
+  await syncSubscriptionStatus(user);
+
 };
 
-const withMiddleware = (handler: NextApiHandler) =>
-  withCors(
-    withErrorHandling(handler))
+export default withCors(
+  withErrorHandling(
+    (async (req, res) => {
+      await auth0.handleCallback(req, res, {
+        onUserLoaded: async (req, res, session, state) => {
 
-export default withMiddleware(async (req, res) => {
-  await auth0.handleCallback(req, res, {
-    onUserLoaded: async (req, res, session, state) => {
+          const { user } = session;
+          await createIfNotPresent(user as AuthModel);
 
-      const { user } = session;
-      await createIfNotPresent(user as AuthModel);
-
-      return {
-        ...session,
-        user: {
-          ...session.user,
-        },
-        redirectTo: "/"
-      };
-    }
-  });
-});
+          return {
+            ...session,
+            user: {
+              ...session.user,
+            },
+            redirectTo: "/"
+          };
+        }
+      });
+    })
+  )
+);
