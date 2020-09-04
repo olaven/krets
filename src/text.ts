@@ -328,7 +328,7 @@ export const upgrade = strings({
         loading: "Updating.. Thanks for our patience!",
         button: "Setup subscription",
         salesArgument: "That's why Krets has a low price for everyone creating something by themselves!",
-        includedAsSubscriber: "for more functionality",
+        includedAsSubscriber: "for access and updates",
         thanks: {
             heading: "Thank you,",
             subscription: "You have this subscription: ",
@@ -358,9 +358,9 @@ export const upgrade = strings({
         monthly: "Pris per måned",
         pay: "Start abonnement",
         loading: "Oppgraderer.. Takk for tålmodigheten!",
-        button: "Oppgrader Krets",
+        button: "Opprett abonnemment",
         salesArgument: "Derfor er Krets ekstra rimelig for alle som skaper noe på egenhånd!",
-        includedAsSubscriber: "for mer funksjonalitet",
+        includedAsSubscriber: "for tilgang og oppdateringer",
         thanks: {
             heading: "Tusen takk,",
             subscription: "Du har dette abonnementet: ",

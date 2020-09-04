@@ -46,7 +46,6 @@ const logMail = (info: any) => {
     if (process.env.NODE_ENV !== "production") {
 
         const url = nodemailer.getTestMessageUrl(info);
-        console.log(`Test mail URL: ${url}`);
     }
 }
 

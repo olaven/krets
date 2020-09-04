@@ -53,7 +53,7 @@ const DeleteAccount = () => {
     const onDelete = async () => {
 
         const [status] = await deleteUser(authUser.sub);
-        console.log(status);
+
         if (status === NO_CONTENT) {
 
             router.replace("/")

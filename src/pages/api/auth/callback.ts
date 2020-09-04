@@ -13,10 +13,7 @@ import { getSubscription } from '../../../payment/subscription';
 const syncSubscriptionStatus = async (user: UserModel) => {
 
   const subscription = await getSubscription(user.customer_id);
-  console.log(subscription);
 
-
-  console.log(`subscriptions: ${subscription?.id} - ${user.subscription_id}`)
   if (user.subscription_id !== subscription?.id) {
 
     await users.updateUser({

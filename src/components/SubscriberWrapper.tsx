@@ -19,13 +19,11 @@ export const SubscriberWrapper = (WrappedComponent: () => ReactElement) =>
 
         useEffect(() => {
 
-            console.log(databaseUser);
             setLacksSubscription(databaseUser && !databaseUser.subscription_id)
         }, [databaseUser]);
 
         useEffect(() => {
 
-            console.log("lacksSubscritpion", lacksSubscription)
             if (lacksSubscription)
                 router.replace("/user");
         }, [lacksSubscription]);
