@@ -132,12 +132,12 @@ const ProfileInfo = () => {
     const { authUser, databaseUser, loading } = useContext(UserContext);
 
     const DynamicContent =
-        authUser && databaseUser?.subscription_id || databaseUser?.free_premium ?
+        authUser && databaseUser?.subscription_id ?
             <SubscriberInfo /> :
             <NonSubscriber />
 
     const DynamicButton =
-        databaseUser?.subscription_id || databaseUser?.free_premium ?
+        databaseUser?.subscription_id ?
             <>
                 <PositiveAction href="/" text={uiText.upgrade.back} />
                 <CancelSubscription />
