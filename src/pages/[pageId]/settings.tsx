@@ -10,6 +10,7 @@ import { UpdateTitle } from "../../components/Settings/UpdateTitle";
 import { ManageQuestions } from "../../components/Settings/ManageQuestions/ManageQuestions";
 import { Collapsible } from "../../components/Collapsible";
 import { DoubleConfirmationButton } from "../../components/tiny/buttons";
+import { SubscriberWrapper } from "../../components/SubscriberWrapper";
 
 const UpdateName = () => {
 
@@ -111,7 +112,7 @@ export const SettingsContent = () => {
         </Box>
 }
 
-const Settings = () => {
+const Settings = SubscriberWrapper(() => {
 
     const { query: { pageId } } = useRouter();
 
@@ -120,5 +121,6 @@ const Settings = () => {
             <SettingsContent />
         </SettingsContextProvider> :
         null
-}
+});
+
 export default Settings; 

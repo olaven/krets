@@ -37,8 +37,6 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
 
         if (status === CREATED) {
 
-            console.log(Array.from(answers.values()));
-
             await Promise.all(
                 Array.from(answers.values()).map(answer =>
                     filterStatus(

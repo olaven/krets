@@ -12,7 +12,7 @@ export const useProduct = (userId: string) => {
 
         if (!userId) return;
 
-        const [status, product] = await getProductByUser(userId)
+        const [status, product] = await getProductByUser(userId);
         if (status === OK)
             setProduct(product);
         else

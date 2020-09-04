@@ -6,7 +6,7 @@ import React from "react";
 import { waitFor, render, fireEvent, findByText, getByText } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
 import * as text from "../../../../src/text"
-import { PageCreator, nameToId } from "../../../../src/components/Home/PageSection/PageCreator";
+import { PageCreator, nameToId } from "../../../../src/components/Home/Home/PageCreator";
 import { renderWithPagesContext, mockFetch } from "../../frontendTestUtils";
 
 describe("The nameToId function", () => {
@@ -72,6 +72,19 @@ describe("The page creator component", () => {
         waitFor(() => {
 
             expect(findByText(text.pageCreator.preview)).toBeInTheDocument();
+        });
+    });
+
+    it("Does not render if there is no active subscription id", async () => {
+
+
+        //NOTE: subscription_id = null
+        const { findByText } = renderWithPagesContext(<PageCreator />, [], null);
+
+
+        waitFor(() => {
+
+            expect(findByText(text.pageCreator.preview)).not.toBeInTheDocument();
         });
     });
 

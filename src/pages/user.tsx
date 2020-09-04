@@ -53,7 +53,7 @@ const DeleteAccount = () => {
     const onDelete = async () => {
 
         const [status] = await deleteUser(authUser.sub);
-        console.log(status);
+
         if (status === NO_CONTENT) {
 
             router.replace("/")
@@ -118,25 +118,34 @@ const NonSubscriber = () => {
     </>
 }
 
+const PositiveAction = ({ href, text }: { href: string, text: string }) =>
+    <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
+        <NextLink.default href={href} prefetch={true}>
+            <a style={{ textDecoration: "none" }}>
+                <Text color="secondary">{text}</Text>
+            </a>
+        </NextLink.default>
+    </Button>
+
 const ProfileInfo = () => {
 
     const { authUser, databaseUser, loading } = useContext(UserContext);
 
     const DynamicContent =
-        authUser && databaseUser?.subscription_id || databaseUser?.free_premium ?
+        authUser && databaseUser?.subscription_id ?
             <SubscriberInfo /> :
             <NonSubscriber />
 
     const DynamicButton =
-        databaseUser?.subscription_id || databaseUser?.free_premium ?
-            <CancelSubscription /> :
-            <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
-                <NextLink.default href={"/upgrade"} prefetch={true}>
-                    <a style={{ textDecoration: "none" }}>
-                        <Text color="secondary">{uiText.upgrade.button}</Text>
-                    </a>
-                </NextLink.default>
-            </Button>
+        databaseUser?.subscription_id ?
+            <>
+                <PositiveAction href="/" text={uiText.upgrade.back} />
+                <CancelSubscription />
+            </> :
+            <>
+                <PositiveAction href="/subscription" text={uiText.upgrade.button} />
+                <DeleteAccount />
+            </>
 
     const Info = () =>
         loading || !databaseUser ?
@@ -144,16 +153,7 @@ const ProfileInfo = () => {
             <>
                 {DynamicContent}
 
-                <Button width={[1, 0.5]} backgroundColor="primary" m={[1]}>
-                    <NextLink.default href={"/"} prefetch={true}>
-                        <a style={{ textDecoration: "none" }}>
-                            <Text color="secondary">{uiText.upgrade.back}</Text>
-                        </a>
-                    </NextLink.default>
-                </Button>
-
                 {DynamicButton}
-                <DeleteAccount />
             </>
 
     return loading || !databaseUser ?
