@@ -12,7 +12,7 @@ const PriceRepresentation = ({ price, selectedPriceId, setSelectedPrice }: Price
 
 
     return <Box>
-        <Text>{price.nickname}</Text>
+        {/* <Text>{price.nickname}</Text> */}
         <Text>{firstTier.flat_amount / 100},- {text.upgrade.included} {firstTier.up_to} {text.upgrade.responses}!</Text>
         <Text>{secondTier.unit_amount / 100},- {text.upgrade.afterTier}</Text>
         <Text>{text.upgrade.monthly}</Text>
@@ -28,7 +28,7 @@ type CardProps = { product: Stripe.Product, selectedPriceId: string, setSelected
 export const ProductCard = ({ product, selectedPriceId, setSelectedPriceId }: CardProps) => {
 
     const prices = usePrices(product.id);
-    return <Box>
+    return <Box p={[1, 2, 3]}>
         <Card>
             <Heading fontSize={[2, 3, 4]}>{product.name}</Heading>
             <Text fontSize={[1, 2, 3]}>{product.description}</Text>
