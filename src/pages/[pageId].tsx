@@ -17,7 +17,7 @@ export default () => {
     const pageId = router.query.pageId as string;
 
     const [page, loading] = usePage(pageId);
-    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
+    const userOwnsThePage = authUser && authUser.sub === page?.owner_id;
 
     return <Box>
         <Flex>
