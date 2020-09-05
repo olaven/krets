@@ -47,7 +47,7 @@ const Upgrade = () => {
     const router = useRouter();
     const { databaseUser } = useContext(UserContext);
 
-    if (databaseUser?.free_premium || databaseUser?.subscription_id)
+    if (databaseUser?.subscription_id)
         router.replace("/user");
 
     return <PriceAlternatives />

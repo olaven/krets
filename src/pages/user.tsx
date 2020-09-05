@@ -10,6 +10,7 @@ import Loader from 'react-spinners/BounceLoader';
 import { useProduct } from "../effects/useProduct";
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
 import { TextBox } from "../components/tiny/TextBox";
+import { ShareVideo } from "../components/Videos";
 
 const CancelSubscription = () => {
 
@@ -152,7 +153,6 @@ const ProfileInfo = () => {
             <Loader size={150} /> :
             <>
                 {DynamicContent}
-
                 {DynamicButton}
             </>
 

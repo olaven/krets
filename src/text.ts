@@ -105,6 +105,7 @@ export const buttons = strings({
         logout: "Log out",
         login: "Log in",
         myPage: "Account",
+        guide: "Help",
         aboutPage: "About",
         getStarted: "Get started!",
         toAdmin: "Overview",
@@ -117,6 +118,7 @@ export const buttons = strings({
         logout: "Logg ut",
         login: "Logg inn",
         myPage: "Konto",
+        guide: "Help",
         aboutPage: "Om",
         getStarted: "Kom i gang!",
         toAdmin: "Oversikt",
@@ -210,6 +212,19 @@ export const adminPage = strings({
         notOwning: "Denne siden eier du ikke."
     }
 });
+
+export const guide = strings({
+    en: {
+        toGetStartedVideo: "How do I get started?",
+        toShareVideo: "How do I share with my audience?",
+        toAdminVideo: "How do I see the feedback?",
+    },
+    no: {
+        toGetStartedVideo: "Hvordan kommer jeg i gang?",
+        toShareVideo: "Hvordan deler jeg med mitt publikum?",
+        toAdminVideo: "Hvordan ser jeg tilbakemeldinger?",
+    }
+})
 
 export const settings = strings({
     en: {

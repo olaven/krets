@@ -2,7 +2,7 @@ import { UserContext, UserContextProvider } from "../context/UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
-import { AboutButton, LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
+import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
 
 const HeaderLogo = () =>
     <Flex color='primary' my={[1, 1, 2]} width={[1]}>
@@ -35,10 +35,12 @@ const CornerButtons = () => {
 
     return authUser ?
         <>
+            <GuidePageButton />
             <MyPageButton />
             <LogoutButton />
         </> :
         <>
+            <GuidePageButton />
             <AboutButton />
             <LoginButton />
         </>
