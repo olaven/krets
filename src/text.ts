@@ -213,6 +213,19 @@ export const adminPage = strings({
     }
 });
 
+export const guide = strings({
+    en: {
+        toGetStartedVideo: "How do I get started?",
+        toShareVideo: "How do I share with my audience?",
+        toAdminVideo: "How do I see the feedback?",
+    },
+    no: {
+        toGetStartedVideo: "Hvordan kommer jeg i gang?",
+        toShareVideo: "Hvordan deler jeg med mitt publikum?",
+        toAdminVideo: "Hvordan ser jeg tilbakemeldinger?",
+    }
+})
+
 export const settings = strings({
     en: {
         heading: "Settings page for",
