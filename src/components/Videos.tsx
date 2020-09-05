@@ -10,10 +10,10 @@ const Video = ({ source }: { source: string }) =>
 //TODO: swap all for individual Wistia videos
 
 export const GetStartedVideo = () =>
-    <Video source={"https://player.vimeo.com/video/455046714"} />
+    <Video source={"https://www.youtube.com/embed/SKm_5QNnjoU"} />
 
 export const ShareVideo = () =>
-    <Video source={"https://player.vimeo.com/video/455046714"} />
+    <Video source={"https://www.youtube.com/embed/yW_nHogMeU8"} />
 
 export const AdminVideo = () =>
-    <Video source={"https://player.vimeo.com/video/455046714"} />
+    <Video source={"https://www.youtube.com/embed/jKDMy0JXlfg"} />
