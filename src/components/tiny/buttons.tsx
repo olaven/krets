@@ -3,19 +3,23 @@ import React, { useState } from "react"
 import * as uiText from "../../text"
 import { Loader } from "./loader";
 
-export const LogoutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
-    <Link color={"primary"} href="/api/auth/logout">{uiText.buttons.logout}</Link>
-</Button>;
+const HeaderButton = ({ href, text }: { href: string, text: string }) =>
+    <Button backgroundColor={"secondary"} minWidth={"8em"}>
+        <Link color={"primary"} href={href}>{text}</Link>
+    </Button>;
 
-export const LoginButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
-    <Link color={"primary"} href="/api/auth/login">
-        {uiText.buttons.login}
-    </Link>
-</Button>;
+export const LogoutButton = () =>
+    <HeaderButton href="/api/auth/logout" text={uiText.buttons.logout} />;
 
-export const MyPageButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
-    <Link color={"primary"} href="/user">{uiText.buttons.myPage}</Link>
-</Button>;
+export const LoginButton = () =>
+    <HeaderButton href="/api/auth/login" text={uiText.buttons.login} />
+
+export const MyPageButton = () =>
+    <HeaderButton href="/user" text={uiText.buttons.myPage} />
+
+export const GuidePageButton = () =>
+    <HeaderButton href="/guide" text={uiText.buttons.guide} />
+
 
 export const AboutButton = () => <Button backgroundColor={"secondary"} minWidth={"8em"}>
     <Link color={"primary"} href="/about">{uiText.buttons.aboutPage}</Link>
