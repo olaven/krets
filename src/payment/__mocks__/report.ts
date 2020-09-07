@@ -1,4 +1,3 @@
-export const reportUsage = async () => {
+export const reportUsage = jest.fn(async () => {
 
-    return jest.fn();
-}
+});

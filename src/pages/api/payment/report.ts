@@ -1,10 +1,11 @@
 import { NO_CONTENT, UNAUTHORIZED, FORBIDDEN } from "node-kall";
 import { withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
+import { reportUsage } from "../../../payment/report";
 
 export default withCors(
     withErrorHandling(
         withMethodHandlers({
-            POST: (request, response) => {
+            POST: async (request, response) => {
 
                 const token = request.headers.authorization?.split(" ")[1]
                 if (!token)
@@ -16,8 +17,7 @@ export default withCors(
                         .status(FORBIDDEN)
                         .end();
 
-
-                //TODO: implement reporting 
+                await reportUsage()
 
                 response
                     .status(NO_CONTENT)
