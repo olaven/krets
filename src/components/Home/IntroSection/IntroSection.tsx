@@ -43,8 +43,7 @@ export const IntroSection = () => {
         }}>
 
             <Text fontSize={[0, 1, 2]} textAlign="center">
-                {/* //TODO: remove earlyverison when warning is no longer appropriate (ready to take customers) */}
-                {intro.earlyVersionDisclaimer} {intro.acceptPrefix} <Link href={"/legal/terms-and-conditions.html"}>{intro.termsOfUse}</Link> {intro.acceptInfix} <Link href={"/legal/privacy-policy.html"}>{intro.privacyPolicy} {intro.acceptSuffix}</Link>
+                {intro.acceptPrefix} <Link href={"/legal/terms-and-conditions.html"}>{intro.termsOfUse}</Link> {intro.acceptInfix} <Link href={"/legal/privacy-policy.html"}>{intro.privacyPolicy} {intro.acceptSuffix}</Link>
             </Text>
         </section>
     </Box>
