@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import Stripe from "stripe";
 
 
 const customers: string[] = [];
@@ -24,4 +25,17 @@ export const stripe = {
             return "MOCK DELETED";
         }
     },
+    subscriptions: ({
+        list: (options: {customer: string}) => ({
+            data:[
+                { id: "FIRST-MOCK-SUBSCRIPTION-FROM-STRIPE-MOCK"}
+            ]
+        })
+    }), 
+    subscriptionItems: ({
+        createUsageRecord: jest.fn(async (productId: string, UsageRecord: Stripe.UsageRecordCreateParams) => {
+
+            console.log("Insie createUsageRecord MOCK");
+        }),
+    })
 }

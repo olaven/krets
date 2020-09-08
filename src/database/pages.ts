@@ -21,6 +21,29 @@ const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }
             [ownerId, options.amount]
     );
 
+const getPageCountByOwner = async (ownerId: string) => {
+
+    const result = await first<{ count: string }>(
+        "select count(*) from pages where owner_id = $1",
+        [ownerId]
+    );
+
+    return parseInt(result.count);
+}
+
+//NOTE: count is `string` due to bigint > max `number` value. See: https://github.com/brianc/node-postgres/issues/378
+const getCustomerToPageCount = () => rows<{
+    customer_id: string, count: string
+}>(
+    `
+        select count(pages.id), users.customer_id 
+        from pages right join users 
+        on pages.owner_id = users.id
+        group by users.id;
+    `,
+    []
+)
+
 
 //THINKABOUT: implement pagination before categories are pushed as a feature
 const getByOwnerAndCategory = (ownerId: string, categoryId: string) =>
@@ -78,6 +101,9 @@ export const pages = ({
     getPage,
     getByOwner,
     getByOwnerAndCategory,
+    //FIXME: not used. replaced by `getCustomerToPage`
+    getPageCountByOwner,
+    getCustomerToPageCount,
     createPage,
     updatePage,
     deletePage,

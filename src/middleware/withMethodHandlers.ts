@@ -26,10 +26,3 @@ export const withMethodHandlers = (handlers: Handlers) =>
             .status(405)
             .end();
     }
-
-
-/* //Example
-withMethodHandlers({
-    GET: (request, repsonse) => { },
-    POST: (request, repsonse) => { }
-}); */

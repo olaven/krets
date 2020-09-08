@@ -49,6 +49,21 @@ describe("User repository", () => {
         expect(updated.customer_id).toEqual(NEW_CUSTOMER_ID);
     });
 
+    test("another test for updating customer id", async () => {
+
+        const original = await users.createUser(randomUser()); 
+        const NEW_CUSTOMER_ID = faker.random.uuid(); 
+
+        await users.updateUser({
+            ...original, 
+            customer_id: NEW_CUSTOMER_ID
+        }); 
+
+        const after = await users.getUser(original.id); 
+        expect(after.customer_id).not.toEqual(original.customer_id);
+        expect(after.customer_id).toEqual(NEW_CUSTOMER_ID);
+    });
+
     test("Can update payment information", async () => {
 
         const NEW_PRODUCT_ID = uid();

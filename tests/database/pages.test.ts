@@ -340,5 +340,99 @@ describe("Database interface for pages", () => {
             expect(updated.id).toEqual(original.id);
             expect(updated.name).toEqual(original.name);
         });
-    })
+    });
+
+    describe("The function for returning the amount of pages owned by a given user", () => {
+
+        it("Returns a number", async () => {
+
+            const [owner] = await setupPages();
+
+            const count = await pages.getPageCountByOwner(owner.id);
+            expect(typeof (count)).toEqual("number");
+        });
+
+        it("Returns the same amount as persisted", async () => {
+
+            const [owner, persisted] = await setupPages();
+            const count = await pages.getPageCountByOwner(owner.id);
+
+            expect(count).toEqual(persisted.length);
+        });
+
+        it("Only counts those by relevant owner", async () => {
+
+
+            const [first, pagesOfFirst] = await setupPages();
+            const [second, pagesOfSecond] = await setupPages();
+
+            const firstCount = await pages.getPageCountByOwner(first.id);
+            const secondCOund = await pages.getPageCountByOwner(second.id);
+
+            expect(firstCount).toEqual(pagesOfFirst.length);
+            expect(secondCOund).toEqual(pagesOfSecond.length);
+        });
+    });
+
+    describe("Getting customer id and amount of pages",  () => {
+
+        it("does not throw", async () => {
+
+            const [owner, persisted] = await setupPages();
+
+            expect(pages.getCustomerToPageCount())
+                .resolves.not.toThrow()
+        });
+
+        it("Returns something an array of { customer_id, count } ", async () => {
+
+            //NOTE: in practice this is not needed as there will always be something from the other tests
+            await setupPages();
+
+            const [firstElement] = (await pages.getCustomerToPageCount()) as any[]
+            expect(firstElement.customer_id).toBeDefined();
+            expect(firstElement.count).toBeDefined();
+        });
+
+
+        const random = <T>(array: T[]) =>
+            array[Math.floor(Math.random() * array.length + 1)];
+
+        it("Returns the actual page count of a user", async () => {
+
+            await setupPages();
+
+            const { customer_id, count } = random(
+                await pages.getCustomerToPageCount()
+            )
+
+            const user = await users.getUserByCustomerId(customer_id);
+            const ownedByUser = await pages.getByOwner(user.id);
+
+            expect(ownedByUser.length).toEqual(parseInt(count));
+        });
+
+        it("Returns a row for every registered customer", async () => {
+
+            await setupPages();
+
+            const rows = await pages.getCustomerToPageCount();
+            const countRegistered = await users.getUserCount();
+
+            //FIXME: could this be because users without pages are ignored? 
+            expect(rows.length).toEqual(parseInt(countRegistered));
+        });
+
+        it("Actually returns a valid number of pages", async () => {
+
+            await setupPages();
+
+            const rows = await pages.getCustomerToPageCount();
+
+            for (const { count } of rows) {
+
+                expect(count).not.toBeNaN();
+            }
+        });
+    });
 });
