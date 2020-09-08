@@ -382,12 +382,15 @@ describe("Database interface for pages", () => {
                 .resolves.not.toThrow()
         });
 
-        it("Returns something an array of { customer_id, count } ", async () => {
+        it("Returns something an array of { customer_id, count }", async () => {
 
             //NOTE: in practice this is not needed as there will always be something from the other tests
             await setupPages(4, true);
 
-            const [firstElement] = (await pages.getCustomerToPageCount()) as any[]
+            const all  = (await pages.getCustomerToPageCount()) as any[]
+
+            expect(all.length).toBeGreaterThan(0);
+            const [ firstElement ] = all;
             expect(firstElement.customer_id).toBeDefined();
             expect(firstElement.count).toBeDefined();
         });
