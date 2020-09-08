@@ -2,7 +2,6 @@ import * as faker from "faker";
 import { pages, categories, responses, users, questions, answers } from "../../src/database/database";
 import { randomUser, setupAnswers, setupPages, setupQuestions } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
-import { deletePage } from "../../src/fetchers";
 
 
 describe("Database interface for pages", () => {
@@ -387,12 +386,11 @@ describe("Database interface for pages", () => {
             //NOTE: in practice this is not needed as there will always be something from the other tests
             await setupPages(4, true);
 
-            const all  = (await pages.getCustomerToPageCount()) as any[]
+            const element  = random((await pages.getCustomerToPageCount()) as any[])
 
-            expect(all.length).toBeGreaterThan(0);
-            const [ firstElement ] = all;
-            expect(firstElement.customer_id).toBeDefined();
-            expect(firstElement.count).toBeDefined();
+            expect(element).toBeDefined()
+            expect(element.customer_id).toBeDefined();
+            expect(element.count).toBeDefined();
         });
 
 
@@ -401,7 +399,7 @@ describe("Database interface for pages", () => {
 
         it("Returns the actual page count of a user ", async () => {
 
-            await setupPages();
+            await setupPages(4, true);
 
             const { customer_id, count } = random(
                 await pages.getCustomerToPageCount()
