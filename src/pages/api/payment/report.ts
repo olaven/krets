@@ -29,13 +29,14 @@ export const withValidToken = (handler: NextApiHandler) =>
 
 export default withCors(
     withErrorHandling(
+         //NOTE: 'withMiddelware' only calls subsequent handlers if the token is valid
         withValidToken(
             withMethodHandlers({
                 POST: async (_, response) => {
 
                     await reportUsage();
 
-                    response //skal ikke komme hit 
+                    response 
                         .status(NO_CONTENT)
                         .end();
                 }
