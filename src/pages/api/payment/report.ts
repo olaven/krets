@@ -11,7 +11,7 @@ import { reportUsage } from "../../../payment/report";
  * 
  * @param handler 
  */
-export const withValidToken = (handler: NextApiHandler) =>
+const withValidToken = (handler: NextApiHandler) =>
     (request: NextApiRequest, response: NextApiResponse) => {
 
         const token = request.headers.authorization?.split(" ")[1];
@@ -19,6 +19,7 @@ export const withValidToken = (handler: NextApiHandler) =>
             return response
                 .status(UNAUTHORIZED)
                 .end();
+
         if (token !== process.env.USAGE_REPORT_SECRET_TOKEN)
             return response
                 .status(FORBIDDEN)
@@ -29,14 +30,14 @@ export const withValidToken = (handler: NextApiHandler) =>
 
 export default withCors(
     withErrorHandling(
-         //NOTE: 'withMiddelware' only calls subsequent handlers if the token is valid
+        //NOTE: 'withMiddelware' only calls subsequent handlers if the token is valid
         withValidToken(
             withMethodHandlers({
                 POST: async (_, response) => {
 
                     await reportUsage();
 
-                    response 
+                    response
                         .status(NO_CONTENT)
                         .end();
                 }
