@@ -31,13 +31,13 @@ const getPageCountByOwner = async (ownerId: string) => {
     return parseInt(result.count);
 }
 
-const getCustomerToPage = async () => rows<{
-    //NOTE: count is `string` due to bigint > max `number` value. See: https://github.com/brianc/node-postgres/issues/378
+//NOTE: count is `string` due to bigint > max `number` value. See: https://github.com/brianc/node-postgres/issues/378
+const getCustomerToPageCount = async () => rows<{
     customer_id: string, count: string
-}>(
+}>(//TODO: MAKE INNER JOIN
     `
         select count(pages.id), users.customer_id 
-        from pages inner join users 
+        from pages right join users 
         on pages.owner_id = users.id
         group by users.id;
     `,
@@ -103,7 +103,7 @@ export const pages = ({
     getByOwnerAndCategory,
     //FIXME: not used. replaced by `getCustomerToPage`
     getPageCountByOwner,
-    getCustomerToPage,
+    getCustomerToPageCount,
     createPage,
     updatePage,
     deletePage,

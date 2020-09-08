@@ -380,7 +380,7 @@ describe("Database interface for pages", () => {
 
             const [owner, persisted] = await setupPages();
 
-            expect(pages.getCustomerToPage())
+            expect(pages.getCustomerToPageCount())
                 .resolves.not.toThrow()
         });
 
@@ -389,7 +389,7 @@ describe("Database interface for pages", () => {
             //NOTE: in practice this is not needed as there will always be something from the other tests
             await setupPages();
 
-            const [firstElement] = (await pages.getCustomerToPage()) as any[]
+            const [firstElement] = (await pages.getCustomerToPageCount()) as any[]
             expect(firstElement.customer_id).toBeDefined();
             expect(firstElement.count).toBeDefined();
         });
@@ -403,7 +403,7 @@ describe("Database interface for pages", () => {
             await setupPages();
 
             const { customer_id, count } = random(
-                (await pages.getCustomerToPage())
+                await pages.getCustomerToPageCount()
             )
 
             const user = await users.getUserByCustomerId(customer_id);
@@ -412,15 +412,27 @@ describe("Database interface for pages", () => {
             expect(ownedByUser.length).toEqual(parseInt(count));
         });
 
-        it("Returns a row for every registered customer :D", async () => {
+        it("Returns a row for every registered customer", async () => {
 
             await setupPages();
 
-            const rows = await pages.getCustomerToPage();
+            const rows = await pages.getCustomerToPageCount();
             const countRegistered = await users.getUserCount();
 
             //FIXME: could this be because users without pages are ignored? 
             expect(rows.length).toEqual(parseInt(countRegistered));
+        });
+
+        it("Actually returns a valid number of pages", async () => {
+
+            await setupPages();
+
+            const rows = await pages.getCustomerToPageCount();
+
+            for (const { count } of rows) {
+
+                expect(count).not.toBeNaN();
+            }
         });
     });
 });
