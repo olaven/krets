@@ -6,11 +6,11 @@ import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionMode
 const coinFlip = () => 
     faker.random.number({min: 0, max: 1}) === 1; 
 
-export const randomUser = (id = faker.random.uuid()): UserModel => ({
+export const randomUser = (id = faker.random.uuid(), forceSubscription = false): UserModel => ({
     id,
     customer_id: faker.random.uuid(),
     invoice_paid: false,
-    subscription_id: coinFlip()? 
+    subscription_id: coinFlip() || forceSubscription? 
         faker.random.uuid(): 
         null
 });
@@ -104,9 +104,9 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
 }
 
 
-export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 })): Promise<[UserModel, PageModel[]]> => {
+export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), forceSubscription = false): Promise<[UserModel, PageModel[]]> => {
 
-    const user = await users.createUser(randomUser());
+    const user = await users.createUser(randomUser(faker.random.uuid(), forceSubscription));
 
 
     const persisted = []
