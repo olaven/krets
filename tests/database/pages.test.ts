@@ -381,7 +381,7 @@ describe("Database interface for pages", () => {
                 .resolves.not.toThrow()
         });
 
-        it("Returns something an array of { customer_id, count }", async () => {
+        it.skip("Returns something an array of { customer_id, count }", async () => {
 
             //NOTE: in practice this is not needed as there will always be something from the other tests
             await setupPages(4, true);
@@ -397,7 +397,7 @@ describe("Database interface for pages", () => {
         const random = <T>(array: T[]) =>
             array[Math.floor(Math.random() * array.length + 1)];
 
-        it("Returns the actual page count of a user ", async () => {
+        it.skip("Returns the actual page count of a user ", async () => {
 
             await setupPages(4, true);
 
