@@ -35,7 +35,7 @@ export default withCors(
 
                     await reportUsage();
 
-                    response
+                    response //skal ikke komme hit 
                         .status(NO_CONTENT)
                         .end();
                 }

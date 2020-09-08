@@ -25,8 +25,8 @@ describe("The endpoint for reporting usage to Stripe", () => {
         await teardownServer(server);
     });
 
-    const reportFetch = (token: string) => fetch(url, {
-        method: "POST", headers: {
+    const reportFetch = (token: string, method = "POST") => fetch(url, {
+        method, headers: {
             authorization: `Bearer: ${token}`
         }
     });
@@ -37,11 +37,11 @@ describe("The endpoint for reporting usage to Stripe", () => {
             "GET", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"
         ]) {
 
-            const { status } = await fetch(url, { method })
+            const { status } = await reportFetch(process.env.USAGE_REPORT_SECRET_TOKEN, method);
             expect(status).toEqual(405);
         }
 
-        const { status } = await fetch(url, { method: "POST" });
+        const { status } = await reportFetch(process.env.USAGE_REPORT_SECRET_TOKEN);
         expect(status).not.toEqual(405);
     });
 
