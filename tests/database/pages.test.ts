@@ -374,7 +374,7 @@ describe("Database interface for pages", () => {
         });
     });
 
-    describe("Getting customer id and amount of pages", async () => {
+    describe("Getting customer id and amount of pages",  () => {
 
         it("does not throw", async () => {
 
