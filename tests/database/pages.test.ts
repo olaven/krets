@@ -398,7 +398,7 @@ describe("Database interface for pages", () => {
         const random = <T>(array: T[]) =>
             array[Math.floor(Math.random() * array.length + 1)];
 
-        it("Returns the actual page count of a user", async () => {
+        it("Returns the actual page count of a user ", async () => {
 
             await setupPages();
 
@@ -412,18 +412,17 @@ describe("Database interface for pages", () => {
             expect(ownedByUser.length).toEqual(parseInt(count));
         });
 
-        it("Returns a row for every registered customer", async () => {
+        it("Returns a row for every registered customer with a subscription ", async () => {
 
             await setupPages();
 
             const rows = await pages.getCustomerToPageCount();
-            const countRegistered = await users.getUserCount();
+            const countRegistered = await users.getUserCountWithSubscription();
 
-            //FIXME: could this be because users without pages are ignored? 
-            expect(rows.length).toEqual(parseInt(countRegistered));
+            expect(rows.length).toEqual(countRegistered);
         });
 
-        it("Actually returns a valid number of pages", async () => {
+      it("Actually returns a valid number of pages", async () => {
 
             await setupPages();
 
@@ -431,7 +430,7 @@ describe("Database interface for pages", () => {
 
             for (const { count } of rows) {
 
-                expect(count).not.toBeNaN();
+                expect(parseInt(count)).not.toBeNaN();
             }
         });
     });

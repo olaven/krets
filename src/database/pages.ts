@@ -39,6 +39,7 @@ const getCustomerToPageCount = () => rows<{
         select count(pages.id), users.customer_id 
         from pages right join users 
         on pages.owner_id = users.id
+        where users.subscription_id is not null
         group by users.id;
     `,
     []
