@@ -3,10 +3,16 @@ import { users, pages, responses, answers, questions } from "../../src/database/
 import { first, run } from "../../src/database/helpers/query";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
+const coinFlip = () => 
+    faker.random.number({min: 0, max: 1}) === 1; 
+
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
     customer_id: faker.random.uuid(),
     invoice_paid: false,
+    subscription_id: coinFlip()? 
+        faker.random.uuid(): 
+        null
 });
 
 export const randomPage = (ownerId: string, color: string = null, categoryId: string = null): PageModel => ({

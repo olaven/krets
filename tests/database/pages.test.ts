@@ -433,5 +433,31 @@ describe("Database interface for pages", () => {
                 expect(parseInt(count)).not.toBeNaN();
             }
         });
+
+        it("Does not include users without a subscription", async () => {
+
+            const [ user ] = await setupPages();
+            await users.updateUser({
+                ...user, 
+                subscription_id: null 
+            });
+            
+            const rows = await pages.getCustomerToPageCount()
+            const found = rows.find(({customer_id}) => customer_id === user.customer_id); 
+            expect(found).toBeFalsy(); 
+        });
+
+        it("Does include users with a subscription", async () => {
+
+            const [ user ] = await setupPages();
+            await users.updateUser({
+                ...user, 
+                subscription_id: faker.random.uuid()
+            });
+            
+            const rows = await pages.getCustomerToPageCount()
+            const found = rows.find(({customer_id}) => customer_id === user.customer_id); 
+            expect(found).toBeTruthy(); 
+        })
     });
 });
