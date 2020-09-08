@@ -33,7 +33,7 @@ export const stripe = {
         })
     }), 
     subscriptionItems: ({
-        createUsageRecord: jest.fn((productId: string, UsageRecord: Stripe.UsageRecordCreateParams) => {
+        createUsageRecord: jest.fn(async (productId: string, UsageRecord: Stripe.UsageRecordCreateParams) => {
 
             console.log("Insie createUsageRecord MOCK");
         }),

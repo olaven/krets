@@ -21,13 +21,11 @@ describe("The function reporting usage", () => {
     });
 
     //FIXME: denne tar for lang tid fordi det er shit ton med brukere i testdatabasen. Finn ut av hvordan jeg kan cleare før/etter hver test 
-    it("Does call `createUsageRecord` for every user", async () => {
+    it("Does call `createUsageRecord` for every user ", async () => {
 
         const userCount = parseInt(await users.getUserCount());
-        
         //@ts-expect-error
-        reportUsage.mockReset()
-
+        stripe.subscriptionItems.createUsageRecord.mockReset()
         await reportUsage(); 
         expect(stripe.subscriptionItems.createUsageRecord)
             .toHaveBeenCalledTimes(userCount);
