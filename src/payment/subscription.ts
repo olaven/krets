@@ -27,6 +27,10 @@ export const createSubscription = async (customerId: string, paymentMethodId, pr
     return [product_id, subscription.id];
 }
 
+/**
+ * Returns the subscription object of a customer, if present.
+ * @param customerId customer owning the subscription
+ */
 export const getSubscription = async (customerId: string): Promise<Stripe.Subscription | null> => {
 
     const subscriptions = await stripe.subscriptions.list({ customer: customerId })

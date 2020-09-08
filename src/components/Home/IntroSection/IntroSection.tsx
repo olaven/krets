@@ -1,8 +1,7 @@
 import React from "react";
 import { Flex, Box, Text, Image, Link, Heading } from "rebass";
-import { LoginButton, GetStartedButton } from "../../tiny/buttons";
+import { GetStartedButton } from "../../tiny/buttons";
 import { intro } from "../../../text";
-import { TextBox } from "../../tiny/TextBox";
 
 export const IntroSection = () => {
 

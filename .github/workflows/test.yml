@@ -3,7 +3,7 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     services:
@@ -13,7 +13,7 @@ jobs:
           POSTGRES_PASSWORD: pass
           POSTGRES_USER: user
           POSTGRES_DB: data
-        options: >-
+        options: 
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -33,3 +33,4 @@ jobs:
         PGUSER: user
         PGPASSWORD: pass
         PGDATABASE: data
+        USAGE_REPORT_SECRET_TOKEN: github_actions_usage_report_token

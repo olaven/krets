@@ -13,7 +13,7 @@ const PriceRepresentation = ({ price, selectedPriceId, setSelectedPrice }: Price
 
     return <Box>
         {/* <Text>{price.nickname}</Text> */}
-        <Text>{firstTier.flat_amount / 100},- {text.upgrade.included} {firstTier.up_to} {text.upgrade.responses}!</Text>
+        <Text>{firstTier.flat_amount / 100},- {text.upgrade.included} {firstTier.up_to} {text.upgrade.pages}!</Text>
         <Text>{secondTier.unit_amount / 100},- {text.upgrade.afterTier}</Text>
         <Text>{text.upgrade.monthly}</Text>
         <Text>{text.upgrade.vat}</Text>

@@ -23,25 +23,39 @@ const syncSubscriptionStatus = async (user: UserModel) => {
   }
 }
 
-//TODO: Refactor: this function is messy and does several things
-const createIfNotPresent = async ({ sub, email }: AuthModel) => {
+/**
+ * If user exists, returns it. 
+ * If not, creates and returns a new one 
+ * @param id 
+ * @param email 
+ */
+const createUser = async (id: string, email: string) => {
 
-  const user = await users.getUser(sub);
+  const user = await users.getUser(id); 
+  
   if (!user) {
 
     const customer_id = await registerCustomer(email);
-    await users.createUser({ id: sub, customer_id });
+    return await users.createUser({ id: id, customer_id });
+  } else {
+
+    return user;
   }
+}
+
+//TODO: Refactor: this function is messy and does several things
+const createIfNotPresent = async ({ sub, email }: AuthModel) => {
+
+  let user = await createUser(sub, email);  
 
   const customerRegistered = await customerExists(user?.customer_id);
-  if (user && !customerRegistered) {
+  if (!customerRegistered) {
 
     const customer_id = await registerCustomer(email);
     await users.updateUser({ ...user, customer_id });
   }
 
   await syncSubscriptionStatus(user);
-
 };
 
 export default withCors(

@@ -2,6 +2,16 @@ import { first, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
 import { pages } from "./database"
 
+//TODO: only export to tests 
+const getUserCountWithSubscription = async () => {
+
+   const result = await first<{ count: string}>(
+      'select count(*) from users where subscription_id is not null', []
+   )
+
+   return parseInt(result.count);
+}
+
 const getUser = (id: string) =>
    first<UserModel>(
       "select * from users where id = $1",
@@ -107,6 +117,7 @@ const _deleteUser = (id: string) => run(
 
 
 export const users = ({
+   getUserCountWithSubscription,
    getUser,
    getUserByCustomerId,
    createUser,

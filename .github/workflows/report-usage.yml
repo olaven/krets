@@ -1,0 +1,20 @@
+name: Report usage to Stripe
+
+on:
+    branch: [ master ]
+    schedule: 
+        - cron: '0 12 * * *'
+
+jobs:
+  report-usage:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Stage
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://krets.app/api/payment/report'
+        method: 'POST'
+        bearerToken: ${{ secrets.USAGE_REPORT_SECRET_TOKEN }}
+
+±
