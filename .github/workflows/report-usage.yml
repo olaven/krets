@@ -2,6 +2,7 @@ name: Report usage to Stripe
 
 #TODO: double check cron 
 on:
+    branch: [ master ]
     schedule: 
         - cron: '0 12 * * *'
 
