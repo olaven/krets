@@ -13,15 +13,22 @@ describe("The function reporting usage", () => {
             .not.toThrow();
     });
 
-    it("does communicate with `stripe.createUsageRecord`", async () => {
+    it("does communicate with `stripe.createUsageRecord` ", async () => {
 
+        await reportUsage(); 
         expect(stripe.subscriptionItems.createUsageRecord)
             .toHaveBeenCalled();
     });
 
+    //FIXME: denne tar for lang tid fordi det er shit ton med brukere i testdatabasen. Finn ut av hvordan jeg kan cleare før/etter hver test 
     it("Does call `createUsageRecord` for every user", async () => {
 
         const userCount = parseInt(await users.getUserCount());
+        
+        //@ts-expect-error
+        reportUsage.mockReset()
+
+        await reportUsage(); 
         expect(stripe.subscriptionItems.createUsageRecord)
             .toHaveBeenCalledTimes(userCount);
     });

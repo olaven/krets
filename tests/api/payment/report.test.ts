@@ -65,7 +65,7 @@ describe("The endpoint for reporting usage to Stripe", () => {
         expect(status).toEqual(204)
     });
 
-    it("Does call `reportUsage` on successful call", async () => {
+    it("Does call `reportUsage` on successful call - ru nagain", async () => {
 
         await reportFetch(process.env.USAGE_REPORT_SECRET_TOKEN);
         expect(reportUsage).toHaveBeenCalled();

@@ -25,6 +25,13 @@ export const stripe = {
             return "MOCK DELETED";
         }
     },
+    subscriptions: ({
+        list: (options: {customer: string}) => ({
+            data:[
+                { id: "FIRST-MOCK-SUBSCRIPTION-FROM-STRIPE-MOCK"}
+            ]
+        })
+    }), 
     subscriptionItems: ({
         createUsageRecord: jest.fn((productId: string, UsageRecord: Stripe.UsageRecordCreateParams) => {
 

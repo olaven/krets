@@ -13,10 +13,13 @@ const createUsagerecord = (productId: string, count: number) => stripe.subscript
 )
 
 
-export const reportUsage = async () =>
-    (await pages.getCustomerToPageCount())
-        .forEach(async ({ customer_id, count }) => {
+export const reportUsage = async () => {
 
-            const subscription = await getSubscription(customer_id)
-            await createUsagerecord(subscription.id, parseInt(count))
-        });
+    //NOTE: jest does not appear to play nice with async for loops 
+    const customersToPageCount = await pages.getCustomerToPageCount(); 
+    for (const { customer_id, count } of customersToPageCount) {
+
+        const subscription = await getSubscription(customer_id); 
+        await createUsagerecord(subscription.id, parseInt(count))
+    }
+}
