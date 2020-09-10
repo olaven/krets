@@ -6129,10 +6129,10 @@ node-int64@^0.4.0:
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
   integrity sha1-h6kGXNs1XTGC2PlM4RGIuCXGijs=
 
-node-kall@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/node-kall/-/node-kall-1.0.5.tgz#b0c2d75d0523bc21386f6a61270716a8da696f78"
-  integrity sha512-KW/5GGIVgHlmhfV7iSWKUTmemNyqTtSWAJmUPEW0ZCnklGp9aVe/07NTA74ramy4/CQS+jeZuY1tA1s4K1mGZg==
+node-kall@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/node-kall/-/node-kall-1.0.6.tgz#9faecfdce2666128b12cfbe821082361af0d6b0e"
+  integrity sha512-5kpZrwrftMExTSGz5xrkIIKY+adGbuJkdlClfCuv4MjRr/Oxw6l6dQ4fcj1Td9Dr7aOAkIpaPpp9zwAoGrPxUQ==
 
 node-libs-browser@^2.2.1:
   version "2.2.1"

@@ -5,6 +5,7 @@ import { PagesContext } from "../../../context/PagesContext";
 import { post, CREATED, CONFLICT } from "node-kall";
 import * as text from "../../../text"
 import { TooltipHelp } from "tooltip-help-react";
+import { PageModel } from "../../../models/models";
 
 export const nameToId = (name: string) => name
     .toLowerCase()
@@ -41,7 +42,7 @@ export const PageCreator = () => {
         if (status === CREATED) {
 
             setName("");
-            addPage(page);
+            addPage(page as PageModel); //NOTE: missing .owner_id, but that is added in backend
         } else if (status === CONFLICT) {
 
             alert(text.pageCreator.conflict);

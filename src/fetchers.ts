@@ -1,6 +1,7 @@
-import { get, put, del, post, OK } from "node-kall";
+import { get, put, del, post } from "node-kall";
 import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel } from "./models/models";
 import Stripe from "stripe";
+
 
 /*
  * Contains functions for fetching API endpoints. 
@@ -32,7 +33,7 @@ export const getAnswers = (pageId: string, responseId: string) =>
     get<AnswerModel[]>(`/api/pages/${pageId}/responses/${responseId}/answers`);
 
 export const getCategories = () =>
-    get<CategoryModel>(`/api/categories`);
+    get<CategoryModel[]>(`/api/categories`);
 
 export const postCategory = (category: CategoryModel) =>
     post<CategoryModel>(`/api/categories`, category);
