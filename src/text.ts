@@ -227,7 +227,6 @@ export const guide = strings({
 export const settings = strings({
     en: {
         heading: "Settings page for",
-        loading: "Loading settings page..",
         changeNameHeader: "Update page name",
         changeNameButton: "Update name",
         changeTitleHeader: "Update page title",
@@ -249,7 +248,6 @@ export const settings = strings({
     },
     no: {
         heading: "Instillinger for",
-        loading: "Laster instillinger..",
         changeNameHeader: "Oppdater sidens navn",
         changeNameButton: "Oppdater navn",
         changeTitleHeader: "Oppdater sidens tittel",
