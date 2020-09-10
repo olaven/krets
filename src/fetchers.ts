@@ -33,7 +33,7 @@ export const getAnswers = (pageId: string, responseId: string) =>
     get<AnswerModel[]>(`/api/pages/${pageId}/responses/${responseId}/answers`);
 
 export const getCategories = () =>
-    get<CategoryModel>(`/api/categories`);
+    get<CategoryModel[]>(`/api/categories`);
 
 export const postCategory = (category: CategoryModel) =>
     post<CategoryModel>(`/api/categories`, category);
