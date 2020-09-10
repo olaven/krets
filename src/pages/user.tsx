@@ -10,7 +10,6 @@ import Loader from 'react-spinners/BounceLoader';
 import { useProduct } from "../effects/useProduct";
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
 import { TextBox } from "../components/tiny/TextBox";
-import { ShareVideo } from "../components/Videos";
 
 const CancelSubscription = () => {
 
@@ -141,10 +140,12 @@ const ProfileInfo = () => {
         databaseUser?.subscription_id ?
             <>
                 <PositiveAction href="/" text={uiText.upgrade.back} />
+                <PositiveAction href="/guide" text={uiText.upgrade.getHelp} />
                 <CancelSubscription />
             </> :
             <>
                 <PositiveAction href="/subscription" text={uiText.upgrade.button} />
+                <PositiveAction href="/guide" text={uiText.upgrade.getHelp} />
                 <DeleteAccount />
             </>
 
