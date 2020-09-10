@@ -331,7 +331,7 @@ export const responseList = strings({
 export const upgrade = strings({
     en: {
         heading: "Setup subscription to Krets!",
-        trailInformation: "All plans have a 5 day free trail",
+        trailInformation: "All plans have a 14 day free trail",
         choosePrice: "Choose 💡",
         priceChosen: "Chosen 🙌",
         pay: "Start subscription",
@@ -364,7 +364,7 @@ export const upgrade = strings({
     },
     no: {
         heading: "Finn abonnementet som passer deg!",
-        trailInformation: "Det er alltid en gratis prøveperiode på 5 dager",
+        trailInformation: "Det er alltid en gratis prøveperiode på 14 dager",
         choosePrice: "Velg denne prisen 💡",
         priceChosen: "Valgt  🙌",
         included: "inkludert",
