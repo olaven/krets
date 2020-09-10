@@ -8,25 +8,22 @@ export const Loader = ({ size }: { size: number }) => <Box width={1}>
         < BounceLoader
             css={css`
                 display: block;
-                margin: 0 auto;
-                border-color: teal;`}
-            size={100}
+                margin: 0 auto;`}
+            size={size}
             color={"teal"}
         />
     </span>
 </Box >
 
 
-   
-export const LoadMore = ({ onClick, active, isLoading }) =>
-{
-    if(!active)
+
+export const LoadMore = ({ onClick, active, isLoading }) => {
+    if (!active)
         return null;
 
-    if(isLoading) 
+    if (isLoading)
         return <Loader size={10} />
 
     return <LoadMoreButton onClick={onClick} />
 }
-   
-       
+

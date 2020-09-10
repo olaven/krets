@@ -11,6 +11,7 @@ import { ManageQuestions } from "../../components/Settings/ManageQuestions/Manag
 import { Collapsible } from "../../components/Collapsible";
 import { DoubleConfirmationButton } from "../../components/tiny/buttons";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
+import { Loader } from "../../components/tiny/loader";
 
 const UpdateName = () => {
 
@@ -92,7 +93,7 @@ export const SettingsContent = () => {
     const { pageLoading, page } = useContext(SettingsContext);
 
     return pageLoading ?
-        <Text>{text.settings.loading}</Text> :
+        <Loader size={150} /> :
         <Box m={[1, 2, 3]} >
             <Heading fontSize={[3, 4, 5]}>
                 {text.settings.heading} {page.name}
