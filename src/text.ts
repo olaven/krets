@@ -353,6 +353,7 @@ export const upgrade = strings({
             contactSuffix: "👋",
             greetings: "- founder, developer, 👨‍💻 and everything in between"
         },
+        getHelp: "How do I use Krets?",
         back: "Back to Krets",
         cancel: "Cancel subscription",
         sure: "I am sure",
@@ -385,6 +386,7 @@ export const upgrade = strings({
             contactSuffix: "👋",
             greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet"
         },
+        getHelp: "Hvordan bruker jeg Krets?",
         back: "Tilbake til Krets",
         cancel: "Kanseller abonnement",
         sure: "Jeg er sikker",
