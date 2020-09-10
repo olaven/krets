@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import Loader from "react-spinners/BounceLoader";
 import { QuestionsContext } from "../../../context/QuestionsContext";
+import { Loader } from "../../tiny/loader";
 import { QuestionCard } from "./QuestionCard";
 
 

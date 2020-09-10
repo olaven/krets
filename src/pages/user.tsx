@@ -6,10 +6,10 @@ import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { deleteSubscription, deleteUser } from '../fetchers';
-import Loader from 'react-spinners/BounceLoader';
 import { useProduct } from "../effects/useProduct";
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
 import { TextBox } from "../components/tiny/TextBox";
+import { Loader } from "../components/tiny/loader";
 
 const CancelSubscription = () => {
 
