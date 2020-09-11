@@ -6,7 +6,6 @@ on:
 
 jobs:
   report-usage:
-
     runs-on: ubuntu-latest
     steps:
     - name: Deploy Stage
@@ -15,5 +14,3 @@ jobs:
         url: 'https://krets.app/api/payment/report'
         method: 'POST'
         bearerToken: ${{ secrets.USAGE_REPORT_SECRET_TOKEN }}
-
-±
