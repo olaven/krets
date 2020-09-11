@@ -1,8 +1,7 @@
 name: Report usage to Stripe
 
 on:
-    branch: [ master ]
-    schedule: 
+    schedule: # [runs on default branch](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule)
         - cron: '0 12 * * *'
 
 jobs:
