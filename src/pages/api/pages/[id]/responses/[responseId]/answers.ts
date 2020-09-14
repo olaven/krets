@@ -10,7 +10,8 @@ import { getPathParam } from "../../../../../../workarounds";
 
 //THINKABOUT: how to better solve the amount of dabase reads in this function 
 //THINKABOUT: generalize and share this middlware somehow? 
-const actuallyOwns = (handler: NextApiHandler) =>
+//NOTE: exported to `./count.ts`
+export const actuallyOwns = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const pageId = getPathParam(request.url, 4);
