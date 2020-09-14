@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Box, Heading, } from "rebass";
+import { Box, Heading, Flex } from "rebass";
 import { useContext } from "react";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
