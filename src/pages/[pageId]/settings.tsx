@@ -11,13 +11,22 @@ import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../comp
 
 
 
+//TODO: use other places, if useful here
+const WidthContainer = ({ children }) => <Flex>
+    <Box width={[0, 1 / 4, 1 / 3]}></Box>
+    <Box width={[1, 2 / 4, 1 / 3]}>
+        {children}
+    </Box>
+    <Box width={[0, 1 / 4, 1 / 3]}></Box>
+</Flex >
+
 export const SettingsContent = () => {
 
     const { pageLoading, page } = useContext(SettingsContext);
 
     return pageLoading ?
         <Loader size={150} /> :
-        <Box m={[1, 2, 3]} >
+        <WidthContainer>
             <Heading fontSize={[3, 4, 5]}>
                 {text.settings.heading} {page.name}
             </Heading>
@@ -33,7 +42,7 @@ export const SettingsContent = () => {
             <Collapsible text={text.settings.deletePageButton}>
                 <DeletePage />
             </Collapsible>
-        </Box>
+        </WidthContainer>
 }
 
 const Settings = SubscriberWrapper(() => {
