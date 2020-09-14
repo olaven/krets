@@ -11,10 +11,12 @@ import { getPathParam } from "../../../../../../workarounds";
 //THINKABOUT: how to better solve the amount of dabase reads in this function 
 //THINKABOUT: generalize and share this middlware somehow? 
 //NOTE: exported to `./count.ts`
-export const actuallyOwns = (handler: NextApiHandler) =>
+export const actuallyOwns = (handler: NextApiHandler, pageIdFromUrl: (url: string) => string) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
-        const pageId = getPathParam(request.url, 4);
+
+
+        const pageId = pageIdFromUrl(request.url);
         const { user } = await auth0.getSession(request);
 
         const page = await pages.getPage(pageId);
@@ -58,7 +60,8 @@ export default withCors(
                 withMethodHandlers({
                     GET: getAnswers,
                     POST: postAnswers
-                })
+                }),
+                (url) => getPathParam(url, 4)
             )
         )
     )

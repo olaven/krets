@@ -231,4 +231,31 @@ describe("Database repository for pages", () => {
             expect(coordinate.y).toBeDefined();
         });
     });
+
+    describe("Getting the amount of responses on a page", () => {
+
+        it("Returns a number", async () => {
+
+            const [page] = await blindSetup();
+
+            const count = await responses.getCount(page.id);
+            expect(parseInt((count as unknown as string))).not.toBeNaN();
+        });
+
+        it("Returns the same number as count of responses", async () => {
+
+            const n = await faker.random.number({ min: 1, max: 20 });
+            const [page] = await blindSetup(n);
+
+            const count = await responses.getCount(page.id);
+            expect(count).toEqual(n);
+        });
+
+        it("Works when no responses are persisted", async () => {
+
+            const [page] = await blindSetup(0);
+            const count = await responses.getCount(page.id);
+            expect(count).toEqual(0)
+        });
+    })
 });

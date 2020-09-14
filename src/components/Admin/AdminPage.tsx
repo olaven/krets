@@ -43,6 +43,10 @@ const AverageScore = () => {
     </Text>
 }
 
+const TotalAmountReceived = () => {
+    
+}
+
 const AdminContent = () => <Flex flexWrap="wrap">
     <AdminBox width={1}>
         <AverageScore />

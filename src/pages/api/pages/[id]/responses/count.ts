@@ -14,9 +14,10 @@ export default
                         const count = await responses.getCount(pageId);
 
                         return response
-                            .json({ count })
+                            .json({ count });
                     }
-                })
+                }),
+                (url) => getPathParam(url, 3)
             )
         )
     )
