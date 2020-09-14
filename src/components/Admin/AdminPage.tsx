@@ -8,7 +8,7 @@ import { TextList } from "./TextList/TextList";
 import { Charts } from "../Charts";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
-import { getOverallAverage } from "../../fetchers";
+import { getCount, getOverallAverage } from "../../fetchers";
 import { Loader } from "../tiny/loader";
 
 const AdminBox = props => <Box
@@ -18,11 +18,36 @@ const AdminBox = props => <Box
     {props.children}
 </Box>
 
+const ResponseCount = () => {
+
+    const { page } = useContext(AdminPageContext);
+
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        (async () => {
+            const [status, body] = await getCount(page.id)
+            if (status === OK) {
+
+                setCount(body.count);
+            } else {
+
+                console.warn(`Error fetching count: ${status}`);
+            }
+        })()
+    }, []);
+
+    return <Text>
+        {text.adminPage.count} {count}
+    </Text>
+}
+
+
 const AverageScore = () => {
 
     const { page } = useContext(AdminPageContext);
 
-    const [average, setAverage] = useState<number>(0);
+    const [average, setAverage] = useState(0);
 
     useEffect(() => {
         (async () => {
@@ -43,13 +68,10 @@ const AverageScore = () => {
     </Text>
 }
 
-const TotalAmountReceived = () => {
-    
-}
-
 const AdminContent = () => <Flex flexWrap="wrap">
     <AdminBox width={1}>
         <AverageScore />
+        <ResponseCount />
     </AdminBox>
     <AdminBox>
         <CompareSelect />

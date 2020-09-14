@@ -150,14 +150,15 @@ describe("Endpoints for specific page", () => {
         });
 
         //NOTE: should perhaps be 404
-        it("Returns 400 if category does not exist", async () => {
+        //FIXME: broken after refactoring -> handle this in handle category not present in PUT /[id].ts
+        it("Returns 400 if category does not exist ", async () => {
 
             const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
 
 
             //NOTE: category id does not exist (may fail due to randomness, but very unlikely)
-            page.category_id = uid();
+            page.category_id = faker.random.number().toString();
 
             const pageBeforeUpdate = await pages.getPage(page.id);
             const { status } = await putFetch(user.id, page.id, page);

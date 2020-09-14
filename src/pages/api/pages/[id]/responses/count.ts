@@ -1,12 +1,12 @@
-import { actuallyOwns } from "./[responseId]/answers"
 import { responses } from "../../../../../database/database"
-import { withAuthentication, withCors, withMethodHandlers } from "../../../../../middleware/middleware"
+import { asPageOwner, withAuthentication, withCors, withMethodHandlers, withMethods } from "../../../../../middleware/middleware"
 import { getPathParam } from "../../../../../workarounds";
 
 export default
     withCors(
         withAuthentication(
-            actuallyOwns(
+            asPageOwner(
+                url => getPathParam(url, 3),
                 withMethodHandlers({
                     GET: async (request, response) => {
 
@@ -16,8 +16,7 @@ export default
                         return response
                             .json({ count });
                     }
-                }),
-                (url) => getPathParam(url, 3)
+                })
             )
         )
     )

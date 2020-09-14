@@ -1,41 +1,15 @@
-import auth0 from "../../../auth/auth0";
-import { pages } from "../../../database/database";
+
+import { pages, categories } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models/models";
-import { withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
+import { asPageOwner, withAuthentication, withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { getPathParam } from "../../../workarounds";
+import auth0 from "../../../auth/__mocks__/auth0";
+
 
 
 const getId = (url: string) => getPathParam(url, 1);
-
-const del = async (request: NextApiRequest, response: NextApiResponse) => {
-
-    const id = getId(request.url)
-    const { user } = await auth0.getSession(request);
-
-    if (!user.sub) {
-
-        response
-            .status(UNAUTHORIZED)
-            .send("Not authenticated");
-        return;
-    }
-
-    const page = await pages.getPage(id);
-    if (page.owner_id !== user.sub) {
-
-        response
-            .status(FORBIDDEN)
-            .send("Forbidden");
-        return;
-    }
-
-    pages.deletePage(page.id);
-    response
-        .status(NO_CONTENT)
-        .send("NO CONTENT");
-}
 
 
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -56,57 +30,43 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
     }
 }
 
-const put = async (request, response) => {
+const del = withAuthentication(
+    asPageOwner(
+        getId,
+        async (request: NextApiRequest, response: NextApiResponse) => {
 
-    const page = request.body as PageModel;
-    const { user } = await auth0.getSession(request);
+            const id = getId(request.url)
+            pages.deletePage(id);
 
-    if (!user) {
-
-        response
-            .status(UNAUTHORIZED)
-            .send("Not authenticated")
-        return;
-    }
-
-    const pageFromDb = await pages.getPage(page.id)
-    if (!pageFromDb) {
-
-        response
-            .status(NOT_FOUND)
-            .send("Page was not found");
-        return;
-    }
-
-    if (page.owner_id !== user.sub) {
-
-        response
-            .status(FORBIDDEN)
-            .send("You do not own this page")
-        return;
-    }
-
-    if (!page.name) {
-        response
-            .status(BAD_REQUEST)
-            .send("name missing");
-        return;
-    }
+            response
+                .status(NO_CONTENT)
+                .send("NO CONTENT");
+        }
+    )
+)
 
 
-    try {
 
-        await pages.updatePage(page)
-        response
-            .status(NO_CONTENT)
-            .send("")
-    } catch (error) {
+const put = withAuthentication(
+    asPageOwner(
+        getId,
+        async (request, response) => {
 
-        response
-            .status(BAD_REQUEST)
-            .send("Page was not properly formatted")
-    }
-};
+            const page = request.body as PageModel;
+
+            if (!page.name) {
+                return response
+                    .status(BAD_REQUEST)
+                    .send("name missing");
+            }
+
+            await pages.updatePage(page)
+            response
+                .status(NO_CONTENT)
+                .send("");
+        }
+    )
+);
 
 export default withCors(
     withErrorHandling(
