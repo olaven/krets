@@ -1,92 +1,15 @@
 import { useRouter } from "next/router";
-import { Box, Button, Heading, Text, Flex } from "rebass";
-import { Input, Label, Select } from "@rebass/forms"
-import { putPage, deletePage } from "../../fetchers";
-import { useState, useContext } from "react";
-import { NO_CONTENT } from "node-kall";
+import { Box, Heading, } from "rebass";
+import { useContext } from "react";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
-import { UpdateTitle } from "../../components/Settings/UpdateTitle";
-import { ManageQuestions } from "../../components/Settings/ManageQuestions/ManageQuestions";
 import { Collapsible } from "../../components/Collapsible";
-import { DoubleConfirmationButton } from "../../components/tiny/buttons";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
 import { Loader } from "../../components/tiny/loader";
-
-const UpdateName = () => {
-
-    const { page, updatePage } = useContext(SettingsContext);
-    const [name, setName] = useState(page.name);
-
-    const updateName = async () => {
-
-        page.name = name;
-        const [status] = await putPage(page);
-        if (status !== NO_CONTENT) {
-
-            alert(text.settings.changeNameError);
-        } else {
-
-            await updatePage();
-            setName("");
-        }
-    }
-
-    return <Box py={[1, 2, 3]}>
-        <Flex width={[1, 1 / 2]}>
-            <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
-            <Button onClick={updateName}>{text.settings.changeNameButton}</Button>
-        </Flex>
-    </Box >
-}
+import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../components/Settings/Settings"
 
 
-export const DeletePage = () => {
 
-    const router = useRouter();
-    const { page } = useContext(SettingsContext);
-    const [wantsToDelete, setWantsToDelete] = useState(false);
-
-    const performDeletion = async () => {
-
-        const [status] = await deletePage(page.id);
-        if (status === NO_CONTENT) {
-
-            router.replace("/");
-        } else {
-
-            alert(text.settings.deleteError)
-        }
-    }
-
-    return <DoubleConfirmationButton
-        text={text.settings.deletePageButton}
-        action={performDeletion}
-    />
-}
-
-//TODO: actually when/if categories are used 
-//TODO: actually pull categories (from context etc.)
-const UpdateCategory = () => {
-
-    const { page } = useContext(SettingsContext);
-    const options = [
-        { value: "first_id", name: "My First Category" },
-        { value: "second_id", name: "My Second Category" },
-        { value: "third_id", name: "My Third Category" },
-        { value: "fourth_id", name: "My Fourth Category" },
-    ]
-
-    return <Box>
-        <Label htmlFor='category'>Kategori</Label>
-        <Select
-            id='category'
-            name='category'>
-            {options.map(({ value, name }) => <option value={value}>{name}</option>)}
-        </Select>
-        her skal jeg oppdatere kategori for {page.name}
-    </Box>
-}
 
 export const SettingsContent = () => {
 
