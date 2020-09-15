@@ -41,6 +41,9 @@ export const postCategory = (category: CategoryModel) =>
 export const getOverallAverage = (pageId: string) =>
     get<number>(`/api/pages/${pageId}/average`);
 
+export const getCount = (pageId: string) =>
+    get<{ count: number }>(`/api/pages/${pageId}/responses/count`);
+
 export const getLineCoordinates = (pageId: string) =>
     get<CoordinateModel>(`/api/pages/${pageId}/charts/line`);
 

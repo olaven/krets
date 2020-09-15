@@ -4,12 +4,12 @@ import { pages } from "../../../database/database";
 import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel, PaginatedModel } from "../../../models/models";
 import { NextApiResponse, NextApiRequest } from "next";
-import { withCors, withAuthentication, withErrorHandling } from "../../../middleware/middleware";
+import { withCors, withAuthentication, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { getKey } from "../../../workarounds";
 
 
 
-const get = async (request: NextApiRequest, response: NextApiResponse) => {
+const getPages = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
     const requestKey = getKey(request.url) as string;
@@ -28,7 +28,7 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
         .json(paginated);
 }
 
-const post = withErrorHandling(
+const postPage = withErrorHandling(
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const { user } = await auth0.getSession(request);
@@ -50,15 +50,11 @@ const post = withErrorHandling(
 
 
 export default withCors(
-    withAuthentication(async (request, response) => {
-
-        if (request.method === "GET") {
-
-            get(request, response);
-        } else if (request.method === "POST") {
-
-            post(request, response);
-        }
-    })
+    withAuthentication(
+        withMethodHandlers({
+            GET: getPages,
+            POST: postPage
+        })
+    )
 );
 

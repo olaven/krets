@@ -133,7 +133,7 @@ describe("Endpoints for specific page", () => {
             expect(status).toEqual(404);
         });
 
-        it("Returns 204 on succesful category update", async () => {
+        it("Returns 204 on succesful category update ", async () => {
 
             const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
@@ -157,7 +157,7 @@ describe("Endpoints for specific page", () => {
 
 
             //NOTE: category id does not exist (may fail due to randomness, but very unlikely)
-            page.category_id = uid();
+            page.category_id = faker.random.number().toString();
 
             const pageBeforeUpdate = await pages.getPage(page.id);
             const { status } = await putFetch(user.id, page.id, page);
@@ -169,7 +169,7 @@ describe("Endpoints for specific page", () => {
         });
     });
 
-    describe("The DELTE endpoint of pages", () => {
+    describe("The DELETE endpoint of pages", () => {
 
         const deleteFetch = (pageId: string, userId: string) =>
             authenticatedFetch(userId, fullUrl(pageId), { method: "DELETE" });

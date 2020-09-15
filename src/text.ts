@@ -199,12 +199,14 @@ export const categoryCreator = strings({
 export const adminPage = strings({
     en: {
         average: "Average score:",
+        count: "Response count:",
         contactDetails: "Contact details",
         loading: "Loading admin page...",
         notOwning: "You do not own this page."
     },
     no: {
         average: "Gjennomsnittlig score:",
+        count: "Antall svar:",
         contactDetails: "Kontaktinformasjon",
         loading: "Laster adminside...",
         notOwning: "Denne siden eier du ikke."

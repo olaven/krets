@@ -71,6 +71,20 @@ const getAverageEmotionByPage = async (pageId: string) => {
         0 // If there are no responses
 }
 
+/**
+ * Returns the amount of responses on given page
+ * @param pageId 
+ */
+const getCount = async (pageId: string) => {
+
+    const result = await first<{ count: string }>(
+        "select count(*) from responses where page_id = $1",
+        [pageId]
+    );
+
+    return parseInt(result.count);
+}
+
 //FIXME: fugly function. 
 //THINKABOUT: calucate chart separately from data fetching 
 //THINKABOUT: perhaps should be calculated differently than "all on-demand"
@@ -122,6 +136,7 @@ export const getLineCoordinates = async (pageId: string) => {
 export const responses = ({
     getResponses,
     getResponse,
+    getCount,
     createResponse,
     getAverageEmotionByPage,
     getLineCoordinates
