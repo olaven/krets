@@ -133,7 +133,7 @@ describe("Endpoints for specific page", () => {
             expect(status).toEqual(404);
         });
 
-        it("Returns 204 on succesful category update", async () => {
+        it("Returns 204 on succesful category update ", async () => {
 
             const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
@@ -150,8 +150,7 @@ describe("Endpoints for specific page", () => {
         });
 
         //NOTE: should perhaps be 404
-        //FIXME: broken after refactoring -> handle this in handle category not present in PUT /[id].ts
-        it("Returns 400 if category does not exist ", async () => {
+        it("Returns 400 if category does not exist", async () => {
 
             const user = await users.createUser(randomUser());
             const page = await createPage(user.id);
@@ -170,7 +169,7 @@ describe("Endpoints for specific page", () => {
         });
     });
 
-    describe("The DELTE endpoint of pages", () => {
+    describe("The DELETE endpoint of pages", () => {
 
         const deleteFetch = (pageId: string, userId: string) =>
             authenticatedFetch(userId, fullUrl(pageId), { method: "DELETE" });

@@ -96,4 +96,25 @@ describe("Database interface for categories", () => {
         expect(retrieved.length).toEqual(n);
         expect(persisted).toEqual(retrieved);
     });
+
+    it("Is possible to check wether a page is owned by a user ", async () => {
+
+        const owner = await users.createUser(randomUser())
+        const category = await categories.createCategory(randomCategory(owner.id));
+
+        const result = await categories.hasOwner(owner.id, category.id);
+        expect(result).toBe(true);
+    });
+
+    it("Returns false if category is not owned by user ", async () => {
+
+
+        const owner = await users.createUser(randomUser())
+        const other = await users.createUser(randomUser())
+        const category = await categories.createCategory(randomCategory(owner.id));
+
+        //NOTE: not passing `owner`, but `other`
+        const result = await categories.hasOwner(other.id, category.id);
+        expect(result).toBe(false);
+    });
 });

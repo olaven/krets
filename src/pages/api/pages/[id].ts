@@ -1,6 +1,6 @@
 
 import { pages, categories } from "../../../database/database";
-import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, NOT_IMPLEMENTED, FORBIDDEN, NO_CONTENT } from "node-kall";
+import { NOT_FOUND, BAD_REQUEST, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models/models";
 import { asPageOwner, withAuthentication, withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
@@ -59,6 +59,12 @@ const put = withAuthentication(
                     .status(BAD_REQUEST)
                     .send("name missing");
             }
+
+            const { user } = await auth0.getSession(request);
+            if (page.category_id && !(await categories.hasOwner(user.sub, page.category_id)))
+                return response
+                    .status(BAD_REQUEST)
+                    .end();
 
             await pages.updatePage(page)
             response
