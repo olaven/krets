@@ -34,9 +34,9 @@ export const UpdateTitle = () => {
     }
 
     return <Box py={[1, 2, 3]}>
-        <Flex width={[1, 1 / 2]}>
+        <Flex>
             <Input id='name' name='name' value={title} onChange={(event) => { setTitle(event.target.value) }}></Input>
-            <Button onClick={updateName}>{text.settings.changeTitleButton}</Button>
+            <Button mx={1} onClick={updateName}>{text.settings.changeTitleButton}</Button>
         </Flex>
     </Box >
 }

@@ -27,9 +27,9 @@ export const UpdateName = () => {
     }
 
     return <Box py={[1, 2, 3]}>
-        <Flex width={[1, 1 / 2]}>
+        <Flex>
             <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
-            <Button onClick={updateName}>{text.settings.changeNameButton}</Button>
+            <Button mx={1} onClick={updateName}>{text.settings.changeNameButton}</Button>
         </Flex>
     </Box >
 }

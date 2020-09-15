@@ -37,7 +37,7 @@ export const PageList = () => {
                     <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
                 </Tooltip>
                 <HelpButton />
-                {!hasLoaded && <Loader size={10} />}
+                {!hasLoaded && <Loader size={50} />}
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
                     .map(page => <PageCard key={`${page.id}-${page.created_at}`} {...page} />)}

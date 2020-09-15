@@ -240,9 +240,10 @@ export const settings = strings({
         deleteCancelation: "Don't delete.",
         deleteError: "An error occured when deleting..",
         questions: {
-            heading: "Create upto 3 custom questions",
+            heading: "Create question",
             placeholder: "Enter question",
             createButton: "Create new",
+            listHeader: "Your questions",
             updateButton: "Update",
             deleteButton: "Delete.",
             unstable: "Custom questions an unstable feature - it may change"
@@ -261,9 +262,10 @@ export const settings = strings({
         deleteCancelation: "Ikke slett.",
         deleteError: "En feil oppsto med slettingen..",
         questions: {
-            heading: "Lag inntil 3 egne spørsmål",
+            heading: "Lag egne spørsmål",
             placeholder: "Enter question",
             createButton: "Opprett",
+            listHeader: "Dine spørsmål",
             updateButton: "Oppdater",
             deleteButton: "Slett.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
