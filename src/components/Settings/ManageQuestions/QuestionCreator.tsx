@@ -30,7 +30,7 @@ export const QuestionCreator = () => {
 
     //TODO: Different message if more questions aren't allowed 
     return moreQuestionsAreAllowed &&
-        <Box as='form' onSubmit={e => e.preventDefault()} width={2 / 4}>
+        <Box as='form' onSubmit={e => e.preventDefault()}>
 
             <Flex>
                 <Input

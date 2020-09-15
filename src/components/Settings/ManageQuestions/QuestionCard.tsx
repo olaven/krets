@@ -13,7 +13,7 @@ const DeleteQuestion = () => {
         console.error("Not implemented");
         alert("Sletting er ikke implementert enda. Men du kan oppdatere :-)");
     }
-    return <Button width={[1 / 4, 1 / 8]} mx={[1]} backgroundColor="failure" onClick={onDelete}>
+    return <Button mx={1} my={0.5} backgroundColor="failure" onClick={onDelete}>
         {uiText.settings.questions.deleteButton}
     </Button>
 }
@@ -42,7 +42,7 @@ const UpdateQuestion = ({ question, text }: { question: QuestionModel, text: str
                 console.error(`${status} when updating question..`);
             });
     }
-    return <Button width={[1 / 4, 1 / 8]} mx={[1]} fontSize={[1]} onClick={onUpdate}>
+    return <Button mx={1} my={0.5} fontSize={[1]} onClick={onUpdate}>
         {buttonText}
     </Button>
 }
@@ -51,7 +51,7 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
 
     const [text, setText] = useState(question.text);
 
-    return <Card my={[1, 2, 3]}>
+    return <Card my={[1]}>
         <Flex>
             <Input value={text} onChange={(event) => { setText(event.target.value) }} />
             <UpdateQuestion question={question} text={text} />

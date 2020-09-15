@@ -18,7 +18,7 @@ export const ManageQuestions = () => {
     const { page } = useContext(SettingsContext);
 
     return <QuestionsContextProvider pageId={page.id}>
-        <Heading>{uiText.settings.questions.heading}</Heading>
+        <Heading opacity={0.5}>{uiText.settings.questions.heading}</Heading>
         <Text color={"attention"}>{uiText.settings.questions.unstable}</Text>
         <QuestionCreator />
         <QuestionsList />
