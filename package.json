@@ -67,6 +67,7 @@
     "faker": "^4.1.0",
     "jest": "^26.1.0",
     "jest-config": "^26.1.0",
+    "node-fetch": "^2.6.1",
     "test-listen": "^1.1.0",
     "ts-jest": "^26.1.1"
   }
