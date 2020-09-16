@@ -113,7 +113,7 @@ const NonSubscriber = () => {
         </TextBox>
         <TextBox>
             {uiText.upgrade.salesArgument}
-            <Link href="/upgrade"> {uiText.upgrade.button}</Link> {uiText.upgrade.includedAsSubscriber}
+            <Link href="/subscription"> {uiText.upgrade.button}</Link> {uiText.upgrade.includedAsSubscriber}
         </TextBox>
     </>
 }
