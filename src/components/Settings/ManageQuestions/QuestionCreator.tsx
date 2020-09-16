@@ -44,11 +44,10 @@ export const QuestionCreator = () => {
                     value={text}
                     mx={1}
                 />
-                <Button
-                    onClick={onCreateQuestion}
-                >
-                    {uiText.settings.questions.createButton}
-                </Button>
+                <TriggerLoadingButton
+                    text={uiText.settings.questions.createButton}
+                    action={onCreateQuestion}
+                />
             </Flex>
 
         </Box>

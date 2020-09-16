@@ -5,6 +5,7 @@ import { Input } from "@rebass/forms";
 import { QuestionModel } from "../../../models/models";
 import { useState } from "react";
 import { updateQuestion } from "../../../fetchers";
+import { TriggerLoadingButton } from "../../tiny/buttons";
 
 const DeleteQuestion = () => {
 
@@ -18,9 +19,9 @@ const DeleteQuestion = () => {
     </Button>
 }
 
-const UpdateQuestion = ({ question, text }: { question: QuestionModel, text: string }) => {
+export const QuestionCard = ({ question }: { question: QuestionModel }) => {
 
-    const [buttonText, setButtonText] = useState(uiText.settings.questions.updateButton);
+    const [text, setText] = useState(question.text);
 
     const onUpdate = async () => {
 
@@ -29,32 +30,16 @@ const UpdateQuestion = ({ question, text }: { question: QuestionModel, text: str
             text
         });
 
-        //NOTE: not very readable, but kind of fun :-D
-        status === NO_CONTENT ?
-            (() => {
-
-                setButtonText("✅");
-                setTimeout(() => {
-                    setButtonText(uiText.settings.questions.updateButton);
-                }, 1000)
-            })() :
-            (() => {
-                console.error(`${status} when updating question..`);
-            });
+        if (status !== NO_CONTENT)
+            console.error(`${status} when updating question..`);
     }
-    return <Button mx={1} my={0.5} fontSize={[1]} onClick={onUpdate}>
-        {buttonText}
-    </Button>
-}
-
-export const QuestionCard = ({ question }: { question: QuestionModel }) => {
-
-    const [text, setText] = useState(question.text);
 
     return <Card my={[1]}>
         <Flex>
             <Input value={text} onChange={(event) => { setText(event.target.value) }} />
-            <UpdateQuestion question={question} text={text} />
+            <TriggerLoadingButton
+                action={onUpdate}
+                text={uiText.settings.questions.updateButton} />
             <DeleteQuestion />
         </Flex>
     </Card>
