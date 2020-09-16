@@ -60,10 +60,20 @@ export const DoubleConfirmationButton = ({ text, action }) => {
         </Button >
 }
 
-export const TriggerLoadingButton = ({ text, loading, action }: { text: string, loading: boolean, action: () => any }) =>
-    loading ?
+export const TriggerLoadingButton = ({ text, action }: { text: string, action: () => any }) => {
+
+    const [loading, setLoading] = useState(false);
+
+    return loading ?
         <Loader size={80} /> :
-        <Button mx={1} onClick={action}>{text}</Button>
+        <Button mx={1} onClick={async () => {
+
+            setLoading(true);
+            await action();
+            setLoading(false);
+        }}>{text}</Button>
+}
+
 
 
 const ListButton = (href: string, text: string) =>

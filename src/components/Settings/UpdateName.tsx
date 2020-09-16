@@ -11,19 +11,14 @@ import { TriggerLoadingButton } from "../tiny/buttons"
 export const UpdateName = () => {
 
     const { page, updatePage } = useContext(SettingsContext);
-    const [loading, setLoading] = useState(false);
     const [name, setName] = useState(page.name);
 
     const updateName = async () => {
-
-        setLoading(true);
 
         const [status] = await putPage({ ...page, name });
         if (status !== NO_CONTENT)
             console.warn(`${status} when updating page name`);
         await updatePage();
-
-        setLoading(false);
     }
 
     return <Box py={[1, 2, 3]}>
@@ -35,8 +30,7 @@ export const UpdateName = () => {
                 onChange={(event) => { setName(event.target.value) }} />
             <TriggerLoadingButton
                 text={text.settings.changeNameButton}
-                action={updateName}
-                loading={loading} />
+                action={updateName} />
         </Flex>
     </Box >
 }

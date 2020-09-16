@@ -6,12 +6,14 @@ import { useContext, useState } from "react";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { SettingsContext } from "../../../context/SettingsContext";
 import { postQuestion } from "../../../fetchers";
+import { TriggerLoadingButton } from "../../tiny/buttons";
 
 
 export const QuestionCreator = () => {
 
     const { page } = useContext(SettingsContext);
     const { moreQuestionsAreAllowed, refreshQuestions } = useContext(QuestionsContext);
+
     const [text, setText] = useState("");
 
     const onCreateQuestion = async () => {
@@ -44,7 +46,6 @@ export const QuestionCreator = () => {
                 />
                 <Button
                     onClick={onCreateQuestion}
-                    aria-label={"create-button"}
                 >
                     {uiText.settings.questions.createButton}
                 </Button>
