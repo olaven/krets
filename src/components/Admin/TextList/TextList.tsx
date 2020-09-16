@@ -20,6 +20,7 @@ const Divider = () => <Box
 export const TextList = () => {
 
     const { responses, getNextResponses, moreResponsesAvailable, responsesLoading } = useContext(AdminPageContext);
+
     const [selectedEmotions, setSelectedEmotions] = useState<Emotion[]>([":-)", ":-|", ":-("]);
 
     if (!responses)
