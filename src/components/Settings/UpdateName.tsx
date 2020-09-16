@@ -1,35 +1,42 @@
 import * as text from "../../text"
 import { NO_CONTENT } from "node-kall"
 import { useContext, useState } from "react"
-import { Box, Flex, Button } from "rebass"
+import { Box, Flex } from "rebass"
 import { Input } from "@rebass/forms"
 import { SettingsContext } from "../../context/SettingsContext"
 import { putPage } from "../../fetchers"
+import { TriggerLoadingButton } from "../tiny/buttons"
 
 
 export const UpdateName = () => {
 
     const { page, updatePage } = useContext(SettingsContext);
+    const [loading, setLoading] = useState(false);
     const [name, setName] = useState(page.name);
 
     const updateName = async () => {
 
-        page.name = name;
-        const [status] = await putPage(page)
-        if (status !== NO_CONTENT) {
+        setLoading(true);
 
-            alert(text.settings.changeNameError)
-        } else {
+        const [status] = await putPage({ ...page, name });
+        if (status !== NO_CONTENT)
+            console.warn(`${status} when updating page name`);
+        await updatePage();
 
-            await updatePage();
-            setName("");
-        }
+        setLoading(false);
     }
 
     return <Box py={[1, 2, 3]}>
         <Flex>
-            <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
-            <Button mx={1} onClick={updateName}>{text.settings.changeNameButton}</Button>
+            <Input
+                id='name'
+                name='name'
+                value={name}
+                onChange={(event) => { setName(event.target.value) }} />
+            <TriggerLoadingButton
+                text={text.settings.changeNameButton}
+                action={updateName}
+                loading={loading} />
         </Flex>
     </Box >
 }

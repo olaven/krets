@@ -60,6 +60,12 @@ export const DoubleConfirmationButton = ({ text, action }) => {
         </Button >
 }
 
+export const TriggerLoadingButton = ({ text, loading, action }: { text: string, loading: boolean, action: () => any }) =>
+    loading ?
+        <Loader size={80} /> :
+        <Button mx={1} onClick={action}>{text}</Button>
+
+
 const ListButton = (href: string, text: string) =>
     <Box m={[1]}>
         <Button width={1}>
