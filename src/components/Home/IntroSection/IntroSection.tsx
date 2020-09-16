@@ -62,13 +62,13 @@ export const IntroSection = () => {
             <Box width={[0, 1 / 4]}> </Box>
             <Box width={[1, 2 / 4]}>
 
-                <Box backgroundColor="primary" color="secondary" width={1}>
+                <Box backgroundColor="primary" color="secondary" width={1} padding={[1, 2]}>
                     <Heading textAlign="center" py={[1, 2]}>{intro.instructions}</Heading>
                     <Flex>
                         <Box width={[1 / 20, 1 / 6]}></Box>
                         <Box width={[9 / 10, 4 / 6]}>
                             <Image margin="auto auto" src="/krets-qr.png" />
-                            <Link href="https://krets.app/krets">https://krets.app/krets</Link>
+                            {/* <Link href="https://krets.app/krets">https://krets.app/krets</Link> */}
                         </Box>
                         <Box width={[1 / 20, 1 / 6]}></Box>
                     </Flex>
@@ -77,7 +77,7 @@ export const IntroSection = () => {
             <Box width={[0, 1 / 4]}> </Box>
         </Flex>
 
-        <Flex width={1} flexWrap="wrap">
+        {/*  <Flex width={1} flexWrap="wrap">
             <IntroTextBox>
                 {intro.create}
             </IntroTextBox>
@@ -90,6 +90,6 @@ export const IntroSection = () => {
                 {intro.insight}
             </IntroTextBox>
             <IntroImageBox source="/insight.svg" />
-        </Flex>
+        </Flex> */}
     </Box>
 };
