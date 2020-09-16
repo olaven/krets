@@ -1,10 +1,11 @@
 import * as text from "../../text"
 import { NO_CONTENT } from "node-kall"
 import { useContext, useState } from "react"
-import { Box, Flex, Button } from "rebass"
+import { Box, Flex } from "rebass"
 import { Input } from "@rebass/forms"
 import { SettingsContext } from "../../context/SettingsContext"
 import { putPage } from "../../fetchers"
+import { TriggerLoadingButton } from "../tiny/buttons"
 
 
 export const UpdateName = () => {
@@ -14,22 +15,22 @@ export const UpdateName = () => {
 
     const updateName = async () => {
 
-        page.name = name;
-        const [status] = await putPage(page)
-        if (status !== NO_CONTENT) {
-
-            alert(text.settings.changeNameError)
-        } else {
-
-            await updatePage();
-            setName("");
-        }
+        const [status] = await putPage({ ...page, name });
+        if (status !== NO_CONTENT)
+            console.warn(`${status} when updating page name`);
+        await updatePage();
     }
 
     return <Box py={[1, 2, 3]}>
         <Flex>
-            <Input id='name' name='name' value={name} onChange={(event) => { setName(event.target.value) }}></Input>
-            <Button mx={1} onClick={updateName}>{text.settings.changeNameButton}</Button>
+            <Input
+                id='name'
+                name='name'
+                value={name}
+                onChange={(event) => { setName(event.target.value) }} />
+            <TriggerLoadingButton
+                text={text.settings.changeNameButton}
+                action={updateName} />
         </Flex>
     </Box >
 }
