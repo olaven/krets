@@ -11,8 +11,8 @@ import { randomPage, randomUser } from "../../database/databaseTestUtils";
 
 describe("The component for creating new responses", () => {
 
-    const launch = (page: PageModel) =>
-        render(<ResponseSection page={page} />);
+    const launch = (page: PageModel, showHeader = true) =>
+        render(<ResponseSection page={page} showHeader={showHeader} />);
 
     const page = () => randomPage(randomUser().id)
 
@@ -22,6 +22,15 @@ describe("The component for creating new responses", () => {
 
             const { getByLabelText } = launch(page());
             expect(getByLabelText("response-section-header")).toBeInTheDocument();
+        });
+
+        it("Does not show header if `showHeader`-prop is false ", () => {
+
+            const { findByLabelText } = launch(page(), false);
+            waitFor(() => {
+
+                expect(findByLabelText("response-section-header")).not.toBeInTheDocument();
+            });
         });
 
         it("Does show smileys at render", () => {
@@ -52,9 +61,9 @@ describe("The component for creating new responses", () => {
             const [button] = getAllByLabelText("response-emoji-button");
             fireEvent.click(button);
 
-            const checkBox = getByLabelText("response-checkbox-input")
+            const checkBox = getByLabelText("response-checkbox-input");
 
-            fireEvent.change(checkBox)
+            fireEvent.change(checkBox);
 
             waitFor(() => {
 
@@ -66,7 +75,7 @@ describe("The component for creating new responses", () => {
 
             const customPage = page()
             customPage.custom_title = faker.lorem.words(4);
-            const { findByText } = launch(customPage)
+            const { findByText } = launch(customPage);
 
             waitFor(() => {
 

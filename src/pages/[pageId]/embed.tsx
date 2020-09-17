@@ -9,7 +9,6 @@ import { usePage } from '../../effects/usePage';
 
 const Embed = () => {
 
-
     const router = useRouter();
     const pageId = router.query.pageId as string;
 
