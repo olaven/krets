@@ -63,44 +63,12 @@ describe("The endpoint for answers on a given response", () => {
 
     describe("Creation of answers", () => {
 
-        it("Returns 401 if not authenticated", async () => {
-
-            const [_, page, response, __] = await setupAnswers()
-
-            const { status } = await fetch(fullURL(page.id, response.id), {
-                method: "POST",
-                body: JSON.stringify(randomAnswer(response.id)),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            expect(status).toEqual(401);
-        });
-
-        it("Returns 403 if authenticated, but not page owner", async () => {
-
-            const [owner, page, response, __] = await setupAnswers();
-            const other = await users.createUser(randomUser());
-            expect(owner.id).not.toEqual(other.id);
-
-            const { status } = await authenticatedFetch(other.id, fullURL(page.id, response.id), {
-                method: "POST",
-                body: JSON.stringify(randomAnswer(response.id)),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            expect(status).toEqual(403);
-        });
-
-        it("Is possible to post answer", async () => {
+        it("Is possible to post answer as unauthenticated user", async () => {
 
             const [owner, page, response, __] = await setupAnswers();
             const answer = randomAnswer(response.id);
 
-            const fetchResponse = await authenticatedFetch(owner.id, fullURL(page.id, response.id), {
+            const fetchResponse = await fetch(fullURL(page.id, response.id), {
                 method: "POST",
                 body: JSON.stringify(answer),
                 headers: {
