@@ -12,7 +12,7 @@ import { ContactInput } from "./ContactInput";
 
 
 
-export const ResponseSection = ({ page }: { page: PageModel }) => {
+export const ResponseSection = ({ page, showHeader }: { page: PageModel, showHeader: boolean }) => {
 
     const { questions } = useContext(QuestionsContext);
 
@@ -62,7 +62,7 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
         {published ?
             <Thanks /> :
             <>
-                <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
+                {showHeader && <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>}
                 <Flex>
                     <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                     <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
@@ -91,6 +91,7 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
                         {uiText.response.button}
                     </Button>
                 </>}
-            </>}
-    </Box>;
+            </>
+        }
+    </Box >;
 };
