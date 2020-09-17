@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, } from "react";
-import { get, OK } from "node-kall";
+import { OK } from "node-kall";
 import { QuestionModel } from "../models/models";
 import { getQuestions } from "../fetchers";
 

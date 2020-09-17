@@ -60,18 +60,22 @@ export const DoubleConfirmationButton = ({ text, action }) => {
         </Button >
 }
 
-export const TriggerLoadingButton = ({ text, action }: { text: string, action: () => any }) => {
+export const TriggerLoadingButton = ({ text, action, backgroundColor }: { text: string, action: () => any, backgroundColor?: string }) => {
 
     const [loading, setLoading] = useState(false);
 
     return loading ?
         <Loader size={80} /> :
-        <Button mx={1} onClick={async () => {
+        <Button
+            mx={1}
+            backgroundColor={backgroundColor ? backgroundColor : "primary"}
+            onClick={async () => {
 
-            setLoading(true);
-            await action();
-            setLoading(false);
-        }}>{text}</Button>
+                setLoading(true);
+                await action();
+                setLoading(false);
+            }}
+        >{text}</Button>
 }
 
 

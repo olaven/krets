@@ -74,6 +74,11 @@ export const postQuestion = (question: QuestionModel) =>
 export const updateQuestion = (question: QuestionModel) =>
     put<QuestionModel>(`/api/pages/${question.page_id}/questions/${question.id}`, question);
 
+export const deleteQuestion = (question: QuestionModel) =>
+    del<QuestionModel>(`/api/pages/${question.page_id}/questions/${question.id}`, {
+        body: JSON.stringify(question) //backend expects question to be passed as body.
+    });
+
 //DANGER: actually deletes entire user.
 export const deleteUser = (id: string) =>
     del(`/api/users/${id}`);

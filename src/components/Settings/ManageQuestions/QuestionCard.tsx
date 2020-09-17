@@ -1,22 +1,29 @@
 import * as uiText from "../../../text";
-import { NO_CONTENT } from "node-kall";
+import { NO_CONTENT, OK } from "node-kall";
 import { Button, Card, Flex } from "rebass";
 import { Input } from "@rebass/forms";
 import { QuestionModel } from "../../../models/models";
-import { useState } from "react";
-import { updateQuestion } from "../../../fetchers";
+import { useContext, useState } from "react";
+import { deleteQuestion, updateQuestion } from "../../../fetchers";
 import { TriggerLoadingButton } from "../../tiny/buttons";
+import { QuestionsContext } from "../../../context/QuestionsContext";
 
-const DeleteQuestion = () => {
+const DeleteQuestion = ({ question }: { question: QuestionModel }) => {
+
+    const { refreshQuestions } = useContext(QuestionsContext);
 
     const onDelete = async () => {
-        //TODO: implement
-        console.error("Not implemented");
-        alert("Sletting er ikke implementert enda. Men du kan oppdatere :-)");
+
+        const [status] = await deleteQuestion(question);
+
+        if (status !== OK) alert(`error deleting question..`);
+        else refreshQuestions();
     }
-    return <Button mx={1} my={0.5} backgroundColor="failure" onClick={onDelete}>
-        {uiText.settings.questions.deleteButton}
-    </Button>
+    return <TriggerLoadingButton
+        text={uiText.settings.questions.deleteButton}
+        action={onDelete}
+        backgroundColor="failure"
+    />
 }
 
 export const QuestionCard = ({ question }: { question: QuestionModel }) => {
@@ -40,7 +47,7 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
             <TriggerLoadingButton
                 action={onUpdate}
                 text={uiText.settings.questions.updateButton} />
-            <DeleteQuestion />
+            <DeleteQuestion question={question} />
         </Flex>
     </Card>
 }

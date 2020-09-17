@@ -1,4 +1,4 @@
-import { Flex, Button, Box } from "rebass";
+import { Flex, Button, Box, Heading } from "rebass";
 import { CREATED } from "node-kall";
 import { Input } from "@rebass/forms";
 import * as uiText from "../../../text";
@@ -33,7 +33,7 @@ export const QuestionCreator = () => {
     //TODO: Different message if more questions aren't allowed 
     return moreQuestionsAreAllowed &&
         <Box as='form' onSubmit={e => e.preventDefault()}>
-
+            <Heading opacity={0.5}>{uiText.settings.questions.createQuestion}</Heading>
             <Flex>
                 <Input
                     aria-label="questionname-input"
