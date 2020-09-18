@@ -1,23 +1,25 @@
-import { FORBIDDEN, CREATED, OK } from "node-kall";
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { CREATED } from "node-kall";
+import { NextApiRequest, NextApiResponse } from "next";
 import { asPageOwner, withAuthentication, withErrorHandling, withMethodHandlers } from "../../../../../../middleware/middleware";
 import { withCors } from "../../../../../../middleware/withCors";
-import { answers, pages, responses } from "../../../../../../database/database";
-import auth0 from "../../../../../../auth/auth0";
+import { answers, responses } from "../../../../../../database/database";
 import { AnswerModel } from "../../../../../../models/models";
 import { getPathParam } from "../../../../../../workarounds";
 
 
+export const getAnswers = withAuthentication(
+    asPageOwner(
+        url => getPathParam(url, 4),
+        async (request: NextApiRequest, response: NextApiResponse) => {
 
+            const responseId = getPathParam(request.url, 2);
+            const retrieved = await answers.getByResponse(responseId);
 
-export const getAnswers = async (request: NextApiRequest, response: NextApiResponse) => {
-
-    const responseId = getPathParam(request.url, 2);
-    const retrieved = await answers.getByResponse(responseId);
-
-    return response
-        .json(retrieved)
-}
+            return response
+                .json(retrieved)
+        }
+    )
+);
 
 export const postAnswers = async (request: NextApiRequest, response: NextApiResponse) => {
 
@@ -35,15 +37,10 @@ export const postAnswers = async (request: NextApiRequest, response: NextApiResp
 
 
 export default withCors(
-    withAuthentication(
-        withErrorHandling(
-            asPageOwner(
-                url => getPathParam(url, 4),
-                withMethodHandlers({
-                    GET: getAnswers,
-                    POST: postAnswers
-                }),
-            )
-        )
+    withErrorHandling(
+        withMethodHandlers({
+            GET: getAnswers,
+            POST: postAnswers
+        }),
     )
 );
