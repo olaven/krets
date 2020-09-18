@@ -7,7 +7,7 @@ export const intro = strings({
     en: {
         about: "You'll only improve through feedback 👊",
         aim: "Krets aims to make it frictionless 😁",
-        instructions: "See how it works - Scan with your phone ✨",
+        instructions: "See how it works - Scan with your phone 🤳✨",
         create: "Creating a page on Krets is fast!",
         visiting: "Your audience visits your site, with a link or a QR-code",
         insight: "Gain insight!",
@@ -20,7 +20,7 @@ export const intro = strings({
     no: {
         about: "Tilbakemeldinger er nødvendig for forbedring 👊",
         aim: "Krets ønsker å gjøre det friksjonsfritt 😁",
-        instructions: "Se hvordan det funker - Scan med telefonen ✨",
+        instructions: "Se hvordan det funker - Scan med telefonen 🤳✨",
         create: "Å lage en Krets-side er kjapt!",
         visiting: "Ditt publikum besøker din side, med link eller QR-kode",
         insight: "Få innsikt!",
