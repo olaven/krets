@@ -21,6 +21,7 @@ export const QuestionCreator = () => {
         const [status, question] = await postQuestion({
             text,
             page_id: page.id,
+            archived: false
         });
 
         if (status === CREATED) {

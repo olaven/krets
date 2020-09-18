@@ -152,7 +152,8 @@ describe("The endpoint for questions", () => {
             const [user, page] = await setupQuestions();
             const { status } = await postQuestion(user.id, {
                 page_id: page.id,
-                text: null
+                text: null,
+                archived: false,
             });
 
             expect(status).toEqual(400);

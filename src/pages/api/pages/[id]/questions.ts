@@ -13,7 +13,7 @@ const getId = (url: string) => getPathParam(url, 2);
 const getQuestions = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const pageId = getId(request.url);
-    const retrieved = await questions.getByPage(pageId);
+    const retrieved = await questions.getNonArchivedByPage(pageId);
 
     response.json(retrieved);
 };
