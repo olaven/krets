@@ -68,6 +68,18 @@ describe("The endpoint for questions", () => {
             }
         });
 
+        it("Only returns non-archived questions", async () => {
+
+            const [_, firstPage] = await setupQuestions(1, false);
+            const firstRetrieved = await (await fetch(fullURL(firstPage.id))).json() as QuestionModel[];
+
+            const [__, secondPage] = await setupQuestions(1, true);
+            const secondRetrieved = await (await fetch(fullURL(secondPage.id))).json() as QuestionModel[];
+
+            expect(firstRetrieved.length).toEqual(1);
+            expect(secondRetrieved.length).toEqual(0);
+        });
+
         it("Only returns questions from given page", async () => {
 
             const sort = (questions: QuestionModel[]) =>
