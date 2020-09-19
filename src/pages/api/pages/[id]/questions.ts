@@ -13,7 +13,14 @@ const getId = (url: string) => getPathParam(url, 2);
 const getQuestions = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const pageId = getId(request.url);
-    const retrieved = await questions.getNonArchivedByPage(pageId);
+
+    //'false' becomes `true`.. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/Boolean
+    const includeArchived = Boolean(request.query?.includeArchived === 'true');
+
+    console.log("include archived: ", includeArchived);
+    const retrieved = includeArchived ?
+        await questions.getByPage(pageId) :
+        await questions.getNonArchivedByPage(pageId);
 
     response.json(retrieved);
 };

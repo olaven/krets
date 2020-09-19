@@ -246,7 +246,7 @@ export const settings = strings({
             createButton: "Create new",
             listHeader: "Your questions",
             updateButton: "Update",
-            deleteButton: "Delete.",
+            archiveButton: "Archive.",
             unstable: "Custom questions an unstable feature - it may change"
         }
     },
@@ -269,7 +269,7 @@ export const settings = strings({
             createButton: "Opprett",
             listHeader: "Dine spørsmål",
             updateButton: "Oppdater",
-            deleteButton: "Slett.",
+            archiveButton: "Arkiver.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
         }
     }

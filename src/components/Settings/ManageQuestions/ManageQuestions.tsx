@@ -15,7 +15,7 @@ export const ManageQuestions = () => {
 
     const { page } = useContext(SettingsContext);
 
-    return <QuestionsContextProvider pageId={page.id}>
+    return <QuestionsContextProvider pageId={page.id} includeArchived={false}>
         <QuestionCreator />
         <QuestionsList />
     </QuestionsContextProvider >

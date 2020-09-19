@@ -8,17 +8,18 @@ const getQuestion = (id: string) =>
         [id]
     );
 
-/* const getByPage = (pageId: string) =>
+//NOTE: returns both archived- and non-archived questions 
+const getByPage = (pageId: string) =>
     rows<QuestionModel>(
         `select * from questions where page_id = $1 order by created_at desc`,
         [pageId]
-    ); */
+    );
 
 const getNonArchivedByPage = (pageId: string) =>
     rows<QuestionModel>(
         `select * from questions where page_id = $1 and archived = false order by created_at desc`,
         [pageId]
-    )
+    );
 
 const createQuestion = (question: QuestionModel) =>
     first<QuestionModel>(
@@ -40,6 +41,7 @@ const deleteQuestion = (id: string) =>
 
 export const questions = {
     getQuestion,
+    getByPage,
     getNonArchivedByPage,
     createQuestion,
     updateQuestion,

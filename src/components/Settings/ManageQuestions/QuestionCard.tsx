@@ -54,7 +54,7 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
                 action={onUpdate(question => ({ ...question, text }))}
                 text={uiText.settings.questions.updateButton} />
             <TriggerLoadingButton
-                text={uiText.settings.questions.deleteButton}
+                text={uiText.settings.questions.archiveButton}
                 action={onUpdate(question => ({ ...question, archived: true }))}
                 backgroundColor="failure"
             />

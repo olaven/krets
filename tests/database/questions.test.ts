@@ -35,8 +35,8 @@ describe("The API interface for questions", () => {
             const firstQuestion = await questions.createQuestion(randomQuestion(firstPage.id));
             const secondQuestion = await questions.createQuestion(randomQuestion(secondPage.id));
 
-            const [retrievedFirst] = await questions.getNonArchivedByPage(firstPage.id);
-            const [retrievedSecond] = await questions.getNonArchivedByPage(secondPage.id);
+            const [retrievedFirst] = await questions.getByPage(firstPage.id);
+            const [retrievedSecond] = await questions.getByPage(secondPage.id);
 
             expect(retrievedFirst).toEqual(firstQuestion);
             expect(retrievedSecond).toEqual(secondQuestion);

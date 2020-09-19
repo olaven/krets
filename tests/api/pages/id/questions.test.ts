@@ -13,8 +13,8 @@ describe("The endpoint for questions", () => {
     let server: Server;
     let url: string;
 
-    const fullURL = (pageId: string) =>
-        `${url}/${pageId}/questions`;
+    const fullURL = (pageId: string, includeArchived = false) =>
+        `${url}/${pageId}/questions?includeArchived=${includeArchived}`;
 
     beforeAll(async () => {
 
@@ -68,7 +68,7 @@ describe("The endpoint for questions", () => {
             }
         });
 
-        it("Only returns non-archived questions", async () => {
+        it("Only returns non-archived questions by default", async () => {
 
             const [_, firstPage] = await setupQuestions(1, false);
             const firstRetrieved = await (await fetch(fullURL(firstPage.id))).json() as QuestionModel[];
@@ -78,6 +78,22 @@ describe("The endpoint for questions", () => {
 
             expect(firstRetrieved.length).toEqual(1);
             expect(secondRetrieved.length).toEqual(0);
+        });
+
+        it("Only does include archived questions if explicitly asked to", async () => {
+
+            const [_, firstPage] = await setupQuestions(1, true);
+            const [question] = await (await fetch(fullURL(firstPage.id, true))).json() as QuestionModel[];
+
+            expect(question.archived).toBe(true);
+        });
+
+        it("Does not include archived questions if includeQuestions is false", async () => {
+
+            const [_, firstPage] = await setupQuestions(1, true);
+            const [question] = await (await fetch(fullURL(firstPage.id, false))).json() as QuestionModel[];
+
+            expect(question).toBe(undefined);
         });
 
         it("Only returns questions from given page", async () => {
