@@ -8,15 +8,18 @@ import { deleteQuestion, updateQuestion } from "../../../fetchers";
 import { TriggerLoadingButton } from "../../tiny/buttons";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 
-const DeleteQuestion = ({ question }: { question: QuestionModel }) => {
+/* const ArchiveQuestion = ({ question }: { question: QuestionModel }) => {
 
     const { refreshQuestions } = useContext(QuestionsContext);
 
     const onDelete = async () => {
 
-        const [status] = await deleteQuestion(question);
+        const [status] = await updateQuestion({
+            ...question,
+            archived: true
+        });
 
-        if (status !== OK) alert(`error deleting question..`);
+        if (status !== NO_CONTENT) alert(`error deleting question..`);
         else refreshQuestions();
     }
     return <TriggerLoadingButton
@@ -24,30 +27,37 @@ const DeleteQuestion = ({ question }: { question: QuestionModel }) => {
         action={onDelete}
         backgroundColor="failure"
     />
-}
+} */
 
 export const QuestionCard = ({ question }: { question: QuestionModel }) => {
 
+    const { refreshQuestions } = useContext(QuestionsContext);
     const [text, setText] = useState(question.text);
 
-    const onUpdate = async () => {
+    const onUpdate = (updater: (question: QuestionModel) => QuestionModel) =>
+        async () => {
 
-        const [status] = await updateQuestion({
-            ...question,
-            text
-        });
+            const [status] = await updateQuestion(
+                updater(question)
+            );
 
-        if (status !== NO_CONTENT)
-            console.error(`${status} when updating question..`);
-    }
+            if (status !== NO_CONTENT)
+                console.error(`${status} when updating question..`);
+
+            await refreshQuestions();
+        }
 
     return <Card my={[1]}>
         <Flex>
             <Input value={text} onChange={(event) => { setText(event.target.value) }} />
             <TriggerLoadingButton
-                action={onUpdate}
+                action={onUpdate(question => ({ ...question, text }))}
                 text={uiText.settings.questions.updateButton} />
-            <DeleteQuestion question={question} />
+            <TriggerLoadingButton
+                text={uiText.settings.questions.deleteButton}
+                action={onUpdate(question => ({ ...question, archived: true }))}
+                backgroundColor="failure"
+            />
         </Flex>
     </Card>
 }
