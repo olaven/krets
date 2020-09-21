@@ -47,35 +47,34 @@ const CornerButtons = () => {
         </>
 }
 
+const withHeader = props => <Box
+    minWidth={"100vw"}
+    minHeight={"100vh"}
+    sx={{
+        m: 0,
+        fontFamily: "body"
+    }} backgroundColor={"secondary"}>
+    <Flex px={2}
+        color='primary'
+        alignItems='center'>
+
+        <HeaderLogo />
+        <CornerButtons />
+    </Flex>
+    {props.children}
+</Box>
 
 export const Layout = (props) => {
 
     const router = useRouter();
+
     if (router.pathname.includes("/[pageId]/embed"))
         return <Box sx={{
             m: 0,
             fontFamily: "body"
-        }}>{props.children}
+        }}>
+            {props.children}
         </Box >
-
-    return <Box
-
-        minWidth={"100vw"}
-        minHeight={"100vh"}
-        sx={{
-            m: 0,
-            fontFamily: "body"
-        }} backgroundColor={"secondary"}>
-        <Flex px={2}
-            color='primary'
-            alignItems='center'>
-
-            <HeaderLogo />
-            <CornerButtons />
-        </Flex>
-        {props.children}
-        {/*<div>
-            footer stuff
-        </div>*/}
-    </Box>
+    else
+        return withHeader(props);
 };
