@@ -18,31 +18,33 @@ const getQuestions = async (request: NextApiRequest, response: NextApiResponse) 
     response.json(retrieved);
 };
 
-const postQuestion = withErrorHandling(withAuthentication(async (request, response) => {
+const postQuestion = withErrorHandling(
+    withAuthentication(async (request, response) => {
 
-    const { user } = await auth0.getSession(request);
-    const page = await pages.getPage(getId(request.url));
+        const { user } = await auth0.getSession(request);
+        const page = await pages.getPage(getId(request.url));
 
-    const question = request.body as QuestionModel;
+        const question = request.body as QuestionModel;
 
-    if (page?.owner_id !== user.sub || question.page_id !== page?.id)
-        return response.status(FORBIDDEN).end();
+        if (page?.owner_id !== user.sub || question.page_id !== page?.id)
+            return response.status(FORBIDDEN).end();
 
-    try {
-        const persisted = await questions.createQuestion(question);
-        return response
-            .status(CREATED)
-            .send(persisted);
-    } catch {
+        try {
+            const persisted = await questions.createQuestion(question);
+            return response
+                .status(CREATED)
+                .send(persisted);
+        } catch {
 
-        //TODO: figure out why this is not done by `withErrorHandling`
-        return response
-            .status(BAD_REQUEST)
-            .end();
-    }
+            //TODO: figure out why this is not done by `withErrorHandling`
+            return response
+                .status(BAD_REQUEST)
+                .end();
+        }
 
 
-}));
+    })
+);
 
 export default withCors(
     withErrorHandling(
