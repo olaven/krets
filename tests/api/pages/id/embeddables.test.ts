@@ -69,14 +69,16 @@ describe("The endpoint for embeddables", () => {
         });
 
         it("needs more tests", () => {
-            throw "implement tests";
+            //TODO: implement
+            expect(true).toBe(false)
         });
     });
 
     describe("Verification and persisting of responses", () => {
 
         it("needs more tests", () => {
-            throw "implement tests"
+            //TODO: implement
+            expect(true).toBe(false)
         });
     });
 });

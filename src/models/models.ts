@@ -1,5 +1,4 @@
 export type { Emotion } from "./Emotion"
-
 export type { ResponseModel } from "./ResponseModel";
 export type { PageModel } from "./PageModel";
 export type { CategoryModel } from "./CategoryModel";
@@ -11,3 +10,4 @@ export type { PaymentRequestModel } from "./PaymentModel"
 export type { PaginatedModel } from "./PaginatedModel";
 export type { QuestionModel } from "./QuestionModel";
 export type { AnswerModel } from "./AnswerModel";
+export type { EmbeddableModel } from "./EmbeddableModel";
