@@ -22,7 +22,7 @@ const postEmbeddable = asPageOwner(
             getPageId(request.url)
         );
 
-        const persisted = embeddables.createEmbeddable({
+        const persisted = await embeddables.createEmbeddable({
             ...embeddable,
             page_id: page.id,
             token: nanoid(),

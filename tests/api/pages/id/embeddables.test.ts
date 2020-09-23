@@ -3,10 +3,8 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
 import embeddablesHandler from '../../../../src/pages/api/pages/[id]/embeddables';
-import { users, pages, responses } from "../../../../src/database/database";
-import { randomUser, randomPage, setupPages, setupEmbeddable, randomEmbeddable } from "../../../database/databaseTestUtils";
-import { EmbeddableModel, PageModel, UserModel } from "../../../../src/models/models";
-import { useImperativeHandle } from "react";
+import { setupPages, setupEmbeddable, randomEmbeddable } from "../../../database/databaseTestUtils";
+import { EmbeddableModel, PageModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -87,7 +85,7 @@ describe("The endpoint for embeddables", () => {
             expect(status).toEqual(201);
         });
 
-        it("Returns the embeddable in response body on succesful creation", async () => {
+        it("Returns the embeddable in response body on succesful creation ", async () => {
 
             const [owner, [page]] = await setupPages(1);
 
@@ -98,9 +96,9 @@ describe("The endpoint for embeddables", () => {
             expect(retrieved.origin).toEqual(embeddable.origin);
         });
 
-        it("Does accept embeddable with only origin defined", async () => {
+        it("Does accept embeddable with only origin defined ", async () => {
 
-            const [owner, [page]] = await setupPages(1);
+            const [_, [page]] = await setupPages(1);
             const origin = faker.internet.url();
 
             const { status } = await postEmbeddable(page, { origin });
@@ -109,8 +107,7 @@ describe("The endpoint for embeddables", () => {
 
         it("Does not accept embeddable if origin is not defined", async () => {
 
-            const [owner, [page]] = await setupPages(1);
-            const origin = faker.internet.url();
+            const [_, [page]] = await setupPages(1);
 
             const { status } = await postEmbeddable(page, { origin: undefined });
             expect(status).toEqual(400);
