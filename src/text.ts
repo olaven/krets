@@ -1,7 +1,16 @@
 import LocalizedStrings from "react-localization";
 
-const strings = (config: { en: any, no: any }) =>
-    new LocalizedStrings(config);
+const strings = (config: { en: any, no: any }) => {
+
+    const strings = new LocalizedStrings(config);
+
+    /*
+        NOTE: forces norwegian, as that is the market Krets is going for ATM.
+        Remove the line below to make language dynamic again.
+    */
+    strings.setLanguage("no");
+    return strings;
+}
 
 export const intro = strings({
     en: {
