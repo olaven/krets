@@ -13,23 +13,6 @@ const createAnswer = (answer: AnswerModel) =>
         [answer.response_id, answer.text, answer.question_id]
     );
 
-const createAnswers = async (answers: AnswerModel[]) => {
-
-    let persisted: AnswerModel[] = []
-    for (const answer of answers) {
-        persisted = [
-            ...persisted,
-            await createAnswer(answer)
-        ]
-    }
-    return persisted;
-    /* Promise.all( //NOTE: jest API test does not work well with this. Weird. 
-        answers.map(
-            answer => createAnswer(answer)
-        )
-    ); */
-}
-
 const getByResponse = (responseId: string) =>
     rows<AnswerModel>(
         `select * from answers where response_id = $1 order by created_at asc`,
@@ -39,6 +22,5 @@ const getByResponse = (responseId: string) =>
 export const answers = {
     getAnswer,
     createAnswer,
-    createAnswers,
     getByResponse
 }

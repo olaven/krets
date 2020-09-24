@@ -353,7 +353,7 @@ export const upgrade = strings({
         included: "including",
         pages: "pages",
         afterTier: "per additional page",
-        loading: "Updating.. Thanks for your patience!",
+        loading: "Updating.. Thanks for our patience!",
         button: "Setup subscription",
         salesArgument: "That's why Krets has a low price for everyone creating something by themselves!",
         includedAsSubscriber: "for access and updates",

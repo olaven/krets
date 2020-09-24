@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { randomResponse, randomUser, randomPage, setupResponses } from "./databaseTestUtils";
+import { randomResponse, randomUser, randomPage, blindSetup } from "./databaseTestUtils";
 import { convertEmotion } from "../../src/database/responses";
 import { users, pages, responses } from "../../src/database/database";
 
@@ -110,7 +110,7 @@ describe("Database repository for pages", () => {
 
         test("Can get specific responses", async () => {
 
-            const [_u, _uu, [first, second, third]] = await setupResponses(3);
+            const [_u, _uu, [first, second, third]] = await blindSetup(3);
 
             const retrievedFirst = await responses.getResponse(first.id);
             expect(retrievedFirst).toEqual(first);
@@ -129,7 +129,7 @@ describe("Database repository for pages", () => {
 
                 const pageSize = 10;
                 //NOTE: persisting more than pageSize
-                const [page, owner, persisted] = await setupResponses(pageSize + 5)
+                const [page, owner, persisted] = await blindSetup(pageSize + 5)
                 const retrieved = await responses.getResponses(page.id)
 
                 expect(persisted.length).toBeGreaterThan(pageSize)
@@ -139,7 +139,7 @@ describe("Database repository for pages", () => {
             it("Is possible to specify other pageSize", async () => {
 
                 const pageSize = 2;
-                const [page] = await setupResponses(pageSize + 3);
+                const [page] = await blindSetup(pageSize + 3);
 
                 const retrieved = await responses.getResponses(page.id, {
                     amount: pageSize
@@ -150,7 +150,7 @@ describe("Database repository for pages", () => {
             it("Returns only after given creation date key", async () => {
 
                 const pageSize = 5;
-                const [page, _, persisted] = await setupResponses(pageSize);
+                const [page, _, persisted] = await blindSetup(pageSize);
 
                 const [first, second, third] = persisted;
 
@@ -170,7 +170,7 @@ describe("Database repository for pages", () => {
             it("Returns only after given creation date key, limited by pageSize", async () => {
 
                 const pageSize = 2;
-                const [page, _, persisted] = await setupResponses(8); //NOTE: four times page size
+                const [page, _, persisted] = await blindSetup(8); //NOTE: four times page size
 
                 const [first, second] = persisted;
 
@@ -192,7 +192,7 @@ describe("Database repository for pages", () => {
 
         test("Does return an array", async () => {
 
-            const [page] = await setupResponses();
+            const [page] = await blindSetup();
             const coordinates = await responses.getLineCoordinates(page.id);
 
             expect(coordinates).toBeInstanceOf(Array);
@@ -200,7 +200,7 @@ describe("Database repository for pages", () => {
 
         it("Returns the same amount of responses as perssited", async () => {
 
-            const [page, _, persisted] = await setupResponses();
+            const [page, _, persisted] = await blindSetup();
             const coordinates = await responses.getLineCoordinates(page.id);
 
             expect(persisted.length).toBeGreaterThan(0);
@@ -209,7 +209,7 @@ describe("Database repository for pages", () => {
 
         it("Returns responses sorted by date, with newest first", async () => {
 
-            const [page] = await setupResponses();
+            const [page] = await blindSetup();
             const retrieved = await responses.getResponses(page.id);
 
             for (let i = 1; i < retrieved.length; i++) {
@@ -223,7 +223,7 @@ describe("Database repository for pages", () => {
 
         it("Returns coordinates", async () => {
 
-            const [page] = await setupResponses();
+            const [page] = await blindSetup();
             const [coordinate] = await responses.getLineCoordinates(page.id);
 
 
@@ -236,7 +236,7 @@ describe("Database repository for pages", () => {
 
         it("Returns a number", async () => {
 
-            const [page] = await setupResponses();
+            const [page] = await blindSetup();
 
             const count = await responses.getCount(page.id);
             expect(parseInt((count as unknown as string))).not.toBeNaN();
@@ -245,7 +245,7 @@ describe("Database repository for pages", () => {
         it("Returns the same number as count of responses", async () => {
 
             const n = await faker.random.number({ min: 1, max: 20 });
-            const [page] = await setupResponses(n);
+            const [page] = await blindSetup(n);
 
             const count = await responses.getCount(page.id);
             expect(count).toEqual(n);
@@ -253,7 +253,7 @@ describe("Database repository for pages", () => {
 
         it("Works when no responses are persisted", async () => {
 
-            const [page] = await setupResponses(0);
+            const [page] = await blindSetup(0);
             const count = await responses.getCount(page.id);
             expect(count).toEqual(0)
         });

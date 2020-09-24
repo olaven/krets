@@ -82,17 +82,13 @@ describe("The endpoint for questions", () => {
 
         it("Only does include archived questions if explicitly asked to", async () => {
 
-            const [_, page] = await setupQuestions(1, true);
-            const response = await fetch(fullURL(page.id, true));
-            expect(response.status).toEqual(200);
+            const [_, firstPage] = await setupQuestions(1, true);
+            const [question] = await (await fetch(fullURL(firstPage.id, true))).json() as QuestionModel[];
 
-            const [question] = await response.json() as QuestionModel[];
-
-            expect(question).toBeDefined();
             expect(question.archived).toBe(true);
         });
 
-        it("Does not include archived questions if includeQuestions is false ", async () => {
+        it("Does not include archived questions if includeQuestions is false", async () => {
 
             const [_, firstPage] = await setupQuestions(1, true);
             const [question] = await (await fetch(fullURL(firstPage.id, false))).json() as QuestionModel[];
@@ -202,4 +198,38 @@ describe("The endpoint for questions", () => {
             expect(status).toEqual(403);
         });
     });
+
+    /*     
+    //TODO: implement PUT and DELETE, but on endpoint for specific question, i.e. /pages/questions/[questionId]
+    describe("Updating questions on a page", () => {
+    
+            it("Does respond with _something_", async () => {
+    
+                const { status } = await fetch(fullURL(uid()), { method: "PUT" });
+                expect(status).toBeDefined();
+            });
+    
+    
+            it("Does returns 401 if not authenticated", async () => {
+    
+                const { status } = await fetch(fullURL(uid()), { method: "PUT" });
+                expect(status).toEqual(401);
+            });
+        });
+    
+        describe("Deleting questions", async () => {
+    
+            it("Does respond with _something_", async () => {
+    
+                const { status } = await fetch(fullURL(uid()), { method: "DELETE" });
+                expect(status).toBeDefined();
+            });
+    
+    
+            it("Does returns 401 if not authenticated", async () => {
+    
+                const { status } = await fetch(fullURL(uid()), { method: "DELETE" });
+                expect(status).toEqual(401);
+            });
+        }); */
 });
