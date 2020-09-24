@@ -1,10 +1,10 @@
 import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
+import { setupServer, teardownServer, authenticatedFetch, randomEmbeddableResponse } from "../../apiTestUtils";
 import embeddablesHandler from '../../../../src/pages/api/pages/[id]/embeddables';
 import { setupPages, setupEmbeddable, randomEmbeddable } from "../../../database/databaseTestUtils";
-import { EmbeddableModel, PageModel } from "../../../../src/models/models";
+import { EmbeddableModel, EmbeddableResponseModel, PageModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -105,7 +105,7 @@ describe("The endpoint for embeddables", () => {
             expect(status).toEqual(201);
         });
 
-        it("Does not accept embeddable if origin is not defined", async () => {
+        it("Does not accept embeddable if origin is not defined ", async () => {
 
             const [_, [page]] = await setupPages(1);
 
@@ -118,9 +118,70 @@ describe("The endpoint for embeddables", () => {
 
     describe("Verification and persisting of responses", () => {
 
-        it("needs more tests", () => {
-            //TODO: implement
-            expect(true).toBe(false)
+        const putEmbeddableResponse = (page: PageModel, embeddableResponse: EmbeddableResponseModel) =>
+            fetch(fullURL(page.id), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(embeddableResponse)
+            });
+
+        it("Does _not_ respond with 401 if not authenticated ", async () => {
+
+            const [_, page, embeddable] = await setupEmbeddable();
+            const { status } = await putEmbeddableResponse(page,
+                randomEmbeddableResponse(page.id, embeddable.token)
+            );
+
+            expect(status).not.toEqual(401);
+        });
+
+        it("It returns 201 on succesful request", async () => {
+
+            const [_, page, embeddable] = await setupEmbeddable();
+            const { status } = await putEmbeddableResponse(
+                page, randomEmbeddableResponse(page.id, embeddable.token)
+            );
+            expect(status).toEqual(201)
+        });
+
+        it("Returns 404 if no embeddable with provided token exists", async () => {
+
+            const [_, [page]] = await setupPages(1);
+            const token = faker.random.uuid();
+            const { status } = await putEmbeddableResponse(page,
+                randomEmbeddableResponse(page.id, token)
+            );
+
+            expect(status).toEqual(404);
+        });
+
+        it("Does not accept a wrong token", async () => {
+
+            const [_, page, embeddable] = await setupEmbeddable();
+            const providedToken = faker.random.uuid();
+
+            const embeddableResponse = randomEmbeddableResponse(page.id, providedToken);
+
+            expect(embeddableResponse.answers).not.toContain(null);
+
+            const { status } = await putEmbeddableResponse(page, embeddableResponse);
+
+            expect(providedToken).not.toEqual(embeddable.token);
+            expect(status).toEqual(400);
+        });
+
+        it("Does not accept a wrong page / embeddable match ", async () => {
+
+            const [__, page, embeddable] = await setupEmbeddable();
+            const [_, [otherPage]] = await setupPages(1);
+
+            const embeddableResponse = randomEmbeddableResponse(otherPage.id, embeddable.token);
+            const { status } = await putEmbeddableResponse(page, embeddableResponse);
+
+            expect(otherPage.id).not.toEqual(page.id);
+            expect(status).toEqual(400);
         });
     });
 });

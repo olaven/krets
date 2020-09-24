@@ -16,6 +16,30 @@ describe("The datbase interface for answers", () => {
         expect(persisted.response_id).toEqual(before.response_id);
     });
 
+    it("Is possible to multiple answers with `createAnswers` ", async () => {
+
+        const [_, __, response] = await setupAnswers(0);
+
+        const before = [
+            randomAnswer(response.id),
+            randomAnswer(response.id),
+            randomAnswer(response.id),
+        ];
+
+        await answers.createAnswers(before);
+
+        const persisted = await answers.getByResponse(response.id)
+
+        expect(persisted.length).toEqual(before.length);
+
+        for (const answer of before) {
+
+            //NOTE: assumes randomly generated text
+            const found = persisted.find(a => a.text === answer.text);
+            expect(found).toBeTruthy();
+        }
+    });
+
     it("Is not possible to create an answer for non-existent response", async () => {
 
         const id = uid(); //NOTE: never persisted, does not exist
