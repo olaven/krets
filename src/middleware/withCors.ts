@@ -7,24 +7,26 @@ const cors = Cors({
         "localhost"
 });
 
-/* 
-NOTE: relevant when using custom origins, i.e. when implementing embed feature
-const originCors = (origin: string) =>
+
+//NOTE: relevant when using custom origins, i.e.when implementing embed feature
+export const withCustomOriginCors = (
+    origin: string
+) =>
     (handler: NextApiHandler) =>
         Cors({
             origin: origin
         })(handler);
 
-const TestHandler = (requet: NextApiRequest, response: NextApiResponse) => {
+/* const TestHandler = (requet: NextApiRequest, response: NextApiResponse) => {
 
     //get embed id fro mrequest somehow 
     const embedId = "something";
     const expectedOrigin = "read expected origin fro mdatabase";
-    return originCors(expectedOrigin);
-}
+    return withCustomOriginCors(expectedOrigin);
+} */
 
 
- */
+
 
 export const withCors = (handler: NextApiHandler) =>
     cors(handler)

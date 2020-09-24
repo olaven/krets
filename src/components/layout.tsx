@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
 
+
 const HeaderLogo = () =>
     <Flex color='primary' my={[1, 1, 2]} width={[1]}>
         <Link href="/">
@@ -19,7 +20,7 @@ const HeaderLogo = () =>
 
 /**
  * Shows the CornerButtons unless on 
- * specified pages (code / feedback)
+ * specified pages (code / feedback / embed)
  */
 const CornerButtons = () => {
 
@@ -27,7 +28,7 @@ const CornerButtons = () => {
     const { authUser } = useContext(UserContext);
 
     if ([
-        "/[pageId]", "/[pageId]/code"
+        "/[pageId]", "/[pageId]/code", "/[pageId]/embed"
     ].includes(router.pathname)) {
         return null;
     }
@@ -46,28 +47,34 @@ const CornerButtons = () => {
         </>
 }
 
+const withHeader = props => <Box
+    minWidth={"100vw"}
+    minHeight={"100vh"}
+    sx={{
+        m: 0,
+        fontFamily: "body"
+    }} backgroundColor={"secondary"}>
+    <Flex px={2}
+        color='primary'
+        alignItems='center'>
+
+        <HeaderLogo />
+        <CornerButtons />
+    </Flex>
+    {props.children}
+</Box>
+
 export const Layout = (props) => {
 
+    const router = useRouter();
 
-
-    return <Box
-
-        minWidth={"100vw"}
-        minHeight={"100vh"}
-        sx={{
+    if (router.pathname.includes("/[pageId]/embed"))
+        return <Box sx={{
             m: 0,
             fontFamily: "body"
-        }} backgroundColor={"secondary"}>
-        <Flex px={2}
-            color='primary'
-            alignItems='center'>
-
-            <HeaderLogo />
-            <CornerButtons />
-        </Flex>
-        {props.children}
-        {/*<div>
-            footer stuff
-        </div>*/}
-    </Box>
+        }}>
+            {props.children}
+        </Box >
+    else
+        return withHeader(props);
 };

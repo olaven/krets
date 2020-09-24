@@ -24,8 +24,13 @@ export default () => {
             {loading ?
                 <Loader size={150} /> :
                 page ?
+<<<<<<< HEAD
                     <QuestionsContextProvider pageId={page.id} includeArchived={false}>
                         <ResponseSection page={page} />
+=======
+                    <QuestionsContextProvider pageId={page.id}>
+                        <ResponseSection page={page} showHeader={true} />
+>>>>>>> d37d7670f7632ac073b5e0707066057db5f7162a
                     </QuestionsContextProvider> :
                     <ErrorLoadingPage />
             }

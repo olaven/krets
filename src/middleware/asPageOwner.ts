@@ -2,6 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { FORBIDDEN, NOT_FOUND } from "node-kall";
 import auth0 from "../auth/auth0";
 import { pages } from "../database/database";
+import { PageModel } from "../models/models";
 
 //THINKABOUT: how to better solve the amount of dabase reads in this function 
 export const asPageOwner = (extractPageId: (url: string) => string, handler: NextApiHandler) =>

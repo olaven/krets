@@ -4,7 +4,7 @@ import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
-import { randomUser, randomPage, randomResponse, blindSetup } from "../../../database/databaseTestUtils";
+import { randomUser, randomPage, randomResponse, setupResponses } from "../../../database/databaseTestUtils";
 import { PaginatedModel, ResponseModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
@@ -132,7 +132,7 @@ describe("The endpoint for responses", () => {
 
         it("Has a page size of 10", async () => {
 
-            const [page, user, persisted] = await blindSetup(15);
+            const [page, user, persisted] = await setupResponses(15);
 
             const response = await authenticatedFetch(user.id, fullURL(page.id))
             const retrieved = (await response.json()).data;
@@ -142,7 +142,7 @@ describe("The endpoint for responses", () => {
 
         it("Returns persisted _after_ given key", async () => {
 
-            const [page, user, persisted] = await blindSetup(15);
+            const [page, user, persisted] = await setupResponses(15);
             const [excluded, firstExpected] = persisted;
 
             expect(excluded.created_at).not.toContain("GMT");
@@ -155,7 +155,7 @@ describe("The endpoint for responses", () => {
 
         it("Returns responses wrapped in a PaginationModel", async () => {
 
-            const [page, user] = await blindSetup();
+            const [page, user] = await setupResponses();
             const response = await authenticatedFetch(user.id, fullURL(page.id));
             const pagiantedModel = await response.json() as PaginatedModel<ResponseModel>;
 
