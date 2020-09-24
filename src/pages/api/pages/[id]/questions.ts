@@ -5,7 +5,7 @@ import { withAuthentication, withErrorHandling, withMethodHandlers } from "../..
 import { withCors } from "../../../../middleware/withCors";
 import { QuestionModel } from "../../../../models/models";
 import { CREATED, FORBIDDEN, BAD_REQUEST } from "node-kall";
-import { getPathParam } from "../../../../workarounds";
+import { getIncludeArchived, getPathParam } from "../../../../workarounds";
 
 
 const getId = (url: string) => getPathParam(url, 2);
@@ -13,11 +13,8 @@ const getId = (url: string) => getPathParam(url, 2);
 const getQuestions = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const pageId = getId(request.url);
+    const includeArchived = getIncludeArchived(request.url);
 
-    //'false' becomes `true`.. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/Boolean
-    const includeArchived = Boolean(request.query?.includeArchived === 'true');
-
-    console.log("include archived: ", includeArchived);
     const retrieved = includeArchived ?
         await questions.getByPage(pageId) :
         await questions.getNonArchivedByPage(pageId);
