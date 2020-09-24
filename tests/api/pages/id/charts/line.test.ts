@@ -3,7 +3,7 @@ import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../apiTestUtils";
 import lineChartHandler from "../../../../../src/pages/api/pages/[id]/charts/line"
 import { users } from "../../../../../src/database/database";
-import { randomUser, blindSetup } from "../../../../database/databaseTestUtils";
+import { randomUser, setupResponses } from "../../../../database/databaseTestUtils";
 
 jest.mock("../../../../../src/auth/auth0");
 
@@ -29,7 +29,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns 401 if not authenticated", async () => {
 
-            const [page] = await blindSetup();
+            const [page] = await setupResponses();
             const { status } = await fetch(fullURL(page.id));
 
             expect(status).toEqual(401);
@@ -37,7 +37,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Responds with 400 if authenticated, but no GET", async () => {
 
-            const [page, user] = await blindSetup();
+            const [page, user] = await setupResponses();
 
             for (let method of ["POST", "PUT", "PATCH", "OPTIONS", "HEAD"]) {
 
@@ -51,7 +51,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Responds with 403 if given user does not own the requested page", async () => {
 
-            const [page, owner] = await blindSetup();
+            const [page, owner] = await setupResponses();
             const other = await users.createUser(randomUser());
 
             //NOTE: not fethcing as owner, but as other
@@ -61,7 +61,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns something looking like coordinates", async () => {
 
-            const [page, user, responses] = await blindSetup();
+            const [page, user, responses] = await setupResponses();
             const response = await authenticatedFetch(user.id, fullURL(page.id));
 
             const coordinates = await response.json();
@@ -76,7 +76,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns a label on the last coordinate", async () => {
 
-            const [page, user] = await blindSetup();
+            const [page, user] = await setupResponses();
             const response = await authenticatedFetch(user.id, fullURL(page.id));
             const coordinates = await response.json();
 
@@ -86,7 +86,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Does _not_ return a label on first coordinate", async () => {
 
-            const [page, user] = await blindSetup();
+            const [page, user] = await setupResponses();
             const response = await authenticatedFetch(user.id, fullURL(page.id));
             const coordinates = await response.json();
 
@@ -98,7 +98,7 @@ describe("The endpoint for average all-time score", () => {
 
         it("Only returns label on the last coordinage", async () => {
 
-            const [page, user, responses] = await blindSetup();
+            const [page, user, responses] = await setupResponses();
             const response = await authenticatedFetch(user.id, fullURL(page.id));
             const coordinates = await response.json();
 

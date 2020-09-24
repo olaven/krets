@@ -3,7 +3,7 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../apiTestUtils";
 import countHandler from '../../../../../src/pages/api/pages/[id]/responses/count';
-import { blindSetup } from "../../../../database/databaseTestUtils";
+import { setupResponses } from "../../../../database/databaseTestUtils";
 
 jest.mock("../../../../../src/auth/auth0");
 
@@ -30,15 +30,15 @@ describe("The endpoint for answers on a given response", () => {
 
         it("Responds with 401 if not authenticated", async () => {
 
-            const [page] = await blindSetup();
+            const [page] = await setupResponses();
             const { status } = await fetch(fullURL(page.id));
             expect(status).toEqual(401);
         });
 
         it("Responds with 403 if not owner of the page", async () => {
 
-            const [page, owner] = await blindSetup();
-            const [_, other] = await blindSetup();
+            const [page, owner] = await setupResponses();
+            const [_, other] = await setupResponses();
 
             const { status } = await authenticatedFetch(other.id, fullURL(page.id));
 
@@ -48,7 +48,7 @@ describe("The endpoint for answers on a given response", () => {
 
         it("Responds with an object having `.count`", async () => {
 
-            const [page, owner] = await blindSetup();
+            const [page, owner] = await setupResponses();
             const response = await authenticatedFetch(owner.id, fullURL(page.id));
 
             const body = await response.json();
@@ -59,7 +59,7 @@ describe("The endpoint for answers on a given response", () => {
         it("Returns the correct count", async () => {
 
             const n = faker.random.number({ min: 2, max: 15 });
-            const [page, owner] = await blindSetup(n);
+            const [page, owner] = await setupResponses(n);
 
             const response = await authenticatedFetch(owner.id, fullURL(page.id));
             const body = await response.json();

@@ -23,5 +23,4 @@ export const ManageQuestions = () => {
         <QuestionCreator />
         <QuestionsList />
     </QuestionsContextProvider >
-
 }
