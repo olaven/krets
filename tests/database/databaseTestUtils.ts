@@ -25,7 +25,7 @@ export const randomPage = (ownerId: string, color: string = null, categoryId: st
 
 export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
     ({
-        id: faker.random.uuid(),
+        //id: faker.random.uuid(),
         page_id: pageId,
         // text: faker.lorem.lines(1),
         emotion: emotion,

@@ -25,14 +25,14 @@ export const randomEmbeddableResponse = (pageId: string, embeddableToken: string
     for (let i = 0; i < faker.random.number({ min: 0, max: 5 }); i++) {
 
         answers.push(
-            randomAnswer(pageId)
+            randomAnswer(response.id)
         )
     }
 
     return {
         token: embeddableToken,
         response,
-        answers: 
+        answers,
     }
 }
 

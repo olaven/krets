@@ -137,7 +137,7 @@ describe("The endpoint for embeddables", () => {
             expect(status).not.toEqual(401);
         });
 
-        it("It returns 201 on succesful request", async () => {
+        it("It returns 201 on succesful request ", async () => {
 
             const [_, page, embeddable] = await setupEmbeddable();
             const { status } = await putEmbeddableResponse(
@@ -159,16 +159,13 @@ describe("The endpoint for embeddables", () => {
 
         it("Does not accept a wrong token", async () => {
 
-            const [_, page, embeddable] = await setupEmbeddable();
-            const providedToken = faker.random.uuid();
+            const [_, page, correct] = await setupEmbeddable();
+            const [__, ___, wrong] = await setupEmbeddable();
 
-            const embeddableResponse = randomEmbeddableResponse(page.id, providedToken);
-
-            expect(embeddableResponse.answers).not.toContain(null);
-
+            const embeddableResponse = randomEmbeddableResponse(page.id, wrong.token);
             const { status } = await putEmbeddableResponse(page, embeddableResponse);
 
-            expect(providedToken).not.toEqual(embeddable.token);
+            expect(wrong.token).not.toEqual(correct.token);
             expect(status).toEqual(400);
         });
 

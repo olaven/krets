@@ -54,13 +54,20 @@ const embeddableResponseHandler = async (req: NextApiRequest, res: NextApiRespon
                 getPageId(request.url)
             );
 
-            if (embeddable.page_id !== page.id && response.page_id !== page.id)
+            //if (embeddable.page_id !== page.id && response.page_id !== page.id)
+            if (embeddable.page_id !== page.id || response.page_id !== page.id)
                 return res
                     .status(BAD_REQUEST)
                     .end()
 
-            await responses.createResponse(response);
-            await answerDB.createAnswers(answers);
+            //Need to persist response in order to get its ID 
+            const persistedResponse = await responses.createResponse(response);
+            await answerDB.createAnswers(
+                answers.map(answer => ({
+                    ...answer,
+                    response_id: persistedResponse.id
+                }))
+            );
 
             res
                 .status(CREATED)
