@@ -55,7 +55,7 @@ export const DoubleConfirmationButton = ({ text, action }) => {
                 <Text>{uiText.upgrade.sure}</Text>
             </Button>
         </Flex > :
-        <Button width={[1]} onClick={() => { setTriggered(true) }} backgroundColor="failure" m={[1]} >
+        <Button width={[1]} mx={1} onClick={() => { setTriggered(true) }} backgroundColor="failure" >
             <Text>{text}</Text>
         </Button >
 }
