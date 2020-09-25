@@ -51,15 +51,15 @@ describe("User repository", () => {
 
     test("another test for updating customer id", async () => {
 
-        const original = await users.createUser(randomUser()); 
-        const NEW_CUSTOMER_ID = faker.random.uuid(); 
+        const original = await users.createUser(randomUser());
+        const NEW_CUSTOMER_ID = faker.random.uuid();
 
         await users.updateUser({
-            ...original, 
+            ...original,
             customer_id: NEW_CUSTOMER_ID
-        }); 
+        });
 
-        const after = await users.getUser(original.id); 
+        const after = await users.getUser(original.id);
         expect(after.customer_id).not.toEqual(original.customer_id);
         expect(after.customer_id).toEqual(NEW_CUSTOMER_ID);
     });
@@ -198,11 +198,11 @@ describe("User repository", () => {
     test("Deleting a user also deletes relevant questions", async () => {
 
         const [user, page, persisted] = await setupQuestions(2);
-        const before = await questions.getByPage(page.id);
+        const before = await questions.getNonArchivedByPage(page.id);
 
         await users.deleteUser(user.id);
 
-        const after = await questions.getByPage(page.id);
+        const after = await questions.getNonArchivedByPage(page.id);
 
         expect(before).toEqual(persisted);
         expect(after).not.toEqual(before);
@@ -214,11 +214,11 @@ describe("User repository", () => {
         const [_, otherPage, otherQuestions] = await setupQuestions();
         const [user] = await setupQuestions(2);
 
-        const before = await questions.getByPage(otherPage.id);
+        const before = await questions.getNonArchivedByPage(otherPage.id);
 
         await users.deleteUser(user.id);
 
-        const after = await questions.getByPage(otherPage.id);
+        const after = await questions.getNonArchivedByPage(otherPage.id);
 
         expect(before).toEqual(otherQuestions);
         expect(before).toEqual(after);

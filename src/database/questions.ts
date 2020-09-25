@@ -8,23 +8,29 @@ const getQuestion = (id: string) =>
         [id]
     );
 
+//NOTE: returns both archived- and non-archived questions 
 const getByPage = (pageId: string) =>
     rows<QuestionModel>(
         `select * from questions where page_id = $1 order by created_at desc`,
         [pageId]
     );
 
+const getNonArchivedByPage = (pageId: string) =>
+    rows<QuestionModel>(
+        `select * from questions where page_id = $1 and archived = false order by created_at desc`,
+        [pageId]
+    );
 
 const createQuestion = (question: QuestionModel) =>
     first<QuestionModel>(
-        `insert into questions (page_id, text) values ($1, $2) returning *`,
-        [question.page_id, question.text]
+        `insert into questions (page_id, text, archived) values ($1, $2, $3) returning *`,
+        [question.page_id, question.text, question.archived]
     );
 
 const updateQuestion = (question: QuestionModel) =>
     run(
-        `update questions set text = $2 where id = $1`,
-        [question.id, question.text]
+        `update questions set text = $2, archived = $3 where id = $1`,
+        [question.id, question.text, question.archived]
     )
 
 const deleteQuestion = (id: string) =>
@@ -36,6 +42,7 @@ const deleteQuestion = (id: string) =>
 export const questions = {
     getQuestion,
     getByPage,
+    getNonArchivedByPage,
     createQuestion,
     updateQuestion,
     deleteQuestion,

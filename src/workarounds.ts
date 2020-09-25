@@ -9,12 +9,17 @@ export const getPathParam = (url: string, splitAt: number) => {
     return decodeURIComponent(param);
 };
 
+export const getKey = (url: string) =>
+    getQueryString("key", url);
+
+export const getIncludeArchived = (url: string) =>
+    getQueryString("includeArchived", url) === 'true';
 
 //NOTE: same kind of workaround as `getId`
 //FIXME: super-naive. Update once tests are fixed as per #161
-export const getKey = (url: string) => {
+const getQueryString = (key: string, url: string) => {
     const parsed = querystring.decode(url.split("?")[1]);
-    return parsed.key === "null" ?
+    return parsed[key] === "null" ?
         null :
-        parsed.key
+        parsed[key]
 }

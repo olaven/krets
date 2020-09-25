@@ -3,15 +3,15 @@ import { users, pages, responses, answers, questions } from "../../src/database/
 import { first, run } from "../../src/database/helpers/query";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
-const coinFlip = () => 
-    faker.random.number({min: 0, max: 1}) === 1; 
+const coinFlip = () =>
+    faker.random.number({ min: 0, max: 1 }) === 1;
 
 export const randomUser = (id = faker.random.uuid(), forceSubscription = false): UserModel => ({
     id,
     customer_id: faker.random.uuid(),
     invoice_paid: false,
-    subscription_id: coinFlip() || forceSubscription? 
-        faker.random.uuid(): 
+    subscription_id: coinFlip() || forceSubscription ?
+        faker.random.uuid() :
         null
 });
 
@@ -37,9 +37,10 @@ export const randomAnswer = (responseId: string): AnswerModel => ({
     text: faker.lorem.lines(1)
 });
 
-export const randomQuestion = (pageId: string): QuestionModel => ({
+export const randomQuestion = (pageId: string, archived = false): QuestionModel => ({
     page_id: pageId,
-    text: faker.lorem.lines(1)
+    text: faker.lorem.lines(1),
+    archived
 });
 
 
@@ -66,7 +67,7 @@ export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 2
     return [user, page, response, persisted];
 }
 
-export const setupQuestions = async (amount = faker.random.number({ min: 1, max: 25 }))
+export const setupQuestions = async (amount = faker.random.number({ min: 1, max: 25 }), archived = false)
     : Promise<[UserModel, PageModel, QuestionModel[]]> => {
 
     const user = await users.createUser(randomUser());
@@ -75,7 +76,9 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
     const persisted = [];
     for (let i = 0; i < amount; i++) {
 
-        const question = await questions.createQuestion(randomQuestion(page.id));
+        const question = await questions.createQuestion(
+            randomQuestion(page.id, archived)
+        );
         persisted.push(question);
     }
 

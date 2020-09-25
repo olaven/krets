@@ -24,7 +24,7 @@ export default () => {
             {loading ?
                 <Loader size={150} /> :
                 page ?
-                    <QuestionsContextProvider pageId={page.id}>
+                    <QuestionsContextProvider pageId={page.id} includeArchived={false}>
                         <ResponseSection page={page} />
                     </QuestionsContextProvider> :
                     <ErrorLoadingPage />

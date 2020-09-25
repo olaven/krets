@@ -5,7 +5,7 @@ import { withAuthentication, withErrorHandling, withMethodHandlers } from "../..
 import { withCors } from "../../../../middleware/withCors";
 import { QuestionModel } from "../../../../models/models";
 import { CREATED, FORBIDDEN, BAD_REQUEST } from "node-kall";
-import { getPathParam } from "../../../../workarounds";
+import { getIncludeArchived, getPathParam } from "../../../../workarounds";
 
 
 const getId = (url: string) => getPathParam(url, 2);
@@ -13,7 +13,11 @@ const getId = (url: string) => getPathParam(url, 2);
 const getQuestions = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const pageId = getId(request.url);
-    const retrieved = await questions.getByPage(pageId);
+    const includeArchived = getIncludeArchived(request.url);
+
+    const retrieved = includeArchived ?
+        await questions.getByPage(pageId) :
+        await questions.getNonArchivedByPage(pageId);
 
     response.json(retrieved);
 };

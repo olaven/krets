@@ -9,7 +9,7 @@ export const TextCards = ({ selectedEmotions }) => {
     const { responses, page } = useContext(AdminPageContext);
 
     //NOTE: Loading questions in common through context, instead of once per answer
-    return <QuestionsContextProvider pageId={page.id}>
+    return <QuestionsContextProvider pageId={page.id} includeArchived={true}>
         {responses
             .filter(({ emotion }) => selectedEmotions.includes(emotion))
             .map(response => <TextCard

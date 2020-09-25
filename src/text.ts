@@ -249,12 +249,13 @@ export const settings = strings({
         deleteCancelation: "Don't delete.",
         deleteError: "An error occured when deleting..",
         questions: {
-            heading: "Create question",
+            heading: "Manage questions",
+            createQuestion: "Create question",
             placeholder: "Enter question",
             createButton: "Create new",
             listHeader: "Your questions",
             updateButton: "Update",
-            deleteButton: "Delete.",
+            archiveButton: "Archive.",
             unstable: "Custom questions an unstable feature - it may change"
         }
     },
@@ -271,12 +272,13 @@ export const settings = strings({
         deleteCancelation: "Ikke slett.",
         deleteError: "En feil oppsto med slettingen..",
         questions: {
-            heading: "Lag egne spørsmål",
+            heading: "Egne spørsmål",
+            createQuestion: "Lag spørsmål",
             placeholder: "Enter question",
             createButton: "Opprett",
             listHeader: "Dine spørsmål",
             updateButton: "Oppdater",
-            deleteButton: "Slett.",
+            archiveButton: "Arkiver.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
         }
     }
@@ -351,7 +353,7 @@ export const upgrade = strings({
         included: "including",
         pages: "pages",
         afterTier: "per additional page",
-        loading: "Updating.. Thanks for your patience!",
+        loading: "Updating.. Thanks for our patience!",
         button: "Setup subscription",
         salesArgument: "That's why Krets has a low price for everyone creating something by themselves!",
         includedAsSubscriber: "for access and updates",
@@ -400,7 +402,7 @@ export const upgrade = strings({
         getHelp: "Hvordan bruker jeg Krets?",
         back: "Tilbake til Krets",
         cancel: "Kanseller abonnement",
-        sure: "Jeg er sikker",
+        sure: "Helt sikker",
         notSure: "Tilbake",
         cancellationError: "Noe galt skjedde 🤕 ",
         cancelContact: "Ta kontakt",
