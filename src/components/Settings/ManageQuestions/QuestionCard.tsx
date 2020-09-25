@@ -5,7 +5,7 @@ import { Input } from "@rebass/forms";
 import { QuestionModel } from "../../../models/models";
 import { useContext, useState } from "react";
 import { deleteQuestion, updateQuestion } from "../../../fetchers";
-import { TriggerLoadingButton } from "../../tiny/buttons";
+import { DoubleConfirmationButton, TriggerLoadingButton } from "../../tiny/buttons";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 
 /* const ArchiveQuestion = ({ question }: { question: QuestionModel }) => {
@@ -53,11 +53,15 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
             <TriggerLoadingButton
                 action={onUpdate(question => ({ ...question, text }))}
                 text={uiText.settings.questions.updateButton} />
-            <TriggerLoadingButton
+            <DoubleConfirmationButton
+                text={uiText.settings.questions.archiveButton}
+                action={onUpdate(question => ({ ...question, archived: true }))}
+            />
+            {/* <TriggerLoadingButton
                 text={uiText.settings.questions.archiveButton}
                 action={onUpdate(question => ({ ...question, archived: true }))}
                 backgroundColor="failure"
-            />
+            /> */}
         </Flex>
     </Card>
 }

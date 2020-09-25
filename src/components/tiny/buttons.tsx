@@ -47,15 +47,15 @@ export const DoubleConfirmationButton = ({ text, action }) => {
     const [triggered, setTriggered] = useState(false);
 
     return triggered ?
-        <Flex>
-            <Button width={[1 / 2, 1 / 4]} onClick={() => { setTriggered(false) }} backgroundColor="primary" m={[1]}>
+        <Flex width={1}>
+            <Button fontSize={[1, 2]} width={[1]} onClick={() => { setTriggered(false) }} backgroundColor="primary" m={[1]}>
                 <Text>{uiText.upgrade.notSure}</Text>
             </Button>
-            <Button width={[1 / 2, 1 / 4]} onClick={action} backgroundColor="failure" m={[1]}>
+            <Button fontSize={[1, 2]} width={[1]} onClick={action} backgroundColor="failure" m={[1]}>
                 <Text>{uiText.upgrade.sure}</Text>
             </Button>
         </Flex > :
-        <Button width={[1, 0.5]} onClick={() => { setTriggered(true) }} backgroundColor="failure" m={[1]} >
+        <Button width={[1]} onClick={() => { setTriggered(true) }} backgroundColor="failure" m={[1]} >
             <Text>{text}</Text>
         </Button >
 }
@@ -67,6 +67,8 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor }: { text: 
     return loading ?
         <Loader size={80} /> :
         <Button
+            fontSize={[1, 2]}
+            width={1}
             mx={1}
             backgroundColor={backgroundColor ? backgroundColor : "primary"}
             onClick={async () => {

@@ -402,7 +402,7 @@ export const upgrade = strings({
         getHelp: "Hvordan bruker jeg Krets?",
         back: "Tilbake til Krets",
         cancel: "Kanseller abonnement",
-        sure: "Jeg er sikker",
+        sure: "Helt sikker",
         notSure: "Tilbake",
         cancellationError: "Noe galt skjedde 🤕 ",
         cancelContact: "Ta kontakt",
