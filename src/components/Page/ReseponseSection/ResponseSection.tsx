@@ -4,7 +4,7 @@ import { KretsEmoji } from "../../tiny/emoji";
 import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
-import { postAnswer, postResponse } from "../../../fetchers";
+import { postAnswer, postResponse, putEmbeddableResponse } from "../../../fetchers";
 import { Thanks } from "../../tiny/Thanks";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { CustomQuestions, DefaultQuestion } from "./Questions";
@@ -12,7 +12,11 @@ import { ContactInput } from "./ContactInput";
 
 
 
-export const ResponseSection = ({ page }: { page: PageModel }) => {
+export const ResponseSection = ({ page, showHeader, embeddable }: {
+    page: PageModel, showHeader: boolean, embeddable: {
+        active: boolean, token?: string
+    }
+}) => {
 
     const { questions } = useContext(QuestionsContext);
 
@@ -28,6 +32,33 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
             alert(uiText.response.chooseSmiley);
             return;
         }
+
+        await (embeddable.active ?
+            postEmbeddable() :
+            postStandard());
+    };
+
+    const postEmbeddable = async () => {
+
+        const [status] = await putEmbeddableResponse({
+            token: embeddable.token,
+            response: {
+                emotion,
+                page_id: page.id,
+                contact_details: contactDetails ? contactDetails : null
+            },
+            answers: Array.from(answers.values())
+        });
+
+        if (status === CREATED) {
+
+            setPublished(true);
+        } else {
+
+            alert(uiText.response.error);
+        }
+    }
+    const postStandard = async () => {
 
         const [status, response] = await postResponse({
             emotion,
@@ -46,12 +77,13 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
             );
 
             //FIXME: succsess regardless of wether answers were acepted or not
+            // -> Easier if #279 is implemented:)
             setPublished(true);
         } else {
 
             alert(uiText.response.error);
         }
-    };
+    }
 
 
     const headerText = page.custom_title ?
@@ -62,7 +94,7 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
         {published ?
             <Thanks /> :
             <>
-                <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
+                {showHeader && <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>}
                 <Flex>
                     <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                     <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />

@@ -12,10 +12,7 @@ const Embed = () => {
     const router = useRouter();
     //NOTE: Token passed as router query 
     const { pageId, token } = router.query
-
     const [page, loading] = usePage(pageId as string);
-
-    console.log("token here: ", token);
 
     return <Box>
         <Flex>
@@ -24,7 +21,10 @@ const Embed = () => {
                     <Loader size={150} /> :
                     page ?
                         <QuestionsContextProvider pageId={page.id}>
-                            <ResponseSection page={page} showHeader={false} />
+                            <ResponseSection page={page} showHeader={false} embeddable={{
+                                token: token as string,
+                                active: true,
+                            }} />
                         </QuestionsContextProvider> :
                         <ErrorLoadingPage />
             }
