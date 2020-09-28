@@ -95,7 +95,7 @@ describe("The endpoint for embeddables", () => {
 
             expect(retrieved.page_id).toEqual(embeddable.page_id);
         });
-        it("Does not accept embeddable if page_id is not defined ", async () => {
+        it("Does not accept embeddable if page_id is not defined", async () => {
 
             const [_, [page]] = await setupPages(1);
 

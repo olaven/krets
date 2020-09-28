@@ -9,6 +9,8 @@ import Stripe from "stripe";
 import { UserContext } from "../../src/context/UserContext";
 import { SettingsContext } from "../../src/context/SettingsContext";
 import { randomPage } from "../api/apiTestUtils";
+import { EmbeddableContext } from "../../src/context/EmbeddableContext";
+import { randomEmbeddable } from "../database/databaseTestUtils";
 
 
 export const renderWithPagesContext = (
@@ -36,15 +38,22 @@ export const renderWithPagesContext = (
     </UserContext.Provider>
 </PagesContext.Provider>);
 
-export const renderWithSettingsContext = (
-    Component: ReactElement
+export const renderWithEmbeddableContext = (
+    Component: ReactElement,
+    embeddable = randomEmbeddable("mock-render-page-id")
 ) => render(<SettingsContext.Provider value={{
     page: randomPage("mock-render-owner"),
     pageLoading: false,
     updatePage: async () => { }
 }}>
-    {Component}
-</SettingsContext.Provider>)
+    <EmbeddableContext.Provider value={{
+        embeddable,
+        refreshEmbeddables: async () => { }
+    }}>
+        {Component}
+    </EmbeddableContext.Provider>
+</SettingsContext.Provider>);
+
 
 
 

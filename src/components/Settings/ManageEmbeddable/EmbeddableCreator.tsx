@@ -88,7 +88,7 @@ export const EmbeddableCreator = () => {
             value={origin}
         /> */}
         <TriggerLoadingButton
-            label="embeddable-creator-button"
+            label="embeddable-generate-button"
             text={uiText.button}
             action={onGenerate}
         />

@@ -8,7 +8,8 @@ import { EmbeddableSnippet } from "./EmbeddableSnippet";
 
 const uiText = text.settings.embeddable
 
-const EmbeddableContent = () => {
+//NOTE: exported to tests
+export const EmbeddableContent = () => {
 
     const { embeddable } = useContext(EmbeddableContext);
     return embeddable ?
