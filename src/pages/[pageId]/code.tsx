@@ -32,20 +32,22 @@ const QRImage = ({ page }) => {
         `${text.page.header} ${page.name}` :
         text.page.loading;
 
-    return <Flex m={"auto"}>
+    return <Box>
+        <Heading
+            my={[0, 1, 2]}
+            textAlign="center"
+            m="auto"
+            color="primary"
+        >{headingText}</Heading>
         <Box
-            m={"auto"}
-            p={[1, 2, 3]}
+            p={[1, 2]}
             style={{ textAlign: "center" }}
-            sx={{
-                bg: "primary",
-            }}>
+        >
             <div className={"qr-code"}>
                 <QRCode value={pageLink} enableCORS={false} size={350} fgColor={'teal'} />
             </div>
-            <Heading my={[0, 1, 2]} m="auto" color={"secondary"}>{headingText}</Heading>
         </Box>
-    </Flex>
+    </Box >
 }
 
 export default () => {
