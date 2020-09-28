@@ -4,7 +4,7 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { addProtocol, EmbeddableCreator, validURL } from "../../../../src/components/Settings/ManageEmbeddable/EmbeddableCreator";
 import { randomEmbeddable } from "../../../database/databaseTestUtils";
-import { mockFetch, renderWithPagesContext } from "../../frontendTestUtils";
+import { mockFetch, renderWithPagesContext, renderWithSettingsContext } from "../../frontendTestUtils";
 
 
 describe("URL validation", () => {
@@ -62,10 +62,9 @@ describe("URL protocol adder", () => {
 describe("Creator Component", async () => {
 
     mockFetch(randomEmbeddable("test-page-id"), 201);
+    it("is possible to click button if input is valid ", () => {
 
-    it("is possible to click button if input is valid", () => {
-
-        const { getByLabelText, getByText } = render(<EmbeddableCreator />);
+        const { getByLabelText, getByText } = renderWithSettingsContext(<EmbeddableCreator />);
         const origin = "https://some-site.com"
         const input = getByLabelText("embeddable-creator-input")
         fireEvent.change(input, { target: { value: origin } });

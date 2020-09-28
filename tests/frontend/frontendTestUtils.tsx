@@ -7,6 +7,8 @@ import { render } from '@testing-library/react';
 import { HomeTooltipProvider } from '../../src/components/Home/Home/HomeTooltipProvider';
 import Stripe from "stripe";
 import { UserContext } from "../../src/context/UserContext";
+import { SettingsContext } from "../../src/context/SettingsContext";
+import { randomPage } from "../api/apiTestUtils";
 
 
 export const renderWithPagesContext = (
@@ -33,6 +35,16 @@ export const renderWithPagesContext = (
         </HomeTooltipProvider>
     </UserContext.Provider>
 </PagesContext.Provider>);
+
+export const renderWithSettingsContext = (
+    Component: ReactElement
+) => render(<SettingsContext.Provider value={{
+    page: randomPage("mock-render-owner"),
+    pageLoading: false,
+    updatePage: async () => { }
+}}>
+    {Component}
+</SettingsContext.Provider>)
 
 
 

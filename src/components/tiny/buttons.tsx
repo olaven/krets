@@ -60,13 +60,14 @@ export const DoubleConfirmationButton = ({ text, action }) => {
         </Button >
 }
 
-export const TriggerLoadingButton = ({ text, action, backgroundColor }: { text: string, action: () => any, backgroundColor?: string }) => {
+export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: { text: string, action: () => any, backgroundColor?: string, label?: string }) => {
 
     const [loading, setLoading] = useState(false);
 
     return loading ?
         <Loader size={80} /> :
         <Button
+            aria-label={label}
             fontSize={[1, 2]}
             width={1}
             mx={1}

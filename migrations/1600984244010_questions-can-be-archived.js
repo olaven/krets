@@ -8,7 +8,7 @@ exports.up = pgm => {
         archived: {
             type: 'boolean',
             notNull: true,
-            default: false
+            default: false,
         }
     });
 };

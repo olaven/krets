@@ -73,7 +73,7 @@ export const EmbeddableCreator = () => {
             value={origin}
         />
         <TriggerLoadingButton
-            aria-label="embeddable-creator-button"
+            label="embeddable-creator-button"
             text={uiText.button}
             action={onCreate}
         />
