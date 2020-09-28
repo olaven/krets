@@ -44,7 +44,7 @@ const QRImage = ({ page }) => {
             style={{ textAlign: "center" }}
         >
             <div className={"qr-code"}>
-                <QRCode value={pageLink} enableCORS={false} size={350} fgColor={'teal'} />
+                <QRCode value={pageLink} enableCORS={false} size={400} fgColor={'teal'} />
             </div>
         </Box>
     </Box >
