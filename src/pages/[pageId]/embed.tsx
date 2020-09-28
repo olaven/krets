@@ -14,7 +14,6 @@ const Embed = () => {
 
     const [page, loading] = usePage(pageId);
 
-
     return <Box>
         <Flex>
             {

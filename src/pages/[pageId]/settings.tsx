@@ -7,6 +7,7 @@ import { Collapsible } from "../../components/Collapsible";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
 import { Loader } from "../../components/tiny/loader";
 import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../components/Settings/Settings"
+import { ManageEmbeddable } from "../../components/Settings/ManageEmbeddable/ManageEmbeddable";
 
 
 
@@ -35,6 +36,9 @@ export const SettingsContent = () => {
             </Collapsible>
             <Collapsible text={text.settings.changeTitleHeader}>
                 <UpdateTitle />
+            </Collapsible>
+            <Collapsible text={text.settings.embeddable.heading}>
+                <ManageEmbeddable />
             </Collapsible>
             <Collapsible text={text.settings.questions.heading}>
                 <ManageQuestions />

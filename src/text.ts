@@ -247,6 +247,12 @@ export const settings = strings({
             updateButton: "Update",
             deleteButton: "Delete.",
             unstable: "Custom questions an unstable feature - it may change"
+        },
+        embeddable: {
+            heading: "Use Krets on your website",
+            info: "Add Krets-feedback to your own website 🖇️",
+            button: "Generate code",
+            originPlaceholder: "https://www.your-website.com",
         }
     },
     no: {
@@ -269,6 +275,12 @@ export const settings = strings({
             updateButton: "Oppdater",
             deleteButton: "Slett.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
+        },
+        embeddable: {
+            heading: "Bruk Krets på nettsiden din",
+            info: "Få tilbakemelding rett fra din egen hjemmeside 🖇️",
+            button: "Generer kode",
+            originPlaceholder: "https://www.din-hjemmeside.no",
         }
     }
 })
