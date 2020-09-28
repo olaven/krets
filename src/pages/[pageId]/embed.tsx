@@ -20,7 +20,7 @@ const Embed = () => {
                 loading ?
                     <Loader size={150} /> :
                     page ?
-                        <QuestionsContextProvider pageId={page.id}>
+                        <QuestionsContextProvider pageId={page.id} includeArchived={false}>
                             <ResponseSection page={page} showHeader={false} embeddable={{
                                 token: token as string,
                                 active: true,

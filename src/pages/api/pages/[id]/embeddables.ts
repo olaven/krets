@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { BAD_REQUEST, CREATED, NOT_FOUND } from "node-kall";
 import { embeddables, responses, answers as answerDB, pages } from "../../../../database/database";
 import { withErrorHandling, withAuthentication, withMethodHandlers, asPageOwner } from "../../../../middleware/middleware"
-import { withCors, withCustomOriginCors } from "../../../../middleware/withCors";
+import { withCors } from "../../../../middleware/withCors";
 import { EmbeddableModel, EmbeddableResponseModel } from "../../../../models/models";
 import { getPathParam } from "../../../../workarounds";
 
@@ -67,33 +67,29 @@ const embeddableResponseHandler = async (req: NextApiRequest, res: NextApiRespon
         .status(NOT_FOUND)
         .end();
 
-    withCustomOriginCors(embeddable.origin)(
-        async (request, res) => {
+    const page = await pages.getPage(
+        getPageId(req.url)
+    );
 
-            const page = await pages.getPage(
-                getPageId(request.url)
-            );
+    //if (embeddable.page_id !== page.id && response.page_id !== page.id)
+    if (embeddable.page_id !== page.id || response.page_id !== page.id)
+        return res
+            .status(BAD_REQUEST)
+            .end()
 
-            //if (embeddable.page_id !== page.id && response.page_id !== page.id)
-            if (embeddable.page_id !== page.id || response.page_id !== page.id)
-                return res
-                    .status(BAD_REQUEST)
-                    .end()
+    //Need to persist response in order to get its ID 
+    const persistedResponse = await responses.createResponse(response);
+    await answerDB.createAnswers(
+        answers.map(answer => ({
+            ...answer,
+            response_id: persistedResponse.id
+        }))
+    );
 
-            //Need to persist response in order to get its ID 
-            const persistedResponse = await responses.createResponse(response);
-            await answerDB.createAnswers(
-                answers.map(answer => ({
-                    ...answer,
-                    response_id: persistedResponse.id
-                }))
-            );
+    res
+        .status(CREATED)
+        .end();
 
-            res
-                .status(CREATED)
-                .end();
-        }
-    )(req, res);
 }
 
 export default withErrorHandling(
