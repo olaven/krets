@@ -123,7 +123,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         {uiText.response.button}
                     </Button>
                 </>}
-            </>
-        }
-    </Box >;
+            </>}
+    </Box>;
 };

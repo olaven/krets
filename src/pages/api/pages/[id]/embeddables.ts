@@ -63,8 +63,6 @@ const embeddableResponseHandler = async (req: NextApiRequest, res: NextApiRespon
     const { token, response, answers } = req.body as EmbeddableResponseModel;
     const embeddable = await embeddables.getByToken(token)
 
-    console.log("token: ", token);
-    console.log("found embeddable,", embeddable);
     if (!embeddable) return res
         .status(NOT_FOUND)
         .end();

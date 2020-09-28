@@ -56,7 +56,7 @@ const deleteQuestion = withQuestion(async (question, response) => {
     const deleted = await questions.deleteQuestion(question.id);
     response
         .status(OK)
-        .send(deleted)
+        .send(deleted);
 });
 
 export default withErrorHandling(

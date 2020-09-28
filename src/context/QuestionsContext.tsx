@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect, } from "react";
-import { get, OK } from "node-kall";
+import { createContext, useState, useEffect, ReactChildren } from "react";
+import { OK } from "node-kall";
 import { QuestionModel } from "../models/models";
 import { getQuestions } from "../fetchers";
 
@@ -18,8 +18,8 @@ export const QuestionsContext = createContext<IQuestionsContext>({
 });
 
 
-
-export const QuestionsContextProvider = ({ pageId, children }) => {
+type Props = { pageId: string, includeArchived: boolean, children: React.ReactNode }
+export const QuestionsContextProvider = ({ pageId, includeArchived, children }: Props) => {
 
     const [questions, setQuestions] = useState<QuestionModel[]>([]);
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ export const QuestionsContextProvider = ({ pageId, children }) => {
     //scoped in function, as it should be provided to consumers
     const refreshQuestions = async () => {
 
-        const [status, questions] = await getQuestions(pageId);
+        const [status, questions] = await getQuestions(pageId, includeArchived);
 
         if (status === OK) setQuestions(questions);
         else console.error(`${status} when fetching questions..`);

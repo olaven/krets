@@ -1,6 +1,6 @@
 import * as uiText from "../../../text";
 import { Input, Label, Checkbox } from "@rebass/forms";
-import { Box } from "rebass";
+import { Flex } from "rebass";
 import { useState } from "react";
 
 
@@ -8,7 +8,7 @@ export const ContactInput = ({ setContactDetails }) => {
 
     const [checked, setChecked] = useState(false)
 
-    return <Box p={[1, 2]}>
+    return <Flex p={[1, 2]}>
         <Label width={[]} fontSize={[1]}>
             <Checkbox
                 aria-label="response-checkbox-input"
@@ -28,5 +28,5 @@ export const ContactInput = ({ setContactDetails }) => {
                 }}
             />
         }
-    </Box>
+    </Flex>
 }

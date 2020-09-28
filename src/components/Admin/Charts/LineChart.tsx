@@ -20,6 +20,8 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
         setPageWithCoordinates(pageWithCoordinates);
     }, [pageInformations.length]);
 
+    console.log(pageWithCoordinates)
+
     return <span
         aria-label="line-chart-label">
         <VictoryChart
@@ -30,6 +32,15 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
                 dependentAxis
                 tickValues={[0, 1, 2]}
                 tickFormat={tick => [":-(", ":-|", ":-)"][tick]} //TODO: Proper emoji
+            />
+
+            <VictoryAxis
+                axisLabelComponent={<VictoryLabel />}
+                tickCount={5}
+                tickFormat={tick => {
+                    const date = new Date(tick);
+                    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+                }}
             />
 
             {pageWithCoordinates.map(({ page, coordinates }) => <VictoryLine
