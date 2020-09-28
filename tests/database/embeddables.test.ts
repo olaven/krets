@@ -10,7 +10,7 @@ describe("The database interface for embeddables", () => {
             expect(embeddables.getByToken).toBeDefined();
         });
 
-        it("Is possible to retrieve an embeddable by token ", async () => {
+        it("Is possible to retrieve an embeddable by token", async () => {
 
             const [_, __, persisted] = await setupEmbeddable();
             const retrieved = await embeddables.getByToken(persisted.token);
