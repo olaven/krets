@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel } from "./models/models";
 import Stripe from "stripe";
 
 
@@ -82,4 +82,7 @@ export const getEmbeddable = (pageId: string) =>
     get<EmbeddableModel>(`/api/pages/${pageId}/embeddables`);
 
 export const postEmbeddable = (embeddable: EmbeddableModel) =>
-    post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable); 
+    post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable);
+
+export const putEmbeddableResponse = (embeddableResponse: EmbeddableResponseModel) =>
+    put(`/api/pages/${embeddableResponse.response.page_id}/embeddables`, embeddableResponse); 

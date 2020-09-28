@@ -25,7 +25,9 @@ export default () => {
                 <Loader size={150} /> :
                 page ?
                     <QuestionsContextProvider pageId={page.id}>
-                        <ResponseSection page={page} showHeader={true} />
+                        <ResponseSection page={page} showHeader={true} embeddable={{
+                            active: false
+                        }} />
                     </QuestionsContextProvider> :
                     <ErrorLoadingPage />
             }

@@ -12,7 +12,7 @@ import { randomPage, randomUser } from "../../database/databaseTestUtils";
 describe("The component for creating new responses", () => {
 
     const launch = (page: PageModel, showHeader = true) =>
-        render(<ResponseSection page={page} showHeader={showHeader} />);
+        render(<ResponseSection page={page} showHeader={showHeader} embeddable={{ active: false }} />);
 
     const page = () => randomPage(randomUser().id)
 

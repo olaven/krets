@@ -17,6 +17,7 @@ const Embed = () => {
 
     console.log("token here: ", token);
 
+    console.log("Token ehre", token)
     return <Box>
         <Flex>
             {
@@ -24,7 +25,10 @@ const Embed = () => {
                     <Loader size={150} /> :
                     page ?
                         <QuestionsContextProvider pageId={page.id}>
-                            <ResponseSection page={page} showHeader={false} />
+                            <ResponseSection page={page} showHeader={false} embeddable={{
+                                token: token as string,
+                                active: true,
+                            }} />
                         </QuestionsContextProvider> :
                         <ErrorLoadingPage />
             }
