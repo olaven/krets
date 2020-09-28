@@ -89,6 +89,23 @@ describe("The endpoint for average all-time score", () => {
             expect(before.text).not.toEqual(after.text);
         });
 
+        it("Can update `archived` through put request", async () => {
+
+            const [owner, _, [question]] = await setupQuestions();
+            const before = await questions.getQuestion(question.id);
+            await putQuestion(owner.id, {
+                ...question,
+                archived: !question.archived
+            });
+            const after = await questions.getQuestion(question.id);
+
+            //TODO 
+            expect(before.id).toEqual(after.id);
+            expect(before.archived).toBeDefined();
+            expect(after.archived).toBeDefined();
+            expect(before.archived).not.toEqual(after.archived);
+        });
+
         it("Returns 400 if question page is not the same as actual page", async () => {
 
             const [owner, page, [question]] = await setupQuestions();

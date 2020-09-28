@@ -1,7 +1,7 @@
 import * as faker from "faker";
-import { users, pages, responses, answers, questions, embeddables } from "../../src/database/database";
+import { users, pages, responses, answers, questions } from "../../src/database/database";
 import { first, run } from "../../src/database/helpers/query";
-import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel, EmbeddableModel } from "../../src/models/models";
+import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
 const coinFlip = () =>
     faker.random.number({ min: 0, max: 1 }) === 1;
@@ -25,7 +25,7 @@ export const randomPage = (ownerId: string, color: string = null, categoryId: st
 
 export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
     ({
-        //id: faker.random.uuid(),
+        id: faker.random.uuid(),
         page_id: pageId,
         // text: faker.lorem.lines(1),
         emotion: emotion,
@@ -37,15 +37,10 @@ export const randomAnswer = (responseId: string): AnswerModel => ({
     text: faker.lorem.lines(1)
 });
 
-export const randomQuestion = (pageId: string): QuestionModel => ({
+export const randomQuestion = (pageId: string, archived = false): QuestionModel => ({
     page_id: pageId,
-    text: faker.lorem.lines(1)
-});
-
-export const randomEmbeddable = (pageId: string): EmbeddableModel => ({
-    token: faker.random.uuid(),
-    origin: faker.internet.url(),
-    page_id: pageId,
+    text: faker.lorem.lines(1),
+    archived
 });
 
 
@@ -72,7 +67,7 @@ export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 2
     return [user, page, response, persisted];
 }
 
-export const setupQuestions = async (amount = faker.random.number({ min: 1, max: 25 }))
+export const setupQuestions = async (amount = faker.random.number({ min: 1, max: 25 }), archived = false)
     : Promise<[UserModel, PageModel, QuestionModel[]]> => {
 
     const user = await users.createUser(randomUser());
@@ -81,7 +76,9 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
     const persisted = [];
     for (let i = 0; i < amount; i++) {
 
-        const question = await questions.createQuestion(randomQuestion(page.id));
+        const question = await questions.createQuestion(
+            randomQuestion(page.id, archived)
+        );
         persisted.push(question);
     }
 
@@ -89,7 +86,7 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
         .sort((a, b) => a.created_at < b.created_at ? 0 : -1)];
 }
 
-export const setupResponses = async (responseCount = faker.random.number({ min: 1, max: 30 }))
+export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))
     : Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await users.createUser(randomUser());
@@ -114,6 +111,7 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
 
     const user = await users.createUser(randomUser(faker.random.uuid(), forceSubscription));
 
+
     const persisted = []
     for (let i = 0; i < amount; i++) {
 
@@ -125,13 +123,4 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
     //NOTE: as `fakeCreationDate` messes with sorting
     persisted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [user, persisted];
-}
-
-export const setupEmbeddable = async (): Promise<[UserModel, PageModel, EmbeddableModel]> => {
-
-    const user = await users.createUser(randomUser(faker.random.uuid()));
-    const page = await pages.createPage(randomPage(user.id));
-    const embeddable = await embeddables.createEmbeddable(randomEmbeddable(page.id))
-
-    return [user, page, embeddable];
 }

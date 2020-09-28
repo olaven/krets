@@ -65,14 +65,22 @@ export const getProductByUser = (userId: string) =>
 export const getPrices = (productId: string) =>
     get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`);
 
-export const getQuestions = (pageId: string) =>
-    get<QuestionModel[]>(`/api/pages/${pageId}/questions`);
+export const getQuestions = (pageId: string, includeArchived: boolean) => {
+
+    console.log("Going to include archived from cleitn", includeArchived);
+    return get<QuestionModel[]>(`/api/pages/${pageId}/questions?includeArchived=${includeArchived}`);
+}
 
 export const postQuestion = (question: QuestionModel) =>
     post<QuestionModel>(`/api/pages/${question.page_id}/questions`, question);
 
 export const updateQuestion = (question: QuestionModel) =>
     put<QuestionModel>(`/api/pages/${question.page_id}/questions/${question.id}`, question);
+
+export const deleteQuestion = (question: QuestionModel) =>
+    del<QuestionModel>(`/api/pages/${question.page_id}/questions/${question.id}`, {
+        body: JSON.stringify(question) //backend expects question to be passed as body.
+    });
 
 //DANGER: actually deletes entire user.
 export const deleteUser = (id: string) =>
