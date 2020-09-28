@@ -1,5 +1,7 @@
-import { createContext } from "react";
+import { OK } from "node-kall";
+import { createContext, ReactChild, ReactChildren, ReactElement, useState } from "react";
 import { asyncEffect } from "../effects/asyncEffect";
+import { getEmbeddable } from "../fetchers";
 import { EmbeddableModel } from "../models/models";
 
 interface IEmbeddableContext {
@@ -11,16 +13,23 @@ export const EmbeddableContext = createContext<IEmbeddableContext>({
 });
 
 
-export const EmbeddableContextProvider = props => {
+export const EmbeddableContextProvider = ({ pageId, children }: { pageId: string, children: ReactElement | ReactElement[] }) => {
 
-    const [embeddable, setEmbeddable] = useState(null);
+    const [embeddable, setEmbeddable] = useState<EmbeddableModel>(null);
 
-    asyncEffect(async () => {
+    const refreshEmbeddables = async () => {
 
+        const [status, embeddable] = await getEmbeddable(pageId);
+        if (status === OK) {
+            setEmbeddable(embeddable);
+        } else {
+            console.warn(`Received ${status} when fetching embeddable..`)
+        }
+    }
 
-    }, []);
+    asyncEffect(refreshEmbeddables, []);
 
-    return <EmbeddableContext.Provider value={{}}>
-        {props.children}
+    return <EmbeddableContext.Provider value={{ embeddable, refreshEmbeddables }}>
+        {children}
     </EmbeddableContext.Provider>
 };

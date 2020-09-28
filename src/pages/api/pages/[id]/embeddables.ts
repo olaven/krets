@@ -1,40 +1,60 @@
 import { nanoid } from "nanoid"
 import { NextApiRequest, NextApiResponse } from "next";
-import { BAD_REQUEST, CREATED, NOT_FOUND, NOT_IMPLEMENTED, NO_CONTENT } from "node-kall";
+import { BAD_REQUEST, CREATED, NOT_FOUND } from "node-kall";
 import { embeddables, responses, answers as answerDB, pages } from "../../../../database/database";
 import { withErrorHandling, withAuthentication, withMethodHandlers, asPageOwner } from "../../../../middleware/middleware"
-import { withCustomOriginCors } from "../../../../middleware/withCors";
+import { withCors, withCustomOriginCors } from "../../../../middleware/withCors";
 import { EmbeddableModel, EmbeddableResponseModel } from "../../../../models/models";
 import { getPathParam } from "../../../../workarounds";
 
 const getPageId = url => getPathParam(url, 2);
 
-const postEmbeddable = withAuthentication(
-    asPageOwner(
-        getPageId,
-        async (request, response) => {
-
-            const embeddable = request.body as EmbeddableModel;
-            if (!embeddable.origin)
-                return response
-                    .status(BAD_REQUEST)
-                    .end();
+const getEmbeddable = withCors(
+    withAuthentication(
+        asPageOwner(
+            getPageId,
+            async (request, response) => {
 
 
-            const page = await pages.getPage(
-                getPageId(request.url)
-            );
+                const embeddable = await embeddables.getByPage(
+                    getPageId(request.url)
+                );
 
-            const persisted = await embeddables.createEmbeddable({
-                ...embeddable,
-                page_id: page.id,
-                token: nanoid(),
-            });
+                response
+                    .json(embeddable);
+            }
+        )
+    )
+)
 
-            response
-                .status(CREATED)
-                .send(persisted);
-        }
+const postEmbeddable = withCors(
+    withAuthentication(
+        asPageOwner(
+            getPageId,
+            async (request, response) => {
+
+                const embeddable = request.body as EmbeddableModel;
+                if (!embeddable.origin)
+                    return response
+                        .status(BAD_REQUEST)
+                        .end();
+
+
+                const page = await pages.getPage(
+                    getPageId(request.url)
+                );
+
+                const persisted = await embeddables.createEmbeddable({
+                    ...embeddable,
+                    page_id: page.id,
+                    token: nanoid(),
+                });
+
+                response
+                    .status(CREATED)
+                    .send(persisted);
+            }
+        )
     )
 );
 
@@ -79,6 +99,7 @@ const embeddableResponseHandler = async (req: NextApiRequest, res: NextApiRespon
 export default withErrorHandling(
 
     withMethodHandlers({
+        GET: getEmbeddable,
         POST: postEmbeddable,
         /**
          * `PUT` is not ideal.

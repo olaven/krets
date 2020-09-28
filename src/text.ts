@@ -253,6 +253,7 @@ export const settings = strings({
             info: "Add Krets-feedback to your own website 🖇️",
             button: "Generate code",
             originPlaceholder: "https://www.your-website.com",
+            copyInstructions: "Add this code to your website 🧑‍💻"
         }
     },
     no: {
@@ -281,6 +282,7 @@ export const settings = strings({
             info: "Få tilbakemelding rett fra din egen hjemmeside 🖇️",
             button: "Generer kode",
             originPlaceholder: "https://www.din-hjemmeside.no",
+            copyInstructions: "Bruk denne koden til din nettside 🧑‍💻"
         }
     }
 })

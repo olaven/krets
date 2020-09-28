@@ -10,9 +10,12 @@ import { usePage } from '../../effects/usePage';
 const Embed = () => {
 
     const router = useRouter();
-    const pageId = router.query.pageId as string;
+    //NOTE: Token passed as router query 
+    const { pageId, token } = router.query
 
-    const [page, loading] = usePage(pageId);
+    const [page, loading] = usePage(pageId as string);
+
+    console.log("token here: ", token);
 
     return <Box>
         <Flex>

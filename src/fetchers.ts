@@ -78,5 +78,8 @@ export const updateQuestion = (question: QuestionModel) =>
 export const deleteUser = (id: string) =>
     del(`/api/users/${id}`);
 
+export const getEmbeddable = (pageId: string) =>
+    get<EmbeddableModel>(`/api/pages/${pageId}/embeddables`);
+
 export const postEmbeddable = (embeddable: EmbeddableModel) =>
     post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable); 
