@@ -12,12 +12,8 @@ const Embed = () => {
     const router = useRouter();
     //NOTE: Token passed as router query 
     const { pageId, token } = router.query
-
     const [page, loading] = usePage(pageId as string);
 
-    console.log("token here: ", token);
-
-    console.log("Token ehre", token)
     return <Box>
         <Flex>
             {

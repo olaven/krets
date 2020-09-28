@@ -50,7 +50,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
             answers: Array.from(answers.values())
         });
 
-        console.log("posting", status)
         if (status === CREATED) {
 
             setPublished(true);
