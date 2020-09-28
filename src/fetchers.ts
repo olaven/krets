@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel } from "./models/models";
 import Stripe from "stripe";
 
 
@@ -85,3 +85,9 @@ export const deleteQuestion = (question: QuestionModel) =>
 //DANGER: actually deletes entire user.
 export const deleteUser = (id: string) =>
     del(`/api/users/${id}`);
+
+export const getEmbeddable = (pageId: string) =>
+    get<EmbeddableModel>(`/api/pages/${pageId}/embeddables`);
+
+export const postEmbeddable = (embeddable: EmbeddableModel) =>
+    post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable); 
