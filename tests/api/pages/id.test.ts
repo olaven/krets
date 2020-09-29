@@ -4,6 +4,7 @@ import { users, categories, pages } from "../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages/[id]";
+import { PageModel } from "../../../src/models/models";
 
 
 
@@ -20,12 +21,12 @@ describe("Endpoints for specific page", () => {
 
     const createPage = async (ownerId: string, categoryId: string = null) => {
 
-        const id = uid();
-        const page = {
+        const page: PageModel = {
             id: uid(),
             owner_id: ownerId,
             name: faker.company.companyName(),
             category_id: categoryId,
+            mandatory_contact_details: false,
         };
 
         await pages.createPage(page)

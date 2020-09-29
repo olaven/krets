@@ -28,7 +28,17 @@ export const ToggleMandatoryContactDetails = () => {
     const update = page.mandatory_contact_details ? updateWhenEnabled : updateWhenDisabled;
 
     return <Box>
-        <Button width={1} onClick={onUpdate}>{update}</Button>
-        <Text fontSize={[21]}>{text}</Text>
+        <Button
+            aria-label="toggle-mandatory-button"
+            width={1}
+            onClick={onUpdate}
+        >
+            {update}
+        </Button>
+        <Text
+            fontSize={[21]}
+        >
+            {text}
+        </Text>
     </Box>
 }
