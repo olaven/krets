@@ -8,6 +8,7 @@ const coinFlip = () =>
 
 export const randomUser = (id = faker.random.uuid(), forceSubscription = false): UserModel => ({
     id,
+    active: true,
     customer_id: faker.random.uuid(),
     invoice_paid: false,
     subscription_id: coinFlip() || forceSubscription ?
