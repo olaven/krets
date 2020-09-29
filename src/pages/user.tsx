@@ -39,10 +39,12 @@ const CancelSubscription = () => {
         </Text>
     }
 
-    return <DoubleConfirmationButton
-        action={onCancel}
-        text={uiText.upgrade.cancel}
-    />
+    return <Box width={[1, 0.5]}>
+        <DoubleConfirmationButton
+            action={onCancel}
+            text={uiText.upgrade.cancel}
+        />
+    </Box>
 }
 
 const DeleteAccount = () => {
@@ -64,9 +66,11 @@ const DeleteAccount = () => {
         }
     }
 
-    return <DoubleConfirmationButton
-        text={uiText.user.deleteButton}
-        action={onDelete} />
+    return <Box width={[1, 0.5]}>
+        <DoubleConfirmationButton
+            text={uiText.user.deleteButton}
+            action={onDelete} />
+    </Box>
 }
 
 
