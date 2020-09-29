@@ -52,7 +52,6 @@ describe("The database interface for embeddables", () => {
             expect(persisted.id).toBeDefined();
 
             expect(original.token).toEqual(persisted.token);
-            expect(original.origin).toEqual(persisted.origin);
             expect(original.page_id).toEqual(persisted.page_id);
         });
     });

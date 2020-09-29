@@ -20,8 +20,8 @@ const getByToken = (token: string) =>
 
 const createEmbeddable = (embeddable: EmbeddableModel) =>
     first<EmbeddableModel>(
-        "insert into embeddables(token, origin, page_id) values($1, $2, $3) RETURNING *",
-        [embeddable.token, embeddable.origin, embeddable.page_id]
+        "insert into embeddables(token, page_id) values($1, $2) RETURNING *",
+        [embeddable.token, embeddable.page_id]
     );
 
 export const embeddables = {

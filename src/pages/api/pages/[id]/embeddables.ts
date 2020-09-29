@@ -20,8 +20,12 @@ const getEmbeddable = withCors(
                     getPageId(request.url)
                 );
 
-                response
-                    .json(embeddable);
+                embeddable ?
+                    response
+                        .json(embeddable) :
+                    response
+                        .status(NOT_FOUND)
+                        .end();
             }
         )
     )
@@ -34,11 +38,10 @@ const postEmbeddable = withCors(
             async (request, response) => {
 
                 const embeddable = request.body as EmbeddableModel;
-                if (!embeddable.origin)
+                if (!embeddable.page_id) //THINKABOUT: unessecary to send body at all - all data is generated server side (also page-id)
                     return response
                         .status(BAD_REQUEST)
-                        .end();
-
+                        .end()
 
                 const page = await pages.getPage(
                     getPageId(request.url)

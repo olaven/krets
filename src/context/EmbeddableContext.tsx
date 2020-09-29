@@ -1,4 +1,4 @@
-import { OK } from "node-kall";
+import { NOT_FOUND, OK } from "node-kall";
 import { createContext, ReactChild, ReactChildren, ReactElement, useState } from "react";
 import { asyncEffect } from "../effects/asyncEffect";
 import { getEmbeddable } from "../fetchers";
@@ -20,8 +20,13 @@ export const EmbeddableContextProvider = ({ pageId, children }: { pageId: string
     const refreshEmbeddables = async () => {
 
         const [status, embeddable] = await getEmbeddable(pageId);
+
         if (status === OK) {
+
             setEmbeddable(embeddable);
+        } else if (status === NOT_FOUND) {
+
+            setEmbeddable(null);
         } else {
             console.warn(`Received ${status} when fetching embeddable..`)
         }
