@@ -267,8 +267,8 @@ describe("Database interface for pages", () => {
 
             expect(first.mandatory_contact_details).toBe(false);
             expect(second.mandatory_contact_details).toBe(true);
-            expect(third.mandatory_contact_details).toBe(true);
-            expect(fourth.mandatory_contact_details).toBe(false);
+            expect(third.mandatory_contact_details).toBe(false);
+            expect(fourth.mandatory_contact_details).toBe(true);
         });
     });
 

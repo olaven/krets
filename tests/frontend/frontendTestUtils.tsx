@@ -43,11 +43,12 @@ export const renderWithPagesContext = (
  */
 export const renderWithSettingsContext = (
     Component: ReactElement,
-    page = randomPage("mock-render-owner")
+    page = randomPage("mock-render-owner"),
+    updatePage = async () => { }
 ) => render(<SettingsContext.Provider value={{
     page,
+    updatePage,
     pageLoading: false,
-    updatePage: async () => { }
 }}>
     {Component}
 </SettingsContext.Provider>)

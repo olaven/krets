@@ -294,7 +294,7 @@ export const settings = strings({
             heading: "Om kontaktinformasjon",
             enabledText: "Dine kunder må legge igjen kontakinformasjon",
             updateWhenEnabled: "Gjør frivillig",
-            disabledText: "Dine kunder kan være anonyme",
+            disabledText: "Dine kunder kan nå være anonyme",
             updateWhenDisabled: "Gjør obligatorisk med kontaktinformasjon",
         }
     }

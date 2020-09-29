@@ -46,19 +46,50 @@ describe("The component for creating new responses", () => {
             })
         });
 
-        it("Does contact checkbox is clicked", () => {
+        it("Does show contact input after contact checkbox is clicked", () => {
 
             const { findByLabelText, getByLabelText, getAllByLabelText } = launch(page());
             const [button] = getAllByLabelText("response-emoji-button");
             fireEvent.click(button);
 
-            const checkBox = getByLabelText("response-checkbox-input")
+            const checkBox = getByLabelText("response-checkbox-input");
 
             fireEvent.change(checkBox)
 
             waitFor(() => {
 
                 expect(findByLabelText("response-contact-input")).toBeInTheDocument();
+            });
+        });
+
+        it("Does not show contact text input checkbox if contact details are mandatory", () => {
+
+            const { getByLabelText, getAllByLabelText } = launch({
+                ...page(),
+                mandatory_contact_details: true
+            });
+            const [button] = getAllByLabelText("response-emoji-button");
+            fireEvent.click(button);
+
+            waitFor(() => {
+
+                expect(getByLabelText("response-checkbox-input")).not.toBeInTheDocument();
+            });
+        });
+
+
+        it("Does show contact text input if contact details are mandatory", () => {
+
+            const { getByLabelText, getAllByLabelText } = launch({
+                ...page(),
+                mandatory_contact_details: true
+            });
+            const [button] = getAllByLabelText("response-emoji-button");
+            fireEvent.click(button);
+
+            waitFor(() => {
+
+                expect(getByLabelText("response-contact-input")).toBeInTheDocument();
             });
         });
 

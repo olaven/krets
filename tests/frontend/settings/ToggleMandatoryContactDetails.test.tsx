@@ -5,16 +5,20 @@
 import '@testing-library/jest-dom/extend-expect'
 import { randomPage, randomUser } from "../../database/databaseTestUtils";
 import { ToggleMandatoryContactDetails } from "../../../src/components/Settings/ToggleMandatoryContactDetails";
-import { renderWithSettingsContext } from "../frontendTestUtils";
+import { mockFetch, renderWithSettingsContext } from "../frontendTestUtils";
 import * as text from "../../../src/text";
+import { fireEvent, waitFor } from '@testing-library/react';
 
 describe("The component for updating wether page contact details should be mandatory or not", () => {
 
-    const render = (mandatory: boolean) =>
-        renderWithSettingsContext(<ToggleMandatoryContactDetails />, {
-            ...randomPage(randomUser().id),
-            mandatory_contact_details: mandatory
-        });
+    const render = (mandatory: boolean, updatePage = async () => { }) =>
+        renderWithSettingsContext(
+            <ToggleMandatoryContactDetails />,
+            {
+                ...randomPage(randomUser().id),
+                mandatory_contact_details: mandatory,
+            },
+            updatePage);
 
     const renderEnabled = () => render(true);
     const renderDisabled = () => render(false);
@@ -45,4 +49,45 @@ describe("The component for updating wether page contact details should be manda
         const button = getByLabelText("toggle-mandatory-button");
         expect(button.textContent).toEqual(updateWhenDisabled);
     });
+
+    it("Does attempt to update page on click", () => {
+
+        mockFetch(204);
+        const updateMock = jest.fn();
+        const { getByLabelText } = render(true, updateMock);
+        const button = getByLabelText("toggle-mandatory-button");
+
+        fireEvent.click(button);
+
+        waitFor(() => {
+
+            expect(updateMock).toHaveBeenCalled();
+        });
+    });
+
+    it("Does rerender with new page", () => {
+
+        mockFetch(204);
+        const updateMock = jest.fn(async () => { });
+        const { getByLabelText, getByText } = render(true, updateMock);
+        const button = getByLabelText("toggle-mandatory-button");
+
+        fireEvent.click(button);
+
+        waitFor(() => {
+
+            expect(getByText(enabledText)).toBeInTheDocument();
+        });
+
+        mockFetch({
+            ...randomPage(randomUser().id),
+            mandatory_contact_details: false,
+        }, 200);
+
+        waitFor(() => {
+
+            expect(updateMock).toHaveBeenCalled();
+            expect(getByText(disabledText)).toBeInTheDocument();
+        });
+    })
 });
