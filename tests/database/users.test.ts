@@ -34,6 +34,30 @@ describe("User repository", () => {
         expect(after).toBeTruthy();
     });
 
+    test(" User has prop for wether it is active or not", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(user.active).toBeDefined();
+    });
+
+    test(" `.active` is a boolean", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(typeof user.active).toEqual("boolean");
+    });
+
+    test(" Can update user `active` status through `updateUser`", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateUser({
+            ...original,
+            active: !original.active
+        });
+
+        expect(original.active).not.toEqual(updated.active);
+        expect(updated.active).toEqual(!original.active);
+    });
+
     test("Can update customer id", async () => {
 
         const original = await users.createUser(randomUser());
@@ -41,6 +65,7 @@ describe("User repository", () => {
 
         const updated = await users.updateUser({
             id: original.id,
+            active: true,
             customer_id: NEW_CUSTOMER_ID
         });
 
@@ -72,6 +97,7 @@ describe("User repository", () => {
         const original = await users.createUser(randomUser());
         const updated = await users.updateUser({
             id: original.id,
+            active: true,
             customer_id: original.customer_id,
             product_id: NEW_PRODUCT_ID,
             subscription_id: NEW_SUBSCRIPTION_ID

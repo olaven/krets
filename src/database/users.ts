@@ -5,7 +5,7 @@ import { pages } from "./database"
 //TODO: only export to tests 
 const getUserCountWithSubscription = async () => {
 
-   const result = await first<{ count: string}>(
+   const result = await first<{ count: string }>(
       'select count(*) from users where subscription_id is not null', []
    )
 
@@ -32,8 +32,8 @@ const createUser = (user: UserModel) =>
 
 const updateUser = (user: UserModel) =>
    first<UserModel>(
-      `update users set customer_id = $2, product_id = $3, subscription_id = $4 where id = $1 returning *`,
-      [user.id, user.customer_id, user.product_id, user.subscription_id]
+      `update users set customer_id = $2, product_id = $3, subscription_id = $4, active = $5 where id = $1 returning *`,
+      [user.id, user.customer_id, user.product_id, user.subscription_id, user.active]
    );
 
 /**
