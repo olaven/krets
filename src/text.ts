@@ -63,8 +63,9 @@ export const response = strings({
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
-        prefixCustomQuestionCheckbox: "I want to answer",
-        suffixCustomQuestionCheckbox: "questions",
+        prefixCustomQuestionCheckbox: "I want to answer", //temporary not used in favour of `customQuestionsCheckbox`
+        suffixCustomQuestionCheckbox: "questions", //temporary not used in favour of `customQuestionsCheckbox`
+        customQuestionsCheckbox: "Let me elaborate",
         contactCheckbox: "I want to be contacted",
         contactPlaceholder: "Email or phone number",
         copyButton: {
@@ -85,6 +86,7 @@ export const response = strings({
         thanks: "Tusen takk!",
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
+        customQuestionsCheckbox: "Jeg vil utdype svaret mitt",
         contactCheckbox: "Jeg vil bli kontaktet igjen",
         contactPlaceholder: "Epost eller telefonnummer",
         copyButton: {
