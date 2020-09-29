@@ -61,8 +61,12 @@ const getPage = (id: string) =>
 
 const updatePage = (page: PageModel) =>
     first<PageModel>(
-        "update pages set name = $1, custom_title = $2, category_id = $3, color = $4 where id = $5 returning *",
-        [page.name, page.custom_title, page.category_id, page.color, page.id]
+        `
+            update pages 
+            set name = $1, custom_title = $2, category_id = $3, color = $4, mandatory_contact_details = $5 
+            where id = $6 
+            returning *`,
+        [page.name, page.custom_title, page.category_id, page.color, page.mandatory_contact_details, page.id]
     );
 
 

@@ -4,7 +4,7 @@ import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
 import { users, pages, responses } from "../../../../src/database/database";
 import fetch from "cross-fetch";
-import { randomUser, randomPage, randomResponse, blindSetup } from "../../../database/databaseTestUtils";
+import { randomUser, randomPage, randomResponse, blindSetup, setupPage } from "../../../database/databaseTestUtils";
 import { PaginatedModel, ResponseModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
@@ -44,7 +44,8 @@ describe("The endpoint for responses", () => {
         const page = await pages.createPage({
             id: faker.random.uuid(),
             name: faker.company.companyName(),
-            owner_id: user.id
+            owner_id: user.id,
+            mandatory_contact_details: false
         });
 
         await responses.createResponse({
@@ -64,69 +65,144 @@ describe("The endpoint for responses", () => {
         expect(receivedResponses.length).toEqual(2);
     });
 
-    it("is possible to create a response", async () => {
+    describe("Response creation", () => {
 
-        const user = await users.createUser(randomUser());
+        const postResponse = (response: ResponseModel, pageId = response.page_id) =>
+            fetch(fullURL(pageId), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(response)
+            });
 
-        const page = await pages.createPage({
-            id: faker.random.uuid(),
-            name: faker.company.companyName(),
-            owner_id: user.id,
-            category_id: null
+        describe("setup of `mandatory_contact_details` with `setupPages` - test utils", () => {
+
+            it("Does not crash", () => {
+
+                expect(setupPage()).resolves.not.toThrow();
+            });
+
+            it("Creates a non-mandatory page by default", async () => {
+
+                const [_, page] = await setupPage();
+                expect(page.mandatory_contact_details).toBe(false);
+            });
+
+            it("Creates a non-mandatory page if `false` is passed as arg", async () => {
+
+                const [_, page] = await setupPage(false);
+                expect(page.mandatory_contact_details).toBe(false);
+            });
+
+            it("Creates a mandatory page if `true` is passed as arg", async () => {
+
+                const [_, page] = await setupPage(true);
+                expect(page.mandatory_contact_details).toBe(true);
+            });
+        })
+
+        it("is possible to create a response", async () => {
+
+            const user = await users.createUser(randomUser());
+
+            const page = await pages.createPage({
+                id: faker.random.uuid(),
+                name: faker.company.companyName(),
+                owner_id: user.id,
+                category_id: null,
+                mandatory_contact_details: false
+            });
+
+            const response: ResponseModel = {
+                emotion: ':-|',
+                page_id: page.id
+            };
+
+            const fetchResponse = await postResponse(response)
+
+            // Correct response 
+            expect(fetchResponse.status).toEqual(201);
+
+
+            const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
+            const hasCorrect = retrievedResponses.find(r =>
+                r.emotion === response.emotion &&
+                r.page_id === response.page_id)
+
+            expect(hasCorrect).toBeTruthy();
         });
 
-        const response = {
-            emotion: ':-|',
-            page_id: page.id
-        };
 
-        const fetchResponse = await fetch(fullURL(page.id), {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(response)
+        it("Is possible to have the response contain contact details", async () => {
+
+            const user = await users.createUser(randomUser());
+            const page = await pages.createPage(randomPage(user.id));
+            const contactDetails = faker.internet.email();
+
+            const response = await randomResponse(page.id, ":-|", contactDetails);
+
+            const before = await responses.getResponses(page.id);
+            const { status } = await postResponse(response);
+
+            expect(status).toEqual(201);
+
+            const after = await responses.getResponses(page.id);
+            expect(before.length).toEqual(0);
+            expect(after.length).toEqual(1);
+
+            const [retrievedResponse] = after;
+            expect(retrievedResponse.contact_details).toEqual(contactDetails);
         });
 
-        // Correct response 
-        expect(fetchResponse.status).toEqual(201);
+        it("Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
 
+            const [_, page] = await setupPage(true);
+            const response = randomResponse(page.id, ":-)", undefined);
 
-        const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
-        const hasCorrect = retrievedResponses.find(r =>
-            r.emotion === response.emotion &&
-            r.page_id === response.page_id)
+            const { status } = await postResponse(response);
 
-        expect(hasCorrect).toBeTruthy();
-    });
-
-
-    it("Is possible to have the response contain contact details", async () => {
-
-        const user = await users.createUser(randomUser());
-        const page = await pages.createPage(randomPage(user.id));
-        const contactDetails = faker.internet.email();
-
-        const response = await randomResponse(page.id, ":-|", contactDetails);
-
-        const before = await responses.getResponses(page.id);
-        const { status } = await fetch(fullURL(page.id), {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(response)
+            expect(page.mandatory_contact_details).toBe(true);
+            expect(response.contact_details).toBeUndefined();
+            expect(status).toEqual(400);
         });
 
-        expect(status).toEqual(201);
+        it("Does allow responses without contact details if mandatoryis false", async () => {
 
-        const after = await responses.getResponses(page.id);
-        expect(before.length).toEqual(0);
-        expect(after.length).toEqual(1);
+            const [_, page] = await setupPage(false);
 
-        const [retrievedResponse] = after;
-        expect(retrievedResponse.contact_details).toEqual(contactDetails);
-    });
+            const response = randomResponse(page.id, ":-)", undefined);
+            const { status } = await postResponse(response);
+
+            expect(status).toEqual(201);
+            expect(page.mandatory_contact_details).toBe(false);
+            expect(response.contact_details).toBeUndefined();
+        });
+
+        it("Does allow creation with contact details when contact details are mandatory", async () => {
+
+            const [_, page] = await setupPage(true);
+            const response = randomResponse(page.id, ":-|", faker.internet.email());
+            const { status } = await postResponse(response);
+
+            expect(status).toEqual(201);
+        });
+
+
+        it("Persisted response actually has contact details", async () => {
+
+            const [_, page] = await setupPage(true);
+            const contactDetails = faker.internet.email();
+
+            const response = randomResponse(page.id, ":-|", contactDetails);
+            await postResponse(response)
+            const retrieved = await responses.getResponse(response.id);
+
+            expect(retrieved.contact_details).toEqual(contactDetails);
+        });
+    })
+
+
 
     describe("Pagination functionality", () => {
 
