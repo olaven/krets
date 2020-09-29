@@ -1,7 +1,7 @@
 //From DB 
 export interface UserModel {
     id: string,
-    active: boolean,
+    active?: boolean,
 
     //TODO: REMOVE BELOW WHEN HAVING INVOICE ONLY
     customer_id: string,
