@@ -4,7 +4,7 @@ import { PaginationOptions } from "./helpers/PaginationOptions";
 
 
 const createPage = (page: PageModel) => first<PageModel>(
-    "insert into pages(id, owner_id, name, category_id ,color) values($1, $2, $3, $4, $5) returning *",
+    "insert into pages(id, owner_id, name, category_id, color) values($1, $2, $3, $4, $5) returning *",
     [page.id, page.owner_id, page.name, page.category_id, page.color]
 );
 

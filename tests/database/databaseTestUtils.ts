@@ -15,13 +15,13 @@ export const randomUser = (id = faker.random.uuid(), forceSubscription = false):
         null
 });
 
-export const randomPage = (ownerId: string, color: string = null, categoryId: string = null): PageModel => ({
+export const randomPage = (ownerId: string, color: string = null, categoryId: string = null, mandatoryContactDetails = false): PageModel => ({
     id: faker.random.uuid(),
     name: faker.company.companyName(),
     owner_id: ownerId,
     color,
     category_id: categoryId,
-    mandatory_contact_details: false
+    mandatory_contact_details: mandatoryContactDetails
 });
 
 export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
@@ -115,14 +115,20 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
     const persisted = []
     for (let i = 0; i < amount; i++) {
 
-        const page = {
-            ...randomPage(user.id),
-            mandatory_contact_details: mandatoryContactDetails
-        }
 
-        const original = await pages.createPage(page);
+        const original = await pages.createPage(
+            randomPage(user.id, null, null)
+        );
+
         const alteredDate = await fakeCreation<PageModel>("pages", original.id);
-        persisted.push(alteredDate);
+        const withMandatoryProp = mandatoryContactDetails ?
+            await pages.updatePage({
+                ...alteredDate,
+                mandatory_contact_details: true
+            }) :
+            alteredDate;
+
+        persisted.push(withMandatoryProp);
     }
 
     //NOTE: as `fakeCreationDate` messes with sorting

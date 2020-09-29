@@ -155,7 +155,7 @@ describe("The endpoint for responses", () => {
             expect(retrievedResponse.contact_details).toEqual(contactDetails);
         });
 
-        it("Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
+        it(" Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
 
             const [_, page] = await setupPage(true);
             const response = randomResponse(page.id, ":-)", undefined);
@@ -189,16 +189,13 @@ describe("The endpoint for responses", () => {
         });
 
 
-        it("Persisted response actually has contact details", async () => {
+        it("Persisted response actually has contact details ", async () => {
 
             const [_, page] = await setupPage(true);
             const contactDetails = faker.internet.email();
 
-            const response = randomResponse(page.id, ":-|", contactDetails);
-            await postResponse(response)
-            const retrieved = await responses.getResponse(response.id);
-
-            expect(retrieved.contact_details).toEqual(contactDetails);
+            const persisted = await (await postResponse(randomResponse(page.id, ":-|", contactDetails))).json();
+            expect(persisted.contact_details).toEqual(contactDetails);
         });
     })
 
@@ -238,6 +235,6 @@ describe("The endpoint for responses", () => {
 
             expect(pagiantedModel.data).toBeDefined();
             expect(pagiantedModel.next).toBeDefined();
-        })
+        });
     });
 });
