@@ -7,19 +7,24 @@ export const KretsEmoji = props => {
 
     const style = (emotion === type) ?
         {
-            fontSize: [32, 48, 64],
+            fontSize: [55, 89, 144],
+            //fontSize: [48, 64, 128],
         } : {
-            fontSize: [24, 32, 48],
+            fontSize: [34, 55, 89],
         };
 
 
     return <Box  {...style} m={[1, 2, 3]} onClick={() => { setEmotion(type) }}>
-        <Button aria-label="response-emoji-button"
-            sx={{
+        <Button aria-label="response-emoji-button" backgroundColor="secondary"
+            /* sx={{
                 boxShadow: "large",
-            }} >
-            <Emoji text={type} />
+            }}*/ >
+            <div style={{ borderBottom: (type === emotion && "solid teal"), borderRadius: "5px" }}>
+                <Emoji text={type} />
+            </div>
+
+
         </Button>
-    </Box>
+    </Box >
 
 };
