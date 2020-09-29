@@ -20,12 +20,19 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
     const [published, setPublished] = useState(false);
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [contactDetails, setContactDetails] = useState("");
+    const [showContactDetailsError, setShowContactDetailsError] = useState(false);
 
     const onPostResponse = async () => {
 
         //NOTE:impossible with current implementation, as button is hidden if no emotion is selected
         if (!emotion) {
             alert(uiText.response.chooseSmiley);
+            return;
+        }
+
+        if (page.mandatory_contact_details && !contactDetails) {
+
+            setShowContactDetailsError(true);
             return;
         }
 
@@ -86,7 +93,9 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
                             />
                         }
                         <ContactInput
-                            setContactDetails={setContactDetails} />
+                            isMandatory={page.mandatory_contact_details}
+                            setContactDetails={setContactDetails}
+                            showContactDetailsError={showContactDetailsError} />
                         <Button
                             aria-label="response-button-input"
                             width={1}

@@ -15,12 +15,13 @@ export const randomUser = (id = faker.random.uuid(), forceSubscription = false):
         null
 });
 
-export const randomPage = (ownerId: string, color: string = null, categoryId: string = null): PageModel => ({
+export const randomPage = (ownerId: string, color: string = null, categoryId: string = null, mandatoryContactDetails = false): PageModel => ({
     id: faker.random.uuid(),
     name: faker.company.companyName(),
     owner_id: ownerId,
     color,
-    category_id: categoryId
+    category_id: categoryId,
+    mandatory_contact_details: mandatoryContactDetails
 });
 
 export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
@@ -44,7 +45,7 @@ export const randomQuestion = (pageId: string, archived = false): QuestionModel 
 });
 
 
-//IMPORTANT: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
+//DANGER: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
 const fakeCreation = <T>(tableName: string, id: string) => first<T>(
     `update ${tableName} set created_at = $2 where id = $1 returning *`,
     [id, faker.date.past(1)]
@@ -107,20 +108,36 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
 }
 
 
-export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), forceSubscription = false): Promise<[UserModel, PageModel[]]> => {
+export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), forceSubscription = false, mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
 
     const user = await users.createUser(randomUser(faker.random.uuid(), forceSubscription));
-
 
     const persisted = []
     for (let i = 0; i < amount; i++) {
 
-        const original = await pages.createPage(randomPage(user.id));
+
+        const original = await pages.createPage(
+            randomPage(user.id, null, null)
+        );
+
         const alteredDate = await fakeCreation<PageModel>("pages", original.id);
-        persisted.push(alteredDate);
+        const withMandatoryProp = mandatoryContactDetails ?
+            await pages.updatePage({
+                ...alteredDate,
+                mandatory_contact_details: true
+            }) :
+            alteredDate;
+
+        persisted.push(withMandatoryProp);
     }
 
     //NOTE: as `fakeCreationDate` messes with sorting
     persisted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [user, persisted];
+}
+
+export const setupPage = async (mandatoryContactDetails = false): Promise<[UserModel, PageModel]> => {
+
+    const [owner, [page]] = await setupPages(1, false, mandatoryContactDetails);
+    return [owner, page];
 }

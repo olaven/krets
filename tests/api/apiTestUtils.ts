@@ -14,7 +14,8 @@ export const randomPage = (ownerId: string, color: string = null, categoryId: st
     name: faker.company.companyName(),
     owner_id: ownerId,
     color,
-    category_id: categoryId
+    category_id: categoryId,
+    mandatory_contact_details: false
 });
 
 

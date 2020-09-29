@@ -5,5 +5,6 @@ export interface PageModel {
     owner_id: string,
     created_at?: string,
     color?: string,
-    category_id?: string
+    category_id?: string,
+    mandatory_contact_details: boolean,
 }
