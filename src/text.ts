@@ -293,9 +293,9 @@ export const settings = strings({
         mandatoryContact: {
             heading: "Om kontaktinformasjon",
             enabledText: "Dine kunder må legge igjen kontakinformasjon",
-            updateWhenEnabled: "Gjør frivillig",
+            updateWhenEnabled: "Gjør det frivillig å legge inn kontaktinformasjon",
             disabledText: "Dine kunder kan nå være anonyme",
-            updateWhenDisabled: "Gjør obligatorisk med kontaktinformasjon",
+            updateWhenDisabled: "Gjør det obligatorisk med kontaktinformasjon",
         }
     }
 })
