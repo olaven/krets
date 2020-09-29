@@ -58,39 +58,45 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
         page.custom_title :
         `${uiText.response.header} ${page.name}`
 
-    return <Box m={"auto"} py={[4, 8, 16]}>
-        {published ?
-            <Thanks /> :
-            <>
-                <Heading textAlign={"center"} aria-label="response-section-header" py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
-                <Flex>
-                    <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
-                    <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
-                    <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
-                </Flex>
-                {emotion && <>
-                    {questions.length === 0 ?
-                        <DefaultQuestion
-                            answers={answers}
-                            emotion={emotion}
-                            setAnswers={setAnswers} /> :
-                        <CustomQuestions
-                            answers={answers}
-                            questions={questions}
-                            setAnswers={setAnswers}
-                        />
-                    }
-                    <ContactInput
-                        setContactDetails={setContactDetails} />
-                    <Button
-                        aria-label="response-button-input"
-                        width={1}
-                        m={1}
-                        px={3}
-                        onClick={onPostResponse}>
-                        {uiText.response.button}
-                    </Button>
-                </>}
-            </>}
-    </Box>;
+    return <Box py={[4, 8, 16]} m="auto">
+        {
+            published ?
+                <Thanks /> :
+                <>
+                    <Flex alignItems="center">
+                        <Box>
+                            <Heading textAlign={"center"} aria-label="response-section-header" fontSize={[21, 32]} py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
+                            <Flex>
+                                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
+                                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
+                                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
+                            </Flex>
+                        </Box>
+                    </Flex>
+                    {emotion && <>
+                        {questions.length === 0 ?
+                            <DefaultQuestion
+                                answers={answers}
+                                emotion={emotion}
+                                setAnswers={setAnswers} /> :
+                            <CustomQuestions
+                                answers={answers}
+                                questions={questions}
+                                setAnswers={setAnswers}
+                            />
+                        }
+                        <ContactInput
+                            setContactDetails={setContactDetails} />
+                        <Button
+                            aria-label="response-button-input"
+                            width={1}
+                            m={1}
+                            px={3}
+                            onClick={onPostResponse}>
+                            {uiText.response.button}
+                        </Button>
+                    </>}
+                </>
+        }
+    </Box >;
 };

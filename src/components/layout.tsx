@@ -48,10 +48,7 @@ const CornerButtons = () => {
 
 export const Layout = (props) => {
 
-
-
     return <Box
-
         minWidth={"100vw"}
         minHeight={"100vh"}
         sx={{
