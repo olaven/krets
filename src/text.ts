@@ -259,6 +259,13 @@ export const settings = strings({
             updateButton: "Update",
             archiveButton: "Archive.",
             unstable: "Custom questions an unstable feature - it may change"
+        },
+        mandatoryContact: {
+            heading: "Require contact details",
+            enabledMessage: "Your respondents must enter email",
+            updateWhenEnabled: "Make optional",
+            disabledMessage: "Your respondents may omit contact details",
+            updateWhenDisabled: "Require contact details",
         }
     },
     no: {
@@ -282,6 +289,13 @@ export const settings = strings({
             updateButton: "Oppdater",
             archiveButton: "Arkiver.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
+        },
+        mandatoryContact: {
+            heading: "Om kontaktinformasjon",
+            enabledText: "Dine kunder må legge igjen kontakinformasjon",
+            updateWhenEnabled: "Gjør frivillig",
+            disabledText: "Dine kunder kan være anonyme",
+            updateWhenDisabled: "Gjør obligatorisk med kontaktinformasjon",
         }
     }
 })

@@ -7,6 +7,7 @@ import { Collapsible } from "../../components/Collapsible";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
 import { Loader } from "../../components/tiny/loader";
 import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../components/Settings/Settings"
+import { ToggleMandatoryContactDetails } from "../../components/Settings/ToggleMandatoryContactDetails";
 
 
 
@@ -41,6 +42,9 @@ export const SettingsContent = () => {
             </Collapsible>
             <Collapsible text={text.settings.deletePageButton}>
                 <DeletePage />
+            </Collapsible>
+            <Collapsible text={text.settings.mandatoryContact.heading}>
+                <ToggleMandatoryContactDetails />
             </Collapsible>
         </WidthContainer>
 }

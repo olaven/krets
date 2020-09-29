@@ -93,6 +93,7 @@ export const ResponseSection = ({ page }: { page: PageModel }) => {
                             />
                         }
                         <ContactInput
+                            isMandatory={page.mandatory_contact_details}
                             setContactDetails={setContactDetails}
                             showContactDetailsError={showContactDetailsError} />
                         <Button
