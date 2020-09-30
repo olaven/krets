@@ -18,6 +18,7 @@ const getPages = async (request: NextApiRequest, response: NextApiResponse) => {
         amount: 15,
         key: requestKey
     });
+
     const paginated: PaginatedModel<PageModel> = {
         data,
         next: `/api/pages?key=${data[data.length - 1]?.created_at}`

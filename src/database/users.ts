@@ -26,21 +26,29 @@ const getUserByCustomerId = (customerId: string) =>
    );
 
 /**
- * DANGER: returns user data that must only be exposed to administrators
+ * DANGER: returns user data that must _not_ be exposed other than to administrators
  * @param options 
  */
 export const getAllUsers = (options: PaginationOptions = { amount: 10 }) =>
-   rows<UserModel>(
-      `
-         select * from users 
-         ${options.key ? `where created_at < $2` : ''}
-         order by created_at desc
-         limit $1
-      `,
-      options.key ?
-         [options.amount, options.key] :
+   options.key ?
+      rows<UserModel>(
+         `
+            select * from users 
+            where created_at < $2 
+            order by created_at desc
+            limit $1
+         `,
+         [options.amount, options.key]
+      ) :
+      rows<UserModel>(
+         `
+            select * from users
+            order by created_at desc
+            limit $1
+         `,
          [options.amount]
-   );
+      );
+
 
 const createUser = (user: UserModel) =>
    first<UserModel>(
@@ -50,13 +58,13 @@ const createUser = (user: UserModel) =>
 
 const updateUser = (user: UserModel) =>
    first<UserModel>(
-      `update users set customer_id = $2, product_id = $3, subscription_id = $4, active = $5 where id = $1 returning *`,
+      `update users set customer_id = $2, product_id = $3, subscription_id = $4, active = $5 where id = $1 returning * `,
       [user.id, user.customer_id, user.product_id, user.subscription_id, user.active]
    );
 
 const updateRole = (user: UserModel) =>
    first<UserModel>(
-      `update users set role = $2 where id = $1 returning *`,
+      `update users set role = $2 where id = $1 returning * `,
       [user.id, user.role]
    );
 
@@ -74,7 +82,7 @@ const updatePaymentInformation =
 
 const updateInvoicePaid = (userId: string, invoicePaid: boolean) =>
    first<UserModel>(
-      `update users set invoice_paid = $2 where id = $1 returning *`,
+      `update users set invoice_paid = $2 where id = $1 returning * `,
       [userId, invoicePaid]
    );
 
@@ -112,28 +120,28 @@ const deleteUser = async (id: string) => {
 //NOTE: this contains syntax errors, but something like this should replace `deleteUser` for performance reasons 
 const _deleteUser = (id: string) => run(
    `
-      WITH pages_owned_by_user AS (
-         select * from pages 
+      WITH pages_owned_by_user AS(
+            select * from pages 
          where owner_id = $1
-      )
+         )
       WITH questions_in_pages as (
          select * from questions 
          where page_id in pages_owned_by_user
       )
       WITH answers_on_questions as (
-         DELETE FROM answers
-         WHERE question_id IN (
-            SELECT id FROM questions_in_pages
-         )
+   DELETE FROM answers
+WHERE question_id IN(
+   SELECT id FROM questions_in_pages
+)
       )
-      DELETE FROM questions 
-      WHERE id IN (
-         SELECT id from questions_in_pages
-      )
-      DELETE FROM pages 
-      WHERE id IN (
-         SELECT id FROM pages_owned_by_user
-      )
+DELETE FROM questions
+WHERE id IN(
+   SELECT id from questions_in_pages
+)
+DELETE FROM pages
+WHERE id IN(
+   SELECT id FROM pages_owned_by_user
+)
    `,
    [id]
 )

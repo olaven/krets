@@ -333,7 +333,7 @@ describe("User repository", () => {
 
     describe("Pagination behaviour of users", () => {
 
-        it("Default return limit is 10", async () => {
+        it(" Default return limit is 10", async () => {
 
             const pageSize = 10;
             const amountPersisted = pageSize + 5;
@@ -346,7 +346,7 @@ describe("User repository", () => {
             expect(retrieved.length).toEqual(pageSize);
         });
 
-        it("Returns pages ordered by creation date", async () => {
+        it(" Returns pages ordered by creation date", async () => {
 
             await setupUsers(3)
             const [first, second, third] = (await users.getAllUsers())
@@ -356,7 +356,7 @@ describe("User repository", () => {
             expect(second).toBeGreaterThan(third);
         });
 
-        it("Only returns pages created after given 'key'-date", async () => {
+        it(" Only returns pages created after given 'key'-date", async () => {
 
             const [first, second, third] = await setupUsers(3);
 
