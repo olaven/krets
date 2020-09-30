@@ -88,6 +88,20 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
         .sort((a, b) => a.created_at < b.created_at ? 0 : -1)];
 }
 
+
+export const setupUsers = async (amount = faker.random.number({ min: 1, max: 20 })) => {
+
+    const persisted: UserModel[] = [];
+    for (let i = 0; i < amount; i++) {
+
+        const original = await users.createUser(randomUser());
+        const alteredDate = await fakeCreation<UserModel>("users", original.id);
+        persisted.push(alteredDate)
+    }
+
+    return persisted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+}
+
 export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))
     : Promise<[PageModel, UserModel, ResponseModel[]]> => {
 

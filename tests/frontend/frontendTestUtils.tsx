@@ -1,7 +1,7 @@
 import * as faker from "faker";
 import * as nextRouter from 'next/router';
 import { ReactElement } from 'react';
-import { PageModel } from '../../src/models/models';
+import { PageModel, UserModel } from '../../src/models/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
 import { HomeTooltipProvider } from '../../src/components/Home/Home/HomeTooltipProvider';
@@ -10,6 +10,18 @@ import { UserContext } from "../../src/context/UserContext";
 import { SettingsContext } from "../../src/context/SettingsContext";
 import { randomPage } from "../api/apiTestUtils";
 
+
+export const renderWithUserContext = (
+    Component: ReactElement,
+    user: UserModel
+) => render(
+    //@ts-expect-error
+    <UserContext.Provider value={{
+        databaseUser: user //NOTE: only passing what is relevant for now 
+    }} >
+        {Component}
+    </UserContext.Provider >
+)
 
 export const renderWithPagesContext = (
     Component: ReactElement,
