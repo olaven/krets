@@ -5,6 +5,7 @@ import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils
 import userHandler from "../../../src/pages/api/users/[id]";
 import { UserModel } from "../../../src/models/models";
 import { mockFetch } from "../../frontend/frontendTestUtils";
+import { createAdmin, createBasicUser } from "./userTestUtils";
 
 
 
@@ -32,15 +33,6 @@ describe("Endpoints for database user data", () => {
         await teardownServer(server)
     });
 
-
-    const createAdmin = async () => {
-
-        const user = await users.createUser(randomUser());
-        const asAdmin = await users.updateRole({ ...user, role: "administrator" });
-        return asAdmin;
-    }
-    const createBasicUser = async () =>
-        users.createUser(randomUser());
 
     const putUser = (callerId: string, user: UserModel) => authenticatedFetch(callerId, fullUrl(user.id), {
         method: "PUT",
@@ -186,8 +178,6 @@ describe("Endpoints for database user data", () => {
 
 
         it("Does not allow non-admin user to update `role` on themselves", async () => {
-
-
 
             const user = await createBasicUser();
             await putUser(user.id, {

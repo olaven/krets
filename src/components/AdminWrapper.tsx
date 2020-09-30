@@ -1,5 +1,3 @@
-
-import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import * as text from "../../src/text"
@@ -14,8 +12,6 @@ export const AdminWrapper = (WrappedComponent: () => ReactElement) =>
 
         const { databaseUser, loading } = useContext(UserContext);
         const [admin, setAdmin] = useState(false);
-
-        const router = useRouter();
 
 
         useEffect(() => {

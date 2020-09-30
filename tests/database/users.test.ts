@@ -1,8 +1,9 @@
 import { pages, questions, users } from "../../src/database/database";
 import * as faker from "faker";
-import { randomUser, setupPages, setupQuestions } from "./databaseTestUtils";
+import { randomUser, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
 import { uid } from "../api/apiTestUtils";
 import { random } from "faker";
+import { UserModel } from "../../src/models/models";
 
 describe("User repository", () => {
 
@@ -327,5 +328,61 @@ describe("User repository", () => {
         expect(before).toEqual(otherQuestions);
         expect(before).toEqual(after);
         expect(after).not.toEqual([]);
+    });
+
+
+    describe("Pagination behaviour of users", () => {
+
+        it("Default return limit is 10", async () => {
+
+            const pageSize = 10;
+            const amountPersisted = pageSize + 5;
+
+            const persisted = await setupUsers(amountPersisted);
+            const retrieved = await users.getAllUsers();
+
+            expect(pageSize).toBeLessThan(amountPersisted);
+            expect(persisted.length).toEqual(amountPersisted);
+            expect(retrieved.length).toEqual(pageSize);
+        });
+
+        it("Returns pages ordered by creation date", async () => {
+
+            await setupUsers(3)
+            const [first, second, third] = (await users.getAllUsers())
+                .map(user => new Date(user.created_at).getTime());
+
+            expect(first).toBeGreaterThan(second);
+            expect(second).toBeGreaterThan(third);
+        });
+
+        it("Only returns pages created after given 'key'-date", async () => {
+
+            const [first, second, third] = await setupUsers(3);
+
+            expect(first.created_at).toBeDefined();
+            const retrieved = (await users.getAllUsers({
+                amount: 10,
+                key: first.created_at
+            })).map(user => user.id);
+
+            expect(retrieved).not.toContain(first.id); //not returned, as equal to key
+            expect(retrieved).toContain(second.id); // returned, as after key
+            expect(retrieved).toContain(third.id); // returned, as after key
+        });
+
+        it(" Contraints both by page size and key", async () => {
+
+            const [first, second, third, fourth] = await setupUsers(4);
+            const retrieved = (await users.getAllUsers({
+                amount: 1,
+                key: second.created_at
+            })).map(user => user.id);
+
+            expect(retrieved).not.toContain(first.id); // as before key
+            expect(retrieved).not.toContain(second.id); // as equal to key 
+            expect(retrieved).toContain(third.id); // as after key and before amount-limit
+            expect(retrieved).not.toContain(fourth.id); // as after amount-limit
+        });
     });
 });

@@ -1,12 +1,11 @@
 import { FORBIDDEN, NOT_FOUND, OK, NO_CONTENT } from "node-kall";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { withCors, withAuthentication, withMethodHandlers } from "../../../middleware/middleware";
+import { withCors, withAuthentication, withMethodHandlers, asAdmin } from "../../../middleware/middleware";
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
 import { getPathParam } from "../../../workarounds";
 import { deleteCustomer } from "../../../payment/customer";
 import { deleteAuthUser } from "../../../auth/delete";
-import { asAdmin } from "../../../middleware/asAdmin";
 import { UserModel } from "../../../models/models";
 
 

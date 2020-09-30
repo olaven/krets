@@ -88,6 +88,23 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
         .sort((a, b) => a.created_at < b.created_at ? 0 : -1)];
 }
 
+
+export const setupUsers = async (amount = faker.random.number({ min: 1, max: 20 })) => {
+
+    const persisted: UserModel[] = [];
+    for (let i = 0; i < amount; i++) {
+
+        persisted.push(
+            await fakeCreation<UserModel>(
+                "users",
+                (await users.createUser(randomUser())).id
+            )
+        );
+    }
+
+    return persisted;
+}
+
 export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))
     : Promise<[PageModel, UserModel, ResponseModel[]]> => {
 

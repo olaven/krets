@@ -1,6 +1,7 @@
-import { first, run } from "./helpers/helpers";
+import { first, rows, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
 import { pages } from "./database"
+import { PaginationOptions } from "./helpers/PaginationOptions";
 
 //TODO: only export to tests 
 const getUserCountWithSubscription = async () => {
@@ -22,6 +23,23 @@ const getUserByCustomerId = (customerId: string) =>
    first<UserModel>(
       `select * from users where customer_id = $1`,
       [customerId]
+   );
+
+/**
+ * DANGER: returns user data that must only be exposed to administrators
+ * @param options 
+ */
+export const getAllUsers = (options: PaginationOptions = { amount: 10 }) =>
+   rows<UserModel>(
+      `
+         select * from users 
+         ${options.key ? `where created_at < $2` : ''}
+         order by created_at desc
+         limit $1
+      `,
+      options.key ?
+         [options.amount, options.key] :
+         [options.amount]
    );
 
 const createUser = (user: UserModel) =>
@@ -126,6 +144,7 @@ export const users = ({
    getUserCountWithSubscription,
    getUser,
    getUserByCustomerId,
+   getAllUsers,
    createUser,
    updateUser,
    updateRole,
