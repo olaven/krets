@@ -34,7 +34,8 @@ export const AdminWrapper = (WrappedComponent: () => ReactElement) =>
             console.log("admi ner truthy", admin);
         }
 
-        return admin ?//FIXME: update
-            <WrappedComponent /> :
+        // return admin ?//FIXME: update
+        return true ?
+            < WrappedComponent /> :
             <div>Noe helt annet</div>
     }
