@@ -108,8 +108,7 @@ describe("User repository", () => {
         })).resolves.not.toThrow();
     });
 
-    //FIXME: just varchar rn - @olaven
-    test(" non-`UserRole`-values are _not_ accepted", async () => {
+    test("non-`UserRole`-values are _not_ accepted", async () => {
 
         const original = await users.createUser(randomUser());
         expect(users.updateRole({
