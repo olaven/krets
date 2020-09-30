@@ -94,7 +94,7 @@ describe("User repository", () => {
         expect(updated.role).toEqual(original.role);
     });
 
-    test("valid `UserRole`-values are accepted", async () => {
+    test(" valid `UserRole`-values are accepted", async () => {
 
         const original = await users.createUser(randomUser());
         expect(users.updateRole({
@@ -108,23 +108,24 @@ describe("User repository", () => {
         })).resolves.not.toThrow();
     });
 
-    test("non-`UserRole`-values are _not_ accepted", async () => {
+    //FIXME: just varchar rn - @olaven
+    test(" non-`UserRole`-values are _not_ accepted", async () => {
 
         const original = await users.createUser(randomUser());
         expect(users.updateRole({
             ...original,
             //@ts-expect-error
             role: "_not_valid_first"
-        })).resolves.toThrow();
+        })).rejects.toThrow();
 
         expect(users.updateRole({
             ...original,
             //@ts-expect-error
             role: "_not_valid_second"
-        })).resolves.toThrow();
+        })).rejects.toThrow();
     });
 
-    test(" Can update user `active` status through `updateUser`", async () => {
+    test("Can update user `active` status through `updateUser`", async () => {
 
         const original = await users.createUser(randomUser());
         const updated = await users.updateUser({
@@ -136,7 +137,7 @@ describe("User repository", () => {
         expect(updated.active).toEqual(!original.active);
     });
 
-    test("Can update customer id", async () => {
+    test(" Can update customer id", async () => {
 
         const original = await users.createUser(randomUser());
         const NEW_CUSTOMER_ID = faker.random.uuid();

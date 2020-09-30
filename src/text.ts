@@ -224,6 +224,15 @@ export const adminPage = strings({
     }
 });
 
+export const administratorPage = strings({
+    en: {
+        denied: "You do not have access to this page"
+    },
+    no: {
+        denied: "You do not have access to this page"
+    }
+})
+
 export const guide = strings({
     en: {
         toGetStartedVideo: "How do I get started?",
@@ -262,9 +271,9 @@ export const settings = strings({
         },
         mandatoryContact: {
             heading: "Require contact details",
-            enabledMessage: "Your respondents must enter email",
+            enabledText: "Your respondents must enter email",
             updateWhenEnabled: "Make optional",
-            disabledMessage: "Your respondents may omit contact details",
+            disabledText: "Your respondents may omit contact details",
             updateWhenDisabled: "Require contact details",
         }
     },

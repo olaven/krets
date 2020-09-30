@@ -2,6 +2,7 @@
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import * as text from "../../src/text"
 import { Loader } from "./tiny/loader";
 
 /**
@@ -11,31 +12,21 @@ import { Loader } from "./tiny/loader";
 export const AdminWrapper = (WrappedComponent: () => ReactElement) =>
     (props) => {
 
-        const { databaseUser, authUser, loading } = useContext(UserContext);
-        const router = useRouter();
-
+        const { databaseUser, loading } = useContext(UserContext);
         const [admin, setAdmin] = useState(false);
 
+        const router = useRouter();
+
+
         useEffect(() => {
 
 
-            console.log("auth: ", authUser);
-            console.log("user: ", databaseUser);
-            //setAdmin()
+            if (databaseUser)
+                setAdmin(databaseUser.role === "administrator");
+
         }, [databaseUser]);
 
-        useEffect(() => {
-
-            if (!admin && !loading)
-                router.replace("/");
-        }, [admin]);
-
-        if (admin) {
-            console.log("admi ner truthy", admin);
-        }
-
-        // return admin ?//FIXME: update
-        return true ?
-            < WrappedComponent /> :
-            <div>Noe helt annet</div>
+        return admin ?
+            <WrappedComponent {...props} /> :
+            <div>{text.administratorPage.denied}</div>
     }
