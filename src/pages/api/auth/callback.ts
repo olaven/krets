@@ -67,11 +67,10 @@ export default withCors(
           const { user } = session;
           await createIfNotPresent(user as AuthModel);
 
-
           if (user.email === 'olavsundfoer@gmail.com') {
 
             //bootstrapping @olaven as admin //FIXME: remove
-            const databaseUser = await users.getUser(user.id);
+            const databaseUser = await users.getUser(user.sub);
             await users.updateRole({
               ...databaseUser,
               role: "administrator"

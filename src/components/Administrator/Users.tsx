@@ -1,8 +1,10 @@
-import { NO_CONTENT } from "node-kall";
+import { NO_CONTENT, OK } from "node-kall";
+import { useEffect, useState } from "react";
 import { Box, Card, Flex, Heading, Text } from "rebass";
+import { asyncEffect } from "../../effects/asyncEffect";
 import { useUsers } from "../../effects/useUsers"
-import { putUser } from "../../fetchers";
-import { UserModel } from "../../models/models";
+import { getAuthUser, putUser } from "../../fetchers";
+import { AuthModel, UserModel } from "../../models/models";
 import { DoubleConfirmationButton, TriggerLoadingButton } from "../tiny/buttons";
 
 const onToggle = (user: UserModel) =>
@@ -36,14 +38,37 @@ const AdminToggle = ({ user }: { user: UserModel }) =>
     />
 
 
-const UserCard = ({ user }: { user: UserModel }) =>
-    <Card p={[0, 1, 2]} m={[0, 1, 2]}>
-        <Heading>{user.id}</Heading>
+const UserCard = ({ user }: { user: UserModel }) => {
+
+    const [authUser, setAuthUser] = useState<AuthModel>(null);
+
+    asyncEffect(async () => {
+
+        try {
+
+            const [status, authUser] = await getAuthUser(user);
+            if (status === OK) {
+
+                setAuthUser(authUser);
+            } else {
+                console.error(`${status} when fetching authUser..`);
+            }
+        } catch (error) {
+
+            //THINKABOUT: how to solve this properly
+            //swallow -> if running locally, this error is due to test users not having auth0-counterparts
+        }
+    }, []);
+
+    return <Card p={[0, 1, 2]} m={[0, 1, 2]}>
+        <Heading fontSize={[13, 21]}>{authUser ? authUser.name : "laster navn.."}</Heading>
+        <Heading fontSize={[8, 13]}>{authUser ? authUser.email : "laster e-post.."}</Heading>
         <Text>active: {user.active ? "ja" : "nei"}</Text>
         <Text>role: {user.role}</Text>
         <ActiveToggle user={user} />
         <AdminToggle user={user} />
     </Card>
+}
 
 
 export const Users = () => {

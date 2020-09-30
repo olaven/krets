@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, UserModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, UserModel, AuthModel } from "./models/models";
 import Stripe from "stripe";
 
 
@@ -85,4 +85,7 @@ export const deleteUser = (id: string) =>
     del(`/api/users/${id}`);
 
 export const putUser = (user: UserModel) =>
-    put(`/api/users/${user.id}`, user); 
+    put(`/api/users/${user.id}`, user);
+
+export const getAuthUser = (user: UserModel) =>
+    get<AuthModel>(`/api/users/${user.id}/auth`); 

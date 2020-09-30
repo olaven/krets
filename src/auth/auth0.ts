@@ -1,6 +1,7 @@
 import {
     initAuth0
 } from '@auth0/nextjs-auth0';
+import request from "request";
 import config from './config';
 
 
@@ -42,4 +43,26 @@ export default initAuth0({
         // (Optional) Configure the clock tolerance in milliseconds, if the time on your database is running behind.
         clockTolerance: 10000
     }
+});
+
+const tokenOptions = {
+    method: 'POST',
+    url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    form: {
+        grant_type: 'client_credentials',
+        client_id: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
+        client_secret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
+        audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`
+    }
+};
+
+export const getAuth0Token = () => new Promise((resolve, reject) => {
+    request(tokenOptions, (error, response, body) => {
+
+        if (error) reject(error);
+
+        const json = JSON.parse(body)
+        resolve(json.access_token);
+    });
 });

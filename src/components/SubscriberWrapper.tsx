@@ -12,7 +12,7 @@ import { Loader } from "./tiny/loader";
 export const SubscriberWrapper = (WrappedComponent: () => ReactElement) =>
     (props) => {
 
-        const { databaseUser, loading } = useContext(UserContext);
+        const { databaseUser } = useContext(UserContext);
         const router = useRouter();
 
         const [lacksSubscription, setLacksSubscription] = useState(false);
