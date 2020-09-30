@@ -55,6 +55,8 @@ export const Users = () => {
             {users.map(user =>
                 <UserCard key={user.id} user={user} />)}
         </Flex>
-        <Button onClick={getNextPages}>Last flere</Button>
+        <TriggerLoadingButton
+            text={"last flere"}
+            action={getNextPages} />
     </Box>
 }

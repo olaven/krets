@@ -93,7 +93,7 @@ describe("Endpoints for database user data", () => {
         }
     });
 
-    it("Returns a `next` link that returns furhter users", async () => {
+    it(" Returns a `next` link that returns furhter users", async () => {
 
         const admin = await createAdmin();
         await setupUsers(15); //NOTE: more than defualt page of 10
@@ -101,7 +101,7 @@ describe("Endpoints for database user data", () => {
         const firstResponse = await authenticatedFetch(admin.id, url);
         const firstPage = await firstResponse.json() as PaginatedModel<UserModel>;
 
-        const secondResponse = await authenticatedFetch(admin.id, firstPage.next);
+        const secondResponse = await authenticatedFetch(admin.id, `${url}${firstPage.next}`);
         const secondPage = await secondResponse.json() as PaginatedModel<UserModel>;
 
         for (const user of secondPage.data) {
