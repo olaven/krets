@@ -1,5 +1,5 @@
 import { NO_CONTENT } from "node-kall";
-import { Box, Button, Card, Flex, Heading, Text } from "rebass";
+import { Box, Card, Flex, Heading, Text } from "rebass";
 import { useUsers } from "../../effects/useUsers"
 import { putUser } from "../../fetchers";
 import { UserModel } from "../../models/models";
