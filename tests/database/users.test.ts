@@ -46,6 +46,84 @@ describe("User repository", () => {
         expect(typeof user.active).toEqual("boolean");
     });
 
+    test("user has a `role`", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(user.role).toBeDefined();
+    });
+
+    test("A role is 'basic' by default", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(user.role).toEqual("basic");
+    });
+
+    test("A role _can not_ be udpated with regular update function", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateUser({
+            ...original,
+            role: 'administrator'
+        });
+
+        expect(original.role).toEqual("basic");
+        expect(updated.role).toEqual("basic");
+    });
+
+    test(" A role can be updated with specific `updateRole`-function", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateRole({
+            ...original,
+            role: "administrator"
+        });
+
+        expect(original.role).toEqual("basic");
+        expect(updated.role).toEqual("administrator");
+    });
+
+    test(" `updateRole` updates only role", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateRole({
+            ...original,
+            active: !original.active, //NOTE updating something other than `role`
+        });
+
+        expect(updated.role).not.toEqual(!original.active);
+        expect(updated.role).toEqual(original.role);
+    });
+
+    test("valid `UserRole`-values are accepted", async () => {
+
+        const original = await users.createUser(randomUser());
+        expect(users.updateRole({
+            ...original,
+            role: "administrator"
+        })).resolves.not.toThrow();
+
+        expect(users.updateRole({
+            ...original,
+            role: "basic"
+        })).resolves.not.toThrow();
+    });
+
+    test("non-`UserRole`-values are _not_ accepted", async () => {
+
+        const original = await users.createUser(randomUser());
+        expect(users.updateRole({
+            ...original,
+            //@ts-expect-error
+            role: "_not_valid_first"
+        })).resolves.toThrow();
+
+        expect(users.updateRole({
+            ...original,
+            //@ts-expect-error
+            role: "_not_valid_second"
+        })).resolves.toThrow();
+    });
+
     test(" Can update user `active` status through `updateUser`", async () => {
 
         const original = await users.createUser(randomUser());

@@ -36,6 +36,12 @@ const updateUser = (user: UserModel) =>
       [user.id, user.customer_id, user.product_id, user.subscription_id, user.active]
    );
 
+const updateRole = (user: UserModel) =>
+   first<UserModel>(
+      `update users set role = $2 where id = $1 returning *`,
+      [user.id, user.role]
+   );
+
 /**
  * Added this in order to avoid 
  * fetchin databaseuser in subscription.ts
@@ -122,6 +128,7 @@ export const users = ({
    getUserByCustomerId,
    createUser,
    updateUser,
+   updateRole,
    updatePaymentInformation,
    updateInvoicePaid,
    userExists,
