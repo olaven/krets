@@ -14,6 +14,11 @@ const strings = (config: { en: any, no: any }) => {
 
 export const intro = strings({
     en: {
+        requestAccess: {
+            button: "Request access",
+            placeholder: "Your work-email",
+            success: "Welcome✋ We'll get back to you as quickly as possible!"
+        },
         about: "You'll only improve through feedback 👊",
         aim: "Krets aims to make it frictionless 😁",
         instructions: "See how it works - Scan with your phone 🤳✨",
@@ -27,6 +32,13 @@ export const intro = strings({
         acceptSuffix: "📝"
     },
     no: {
+        requestAccess: {
+            button: "Etterspør tilgang",
+            placeholder: "Din e-post",
+            success: "Velkommen✋ Vi kommer tilbake til deg så fort vi kan!"
+        },
+        requestAccessButton: "Etterspør tilgang",
+        requestAccessPlaceholder: "Din e-post",
         about: "Tilbakemeldinger er nødvendig for forbedring 👊",
         aim: "Krets ønsker å gjøre det friksjonsfritt 😁",
         instructions: "Se hvordan det funker - Scan med telefonen 🤳✨",
@@ -434,6 +446,18 @@ export const upgrade = strings({
         cancelSuffix: ", dette skal ordnes opp i!"
     }
 });
+
+/**
+ * This should slowly replace `upgrade`, as it does not make sense without Stripe 
+ */
+export const accountInfo = strings({
+    en: {
+        inactiveInfo: "Your account is not activated yet. If you believe this is a mistake, contact post@krets.app"
+    },
+    no: {
+        inactiveInfo: "Din konto er ikke aktiv. Er dette feil? Ta kontakt på post@krets.app"
+    }
+})
 
 export const about = strings({
     en: {
