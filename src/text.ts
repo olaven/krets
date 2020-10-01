@@ -14,6 +14,11 @@ const strings = (config: { en: any, no: any }) => {
 
 export const intro = strings({
     en: {
+        requestAccess: {
+            button: "Request access",
+            placeholder: "Your work-email",
+            success: "Welcome✋ We'll get back to you as quickly as possible!"
+        },
         about: "You'll only improve through feedback 👊",
         aim: "Krets aims to make it frictionless 😁",
         instructions: "See how it works - Scan with your phone 🤳✨",
@@ -27,6 +32,13 @@ export const intro = strings({
         acceptSuffix: "📝"
     },
     no: {
+        requestAccess: {
+            button: "Etterspør tilgang",
+            placeholder: "Din e-post",
+            success: "Velkommen✋ Vi kommer tilbake til deg så fort vi kan!"
+        },
+        requestAccessButton: "Etterspør tilgang",
+        requestAccessPlaceholder: "Din e-post",
         about: "Tilbakemeldinger er nødvendig for forbedring 👊",
         aim: "Krets ønsker å gjøre det friksjonsfritt 😁",
         instructions: "Se hvordan det funker - Scan med telefonen 🤳✨",
