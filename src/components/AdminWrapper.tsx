@@ -16,10 +16,7 @@ export const AdminWrapper = (WrappedComponent: () => ReactElement) =>
 
         useEffect(() => {
 
-
-            if (databaseUser)
-                setAdmin(databaseUser.role === "administrator");
-
+            setAdmin(databaseUser?.role === 'administrator');
         }, [databaseUser]);
 
         return admin ?
