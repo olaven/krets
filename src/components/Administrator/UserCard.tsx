@@ -50,6 +50,7 @@ export const UserCard = ({ user }: { user: UserModel }) => {
 
                 setAuthUser(authUser);
             } else {
+
                 console.error(`${status} when fetching authUser..`);
             }
         } catch (error) {

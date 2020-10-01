@@ -19,8 +19,9 @@ export default applyMiddleware(
     async (request, response) => {
 
         const id = getPathParam(request.url, 2);
-        const authUser = await getAuthUser(id);
+        const [status, authUser] = await getAuthUser(id);
 
         response
-            .json(authUser);
+            .status(status)
+            .send(authUser);
     });
