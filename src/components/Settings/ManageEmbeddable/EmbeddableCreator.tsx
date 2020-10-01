@@ -35,34 +35,6 @@ export const EmbeddableCreator = () => {
 
     const { page } = useContext(SettingsContext);
     const { refreshEmbeddables } = useContext(EmbeddableContext)
-    /* const [origin, setOrigin] = useState("");
-    const [error, setError] = useState(false); */
-
-    /*     const onCreate = async () => {
-    
-            const validated = validURL(
-                addProtocol(
-                    origin
-                )
-            );
-    
-            console.log("valiedated", validated);
-            if (validated) {
-    
-                setError(false);
-                const [status, embeddable] = await postEmbeddable({
-                    origin: validated,
-                    page_id: page.id
-                });
-    
-                if (status === CREATED) {
-                    console.log('Created', embeddable);
-                }
-            } else {
-    
-                setError(true);
-            }
-        } */
 
     const onGenerate = async () => {
 

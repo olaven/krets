@@ -67,6 +67,7 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: {
     return loading ?
         <Loader size={80} /> :
         <Button
+            aria-label={label}
             fontSize={[13, 21]}
             width={1}
             mx={1}

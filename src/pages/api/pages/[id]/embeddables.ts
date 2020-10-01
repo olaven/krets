@@ -29,7 +29,7 @@ const getEmbeddable = withCors(
             }
         )
     )
-)
+);
 
 const postEmbeddable = withCors(
     withAuthentication(

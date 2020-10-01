@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import '@testing-library/jest-dom/extend-expect'
-import { findByLabelText, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { EmbeddableContent } from "../../../../src/components/Settings/ManageEmbeddable/ManageEmbeddable";
 import { randomEmbeddable } from "../../../database/databaseTestUtils";
-import { mockFetch, renderWithPagesContext, renderWithEmbeddableContext } from "../../frontendTestUtils";
+import { mockFetch, renderWithEmbeddableContext } from "../../frontendTestUtils";
 
 
 describe("Manage Embeddable Content", async () => {
@@ -18,18 +18,18 @@ describe("Manage Embeddable Content", async () => {
         expect(button).toBeInTheDocument();
     });
 
-    it(" if embeddable is present, button to generate is not visible", () => {
+    it("if embeddable is present, button to generate is not visible", () => {
 
         const { findByLabelText } = renderWithEmbeddableContext(<EmbeddableContent />);
         const button = findByLabelText("embeddable-generate-button");
         waitFor(() => {
 
             expect(button).not.toBeInTheDocument();
-        })
+        });
     });
 
 
-    it(" if embeddable is present, code is visible", () => {
+    it("if embeddable is present, code is visible", () => {
 
         const { findByLabelText } = renderWithEmbeddableContext(<EmbeddableContent />);
         const code = findByLabelText("<iframe");
@@ -37,6 +37,6 @@ describe("Manage Embeddable Content", async () => {
         waitFor(() => {
 
             expect(code).toBeInTheDocument();
-        })
+        });
     });
 });

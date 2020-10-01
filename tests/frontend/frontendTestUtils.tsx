@@ -25,6 +25,23 @@ export const renderWithUserContext = (
     </UserContext.Provider >
 )
 
+export const renderWithEmbeddableContext = (
+    Component: ReactElement,
+    embeddable = randomEmbeddable("mock-render-page-id")
+) => render(<SettingsContext.Provider value={{
+    page: randomPage("mock-render-owner"),
+    pageLoading: false,
+    updatePage: async () => { }
+}}>
+    <EmbeddableContext.Provider value={{
+        embeddable,
+        refreshEmbeddables: async () => { }
+    }}>
+        {Component}
+    </EmbeddableContext.Provider>
+</SettingsContext.Provider>);
+
+
 export const renderWithPagesContext = (
     Component: ReactElement,
     pages: PageModel[] = [],
