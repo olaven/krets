@@ -1,6 +1,6 @@
 import * as faker from "faker";
 import { pages, categories, responses, users, questions, answers } from "../../src/database/database";
-import { randomUser, setupAnswers, setupPages, setupQuestions } from "../database/databaseTestUtils";
+import { randomUser, setupAnswers, setupPage, setupPages, setupQuestions } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 
 
@@ -15,7 +15,8 @@ describe("Database interface for pages", () => {
             owner_id: owner.id,
             name: "Amazing cafe!",
             id: id,
-            category_id: null
+            category_id: null,
+            mandatory_contact_details: false,
         };
 
         const before = await pages.getPage(id);
@@ -37,7 +38,8 @@ describe("Database interface for pages", () => {
             owner_id: owner.id,
             name: originalName,
             id: faker.random.uuid(),
-            category_id: null
+            category_id: null,
+            mandatory_contact_details: false,
         }
 
         await pages.createPage(page);
@@ -151,7 +153,8 @@ describe("Database interface for pages", () => {
             owner_id: user.id,
             name: "page name",
             id: faker.random.uuid(),
-            category_id: persistedCategory.id
+            category_id: persistedCategory.id,
+            mandatory_contact_details: false
         }
 
         await pages.createPage(page);
@@ -206,6 +209,69 @@ describe("Database interface for pages", () => {
             expect(retrieved[0]).not.toEqual(otherPage);
         });
     });
+
+    describe("The 'mandatory'-column", () => {
+
+        it("Does exist", async () => {
+
+            const [_, page] = await setupPage();
+            expect(page.mandatory_contact_details).toBeDefined();
+        });
+
+        it("Is false by default", async () => {
+
+            const [_, page] = await setupPage();
+            expect(page.mandatory_contact_details).toBe(false);
+        });
+
+        it("Can be updated", async () => {
+
+            const [_, original] = await setupPage();
+            const updated = await pages.updatePage({
+                ...original,
+                mandatory_contact_details: true
+            });
+
+            expect(original.mandatory_contact_details).toBe(false);
+            expect(updated.mandatory_contact_details).toBe(true);
+        });
+
+        it("Can be set to its current state without crashing", async () => {
+
+            const [_, before] = await setupPage();
+            const after = await pages.updatePage({
+                ...before, mandatory_contact_details: before.mandatory_contact_details
+            });
+
+            expect(before.mandatory_contact_details).toEqual(after.mandatory_contact_details);
+        });
+
+        it("Can be changed multiple times, back and forth", async () => {
+
+            const [_, first] = await setupPage();
+
+            const second = await pages.updatePage({
+                ...first,
+                mandatory_contact_details: !first.mandatory_contact_details
+            });
+
+            const third = await pages.updatePage({
+                ...second,
+                mandatory_contact_details: !second.mandatory_contact_details
+            });
+
+            const fourth = await pages.updatePage({
+                ...third,
+                mandatory_contact_details: !third.mandatory_contact_details
+            });
+
+            expect(first.mandatory_contact_details).toBe(false);
+            expect(second.mandatory_contact_details).toBe(true);
+            expect(third.mandatory_contact_details).toBe(false);
+            expect(fourth.mandatory_contact_details).toBe(true);
+        });
+    });
+
     describe("The 'color'-column", () => {
 
         it("Does exist", async () => {
@@ -373,7 +439,7 @@ describe("Database interface for pages", () => {
         });
     });
 
-    describe("Getting customer id and amount of pages",  () => {
+    describe("Getting customer id and amount of pages", () => {
 
         it("does not throw", async () => {
 
@@ -386,7 +452,7 @@ describe("Database interface for pages", () => {
             //NOTE: in practice this is not needed as there will always be something from the other tests
             await setupPages(4, true);
 
-            const element  = random((await pages.getCustomerToPageCount()) as any[])
+            const element = random((await pages.getCustomerToPageCount()) as any[])
 
             expect(element).toBeDefined()
             expect(element.customer_id).toBeDefined();
@@ -421,7 +487,7 @@ describe("Database interface for pages", () => {
             expect(rows.length).toEqual(countRegistered);
         });
 
-      it("Actually returns a valid number of pages", async () => {
+        it("Actually returns a valid number of pages", async () => {
 
             await setupPages();
 
@@ -435,28 +501,28 @@ describe("Database interface for pages", () => {
 
         it("Does not include users without a subscription", async () => {
 
-            const [ user ] = await setupPages();
+            const [user] = await setupPages();
             await users.updateUser({
-                ...user, 
-                subscription_id: null 
+                ...user,
+                subscription_id: null
             });
-            
+
             const rows = await pages.getCustomerToPageCount()
-            const found = rows.find(({customer_id}) => customer_id === user.customer_id); 
-            expect(found).toBeFalsy(); 
+            const found = rows.find(({ customer_id }) => customer_id === user.customer_id);
+            expect(found).toBeFalsy();
         });
 
         it("Does include users with a subscription", async () => {
 
-            const [ user ] = await setupPages();
+            const [user] = await setupPages();
             await users.updateUser({
-                ...user, 
+                ...user,
                 subscription_id: faker.random.uuid()
             });
-            
+
             const rows = await pages.getCustomerToPageCount()
-            const found = rows.find(({customer_id}) => customer_id === user.customer_id); 
-            expect(found).toBeTruthy(); 
+            const found = rows.find(({ customer_id }) => customer_id === user.customer_id);
+            expect(found).toBeTruthy();
         })
     });
 });

@@ -13,11 +13,5 @@
       "internalConsoleOptions": "neverOpen",
       "port": 9229
     },
-    {
-      "name": "Attach debugger",
-      "type": "pwa-node",
-      "request": "attach",
-      "port": 9229
-    }
   ]
 }

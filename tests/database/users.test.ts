@@ -1,8 +1,9 @@
 import { pages, questions, users } from "../../src/database/database";
 import * as faker from "faker";
-import { randomUser, setupPages, setupQuestions } from "./databaseTestUtils";
+import { randomUser, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
 import { uid } from "../api/apiTestUtils";
 import { random } from "faker";
+import { UserModel } from "../../src/models/models";
 
 describe("User repository", () => {
 
@@ -34,13 +35,116 @@ describe("User repository", () => {
         expect(after).toBeTruthy();
     });
 
-    test("Can update customer id", async () => {
+    test(" User has prop for wether it is active or not", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(user.active).toBeDefined();
+    });
+
+    test(" `.active` is a boolean", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(typeof user.active).toEqual("boolean");
+    });
+
+    test("user has a `role`", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(user.role).toBeDefined();
+    });
+
+    test("A role is 'basic' by default", async () => {
+
+        const user = await users.createUser(randomUser());
+        expect(user.role).toEqual("basic");
+    });
+
+    test("A role _can not_ be udpated with regular update function", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateUser({
+            ...original,
+            role: 'administrator'
+        });
+
+        expect(original.role).toEqual("basic");
+        expect(updated.role).toEqual("basic");
+    });
+
+    test(" A role can be updated with specific `updateRole`-function", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateRole({
+            ...original,
+            role: "administrator"
+        });
+
+        expect(original.role).toEqual("basic");
+        expect(updated.role).toEqual("administrator");
+    });
+
+    test(" `updateRole` updates only role", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateRole({
+            ...original,
+            active: !original.active, //NOTE updating something other than `role`
+        });
+
+        expect(updated.role).not.toEqual(!original.active);
+        expect(updated.role).toEqual(original.role);
+    });
+
+    test(" valid `UserRole`-values are accepted", async () => {
+
+        const original = await users.createUser(randomUser());
+        expect(users.updateRole({
+            ...original,
+            role: "administrator"
+        })).resolves.not.toThrow();
+
+        expect(users.updateRole({
+            ...original,
+            role: "basic"
+        })).resolves.not.toThrow();
+    });
+
+    test("non-`UserRole`-values are _not_ accepted", async () => {
+
+        const original = await users.createUser(randomUser());
+        expect(users.updateRole({
+            ...original,
+            //@ts-expect-error
+            role: "_not_valid_first"
+        })).rejects.toThrow();
+
+        expect(users.updateRole({
+            ...original,
+            //@ts-expect-error
+            role: "_not_valid_second"
+        })).rejects.toThrow();
+    });
+
+    test("Can update user `active` status through `updateUser`", async () => {
+
+        const original = await users.createUser(randomUser());
+        const updated = await users.updateUser({
+            ...original,
+            active: !original.active
+        });
+
+        expect(original.active).not.toEqual(updated.active);
+        expect(updated.active).toEqual(!original.active);
+    });
+
+    test(" Can update customer id", async () => {
 
         const original = await users.createUser(randomUser());
         const NEW_CUSTOMER_ID = faker.random.uuid();
 
         const updated = await users.updateUser({
             id: original.id,
+            active: true,
             customer_id: NEW_CUSTOMER_ID
         });
 
@@ -72,6 +176,7 @@ describe("User repository", () => {
         const original = await users.createUser(randomUser());
         const updated = await users.updateUser({
             id: original.id,
+            active: true,
             customer_id: original.customer_id,
             product_id: NEW_PRODUCT_ID,
             subscription_id: NEW_SUBSCRIPTION_ID
@@ -223,5 +328,63 @@ describe("User repository", () => {
         expect(before).toEqual(otherQuestions);
         expect(before).toEqual(after);
         expect(after).not.toEqual([]);
+    });
+
+
+    describe("Pagination behaviour of users", () => {
+
+        it("Default return limit is 10", async () => {
+
+            const pageSize = 10;
+            const amountPersisted = pageSize + 5;
+
+            const persisted = await setupUsers(amountPersisted);
+            const retrieved = await users.getAllUsers();
+
+            expect(pageSize).toBeLessThan(amountPersisted);
+            expect(persisted.length).toEqual(amountPersisted);
+            expect(retrieved.length).toEqual(pageSize);
+        });
+
+        it(" Returns pages ordered by creation date", async () => {
+
+            await setupUsers(3)
+            const [first, second, third] = (await users.getAllUsers())
+                .map(user => new Date(user.created_at).getTime());
+
+            expect(first).toBeGreaterThan(second);
+            expect(second).toBeGreaterThan(third);
+        });
+
+        //does not work, as tests create more users in parallell - TODO: should ideally clear database between all tests
+        it.skip(" Only returns pages created after given 'key'-date", async () => {
+
+            const [first, second, third] = await setupUsers(3);
+
+            expect(first.created_at).toBeDefined();
+            const retrieved = (await users.getAllUsers({
+                amount: 10,
+                key: first.created_at
+            })).map(user => user.id);
+
+            expect(retrieved).not.toContain(first.id); //not returned, as equal to key
+            expect(retrieved).toContain(second.id); // returned, as after key
+            expect(retrieved).toContain(third.id); // returned, as after key
+        });
+
+        //does not work, as tests create more users in parallell - TODO: should ideally clear database between all tests
+        it.skip(" Contraints both by page size and key", async () => {
+
+            const [first, second, third, fourth] = await setupUsers(4);
+            const retrieved = (await users.getAllUsers({
+                amount: 1,
+                key: second.created_at
+            })).map(user => user.id);
+
+            expect(retrieved).not.toContain(first.id); // as before key
+            expect(retrieved).not.toContain(second.id); // as equal to key 
+            expect(retrieved).toContain(third.id); // as after key and before amount-limit
+            expect(retrieved).not.toContain(fourth.id); // as after amount-limit
+        });
     });
 });

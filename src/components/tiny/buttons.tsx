@@ -25,7 +25,7 @@ export const AboutButton = () => <Button backgroundColor={"secondary"} minWidth=
     <Link color={"primary"} href="/about">{uiText.buttons.aboutPage}</Link>
 </Button>;
 
-
+//FIXME: Potentially removable -  not used after invoice-only.
 export const GetStartedButton = () => <Flex width={1} py={[0, 1, 2]}>
     <Box width={[0, 0, 1 / 3]}></Box>
     <Button
@@ -67,8 +67,7 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: {
     return loading ?
         <Loader size={80} /> :
         <Button
-            aria-label={label}
-            fontSize={[1, 2]}
+            fontSize={[13, 21]}
             width={1}
             mx={1}
             backgroundColor={backgroundColor ? backgroundColor : "primary"}

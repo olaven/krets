@@ -47,7 +47,7 @@ describe("The pages endpoint", () => {
             const user = await users.createUser(randomUser());
 
             const response = await postPage({
-                id: faker.random.alphaNumeric(40), name: "My Page", owner_id: user.id
+                id: faker.random.alphaNumeric(40), name: "My Page", owner_id: user.id, mandatory_contact_details: false
             }, url, user.id);
 
             expect(response.status).toEqual(201)
@@ -113,7 +113,7 @@ describe("The pages endpoint", () => {
             for (let i = 0; i < n; i++) {
 
                 await postPage({
-                    id: faker.random.uuid(), name: faker.company.companyName(), owner_id: user.id
+                    id: faker.random.uuid(), name: faker.company.companyName(), owner_id: user.id, mandatory_contact_details: false
                 }, url, user.id);
             }
 

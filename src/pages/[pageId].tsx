@@ -19,7 +19,7 @@ export default () => {
     const [page, loading] = usePage(pageId);
     const userOwnsThePage = authUser && authUser.sub === page?.owner_id;
 
-    return <Box>
+    return <>
         <Flex>
             {loading ?
                 <Loader size={150} /> :
@@ -33,6 +33,6 @@ export default () => {
             }
         </Flex>
         {userOwnsThePage && <CopyURLButton />}
-    </Box>
+    </>
 };
 

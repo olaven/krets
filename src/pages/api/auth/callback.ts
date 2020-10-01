@@ -31,8 +31,8 @@ const syncSubscriptionStatus = async (user: UserModel) => {
  */
 const createUser = async (id: string, email: string) => {
 
-  const user = await users.getUser(id); 
-  
+  const user = await users.getUser(id);
+
   if (!user) {
 
     const customer_id = await registerCustomer(email);
@@ -46,7 +46,7 @@ const createUser = async (id: string, email: string) => {
 //TODO: Refactor: this function is messy and does several things
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
-  let user = await createUser(sub, email);  
+  let user = await createUser(sub, email);
 
   const customerRegistered = await customerExists(user?.customer_id);
   if (!customerRegistered) {
@@ -66,6 +66,16 @@ export default withCors(
 
           const { user } = session;
           await createIfNotPresent(user as AuthModel);
+
+          if (user.email === 'olavsundfoer@gmail.com') {
+
+            //bootstrapping @olaven as admin //FIXME: remove
+            const databaseUser = await users.getUser(user.sub);
+            await users.updateRole({
+              ...databaseUser,
+              role: "administrator"
+            });
+          }
 
           return {
             ...session,

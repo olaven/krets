@@ -45,6 +45,12 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE, NEXT_
 
       <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} />
 
+      <style jsx global>{`
+        :global(body) {
+          margin: 0; 
+        }
+      `}</style>
+
     </Head>
     <ThemeProvider theme={KretsTheme}>
       {/* I should consider moving Stripe-Component (Elements) down to a custom context or similar */}

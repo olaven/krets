@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel } from "./models/models";
 import Stripe from "stripe";
 
 
@@ -65,11 +65,9 @@ export const getProductByUser = (userId: string) =>
 export const getPrices = (productId: string) =>
     get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`);
 
-export const getQuestions = (pageId: string, includeArchived: boolean) => {
+export const getQuestions = (pageId: string, includeArchived: boolean) =>
+    get<QuestionModel[]>(`/api/pages/${pageId}/questions?includeArchived=${includeArchived}`);
 
-    console.log("Going to include archived from cleitn", includeArchived);
-    return get<QuestionModel[]>(`/api/pages/${pageId}/questions?includeArchived=${includeArchived}`);
-}
 
 export const postQuestion = (question: QuestionModel) =>
     post<QuestionModel>(`/api/pages/${question.page_id}/questions`, question);
@@ -93,4 +91,9 @@ export const postEmbeddable = (embeddable: EmbeddableModel) =>
     post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable);
 
 export const putEmbeddableResponse = (embeddableResponse: EmbeddableResponseModel) =>
-    put(`/api/pages/${embeddableResponse.response.page_id}/embeddables`, embeddableResponse); 
+    put(`/api/pages/${embeddableResponse.response.page_id}/embeddables`, embeddableResponse);
+export const putUser = (user: UserModel) =>
+    put(`/api/users/${user.id}`, user);
+
+export const getAuthUser = (user: UserModel) =>
+    get<AuthModel>(`/api/users/${user.id}/auth`); 

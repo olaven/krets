@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
 import { pages, responses } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers } from "../../../../middleware/middleware";
+import { ResponseModel } from "../../../../models/models";
 import { getKey } from "../../../../workarounds";
 
 
@@ -44,21 +45,27 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
         });
 }
 
-const postResponses = async (request: NextApiRequest, response: NextApiResponse) => {
+const postResponses = async (req: NextApiRequest, res: NextApiResponse) => {
 
-    const responseFromUser = request.body;
+    const response = req.body as ResponseModel;
+    const page = await pages.getPage(response.page_id)
+
+    if (page.mandatory_contact_details && !response.contact_details)
+        return res
+            .status(BAD_REQUEST)
+            .end()
 
     try {
 
-        const createdResponse = await responses.createResponse(responseFromUser);
-        response
+        const persisted = await responses.createResponse(response);
+        res
             .status(CREATED)
-            .json(createdResponse);
+            .json(persisted);
     } catch (error) {
 
         //TODO: 400 or 500 based on error 
         console.warn(error);
-        response
+        res
             .status(BAD_REQUEST)
             .send("Invalid response")
     }

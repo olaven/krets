@@ -36,7 +36,7 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
 
             <VictoryAxis
                 axisLabelComponent={<VictoryLabel />}
-                tickCount={5}
+                tickCount={3}
                 tickFormat={tick => {
                     const date = new Date(tick);
                     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`

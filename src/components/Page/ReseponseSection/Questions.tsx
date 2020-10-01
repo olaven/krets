@@ -65,7 +65,8 @@ export const CustomQuestions = ({ setAnswers, answers, questions }: CustomQuesti
                 onChange={() => { setChecked(!checked) }}
                 checked={checked}
             />
-            {uiText.response.prefixCustomQuestionCheckbox} {questions.length} {uiText.response.suffixCustomQuestionCheckbox}
+            {uiText.response.customQuestionsCheckbox}
+            {/* {uiText.response.prefixCustomQuestionCheckbox} {questions.length} {uiText.response.suffixCustomQuestionCheckbox} */}
         </Label >
         {checked && questions.map(question =>
             <CustomQuestion

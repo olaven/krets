@@ -14,6 +14,11 @@ const strings = (config: { en: any, no: any }) => {
 
 export const intro = strings({
     en: {
+        requestAccess: {
+            button: "Request access",
+            placeholder: "Your work-email",
+            success: "Welcome✋ We'll get back to you as quickly as possible!"
+        },
         about: "You'll only improve through feedback 👊",
         aim: "Krets aims to make it frictionless 😁",
         instructions: "See how it works - Scan with your phone 🤳✨",
@@ -27,6 +32,13 @@ export const intro = strings({
         acceptSuffix: "📝"
     },
     no: {
+        requestAccess: {
+            button: "Etterspør tilgang",
+            placeholder: "Din e-post",
+            success: "Velkommen✋ Vi kommer tilbake til deg så fort vi kan!"
+        },
+        requestAccessButton: "Etterspør tilgang",
+        requestAccessPlaceholder: "Din e-post",
         about: "Tilbakemeldinger er nødvendig for forbedring 👊",
         aim: "Krets ønsker å gjøre det friksjonsfritt 😁",
         instructions: "Se hvordan det funker - Scan med telefonen 🤳✨",
@@ -63,8 +75,9 @@ export const response = strings({
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
-        prefixCustomQuestionCheckbox: "I want to answer",
-        suffixCustomQuestionCheckbox: "questions",
+        prefixCustomQuestionCheckbox: "I want to answer", //temporary not used in favour of `customQuestionsCheckbox`
+        suffixCustomQuestionCheckbox: "questions", //temporary not used in favour of `customQuestionsCheckbox`
+        customQuestionsCheckbox: "Let me elaborate",
         contactCheckbox: "I want to be contacted",
         contactPlaceholder: "Email or phone number",
         copyButton: {
@@ -85,6 +98,7 @@ export const response = strings({
         thanks: "Tusen takk!",
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
+        customQuestionsCheckbox: "Jeg vil utdype svaret mitt",
         contactCheckbox: "Jeg vil bli kontaktet igjen",
         contactPlaceholder: "Epost eller telefonnummer",
         copyButton: {
@@ -222,6 +236,15 @@ export const adminPage = strings({
     }
 });
 
+export const administratorPage = strings({
+    en: {
+        denied: "You do not have access to this page"
+    },
+    no: {
+        denied: "You do not have access to this page"
+    }
+})
+
 export const guide = strings({
     en: {
         toGetStartedVideo: "How do I get started?",
@@ -264,6 +287,13 @@ export const settings = strings({
             button: "Generate code",
             originPlaceholder: "https://www.your-website.com",
             copyInstructions: "Add this code to your website 🧑‍💻"
+        },
+        mandatoryContact: {
+            heading: "Require contact details",
+            enabledText: "Your respondents must enter email",
+            updateWhenEnabled: "Make optional",
+            disabledText: "Your respondents may omit contact details",
+            updateWhenDisabled: "Require contact details",
         }
     },
     no: {
@@ -294,6 +324,13 @@ export const settings = strings({
             button: "Generer kode",
             originPlaceholder: "https://www.din-hjemmeside.no",
             copyInstructions: "Bruk denne koden til din nettside 🧑‍💻"
+        },
+        mandatoryContact: {
+            heading: "Om kontaktinformasjon",
+            enabledText: "Dine kunder må legge igjen kontakinformasjon",
+            updateWhenEnabled: "Gjør det frivillig å legge inn kontaktinformasjon",
+            disabledText: "Dine kunder kan nå være anonyme",
+            updateWhenDisabled: "Gjør det obligatorisk med kontaktinformasjon",
         }
     }
 })
@@ -423,6 +460,18 @@ export const upgrade = strings({
         cancelSuffix: ", dette skal ordnes opp i!"
     }
 });
+
+/**
+ * This should slowly replace `upgrade`, as it does not make sense without Stripe 
+ */
+export const accountInfo = strings({
+    en: {
+        inactiveInfo: "Your account is not activated yet. If you believe this is a mistake, contact post@krets.app"
+    },
+    no: {
+        inactiveInfo: "Din konto er ikke aktiv. Er dette feil? Ta kontakt på post@krets.app"
+    }
+})
 
 export const about = strings({
     en: {
