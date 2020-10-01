@@ -126,7 +126,6 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
 export const randomEmbeddable = (pageId: string): EmbeddableModel => ({
     token: faker.random.uuid(),
     page_id: pageId,
-    origin: faker.internet.url()
 })
 
 export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), forceSubscription = false, mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
