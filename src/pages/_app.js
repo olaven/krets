@@ -1,7 +1,5 @@
 import Head from 'next/head'
 import { ThemeProvider } from 'emotion-theming'
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from '@stripe/stripe-js'
 import { UserContextProvider } from '../context/UserContext'
 import { Layout } from '../components/layout'
 import { KretsTheme } from '../components/theme'
@@ -11,7 +9,7 @@ import 'tippy.js/dist/tippy.css';
 MyApp.getInitialProps = async (context) => {
   return {
     TAWKTO_EMBED_SOURCE: process.env.TAWKTO_EMBED_SOURCE,
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    //NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   }
 }
 
@@ -30,7 +28,7 @@ const TawkToEmbedding = ({ source }) => <script type="application/javascript" da
 ` }} ></script>
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }) {
+export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
 
   return <UserContextProvider>
     <Head>
@@ -53,12 +51,9 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE, NEXT_
 
     </Head>
     <ThemeProvider theme={KretsTheme}>
-      {/* I should consider moving Stripe-Component (Elements) down to a custom context or similar */}
-      <Elements stripe={loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Elements>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ThemeProvider>
   </UserContextProvider>
 }
