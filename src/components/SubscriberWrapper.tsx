@@ -19,7 +19,7 @@ export const SubscriberWrapper = (WrappedComponent: () => ReactElement) =>
 
         useEffect(() => {
 
-            setLacksSubscription(databaseUser && !databaseUser.subscription_id)
+            setLacksSubscription(databaseUser && !databaseUser.active);
         }, [databaseUser]);
 
         useEffect(() => {

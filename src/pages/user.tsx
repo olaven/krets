@@ -11,7 +11,8 @@ import { DoubleConfirmationButton } from "../components/tiny/buttons";
 import { TextBox } from "../components/tiny/TextBox";
 import { Loader } from "../components/tiny/loader";
 
-const CancelSubscription = () => {
+//NOTE: Removed because of Stripe removal 
+/* const CancelSubscription = () => {
 
     const { updateUser } = useContext(UserContext);
 
@@ -46,7 +47,7 @@ const CancelSubscription = () => {
         />
     </Box>
 }
-
+ */
 const DeleteAccount = () => {
 
     const { updateUser, authUser } = useContext(UserContext);
@@ -75,19 +76,19 @@ const DeleteAccount = () => {
 
 
 
-const SubscriberInfo = () => {
+const ActiveUserInfo = () => {
 
     const { authUser } = useContext(UserContext);
 
-    const product = useProduct(authUser?.sub);
+    //const product = useProduct(authUser?.sub);
 
     return <>
         <Heading as="h1">{uiText.upgrade.thanks.heading} {authUser?.name.split(" ")[0]} 🙌</Heading>
-        <TextBox>{uiText.upgrade.thanks.subscription} <span style={{
+        {/* <TextBox>{uiText.upgrade.thanks.subscription} <span style={{ //NOTE: removed as STripe is removed
             borderColor: "teal",
             borderStyle: "solid",
             padding: "5px"
-        }}>{product?.name}</span> </TextBox>
+        }}>{product?.name}</span> </TextBox> */}
         <TextBox>
             {uiText.upgrade.thanks.aboutFeedback}
         </TextBox>
@@ -103,22 +104,22 @@ const SubscriberInfo = () => {
     </>
 }
 
-const NonSubscriber = () => {
+const InactiveUserInfo = () => {
 
     const { authUser } = useContext(UserContext);
 
     return <>
         <TextBox>Hey, {authUser.name.split(" ")[0]} 👋</TextBox>
         <TextBox>
-            {uiText.upgrade.thanks.aboutFeedback}
+            {uiText.accountInfo.inactiveInfo}
         </TextBox>
         <TextBox>
             {uiText.upgrade.thanks.aboutKrets}
         </TextBox>
-        <TextBox>
+        {/* <TextBox> //NOTE: Removed as is related to Stripe 
             {uiText.upgrade.salesArgument}
             <Link href="/subscription"> {uiText.upgrade.button}</Link> {uiText.upgrade.includedAsSubscriber}
-        </TextBox>
+        </TextBox> */}
     </>
 }
 
@@ -136,29 +137,18 @@ const ProfileInfo = () => {
     const { authUser, databaseUser, loading } = useContext(UserContext);
 
     const DynamicContent =
-        authUser && databaseUser?.subscription_id ?
-            <SubscriberInfo /> :
-            <NonSubscriber />
-
-    const DynamicButton =
-        databaseUser?.subscription_id ?
-            <>
-                <PositiveAction href="/" text={uiText.upgrade.back} />
-                <PositiveAction href="/guide" text={uiText.upgrade.getHelp} />
-                <CancelSubscription />
-            </> :
-            <>
-                <PositiveAction href="/subscription" text={uiText.upgrade.button} />
-                <PositiveAction href="/guide" text={uiText.upgrade.getHelp} />
-                <DeleteAccount />
-            </>
+        authUser && databaseUser?.active ?
+            <ActiveUserInfo /> :
+            <InactiveUserInfo />
 
     const Info = () =>
         loading || !databaseUser ?
             <Loader size={150} /> :
             <>
                 {DynamicContent}
-                {DynamicButton}
+                {databaseUser.active && <PositiveAction href="/" text={uiText.upgrade.back} />}
+                <PositiveAction href="/guide" text={uiText.upgrade.getHelp} />
+                <DeleteAccount />
             </>
 
     return loading || !databaseUser ?
