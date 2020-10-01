@@ -1,6 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, PaymentRequestModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, UserModel, AuthModel } from "./models/models";
-import Stripe from "stripe";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, UserModel, AuthModel } from "./models/models";
 
 
 /*
@@ -50,6 +49,8 @@ export const getLineCoordinates = (pageId: string) =>
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);
 
+/* 
+//TODO: Removed as part of Stripe Removal - Remove completely
 export const postSubscription = (paymentRequest: PaymentRequestModel) =>
     post<any>(`/api/payment/subscription`, paymentRequest);
 
@@ -63,7 +64,7 @@ export const getProductByUser = (userId: string) =>
     get<Stripe.Product>(`/api/users/${userId}/product`);
 
 export const getPrices = (productId: string) =>
-    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`);
+    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`); */
 
 export const getQuestions = (pageId: string, includeArchived: boolean) =>
     get<QuestionModel[]>(`/api/pages/${pageId}/questions?includeArchived=${includeArchived}`);

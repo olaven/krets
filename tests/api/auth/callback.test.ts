@@ -6,7 +6,6 @@ import { users } from "../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
 
 jest.mock("../../../src/auth/auth0");
-jest.mock("../../../src/payment/stripe");
 
 describe("The callback endpoint", () => {
 
@@ -24,7 +23,7 @@ describe("The callback endpoint", () => {
         await teardownServer(server);
     });
 
-    it("does create user if the user is new", async () => {
+    it(" does create user if the user is new", async () => {
 
         const uid = faker.random.uuid();
 
@@ -36,7 +35,7 @@ describe("The callback endpoint", () => {
         expect(after).toBeTruthy();
     });
 
-    it("does _not_ create if user already exists", async () => {
+    it(" does _not_ create if user already exists", async () => {
 
 
         const user = await users.createUser(randomUser());
@@ -47,18 +46,5 @@ describe("The callback endpoint", () => {
 
         expect(before).toBeTruthy();
         expect(after).toBeTruthy();
-    });
-
-    it("Does create a Customer ID", async () => {
-
-
-        const uid = faker.random.uuid();
-        await authenticatedFetch(uid, url);
-        const user = await users.getUser(uid);
-
-        expect(user).toBeTruthy();
-        expect(user.id).toEqual(uid);
-        expect(user.customer_id).toBeDefined();
-        expect(user.customer_id).not.toEqual("default_customer_id");
     });
 });

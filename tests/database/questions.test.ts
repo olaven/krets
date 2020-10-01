@@ -66,7 +66,7 @@ describe("The API interface for questions", () => {
         });
     })
 
-    describe("Updating of a question", async () => {
+    describe("Updating of a question", () => {
 
 
         it("Is possible to update text of question", async () => {

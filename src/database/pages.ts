@@ -21,25 +21,17 @@ const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }
             [ownerId, options.amount]
     );
 
-const getPageCountByOwner = async (ownerId: string) => {
 
-    const result = await first<{ count: string }>(
-        "select count(*) from pages where owner_id = $1",
-        [ownerId]
-    );
-
-    return parseInt(result.count);
-}
-
+//NOTE: not used after Stripe Removal. May prove useful in the future. 
 //NOTE: count is `string` due to bigint > max `number` value. See: https://github.com/brianc/node-postgres/issues/378
 const getCustomerToPageCount = () => rows<{
-    customer_id: string, count: string
+    id: string, count: string
 }>(
     `
-        select count(pages.id), users.customer_id 
+        select count(pages.id), users.id
         from pages right join users 
         on pages.owner_id = users.id
-        where users.subscription_id is not null
+        where active = 'true' 
         group by users.id;
     `,
     []
@@ -106,8 +98,6 @@ export const pages = ({
     getPage,
     getByOwner,
     getByOwnerAndCategory,
-    //FIXME: not used. replaced by `getCustomerToPage`
-    getPageCountByOwner,
     getCustomerToPageCount,
     createPage,
     updatePage,

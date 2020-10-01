@@ -5,8 +5,7 @@ import { OK, NO_CONTENT } from "node-kall";
 import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { deleteSubscription, deleteUser } from '../fetchers';
-import { useProduct } from "../effects/useProduct";
+import { deleteUser } from '../fetchers';
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
 import { TextBox } from "../components/tiny/TextBox";
 import { Loader } from "../components/tiny/loader";
@@ -116,10 +115,6 @@ const InactiveUserInfo = () => {
         <TextBox>
             {uiText.upgrade.thanks.aboutKrets}
         </TextBox>
-        {/* <TextBox> //NOTE: Removed as is related to Stripe 
-            {uiText.upgrade.salesArgument}
-            <Link href="/subscription"> {uiText.upgrade.button}</Link> {uiText.upgrade.includedAsSubscriber}
-        </TextBox> */}
     </>
 }
 

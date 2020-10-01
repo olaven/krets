@@ -1,16 +1,15 @@
 import auth0 from '../../../auth/auth0';
 import { users } from "../../../database/database";
-import { registerCustomer, customerExists } from '../../../payment/customer';
-import { AuthModel, UserModel } from '../../../models/models';
+import { AuthModel } from '../../../models/models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
-import { getSubscription } from '../../../payment/subscription';
 
 /**
  * Syncs subscription status between Stripe and Database. 
  * Stripe is authoriative. 
  * @param user 
  */
-const syncSubscriptionStatus = async (user: UserModel) => {
+//TODO: removed with Stripe Removal - Remove completely
+/* const syncSubscriptionStatus = async (user: UserModel) => {
 
   const subscription = await getSubscription(user.customer_id);
 
@@ -21,7 +20,7 @@ const syncSubscriptionStatus = async (user: UserModel) => {
       subscription_id: subscription?.id
     });
   }
-}
+} */
 
 /**
  * If user exists, returns it. 
@@ -29,33 +28,39 @@ const syncSubscriptionStatus = async (user: UserModel) => {
  * @param id 
  * @param email 
  */
-const createUser = async (id: string, email: string) => {
+//TODO: moved logic to `createIfNotPresent`
+/* const createUser = async (id: string, email: string) => {
 
   const user = await users.getUser(id);
 
   if (!user) {
 
-    const customer_id = await registerCustomer(email);
-    return await users.createUser({ id: id, customer_id });
+
+    //const customer_id = await registerCustomer(email); TODO: removed with Stripe Removal
+    return await users.createUser({ id });
   } else {
 
     return user;
   }
-}
+} */
 
 //TODO: Refactor: this function is messy and does several things
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
-  let user = await createUser(sub, email);
+  const user = await users.getUser(sub);
+  if (!user) {
+    await users.createUser({ id: sub });
+  }
 
-  const customerRegistered = await customerExists(user?.customer_id);
+
+  /* const customerRegistered = await customerExists(user?.customer_id);
   if (!customerRegistered) {
 
     const customer_id = await registerCustomer(email);
     await users.updateUser({ ...user, customer_id });
-  }
+  } */
 
-  await syncSubscriptionStatus(user);
+  //await syncSubscriptionStatus(user);
 };
 
 export default withCors(
@@ -66,16 +71,6 @@ export default withCors(
 
           const { user } = session;
           await createIfNotPresent(user as AuthModel);
-
-          if (user.email === 'olavsundfoer@gmail.com') {
-
-            //bootstrapping @olaven as admin //FIXME: remove
-            const databaseUser = await users.getUser(user.sub);
-            await users.updateRole({
-              ...databaseUser,
-              role: "administrator"
-            });
-          }
 
           return {
             ...session,
