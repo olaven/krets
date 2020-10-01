@@ -1,11 +1,12 @@
-import { first, run } from "./helpers/helpers";
+import { first, rows, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
 import { pages } from "./database"
+import { PaginationOptions } from "./helpers/PaginationOptions";
 
 //TODO: only export to tests 
 const getUserCountWithSubscription = async () => {
 
-   const result = await first<{ count: string}>(
+   const result = await first<{ count: string }>(
       'select count(*) from users where subscription_id is not null', []
    )
 
@@ -24,6 +25,31 @@ const getUserByCustomerId = (customerId: string) =>
       [customerId]
    );
 
+/**
+ * DANGER: returns user data that must _not_ be exposed other than to administrators
+ * @param options 
+ */
+export const getAllUsers = (options: PaginationOptions = { amount: 10 }) =>
+   options.key ?
+      rows<UserModel>(
+         `
+            select * from users 
+            where created_at < $2 
+            order by created_at desc
+            limit $1
+         `,
+         [options.amount, options.key]
+      ) :
+      rows<UserModel>(
+         `
+            select * from users
+            order by created_at desc
+            limit $1
+         `,
+         [options.amount]
+      );
+
+
 const createUser = (user: UserModel) =>
    first<UserModel>(
       "insert into users(id, customer_id) values($1, $2) RETURNING *",
@@ -32,8 +58,14 @@ const createUser = (user: UserModel) =>
 
 const updateUser = (user: UserModel) =>
    first<UserModel>(
-      `update users set customer_id = $2, product_id = $3, subscription_id = $4 where id = $1 returning *`,
-      [user.id, user.customer_id, user.product_id, user.subscription_id]
+      `update users set customer_id = $2, product_id = $3, subscription_id = $4, active = $5 where id = $1 returning * `,
+      [user.id, user.customer_id, user.product_id, user.subscription_id, user.active]
+   );
+
+const updateRole = (user: UserModel) =>
+   first<UserModel>(
+      `update users set role = $2 where id = $1 returning * `,
+      [user.id, user.role]
    );
 
 /**
@@ -50,7 +82,7 @@ const updatePaymentInformation =
 
 const updateInvoicePaid = (userId: string, invoicePaid: boolean) =>
    first<UserModel>(
-      `update users set invoice_paid = $2 where id = $1 returning *`,
+      `update users set invoice_paid = $2 where id = $1 returning * `,
       [userId, invoicePaid]
    );
 
@@ -88,28 +120,28 @@ const deleteUser = async (id: string) => {
 //NOTE: this contains syntax errors, but something like this should replace `deleteUser` for performance reasons 
 const _deleteUser = (id: string) => run(
    `
-      WITH pages_owned_by_user AS (
-         select * from pages 
+      WITH pages_owned_by_user AS(
+            select * from pages 
          where owner_id = $1
-      )
+         )
       WITH questions_in_pages as (
          select * from questions 
          where page_id in pages_owned_by_user
       )
       WITH answers_on_questions as (
-         DELETE FROM answers
-         WHERE question_id IN (
-            SELECT id FROM questions_in_pages
-         )
+   DELETE FROM answers
+WHERE question_id IN(
+   SELECT id FROM questions_in_pages
+)
       )
-      DELETE FROM questions 
-      WHERE id IN (
-         SELECT id from questions_in_pages
-      )
-      DELETE FROM pages 
-      WHERE id IN (
-         SELECT id FROM pages_owned_by_user
-      )
+DELETE FROM questions
+WHERE id IN(
+   SELECT id from questions_in_pages
+)
+DELETE FROM pages
+WHERE id IN(
+   SELECT id FROM pages_owned_by_user
+)
    `,
    [id]
 )
@@ -120,8 +152,10 @@ export const users = ({
    getUserCountWithSubscription,
    getUser,
    getUserByCustomerId,
+   getAllUsers,
    createUser,
    updateUser,
+   updateRole,
    updatePaymentInformation,
    updateInvoicePaid,
    userExists,

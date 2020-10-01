@@ -23,6 +23,8 @@ const getSession = async (req: NextApiRequest): Promise<ISession> => {
     })
 };
 
+export const getAuth0Token = () => 'random-mock-auth0-management-token';
+
 export default ({
     handleLogin: (req: NextApiRequest, res: NextApiResponse, options?: LoginOptions) => {
 

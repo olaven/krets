@@ -1,51 +1,75 @@
-import React from "react";
-import { Flex, Box, Text, Image, Link, Heading } from "rebass";
-import { GetStartedButton } from "../../tiny/buttons";
+import React, { useEffect, useState } from "react";
+import { Flex, Box, Text, Image, Link, Heading, Button } from "rebass";
+import { Input } from "@rebass/forms";
+import { GetStartedButton, TriggerLoadingButton } from "../../tiny/buttons";
 import { intro } from "../../../text";
+import { postEmail } from "../../../fetchers";
+import { CREATED, OK } from "node-kall";
+
+const DisclaimerBox = () => <Box
+    width={1}>
+    <section style={{
+        display: "flex",
+        margin: "auto",
+        alignItems: "center",
+        justifyContent: "center",
+    }}>
+
+        <Text fontSize={[0, 1, 2]} textAlign="center">
+            {intro.acceptPrefix} <Link href={"/legal/terms-and-conditions.html"}>{intro.termsOfUse}</Link> {intro.acceptInfix} <Link href={"/legal/privacy-policy.html"}>{intro.privacyPolicy} {intro.acceptSuffix}</Link>
+        </Text>
+    </section>
+</Box>
+
+const RequestAccess = () => {
+
+    const [email, setEmail] = useState("");
+    const [valid, setValid] = useState(true);
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+
+        //regex source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+        const valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+        setValid(email === "" || valid);
+    }, [email])
+
+    const onRequestAccess = async () => {
+
+        if (valid) {
+
+            const [status] = await postEmail({
+                from: email,
+                text: `${email} etterspør tilgang til Krets!`
+            });
+
+            setSuccess(status === CREATED);
+        }
+    }
+
+    return <Flex width={[1, 1 / 2, 1 / 3]} m="auto" p={[1, 2, 3]} flexDirection="column">
+        {success ?
+            <Text textAlign="center" backgroundColor="success" color="secondary" px={[1, 2]} py={[2, 3, 4]} fontSize={[3, 4, 5]}>{intro.requestAccess.success}</Text> :
+            <>
+                <Input
+                    fontSize={[13, 21]}
+                    color={valid ? 'black' : 'attention'}
+                    onChange={({ target: { value } }) => {
+                        setEmail(value)
+                    }}
+                    m={[1]}
+                    placeholder={intro.requestAccess.placeholder}
+                />
+                <TriggerLoadingButton
+                    text={intro.requestAccess.button}
+                    action={onRequestAccess}
+                />
+            </>
+        }
+    </Flex >
+}
 
 export const IntroSection = () => {
-
-    const IntroBox = ({ children, width = null }) => <Box
-        width={width ? width : [1, 1, 1 / 2]}
-        height={[150, 300, 300]}
-        p={4}>
-        {children}
-    </Box>
-
-    const IntroImageBox = ({ source }) => <IntroBox>
-        <Image src={source}></Image>
-    </IntroBox>
-
-
-    const IntroTextBox = ({ children, width = null }) => <IntroBox
-        width={width}>
-        <section style={{
-            display: "flex",
-            margin: "auto",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <Text my={[1, 2, 3]} fontSize={[3, 4, 5]} textAlign="center">
-                {children}
-            </Text>
-        </section>
-
-    </IntroBox >
-
-    const DisclaimerBox = () => <Box
-        width={1}>
-        <section style={{
-            display: "flex",
-            margin: "auto",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-
-            <Text fontSize={[0, 1, 2]} textAlign="center">
-                {intro.acceptPrefix} <Link href={"/legal/terms-and-conditions.html"}>{intro.termsOfUse}</Link> {intro.acceptInfix} <Link href={"/legal/privacy-policy.html"}>{intro.privacyPolicy} {intro.acceptSuffix}</Link>
-            </Text>
-        </section>
-    </Box>
 
 
     return <Box >
@@ -55,7 +79,7 @@ export const IntroSection = () => {
             <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.aim}</Text>
         </Flex>
 
-        <GetStartedButton />
+        <RequestAccess />
         <DisclaimerBox />
 
         <Flex py={4}>

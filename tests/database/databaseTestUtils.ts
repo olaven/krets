@@ -8,6 +8,7 @@ const coinFlip = () =>
 
 export const randomUser = (id = faker.random.uuid(), forceSubscription = false): UserModel => ({
     id,
+    active: true,
     customer_id: faker.random.uuid(),
     invoice_paid: false,
     subscription_id: coinFlip() || forceSubscription ?
@@ -85,6 +86,20 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
 
     return [user, page, persisted //NOTE: same order as db returns them -> easier to compare in tests
         .sort((a, b) => a.created_at < b.created_at ? 0 : -1)];
+}
+
+
+export const setupUsers = async (amount = faker.random.number({ min: 1, max: 20 })) => {
+
+    const persisted: UserModel[] = [];
+    for (let i = 0; i < amount; i++) {
+
+        const original = await users.createUser(randomUser());
+        const alteredDate = await fakeCreation<UserModel>("users", original.id);
+        persisted.push(alteredDate)
+    }
+
+    return persisted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 }
 
 export const blindSetup = async (responseCount = faker.random.number({ min: 1, max: 30 }))

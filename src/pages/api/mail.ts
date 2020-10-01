@@ -2,7 +2,7 @@ import auth0 from '../../auth/auth0';
 import { IApiRoute } from '@auth0/nextjs-auth0/dist/handlers/require-authentication';
 import * as nodemailer from "nodemailer";
 import { EmailModel } from '../../models/models';
-import { withCors, withAuthentication, withErrorHandling, withMethods } from "../../middleware/middleware";
+import { withCors, withErrorHandling, withMethods } from "../../middleware/middleware";
 
 const productionMail = {
     host: "mail.hover.com",
@@ -46,6 +46,7 @@ const logMail = (info: any) => {
     if (process.env.NODE_ENV !== "production") {
 
         const url = nodemailer.getTestMessageUrl(info);
+        console.log(`test email: ${url}`);
     }
 }
 
@@ -62,20 +63,20 @@ const withMiddleware = (handler: IApiRoute) =>
     withCors(
         withErrorHandling(
             withMethods(["POST"])(
-                withAuthentication(handler))));
+                handler)));
 
 
 export default withMiddleware(async (request, response) => {
 
-    const { user } = await auth0.getSession(request);
+    const user = (await auth0.getSession(request))?.user;
 
     const email = request.body as EmailModel;
     email.to = process.env.CONTACT_EMAIL;
-    email.from = user.email;
+    email.from = user ? user.email : email.from;
 
     await send(email);
 
-    response
+    return response
         .status(201)
         .send(null);
 }); 

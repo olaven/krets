@@ -27,7 +27,7 @@ export const usePagination = function <T>(basePath: string): [
         data: [], next: null
     });
 
-    const applyNext = (path: string) =>
+    const applyToNext = (path: string) =>
         () => setNext(path);
 
     asyncEffect(async () => {
@@ -40,5 +40,5 @@ export const usePagination = function <T>(basePath: string): [
         setMoreAvailable(page.data.length > 0);
     }, [next]);
 
-    return [page, moreAvailable, pageLoading, applyNext(page.next), applyNext(basePath)];
+    return [page, moreAvailable, pageLoading, applyToNext(page.next), applyToNext(basePath)];
 };

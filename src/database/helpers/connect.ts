@@ -2,6 +2,7 @@ import { Pool, types } from "pg";
 
 
 // -- START NOTE: Overriding default conversion to Date object 
+
 // See [this issue](https://github.com/brianc/node-pg-types/issues/50) for details
 const TYPE_TIMESTAMP = 1114
 const TYPE_TIMESTAMPTZ = 1184
@@ -11,8 +12,6 @@ types.setTypeParser(TYPE_TIMESTAMP, v => v)
 types.setTypeParser(TYPE_TIMESTAMPTZ, v => v)
 
 // -- END
-
-
 
 //TODO: should not check NODE_ENV programatically, but separate config from code 
 const config = (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") ? null : {
