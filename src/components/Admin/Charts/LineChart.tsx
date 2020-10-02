@@ -20,8 +20,6 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
         setPageWithCoordinates(pageWithCoordinates);
     }, [pageInformations.length]);
 
-    console.log(pageWithCoordinates)
-
     return <span
         aria-label="line-chart-label">
         <VictoryChart

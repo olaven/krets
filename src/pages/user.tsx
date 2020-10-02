@@ -64,9 +64,9 @@ const ActiveUserInfo = () => {
 const InactiveUserInfo = () => {
 
     const { authUser } = useContext(UserContext);
-
+    console.log("her", authUser.sub);
     return <>
-        <TextBox>Hey, {authUser.name.split(" ")[0]} 👋</TextBox>
+        <TextBox>{uiText.accountInfo.welcome} {authUser.name.split(" ")[0]} 👋</TextBox>
         <TextBox>
             {uiText.accountInfo.inactiveInfo}
         </TextBox>

@@ -37,8 +37,7 @@ const getCustomerToPageCount = () => rows<{
     []
 )
 
-
-//THINKABOUT: implement pagination before categories are pushed as a feature
+//THINKABOUT: use pagination?
 const getByOwnerAndCategory = (ownerId: string, categoryId: string) =>
     rows<PageModel>(
         `select * from pages where owner_id = $1 and category_id = $2`,
