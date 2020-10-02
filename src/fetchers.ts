@@ -49,23 +49,6 @@ export const getLineCoordinates = (pageId: string) =>
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);
 
-/* 
-//TODO: Removed as part of Stripe Removal - Remove completely
-export const postSubscription = (paymentRequest: PaymentRequestModel) =>
-    post<any>(`/api/payment/subscription`, paymentRequest);
-
-export const deleteSubscription = () =>
-    del(`/api/payment/subscription`);
-
-export const getProducts = () =>
-    get<Stripe.Product[]>(`/api/payment/products`);
-
-export const getProductByUser = (userId: string) =>
-    get<Stripe.Product>(`/api/users/${userId}/product`);
-
-export const getPrices = (productId: string) =>
-    get<Stripe.Price[]>(`/api/payment/prices?productId=${productId}`); */
-
 export const getQuestions = (pageId: string, includeArchived: boolean) =>
     get<QuestionModel[]>(`/api/pages/${pageId}/questions?includeArchived=${includeArchived}`);
 

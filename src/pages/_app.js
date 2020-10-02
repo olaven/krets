@@ -9,7 +9,6 @@ import 'tippy.js/dist/tippy.css';
 MyApp.getInitialProps = async (context) => {
   return {
     TAWKTO_EMBED_SOURCE: process.env.TAWKTO_EMBED_SOURCE,
-    //NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   }
 }
 

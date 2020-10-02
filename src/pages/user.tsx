@@ -1,52 +1,15 @@
 import * as uiText from "../text";
 import * as NextLink from 'next/link'
 import { useRouter } from "next/router"
-import { OK, NO_CONTENT } from "node-kall";
+import { NO_CONTENT } from "node-kall";
 import { Heading, Text, Flex, Box, Button, Link } from "rebass";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { deleteUser } from '../fetchers';
 import { DoubleConfirmationButton } from "../components/tiny/buttons";
 import { TextBox } from "../components/tiny/TextBox";
 import { Loader } from "../components/tiny/loader";
 
-//NOTE: Removed because of Stripe removal 
-/* const CancelSubscription = () => {
-
-    const { updateUser } = useContext(UserContext);
-
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-
-    const onCancel = async () => {
-
-        setLoading(true);
-
-        const [status] = await deleteSubscription();
-        if (status === OK) updateUser();
-        else setError(true);
-
-        setLoading(false);
-    }
-
-    if (loading) {
-        return <Loader size={50} />
-    }
-
-    if (error) {
-        return <Text fontSize={[2, 3, 4]}>
-            {uiText.upgrade.cancellationError} <Link href={"mailto:post@krets.app"}>{uiText.upgrade.cancelContact}</Link>{uiText.upgrade.cancelSuffix}
-        </Text>
-    }
-
-    return <Box width={[1, 0.5]}>
-        <DoubleConfirmationButton
-            action={onCancel}
-            text={uiText.upgrade.cancel}
-        />
-    </Box>
-}
- */
 const DeleteAccount = () => {
 
     const { updateUser, authUser } = useContext(UserContext);
@@ -83,11 +46,6 @@ const ActiveUserInfo = () => {
 
     return <>
         <Heading as="h1">{uiText.upgrade.thanks.heading} {authUser?.name.split(" ")[0]} 🙌</Heading>
-        {/* <TextBox>{uiText.upgrade.thanks.subscription} <span style={{ //NOTE: removed as STripe is removed
-            borderColor: "teal",
-            borderStyle: "solid",
-            padding: "5px"
-        }}>{product?.name}</span> </TextBox> */}
         <TextBox>
             {uiText.upgrade.thanks.aboutFeedback}
         </TextBox>

@@ -3,17 +3,6 @@ import { UserModel } from "../models/models";
 import { pages } from "./database"
 import { PaginationOptions } from "./helpers/PaginationOptions";
 
-/*
-//NOTE: only export to tests 
-//TODO: Removed as part of Stripe removal - Remove Completely
-const getUserCountWithSubscription = async () => {
-
-   const result = await first<{ count: string }>(
-      'select count(*) from users where subscription_id is not null', []
-   )
-
-   return parseInt(result.count);
-} */
 
 const getActiveUserCount = async () => {
 
@@ -29,13 +18,6 @@ const getUser = (id: string) =>
       "select * from users where id = $1",
       [id]
    );
-
-//TODO: Removed as part of Stripe removal - Remove Completely
-/* const getUserByCustomerId = (customerId: string) =>
-   first<UserModel>(
-      `select * from users where customer_id = $1`,
-      [customerId]
-   ); */
 
 /**
  * DANGER: returns user data that must _not_ be exposed other than to administrators
@@ -84,26 +66,6 @@ const updateRole = (user: UserModel) =>
       `update users set role = $2 where id = $1 returning * `,
       [user.id, user.role]
    );
-
-/**
- * Added this in order to avoid 
- * fetchin databaseuser in subscription.ts
- */
-//TODO: Commented as part of stripe removal -> remove completely.
-/* const updatePaymentInformation =
-   ({ id, subscription_id, product_id, invoice_paid }: { id: string, subscription_id: String, product_id: string, invoice_paid: boolean }) =>
-      first<UserModel>(
-         "update users set subscription_id = $2, product_id = $3, invoice_paid = $4 where id = $1 returning *",
-         [id, subscription_id, product_id, invoice_paid]
-      );
-
-
-const updateInvoicePaid = (userId: string, invoicePaid: boolean) =>
-   first<UserModel>(
-      `update users set invoice_paid = $2 where id = $1 returning * `,
-      [userId, invoicePaid]
-   );
- */
 
 const userExists = async (id: string) => {
 
