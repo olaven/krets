@@ -409,120 +409,78 @@ describe("Database interface for pages", () => {
 
     describe("The function for returning the amount of pages owned by a given user", () => {
 
-        it("Returns a number", async () => {
+        describe("Getting customer id and amount of pages", () => {
 
-            const [owner] = await setupPages();
+            it("does not throw", async () => {
 
-            const count = await pages.getPageCountByOwner(owner.id);
-            expect(typeof (count)).toEqual("number");
-        });
-
-        it("Returns the same amount as persisted", async () => {
-
-            const [owner, persisted] = await setupPages();
-            const count = await pages.getPageCountByOwner(owner.id);
-
-            expect(count).toEqual(persisted.length);
-        });
-
-        it("Only counts those by relevant owner", async () => {
-
-
-            const [first, pagesOfFirst] = await setupPages();
-            const [second, pagesOfSecond] = await setupPages();
-
-            const firstCount = await pages.getPageCountByOwner(first.id);
-            const secondCOund = await pages.getPageCountByOwner(second.id);
-
-            expect(firstCount).toEqual(pagesOfFirst.length);
-            expect(secondCOund).toEqual(pagesOfSecond.length);
-        });
-    });
-
-    describe("Getting customer id and amount of pages", () => {
-
-        it("does not throw", async () => {
-
-            expect(pages.getCustomerToPageCount())
-                .resolves.not.toThrow()
-        });
-
-        it.skip("Returns something an array of { customer_id, count }", async () => {
-
-            //NOTE: in practice this is not needed as there will always be something from the other tests
-            await setupPages(4, true);
-
-            const element = random((await pages.getCustomerToPageCount()) as any[])
-
-            expect(element).toBeDefined()
-            expect(element.customer_id).toBeDefined();
-            expect(element.count).toBeDefined();
-        });
-
-
-        const random = <T>(array: T[]) =>
-            array[Math.floor(Math.random() * array.length + 1)];
-
-        it.skip("Returns the actual page count of a user ", async () => {
-
-            await setupPages(4, true);
-
-            const { customer_id, count } = random(
-                await pages.getCustomerToPageCount()
-            )
-
-            const user = await users.getUserByCustomerId(customer_id);
-            const ownedByUser = await pages.getByOwner(user.id);
-
-            expect(ownedByUser.length).toEqual(parseInt(count));
-        });
-
-        it("Returns a row for every registered customer with a subscription ", async () => {
-
-            await setupPages();
-
-            const rows = await pages.getCustomerToPageCount();
-            const countRegistered = await users.getUserCountWithSubscription();
-
-            expect(rows.length).toEqual(countRegistered);
-        });
-
-        it("Actually returns a valid number of pages", async () => {
-
-            await setupPages();
-
-            const rows = await pages.getCustomerToPageCount();
-
-            for (const { count } of rows) {
-
-                expect(parseInt(count)).not.toBeNaN();
-            }
-        });
-
-        it("Does not include users without a subscription", async () => {
-
-            const [user] = await setupPages();
-            await users.updateUser({
-                ...user,
-                subscription_id: null
+                expect(pages.getCustomerToPageCount())
+                    .resolves.not.toThrow()
             });
 
-            const rows = await pages.getCustomerToPageCount()
-            const found = rows.find(({ customer_id }) => customer_id === user.customer_id);
-            expect(found).toBeFalsy();
-        });
+            it.skip("Returns something an array of { customer_id, count }", async () => {
 
-        it("Does include users with a subscription", async () => {
+                //NOTE: in practice this is not needed as there will always be something from the other tests
+                await setupPages(4, true);
 
-            const [user] = await setupPages();
-            await users.updateUser({
-                ...user,
-                subscription_id: faker.random.uuid()
+                const element = random((await pages.getCustomerToPageCount()) as any[])
+
+                expect(element).toBeDefined()
+                expect(element.customer_id).toBeDefined();
+                expect(element.count).toBeDefined();
             });
 
-            const rows = await pages.getCustomerToPageCount()
-            const found = rows.find(({ customer_id }) => customer_id === user.customer_id);
-            expect(found).toBeTruthy();
-        })
-    });
-});
+
+            const random = <T>(array: T[]) =>
+                array[Math.floor(Math.random() * array.length + 1)];
+
+
+            it("Returns a row for every active user", async () => {
+
+                await setupPages();
+
+                const rows = await pages.getCustomerToPageCount();
+                const countRegistered = await users.getActiveUserCount();
+
+                expect(rows.length).toEqual(countRegistered);
+            });
+
+            it("Actually returns a valid number of pages", async () => {
+
+                await setupPages();
+
+                const rows = await pages.getCustomerToPageCount();
+
+                for (const { count } of rows) {
+
+                    expect(parseInt(count)).not.toBeNaN();
+                }
+            });
+
+            it("Does not include inactive users", async () => {
+
+                const [user] = await setupPages();
+                await users.updateUser({
+                    ...user,
+                    active: false
+                });
+
+                const rows = await pages.getCustomerToPageCount()
+                const found = rows.find(({ id }) => id === user.id);
+                expect(found).toBeFalsy();
+            });
+
+            it("Does include active users", async () => {
+
+                const [user] = await setupPages();
+                await users.updateUser({
+                    ...user,
+                    active: true
+                });
+
+                const rows = await pages.getCustomerToPageCount()
+                const found = rows.find(({ id }) => id === user.id);
+                expect(found).toBeTruthy();
+            });
+        });
+    })
+}); 

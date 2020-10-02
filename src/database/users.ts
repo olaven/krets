@@ -3,11 +3,11 @@ import { UserModel } from "../models/models";
 import { pages } from "./database"
 import { PaginationOptions } from "./helpers/PaginationOptions";
 
-//TODO: only export to tests 
-const getUserCountWithSubscription = async () => {
+
+const getActiveUserCount = async () => {
 
    const result = await first<{ count: string }>(
-      'select count(*) from users where subscription_id is not null', []
+      'select count(*) from users where active = true', []
    )
 
    return parseInt(result.count);
@@ -17,12 +17,6 @@ const getUser = (id: string) =>
    first<UserModel>(
       "select * from users where id = $1",
       [id]
-   );
-
-const getUserByCustomerId = (customerId: string) =>
-   first<UserModel>(
-      `select * from users where customer_id = $1`,
-      [customerId]
    );
 
 /**
@@ -50,16 +44,21 @@ export const getAllUsers = (options: PaginationOptions = { amount: 10 }) =>
       );
 
 
+/**
+ * Persists a new user. 
+ * The supplied ID must match the Auth0-ID.
+ * @param user 
+ */
 const createUser = (user: UserModel) =>
    first<UserModel>(
-      "insert into users(id, customer_id) values($1, $2) RETURNING *",
-      [user.id, user.customer_id]
+      "insert into users(id) values($1) RETURNING *",
+      [user.id] //NOTE: passed explicity, as it needs to mirror Auth0
    );
 
 const updateUser = (user: UserModel) =>
    first<UserModel>(
-      `update users set customer_id = $2, product_id = $3, subscription_id = $4, active = $5 where id = $1 returning * `,
-      [user.id, user.customer_id, user.product_id, user.subscription_id, user.active]
+      `update users set active = $2 where id = $1 returning * `,
+      [user.id, user.active]
    );
 
 const updateRole = (user: UserModel) =>
@@ -67,25 +66,6 @@ const updateRole = (user: UserModel) =>
       `update users set role = $2 where id = $1 returning * `,
       [user.id, user.role]
    );
-
-/**
- * Added this in order to avoid 
- * fetchin databaseuser in subscription.ts
- */
-const updatePaymentInformation =
-   ({ id, subscription_id, product_id, invoice_paid }: { id: string, subscription_id: String, product_id: string, invoice_paid: boolean }) =>
-      first<UserModel>(
-         "update users set subscription_id = $2, product_id = $3, invoice_paid = $4 where id = $1 returning *",
-         [id, subscription_id, product_id, invoice_paid]
-      );
-
-
-const updateInvoicePaid = (userId: string, invoicePaid: boolean) =>
-   first<UserModel>(
-      `update users set invoice_paid = $2 where id = $1 returning * `,
-      [userId, invoicePaid]
-   );
-
 
 const userExists = async (id: string) => {
 
@@ -149,15 +129,12 @@ WHERE id IN(
 
 
 export const users = ({
-   getUserCountWithSubscription,
    getUser,
-   getUserByCustomerId,
    getAllUsers,
    createUser,
    updateUser,
    updateRole,
-   updatePaymentInformation,
-   updateInvoicePaid,
    userExists,
    deleteUser,
+   getActiveUserCount
 });

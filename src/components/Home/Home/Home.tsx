@@ -15,7 +15,7 @@ export const Home = SubscriberWrapper(() => {
         <HomeTooltipProvider pageCount={0}>
             <PageCreator />
         </HomeTooltipProvider>
-        <HomeTooltipProvider pageCount={1}>
+        <HomeTooltipProvider pageCount={-1}> {/* i.e. never show -> temporarily removed */}
             <PageList />
         </HomeTooltipProvider >
     </PagesContextProvider >

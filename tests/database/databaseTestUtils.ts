@@ -1,19 +1,11 @@
 import * as faker from "faker";
 import { users, pages, responses, answers, questions } from "../../src/database/database";
-import { first, run } from "../../src/database/helpers/query";
+import { first } from "../../src/database/helpers/query";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
 
-const coinFlip = () =>
-    faker.random.number({ min: 0, max: 1 }) === 1;
-
-export const randomUser = (id = faker.random.uuid(), forceSubscription = false): UserModel => ({
+export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
     active: true,
-    customer_id: faker.random.uuid(),
-    invoice_paid: false,
-    subscription_id: coinFlip() || forceSubscription ?
-        faker.random.uuid() :
-        null
 });
 
 export const randomPage = (ownerId: string, color: string = null, categoryId: string = null, mandatoryContactDetails = false): PageModel => ({
@@ -29,7 +21,6 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
     ({
         id: faker.random.uuid(),
         page_id: pageId,
-        // text: faker.lorem.lines(1),
         emotion: emotion,
         contact_details: contactDetails
     });
@@ -122,10 +113,9 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
     return [page, user, createdResonses];
 }
 
+export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
 
-export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), forceSubscription = false, mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
-
-    const user = await users.createUser(randomUser(faker.random.uuid(), forceSubscription));
+    const user = await users.createUser(randomUser(faker.random.uuid()));
 
     const persisted = []
     for (let i = 0; i < amount; i++) {
@@ -153,6 +143,6 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
 
 export const setupPage = async (mandatoryContactDetails = false): Promise<[UserModel, PageModel]> => {
 
-    const [owner, [page]] = await setupPages(1, false, mandatoryContactDetails);
+    const [owner, [page]] = await setupPages(1, mandatoryContactDetails);
     return [owner, page];
 }
