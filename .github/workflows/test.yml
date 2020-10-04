@@ -33,4 +33,3 @@ jobs:
         PGUSER: user
         PGPASSWORD: pass
         PGDATABASE: data
-        USAGE_REPORT_SECRET_TOKEN: github_actions_usage_report_token

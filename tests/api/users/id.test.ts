@@ -10,7 +10,6 @@ import { createAdmin, createBasicUser } from "./userTestUtils";
 
 
 jest.mock("../../../src/auth/auth0");
-jest.mock("../../../src/payment/stripe");
 jest.mock("request")
 
 describe("Endpoints for database user data", () => {
@@ -81,7 +80,6 @@ describe("Endpoints for database user data", () => {
 
             const retrieved = await response.json() as UserModel;
 
-            expect(retrieved.customer_id).toBeDefined()
             expect(retrieved.id).toBeDefined() //i.e. not 'sub', as in auth0
         });
 

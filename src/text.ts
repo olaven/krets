@@ -466,9 +466,11 @@ export const upgrade = strings({
  */
 export const accountInfo = strings({
     en: {
+        welcome: "Welcome, ",
         inactiveInfo: "Your account is not activated yet. If you believe this is a mistake, contact post@krets.app"
     },
     no: {
+        welcome: "Velkommen, ",
         inactiveInfo: "Din konto er ikke aktiv. Er dette feil? Ta kontakt på post@krets.app"
     }
 })

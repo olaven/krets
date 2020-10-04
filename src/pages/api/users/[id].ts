@@ -4,7 +4,6 @@ import { withCors, withAuthentication, withMethodHandlers, asAdmin } from "../..
 import auth0 from "../../../auth/auth0";
 import { users } from "../../../database/database";
 import { getPathParam } from "../../../workarounds";
-import { deleteCustomer } from "../../../payment/customer";
 import { deleteAuthUser } from "../../../auth/delete";
 import { UserModel } from "../../../models/models";
 
@@ -48,7 +47,6 @@ const deleteUser = asSameUser(
         const dbUser = await users.getUser(id);
 
         await deleteAuthUser(id);
-        await deleteCustomer(dbUser.customer_id);
         await users.deleteUser(id);
 
         response
