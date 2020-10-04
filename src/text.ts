@@ -281,6 +281,13 @@ export const settings = strings({
             archiveButton: "Archive.",
             unstable: "Custom questions an unstable feature - it may change"
         },
+        embeddable: {
+            heading: "Use Krets on your website",
+            info: "Add Krets-feedback to your own website 🖇️",
+            button: "Generate code",
+            originPlaceholder: "https://www.your-website.com",
+            copyInstructions: "Add this code to your website 🧑‍💻"
+        },
         mandatoryContact: {
             heading: "Require contact details",
             enabledText: "Your respondents must enter email",
@@ -310,6 +317,13 @@ export const settings = strings({
             updateButton: "Oppdater",
             archiveButton: "Arkiver.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
+        },
+        embeddable: {
+            heading: "Bruk Krets på nettsiden din",
+            info: "Få tilbakemelding rett fra din egen hjemmeside 🖇️",
+            button: "Generer kode",
+            originPlaceholder: "https://www.din-hjemmeside.no",
+            copyInstructions: "Bruk denne koden til din nettside 🧑‍💻"
         },
         mandatoryContact: {
             heading: "Om kontaktinformasjon",

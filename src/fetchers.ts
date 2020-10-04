@@ -1,5 +1,6 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, UserModel, AuthModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel } from "./models/models";
+
 
 
 /*
@@ -68,6 +69,14 @@ export const deleteQuestion = (question: QuestionModel) =>
 export const deleteUser = (id: string) =>
     del(`/api/users/${id}`);
 
+export const getEmbeddable = (pageId: string) =>
+    get<EmbeddableModel>(`/api/pages/${pageId}/embeddables`);
+
+export const postEmbeddable = (embeddable: EmbeddableModel) =>
+    post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable);
+
+export const putEmbeddableResponse = (embeddableResponse: EmbeddableResponseModel) =>
+    put(`/api/pages/${embeddableResponse.response.page_id}/embeddables`, embeddableResponse);
 export const putUser = (user: UserModel) =>
     put(`/api/users/${user.id}`, user);
 

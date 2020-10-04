@@ -63,6 +63,16 @@ const ActualCard = ({ response, answers }:
         </Flex>
     </Card>
 
+const ContactOnlyCard = ({ response }: { response: ResponseModel }) =>
+    <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color={"secondary"}>
+        <Flex>
+            <Emoji text={response.emotion} />
+            <Text width={1} my={[0, 1, 2]}>
+                {text.adminPage.contactDetails}: {response.contact_details}
+            </Text>
+        </Flex>
+    </Card>
+
 export const TextCard = ({ response }: { response: ResponseModel }) => {
 
     const { page } = useContext(AdminPageContext);
@@ -83,5 +93,8 @@ export const TextCard = ({ response }: { response: ResponseModel }) => {
 
     return answers?.length > 0 && answers[0].text ?
         <ActualCard response={response} answers={answers} /> :
-        null
+        response.contact_details ?
+            <ContactOnlyCard response={response} /> :
+            null
+
 }

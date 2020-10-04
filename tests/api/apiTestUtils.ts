@@ -5,7 +5,8 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { PageModel, CategoryModel, PaginatedModel } from '../../src/models/models';
+import { PageModel, CategoryModel, PaginatedModel, EmbeddableResponseModel } from '../../src/models/models';
+import { randomAnswer, randomResponse } from '../database/databaseTestUtils';
 
 
 //TODO: this is duplicate of function in databaseTestUtils. This should probably be removed in favour of databaseTestUtils-version
@@ -35,6 +36,25 @@ export const putPage = (page: PageModel, userId: string) => authenticatedFetch(u
         body: JSON.stringify(page)
     }
 });
+
+
+export const randomEmbeddableResponse = (pageId: string, embeddableToken: string): EmbeddableResponseModel => {
+
+    const response = randomResponse(pageId);
+    const answers = [];
+    for (let i = 0; i < faker.random.number({ min: 0, max: 5 }); i++) {
+
+        answers.push(
+            randomAnswer(response.id)
+        )
+    }
+
+    return {
+        token: embeddableToken,
+        response,
+        answers,
+    }
+}
 
 export const authenticatedGet = async <T>(userId: string, url: string) => {
 
@@ -98,3 +118,5 @@ export const teardownServer = async (server: Server) => {
 
     await server.close();
 };
+
+
