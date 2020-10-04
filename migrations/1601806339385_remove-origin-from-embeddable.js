@@ -3,7 +3,9 @@
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-    pgm.dropColumn("embeddables", "origin")
+    pgm.dropColumn("embeddables", "origin", {
+        ifExists: true
+    })
 };
 
 exports.down = pgm => { };

@@ -6,7 +6,6 @@ import { useContext } from "react";
 import { SettingsContext } from "../../../context/SettingsContext";
 import { EmbeddableSnippet } from "./EmbeddableSnippet";
 
-const uiText = text.settings.embeddable
 
 //NOTE: exported to tests
 export const EmbeddableContent = () => {
@@ -21,6 +20,7 @@ export const ManageEmbeddable = () => {
 
     const { page } = useContext(SettingsContext);
     return <EmbeddableContextProvider pageId={page.id}>
+        <Text color="attention">Dette er en eksperimentell funksjon som ikke er ferdig utviklet.</Text>
         <EmbeddableContent />
     </ EmbeddableContextProvider >
 }

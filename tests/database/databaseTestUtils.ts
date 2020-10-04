@@ -113,17 +113,14 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
     return [page, user, createdResonses];
 }
 
-export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
-
 export const randomEmbeddable = (pageId: string): EmbeddableModel => ({
     token: faker.random.uuid(),
     page_id: pageId,
 })
 
-export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), forceSubscription = false, mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
+export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
 
-    const user = await users.createUser(randomUser(faker.random.uuid(), forceSubscription));
-
+    const user = await users.createUser(randomUser(faker.random.uuid()));
 
     const persisted = []
     for (let i = 0; i < amount; i++) {
