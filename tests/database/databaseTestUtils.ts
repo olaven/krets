@@ -1,7 +1,7 @@
 import * as faker from "faker";
-import { users, pages, responses, answers, questions } from "../../src/database/database";
-import { first } from "../../src/database/helpers/query";
-import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel } from "../../src/models/models";
+import { users, pages, responses, answers, questions, embeddables } from "../../src/database/database";
+import { first, run } from "../../src/database/helpers/query";
+import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel, EmbeddableModel } from "../../src/models/models";
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
@@ -113,6 +113,11 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
     return [page, user, createdResonses];
 }
 
+export const randomEmbeddable = (pageId: string): EmbeddableModel => ({
+    token: faker.random.uuid(),
+    page_id: pageId,
+})
+
 export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 }), mandatoryContactDetails = false): Promise<[UserModel, PageModel[]]> => {
 
     const user = await users.createUser(randomUser(faker.random.uuid()));
@@ -139,6 +144,15 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
     //NOTE: as `fakeCreationDate` messes with sorting
     persisted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     return [user, persisted];
+}
+
+export const setupEmbeddable = async (): Promise<[UserModel, PageModel, EmbeddableModel]> => {
+
+    const user = await users.createUser(randomUser(faker.random.uuid()));
+    const page = await pages.createPage(randomPage(user.id));
+    const embeddable = await embeddables.createEmbeddable(randomEmbeddable(page.id))
+
+    return [user, page, embeddable];
 }
 
 export const setupPage = async (mandatoryContactDetails = false): Promise<[UserModel, PageModel]> => {
