@@ -79,6 +79,7 @@ const deletePage = async (id: string) => {
         [id]);
     await run(`delete from questions where page_id = $1`, [id]);
     await run(`delete from responses where page_id = $1`, [id]);
+    await run(`delete from embeddables where page_id = $1`, [id]);
     return first<PageModel>("delete from pages where id = $1", [id]);
 }
 
