@@ -1,9 +1,7 @@
-import { pages, questions, users } from "../../src/database/database";
+import { pages, questions, users, embeddables } from "../../src/database/database";
 import * as faker from "faker";
-import { randomUser, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
-import { uid } from "../api/apiTestUtils";
-import { random } from "faker";
-import { UserModel } from "../../src/models/models";
+import { randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
+
 
 describe("User repository", () => {
 
@@ -216,6 +214,18 @@ describe("User repository", () => {
         expect(before).toEqual(otherQuestions);
         expect(before).toEqual(after);
         expect(after).not.toEqual([]);
+    });
+
+    test("Deleting a user also deletes relevant embeddables", async () => {
+
+        const [user, page, embeddable] = await setupEmbeddable()
+
+        const before = await embeddables.getByPage(page.id);
+        await users.deleteUser(user.id);
+        const after = await embeddables.getByPage(page.id);
+
+        expect(before).toBeDefined();
+        expect(after).toBeNull();
     });
 
 

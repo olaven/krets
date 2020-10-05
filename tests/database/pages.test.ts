@@ -1,6 +1,6 @@
 import * as faker from "faker";
-import { pages, categories, responses, users, questions, answers } from "../../src/database/database";
-import { randomUser, setupAnswers, setupPage, setupPages, setupQuestions } from "../database/databaseTestUtils";
+import { pages, categories, responses, users, questions, answers, embeddables } from "../../src/database/database";
+import { randomUser, setupAnswers, setupEmbeddable, setupPage, setupPages, setupQuestions } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 
 
@@ -143,6 +143,39 @@ describe("Database interface for pages", () => {
         expect(unrelatedAfter).toEqual(unrelated);
         expect(answerAfter).toEqual(null);
     });
+
+    it("Deletes embeddables along with page", async () => {
+
+        const [user, page, embeddable] = await setupEmbeddable();
+
+        const before = await embeddables.getByPage(page.id);
+        await pages.deletePage(page.id);
+        const after = await embeddables.getByPage(page.id);
+
+        expect(before).toBeDefined();
+        expect(before.id).toEqual(embeddable.id);
+        expect(after).toBeNull();
+    });
+
+
+
+    it("_Only_ deletes relevant embeddables", async () => {
+
+        const [_, page, embeddable] = await setupEmbeddable();
+        const [__, otherPage, ___] = await setupEmbeddable();
+
+        const before = await embeddables.getByPage(page.id);
+        await pages.deletePage(otherPage.id);
+        const after = await embeddables.getByPage(page.id);
+
+        expect(before).toBeDefined();
+        expect(before.id).toEqual(embeddable.id);
+
+        //NOTE: i.e. no change
+        expect(after).toBeDefined();
+        expect(after.id).toEqual(embeddable.id);
+    });
+
 
     it("Can set category", async () => {
 
