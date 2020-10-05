@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Box, Button, Flex, Heading } from "rebass"
+import { Box, Button, Flex, Heading } from "rebass";
 import { KretsEmoji } from "../../tiny/emoji";
 import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
@@ -100,7 +100,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
             published ?
                 <Thanks /> :
                 <>
-                    <Flex alignItems="center">
+                    <Flex>
                         <Box>
                             <Heading textAlign={"center"} aria-label="response-section-header" fontSize={[21, 32]} py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
                             <Flex>
@@ -126,14 +126,16 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                             isMandatory={page.mandatory_contact_details}
                             setContactDetails={setContactDetails}
                             showContactDetailsError={showContactDetailsError} />
+
                         <Button
                             aria-label="response-button-input"
-                            width={1}
-                            m={1}
-                            px={3}
+                            fontSize={[4, 5, 6]}
+                            width={1}//width={[1, 3 / 4]}
+                            //margin="auto" //FIXME make this work and make button more narrow (e.g. 3/ 4)
                             onClick={onPostResponse}>
                             {uiText.response.button}
                         </Button>
+
                     </>}
                 </>
         }
