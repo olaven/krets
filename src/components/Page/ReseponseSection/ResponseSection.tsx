@@ -102,7 +102,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                 <>
                     <Flex>
                         <Box>
-                            <Heading textAlign={"center"} aria-label="response-section-header" fontSize={[21, 32]} py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>
+                            {showHeader && <Heading textAlign={"center"} aria-label="response-section-header" fontSize={[21, 32]} py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>}
                             <Flex>
                                 <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />

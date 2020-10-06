@@ -104,5 +104,29 @@ describe("The component for creating new responses", () => {
                 expect(findByText(customPage.custom_title)).toBeInTheDocument();
             });
         });
+
+        it("Does not show header if `showHeader` is false", () => {
+
+            const customPage = page()
+            customPage.custom_title = faker.lorem.words(4);
+            const { findByText } = launch(customPage, false);
+
+            waitFor(() => {
+
+                expect(findByText(customPage.custom_title)).not.toBeInTheDocument();
+            });
+        });
+
+        it("Does show header if `showHeader` is true", () => {
+
+            const customPage = page()
+            customPage.custom_title = faker.lorem.words(4);
+            const { findByText } = launch(customPage, true);
+
+            waitFor(() => {
+
+                expect(findByText(customPage.custom_title)).toBeInTheDocument();
+            });
+        });
     });
 });
