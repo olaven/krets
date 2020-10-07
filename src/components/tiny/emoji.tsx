@@ -1,5 +1,5 @@
-import Emoji from "react-emoji-render";
-import { Box, Button } from "rebass"
+import { Box, Button, Text } from "rebass"
+import { emojidata } from "../../emojidata";
 
 export const KretsEmoji = props => {
 
@@ -20,7 +20,7 @@ export const KretsEmoji = props => {
                 boxShadow: "large",
             }}*/ >
             <div style={{ borderBottom: (type === emotion && "solid teal"), borderRadius: "5px" }}>
-                <Emoji text={type} />
+                <Text>{emojidata[type]}</Text>
             </div>
 
 

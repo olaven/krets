@@ -1,6 +1,6 @@
 import { Flex, Button } from "rebass";
-import Emoji from "react-emoji-render";
 import { useState, useEffect } from "react";
+import { emojidata } from "../../../emojidata";
 
 const FilterButton = ({ emotion, selected, setSelected }) => {
 
@@ -24,7 +24,8 @@ const FilterButton = ({ emotion, selected, setSelected }) => {
     return <Button onClick={onClick}
         backgroundColor={active ? "primary" : "inactive"}
         m={[0, 1, 2]} >
-        <Emoji text={emotion} />
+        {emojidata[emotion]}
+        {/* <Emoji text={emotion} /> */}
     </Button >
 }
 

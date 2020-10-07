@@ -1,6 +1,5 @@
 import { OK } from "node-kall";
 import { Card, Box, Flex, Text } from "rebass";
-import Emoji from "react-emoji-render";
 import { AnswerModel, ResponseModel } from "../../../models/models";
 import * as text from "../../../text";
 import { AdminPageContext } from "../../../context/AdminPageContext";
@@ -8,6 +7,7 @@ import { useContext, useState } from "react";
 import { asyncEffect } from "../../../effects/asyncEffect";
 import { getAnswers } from "../../../fetchers";
 import { QuestionsContext } from "../../../context/QuestionsContext";
+import { emojidata } from "../../../emojidata";
 
 
 const formatDate = (dateString: string) => {
@@ -46,7 +46,7 @@ const ActualCard = ({ response, answers }:
     <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color={"secondary"}>
         <Flex flexDirection="column">
             <Flex>
-                <Emoji text={response.emotion} />
+                <Text>{emojidata[response.emotion]}</Text>
                 <Text mx={[1]} opacity={0.5} fontSize={[1, 2, 3]}>{formatDate(response.created_at)}</Text>
                 <Box>
                     {answers.map(answer => //TODO: expand once more questions (and thus more answers) are actually something that happens
@@ -66,7 +66,7 @@ const ActualCard = ({ response, answers }:
 const ContactOnlyCard = ({ response }: { response: ResponseModel }) =>
     <Card p={[0, 1, 2]} m={[0, 1, 2]} backgroundColor={"primary"} color={"secondary"}>
         <Flex>
-            <Emoji text={response.emotion} />
+            <Text>{emojidata[response.emotion]}</Text>
             <Text width={1} my={[0, 1, 2]}>
                 {text.adminPage.contactDetails}: {response.contact_details}
             </Text>
