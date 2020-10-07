@@ -1,5 +1,5 @@
-import Emoji from "react-emoji-render";
 import { Heading } from "rebass";
+import { emojidata } from "../../emojidata";
 import * as text from "../../text";
 
 export const Thanks = () =>
@@ -9,5 +9,5 @@ export const Thanks = () =>
         backgroundColor="success"
         color="secondary">
         {text.response.thanks}
-        <Emoji text=":tada:" />
+        {emojidata["tada"]}
     </Heading>
