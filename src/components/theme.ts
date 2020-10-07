@@ -10,8 +10,8 @@ export const KretsTheme = {
         monospace: 'inherit',
     },
     colors: {
-        secondary: "#FDFEFC",
-        primary: "teal", //'#B4497C',
+        secondary: "#EBF3FE", //old FDFEFC
+        primary: "#0A585C", //old: 'teal',
         success: '#048243',
         failure: '#D5174E',
         attention: 'orange',

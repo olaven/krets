@@ -5,6 +5,7 @@ import { GetStartedButton, TriggerLoadingButton } from "../../tiny/buttons";
 import { intro } from "../../../text";
 import { postEmail } from "../../../fetchers";
 import { CREATED, OK } from "node-kall";
+import { QRCode } from "react-qrcode-logo";
 
 const DisclaimerBox = () => <Box
     width={1}>
@@ -92,7 +93,6 @@ export const IntroSection = () => {
                         <Box width={[1 / 20, 1 / 6]}></Box>
                         <Box width={[9 / 10, 4 / 6]}>
                             <Image margin="auto auto" src="/krets-qr.png" />
-                            {/* <Link href="https://krets.app/krets">https://krets.app/krets</Link> */}
                         </Box>
                         <Box width={[1 / 20, 1 / 6]}></Box>
                     </Flex>
