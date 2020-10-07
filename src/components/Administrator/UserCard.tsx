@@ -1,5 +1,5 @@
 import { NO_CONTENT, OK } from "node-kall";
-import { Card, Heading, Text } from "rebass";
+import { Button, Card, Heading, Text } from "rebass";
 import { useState } from "react";
 import { asyncEffect } from "../../effects/asyncEffect";
 import { getAuthUser, putUser } from "../../fetchers";
@@ -41,6 +41,27 @@ export const UserCard = ({ user }: { user: UserModel }) => {
 
     const [authUser, setAuthUser] = useState<AuthModel>(null);
 
+    const loadAuth = async () => {
+
+
+        try {
+
+            const [status, authUser] = await getAuthUser(user);
+            if (status === OK) {
+
+                setAuthUser(authUser);
+            } else {
+
+                console.error(`${status} when fetching authUser..`);
+            }
+        } catch (error) {
+
+            //THINKABOUT: how to solve this properly
+            //swallow -> if running locally, this error is due to test users not having auth0-counterparts
+        }
+    }
+    /* 
+    NOTE: TEmpl replaced with specific loading due to authp 409 limits
     asyncEffect(async () => {
 
         try {
@@ -58,7 +79,7 @@ export const UserCard = ({ user }: { user: UserModel }) => {
             //THINKABOUT: how to solve this properly
             //swallow -> if running locally, this error is due to test users not having auth0-counterparts
         }
-    }, []);
+    }, []); */
 
     return <Card p={[0, 1, 2]} m={[0, 1, 2]}>
         <Heading fontSize={[13, 21]}>{authUser ? authUser.name : "laster navn.."}</Heading>
@@ -68,5 +89,6 @@ export const UserCard = ({ user }: { user: UserModel }) => {
         <Text>role: {user.role}</Text>
         <ActiveToggle user={user} />
         <AdminToggle user={user} />
+        <Button onClick={loadAuth}>Last inn auth-data</Button>
     </Card>
 }
