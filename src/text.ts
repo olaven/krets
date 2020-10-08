@@ -350,6 +350,9 @@ export const charts = strings({
     en: {
         lineChartCollapsible: "Show development over time",
         barChartCollapsible: "Show overall score",
+        distribution: {
+            collapsible: "Show distribution of smileys",
+        },
         suggestion: {
             collapsible: "Suggest your own chart",
             label: "Your suggestion",
@@ -360,6 +363,9 @@ export const charts = strings({
     no: {
         lineChartCollapsible: "Vis utvikling over tid",
         barChartCollapsible: "Vis samlet score",
+        distribution: {
+            collapsible: "Vis fordeling av smilefjes"
+        },
         suggestion: {
             collapsible: "Foreslå en ny graf",
             label: "Ditt forslag",

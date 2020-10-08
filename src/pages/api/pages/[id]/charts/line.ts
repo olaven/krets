@@ -3,14 +3,10 @@ import { NextApiHandler } from "next";
 import { withAuthentication, withCors, withErrorHandling, withMethodHandlers, withMethods } from "../../../../../middleware/middleware";
 import { responses, pages } from '../../../../../database/database';
 import auth0 from "../../../../../auth/auth0";
+import { getPathParam } from "../../../../../workarounds";
 
 
-//NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
-const getId = (url: string) => {
-
-    const split = url.split("/");
-    return split[split.length - 3];
-};
+const getId = (url: string) => getPathParam(url, 3);
 
 const withMiddleware = (handler: NextApiHandler) =>
     withErrorHandling(

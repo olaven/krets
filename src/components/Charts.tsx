@@ -4,6 +4,7 @@ import { CompareContext } from "../context/CompareContext";
 import * as text from "../text";
 import { LineChart } from "./Admin/Charts/LineChart";
 import { BarChart } from "./Admin/Charts/BarChart";
+import { DistributionChart } from "./Admin/Charts/DistributionChart"
 import { Collapsible } from "./Collapsible"
 import ChartSuggestion from "./Admin/Charts/ChartSuggestion";
 
@@ -24,6 +25,9 @@ export const Charts = () => {
         </Collapsible>
         <Collapsible text={text.charts.barChartCollapsible}>
             <BarChart pageInformations={pageInformations} />
+        </Collapsible>
+        <Collapsible text={text.charts.distribution.collapsible}>
+            <DistributionChart pageInformations={pageInformations} />
         </Collapsible>
         <Collapsible text={text.charts.suggestion.collapsible}>
             <ChartSuggestion />
