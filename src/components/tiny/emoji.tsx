@@ -18,8 +18,8 @@ export const KretsEmoji = props => {
         <Button aria-label="response-emoji-button" backgroundColor="secondary"
             /* sx={{
                 boxShadow: "large",
-            }}*/ >
-            <div style={{ borderBottom: (type === emotion && "solid teal"), borderRadius: "5px" }}>
+            }}*/ >                                  //NOTE: old: solid teal
+            <div style={{ borderBottom: (type === emotion && "solid #0A585C"), borderRadius: "5px" }}>
                 <Text>{emojidata[type]}</Text>
             </div>
 

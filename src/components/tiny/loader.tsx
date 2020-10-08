@@ -10,7 +10,7 @@ export const Loader = ({ size }: { size: number }) => <Box width={1}>
                 display: block;
                 margin: 0 auto;`}
             size={size}
-            color={"teal"}
+            color={"#0A585C"} //old: teal
         />
     </span>
 </Box >
