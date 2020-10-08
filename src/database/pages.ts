@@ -83,7 +83,6 @@ const deletePage = async (id: string) => {
     return first<PageModel>("delete from pages where id = $1", [id]);
 }
 
-
 const pageExists = async (id: string) => {
 
     const result = await first<{ count: string }>(
