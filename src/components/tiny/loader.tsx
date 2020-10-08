@@ -7,8 +7,8 @@ export const Loader = ({ size }: { size: number }) => <Box width={1}>
     <span aria-label="loader-label">
         < BounceLoader
             css={css`
-                display: block;
-                margin: 0 auto;`}
+            display: block;
+            margin: 0 auto;`}
             size={size}
             color={"#0A585C"} //old: teal
         />

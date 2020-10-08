@@ -1,11 +1,10 @@
-import { UserContext, UserContextProvider } from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
-import { Box, Button, Flex, Link, Text, Image } from "rebass";
+import { Box, Flex, Link, Image } from "rebass";
 import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
 
 const HeaderLogo = () => {
-
 
     const router = useRouter();
 
@@ -20,9 +19,9 @@ const HeaderLogo = () => {
                     }}
                 />
             </Link >
-            {/* <Text p={[0, 1, 2]} fontSize={7}>Krets.</Text> */}
         </Flex>
 }
+
 /**
  * Shows the CornerButtons unless on 
  * specified pages (code / feedback)
@@ -69,8 +68,5 @@ export const Layout = (props) => {
             <CornerButtons />
         </Flex>
         {props.children}
-        {/*<div>
-            footer stuff
-        </div>*/}
     </Box>
 };

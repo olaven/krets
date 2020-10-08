@@ -1,9 +1,9 @@
 import React from 'react'
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 export default class extends Document {
   render() {
-    return <html>
+    return <Html>
       <Head>
         {/* <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap" rel="stylesheet"/> */}
         {/* <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet"></link> */}
@@ -16,6 +16,6 @@ export default class extends Document {
         <Main />
         <NextScript />
       </body>
-    </html>
+    </Html>
   }
 }

@@ -1,14 +1,10 @@
-import { filterBody, OK } from "node-kall"
+import { OK } from "node-kall"
 import { VictoryChart, VictoryBar, VictoryAxis, Box } from "victory";
-import { PageInformation } from "../../../context/CompareContext";
-import * as text from "../../../text";
-import { getEmojiDistribution, getOverallAverage } from "../../../fetchers";
+import { getEmojiDistribution } from "../../../fetchers";
 import { useContext, useState } from "react";
 import { asyncEffect } from "../../../effects/asyncEffect";
 import { AdminPageContext } from "../../../context/AdminPageContext";
 import { DistributionModel } from "../../../models/models";
-import { emojidata } from "../../../emojidata";
-
 
 
 export const DistributionChart = () => {

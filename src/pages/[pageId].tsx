@@ -9,7 +9,7 @@ import { CopyURLButton } from '../components/Page/CopyURLButton';
 import { Loader } from '../components/tiny/loader';
 import { QuestionsContextProvider } from '../context/QuestionsContext';
 
-export default () => {
+const PageId = () => {
 
     const { authUser } = useContext(UserContext);
 
@@ -36,3 +36,5 @@ export default () => {
     </>
 };
 
+
+export default PageId
