@@ -24,7 +24,7 @@ const Form = ({ text, setText, sendSuggestion }) => <> <Label>
     </Button>
 </>
 
-export default () => {
+export const ChartSuggestion = () => {
 
     const [text, setText] = useState<string>("");
     const [posted, setPosted] = useState(false);
