@@ -1,41 +1,64 @@
-import { filterBody } from "node-kall"
+import { filterBody, OK } from "node-kall"
 import { VictoryChart, VictoryBar, VictoryAxis, Box } from "victory";
 import { PageInformation } from "../../../context/CompareContext";
 import * as text from "../../../text";
-import { getOverallAverage } from "../../../fetchers";
-import { useState } from "react";
+import { getEmojiDistribution, getOverallAverage } from "../../../fetchers";
+import { useContext, useState } from "react";
 import { asyncEffect } from "../../../effects/asyncEffect";
+import { AdminPageContext } from "../../../context/AdminPageContext";
+import { DistributionModel } from "../../../models/models";
+import { emojidata } from "../../../emojidata";
 
 
 
-export const DistributionChart = ({ pageInformations }: { pageInformations: PageInformation[] }) => {
+export const DistributionChart = () => {
 
-    const [coordinates, setCoordinates] = useState([]);
+    const { page } = useContext(AdminPageContext);
+    const [distribution, setDistribution] = useState<DistributionModel>();
 
     asyncEffect(async () => {
 
-        /* //TODO: cut the `pageInformaitons`-idea entirely once server side calculation is merged - `pages` is enough
-        const pageWithAverage = await Promise.all(pageInformations
-            .map(({ page }) => page)
-            .map(async page => ({ page: page, average: await filterBody(getOverallAverage(page.id)) })))
+        if (!page) return;
 
-        setPageWithAverage(pageWithAverage); */
-    }, [pageInformations.length]);
+        const [status, distribution] = await getEmojiDistribution(page.id);
 
-    return <span aria-label="bar-chart-label">
+        if (status === OK)
+            setDistribution(distribution);
+        else
+            console.error(`${status} when fetching distribution`);
+
+    }, [page]);
+
+    return <span aria-label="distribution-chart-label">
         <VictoryChart
             animate={{
                 duration: 2000,
                 onLoad: { duration: 500 }
             }}
-            domainPadding={{ x: 15 }}
+            domainPadding={{ x: 55 }}
         >
-            {coordinates.map((coordinate) =>
-                <VictoryBar
-                    key={coordinate.x}
-                    data={[coordinate]} //TODO: depend on smiley?
-                    style={{ data: { fill: "orange", opacity: 0.7 } }} />
-            )}
+            <VictoryAxis />
+            <VictoryAxis dependentAxis
+            />
+
+            {distribution && <VictoryBar
+                data={[
+                    {
+                        x: ":-)",
+                        y: parseInt(distribution.happy),
+                    },
+                    {
+                        x: ":-|",
+                        y: parseInt(distribution.neutral),
+                    },
+                    {
+                        x: ":-(",
+                        y: parseInt(distribution.sad),
+                    },
+                ]}
+                style={{ data: { fill: "#c43a31", stroke: "black", strokeWidth: 2 } }}
+            />}
+
         </VictoryChart>
     </span>
 }
