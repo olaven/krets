@@ -2,6 +2,7 @@ import * as faker from "faker";
 import { randomResponse, randomUser, randomPage, blindSetup, setupPage } from "./databaseTestUtils";
 import { convertEmotion } from "../../src/database/responses";
 import { users, pages, responses } from "../../src/database/database";
+import { DistributionModel } from "../../src/models/models";
 
 
 describe("Database repository for pages", () => {
@@ -263,9 +264,8 @@ describe("Database repository for pages", () => {
         const randomDistribution = async () => {
 
             const [page] = await blindSetup();
-            const distribution = responses.getEmojiDistribution(page.id);
-
-            return distribution as any; //TODO: Type
+            const distribution = await responses.getEmojiDistribution(page.id);
+            return distribution;
         }
         it(" Does not throw when run", async () => {
 
