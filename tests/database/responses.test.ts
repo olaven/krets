@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { randomResponse, randomUser, randomPage, blindSetup } from "./databaseTestUtils";
+import { randomResponse, randomUser, randomPage, blindSetup, setupPage } from "./databaseTestUtils";
 import { convertEmotion } from "../../src/database/responses";
 import { users, pages, responses } from "../../src/database/database";
 
@@ -84,7 +84,6 @@ describe("Database repository for pages", () => {
             const before = await responses.getResponses(page.id);
             await responses.createResponse({
                 emotion: ':-)',
-                text: "",
                 page_id: page.id
             });
             const after = await responses.getResponses(page.id);
@@ -257,5 +256,120 @@ describe("Database repository for pages", () => {
             const count = await responses.getCount(page.id);
             expect(count).toEqual(0)
         });
-    })
+    });
+
+    describe("Calculation of emoji distribution data", () => {
+
+        const randomDistribution = async () => {
+
+            const [page] = await blindSetup();
+            const distribution = responses.getEmojiDistribution(page.id);
+
+            return distribution as any; //TODO: Type
+        }
+        it(" Does not throw when run", async () => {
+
+            const [page] = await blindSetup();
+            expect(
+                responses.getEmojiDistribution(page.id)
+            ).resolves.not.toThrow();
+        });
+
+        it("Does return a defined object", async () => {
+
+            const distribution = await randomDistribution();
+
+            expect(distribution).not.toBeNull();
+            expect(distribution).not.toBeUndefined();
+        });
+
+        it("Returns an object with 'sad', 'neutral' and 'happy'", async () => {
+
+            const distribution = await randomDistribution();
+
+            expect(distribution.sad).toBeDefined();
+            expect(distribution.neutral).toBeDefined();
+            expect(distribution.happy).toBeDefined();
+        });
+        it("'sad', 'neutral' and 'happy' are numeric strings", async () => {
+
+            //NOTE: strings due to bigint issue with Postgres/JS number limits
+            const distribution = await randomDistribution();
+
+            expect(parseInt(distribution.sad)).not.toBeNaN();
+            expect(parseInt(distribution.neutral)).not.toBeNaN();
+            expect(parseInt(distribution.happy)).not.toBeNaN();
+        });
+
+        it("Only gets distribution from the requested page", async () => {
+
+            const n = faker.random.number({ min: 0, max: 8 })
+            const [page, _, persisted] = await blindSetup(n);
+            const distribution = await responses.getEmojiDistribution(page.id);
+
+            const sum = parseInt(distribution.sad) + parseInt(distribution.neutral) + parseInt(distribution.happy);
+
+
+            expect(distribution.page_id).toEqual(page.id);
+            expect(persisted.length).toEqual(n);
+            expect(sum).toEqual(n);
+        });
+
+        it("Returned numbers match responses in database - first", async () => {
+
+            const [owner, page] = await setupPage();
+
+            //NOTE: three happy
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+
+            //NOTE: five neutral
+            responses.createResponse(randomResponse(page.id, ":-|"));
+            responses.createResponse(randomResponse(page.id, ":-|"));
+            responses.createResponse(randomResponse(page.id, ":-|"));
+            responses.createResponse(randomResponse(page.id, ":-|"));
+            responses.createResponse(randomResponse(page.id, ":-|"));
+
+            //NOTE: two sad 
+            responses.createResponse(randomResponse(page.id, ":-("));
+            responses.createResponse(randomResponse(page.id, ":-("));
+
+            const distribution = await responses.getEmojiDistribution(page.id);
+            expect(distribution.happy).toEqual("3");
+            expect(distribution.neutral).toEqual("5");
+            expect(distribution.sad).toEqual("2");
+        });
+
+
+        it("Returned numbers match responses in database - second", async () => {
+
+            const [_, page] = await setupPage();
+
+            //NOTE: eight happy
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+            responses.createResponse(randomResponse(page.id, ":-)"));
+
+            //NOTE: two neutral
+            responses.createResponse(randomResponse(page.id, ":-|"));
+            responses.createResponse(randomResponse(page.id, ":-|"));
+
+            //NOTE: four sad
+            responses.createResponse(randomResponse(page.id, ":-("));
+            responses.createResponse(randomResponse(page.id, ":-("));
+            responses.createResponse(randomResponse(page.id, ":-("));
+            responses.createResponse(randomResponse(page.id, ":-("));
+
+            const distribution = await responses.getEmojiDistribution(page.id);
+            expect(distribution.happy).toEqual("8");
+            expect(distribution.neutral).toEqual("2");
+            expect(distribution.sad).toEqual("4");
+        });
+    });
 });

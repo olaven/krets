@@ -1,5 +1,5 @@
 import { rows, first } from "./helpers/helpers";
-import { ResponseModel, Emotion, CoordinateModel } from "../models/models";
+import { ResponseModel, Emotion, CoordinateModel, DistributionModel } from "../models/models";
 import { pages } from "./pages";
 import { PaginationOptions } from "./helpers/PaginationOptions";
 
@@ -85,6 +85,15 @@ const getCount = async (pageId: string) => {
     return parseInt(result.count);
 }
 
+const getEmojiDistribution = (pageId: string) =>
+    first<DistributionModel>(`
+        select page_id, 
+            (SELECT COUNT(*) FROM responses WHERE emotion='2' and page_id = $1) as happy,
+            (SELECT COUNT(*) FROM responses WHERE emotion='1' and page_id = $1) as neutral,
+            (SELECT COUNT(*) FROM responses WHERE emotion='0' and page_id = $1) as sad
+        from responses where page_id = $1
+    `, [pageId]);
+
 //FIXME: fugly function. 
 //THINKABOUT: calucate chart separately from data fetching 
 //THINKABOUT: perhaps should be calculated differently than "all on-demand"
@@ -139,5 +148,6 @@ export const responses = ({
     getCount,
     createResponse,
     getAverageEmotionByPage,
+    getEmojiDistribution,
     getLineCoordinates
 });
