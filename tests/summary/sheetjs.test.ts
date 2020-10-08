@@ -1,5 +1,5 @@
-import { convertToJson, convertToSheet, writeToFile } from "../src/sheetjs"
-import { randomResponse } from "./database/databaseTestUtils";
+import { convertToJson, convertToSheet, writeToFile } from "../../src/summary/sheetjs"
+import { randomResponse } from "../database/databaseTestUtils";
 
 describe("Understandning sheetJS behaviour", () => {
 
@@ -30,15 +30,6 @@ describe("Understandning sheetJS behaviour", () => {
         expect(firstRow.name).toEqual("Guro");
     });
 
-    it("Can write JSON object to Excep file", () => {
-
-        const sheet = convertToSheet(
-            [randomResponse("pageid")]);
-        expect(() => {
-            writeToFile(sheet)
-        }).not.toThrow();
-    });
-
     it("Can convert a response to sheet", () => {
 
         const original = randomResponse("some-page-id");
@@ -48,5 +39,30 @@ describe("Understandning sheetJS behaviour", () => {
         expect(original).not.toBeNull();
         expect(original).toBeDefined();
         expect(original).toEqual(retrieved);
+    });
+
+    it("Does accept two slighly different things", () => {
+
+        const sheet = convertToSheet([
+            { a: "value of a" },
+            { b: "value of b" }
+        ]);
+
+        const [first, second] = convertToJson<any>(sheet);
+
+        expect(first.a).toEqual("value of a");
+        expect(second.b).toEqual("value of b");
+    });
+
+    it(" Can write two different things", () => {
+
+        writeToFile(
+            convertToSheet([
+                { a: "first of a" },
+                { b: "first of b" },
+                { a: "second of only a" },
+                { a: "a of has both", b: "b of has both" }
+            ])
+        );
     });
 })

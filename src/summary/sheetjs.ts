@@ -3,9 +3,14 @@
  * 1. how to generate an excel-like doucment from Response / Answer
  */
 
+/**
+ * Design of sheet
+ each PageModel gets its own sheet: 
+ | smilefjes | kontakt |  | |   
+ */
+
 
 import * as sheetJS from "xlsx";
-
 
 export const convertToSheet = <T>(data: T[]) =>
     sheetJS.utils.json_to_sheet(data, {});
