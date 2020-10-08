@@ -58,6 +58,9 @@ describe("The endpoint for average all-time score", () => {
             const { status } = await authenticatedFetch(other.id, fullURL(page.id));
             expect(status).toEqual(403)
         });
+    });
+
+    describe("The returned line coordinates", () => {
 
         it("Returns something looking like coordinates", async () => {
 
@@ -112,5 +115,5 @@ describe("The endpoint for average all-time score", () => {
                 expect(coordinate.label).not.toBeDefined();
             }
         });
-    });
+    })
 });
