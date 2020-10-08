@@ -315,25 +315,25 @@ describe("Database repository for pages", () => {
             expect(sum).toEqual(n);
         });
 
-        it("Returned numbers match responses in database - first", async () => {
+        it(" Returned numbers match responses in database - first", async () => {
 
-            const [owner, page] = await setupPage();
+            const [_, page] = await setupPage();
 
             //NOTE: three happy
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
 
             //NOTE: five neutral
-            responses.createResponse(randomResponse(page.id, ":-|"));
-            responses.createResponse(randomResponse(page.id, ":-|"));
-            responses.createResponse(randomResponse(page.id, ":-|"));
-            responses.createResponse(randomResponse(page.id, ":-|"));
-            responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
 
             //NOTE: two sad 
-            responses.createResponse(randomResponse(page.id, ":-("));
-            responses.createResponse(randomResponse(page.id, ":-("));
+            await responses.createResponse(randomResponse(page.id, ":-("));
+            await responses.createResponse(randomResponse(page.id, ":-("));
 
             const distribution = await responses.getEmojiDistribution(page.id);
             expect(distribution.happy).toEqual("3");
@@ -342,29 +342,29 @@ describe("Database repository for pages", () => {
         });
 
 
-        it("Returned numbers match responses in database - second", async () => {
+        it(" Returned numbers match responses in database - second", async () => {
 
             const [_, page] = await setupPage();
 
             //NOTE: eight happy
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
-            responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await responses.createResponse(randomResponse(page.id, ":-)"));
 
             //NOTE: two neutral
-            responses.createResponse(randomResponse(page.id, ":-|"));
-            responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await responses.createResponse(randomResponse(page.id, ":-|"));
 
             //NOTE: four sad
-            responses.createResponse(randomResponse(page.id, ":-("));
-            responses.createResponse(randomResponse(page.id, ":-("));
-            responses.createResponse(randomResponse(page.id, ":-("));
-            responses.createResponse(randomResponse(page.id, ":-("));
+            await responses.createResponse(randomResponse(page.id, ":-("));
+            await responses.createResponse(randomResponse(page.id, ":-("));
+            await responses.createResponse(randomResponse(page.id, ":-("));
+            await responses.createResponse(randomResponse(page.id, ":-("));
 
             const distribution = await responses.getEmojiDistribution(page.id);
             expect(distribution.happy).toEqual("8");

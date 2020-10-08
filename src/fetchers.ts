@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel } from "./models/models";
 
 
 
@@ -46,6 +46,9 @@ export const getCount = (pageId: string) =>
 
 export const getLineCoordinates = (pageId: string) =>
     get<CoordinateModel>(`/api/pages/${pageId}/charts/line`);
+
+export const getEmojiDistribution = (pageId: string) =>
+    get<DistributionModel>(`/api/pages/${pageId}/charts/distribution`);
 
 export const postEmail = (email: EmailModel) =>
     post<EmailModel>(`/api/mail`, email);
