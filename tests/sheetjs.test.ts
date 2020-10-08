@@ -1,4 +1,5 @@
 import { convertToJson, convertToSheet, writeToFile } from "../src/sheetjs"
+import { randomResponse } from "./database/databaseTestUtils";
 
 describe("Understandning sheetJS behaviour", () => {
 
@@ -32,9 +33,20 @@ describe("Understandning sheetJS behaviour", () => {
     it("Can write JSON object to Excep file", () => {
 
         const sheet = convertToSheet(
-            both());
+            [randomResponse("pageid")]);
         expect(() => {
             writeToFile(sheet)
         }).not.toThrow();
+    });
+
+    it("Can convert a response to sheet", () => {
+
+        const original = randomResponse("some-page-id");
+        const sheet = convertToSheet([original]);
+        const [retrieved] = convertToJson(sheet);
+
+        expect(original).not.toBeNull();
+        expect(original).toBeDefined();
+        expect(original).toEqual(retrieved);
     });
 })

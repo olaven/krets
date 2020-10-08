@@ -7,7 +7,7 @@
 import * as sheetJS from "xlsx";
 
 
-export const convertToSheet = (data: any[]) =>
+export const convertToSheet = <T>(data: T[]) =>
     sheetJS.utils.json_to_sheet(data, {});
 
 export const writeToFile = (sheet: sheetJS.WorkSheet) =>
