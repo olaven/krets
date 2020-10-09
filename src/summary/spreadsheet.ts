@@ -1,5 +1,5 @@
 
-import { database } from "../database/database";
+/* import { database } from "../database/database";
 import { UserModel } from "../models/models";
 
 
@@ -19,13 +19,28 @@ export const allResponseData = async (user: UserModel) => Promise.all(
         )
     }))
 );
+ */
 
-const generateSummarySheet = async (user: UserModel) => {
+import { database } from "../database/database"
+import { SummaryModel, UserModel } from "../models/models";
+import { convertToSheet, convertToWorkbook, writeToFile } from "./sheetjs";
 
-    (await allResponseData(user))
-        .map(({ page, responses, answers }) => {
 
+export const generateSummarySheet = (summaries: SummaryModel[]) =>
+    writeToFile(
+        convertToWorkbook(
+            summaries.map(summary => ({
+                name: summary.page_name,
+                sheet: convertToSheet<SummaryModel>([summary])
+            }))
+        )
+    );
 
-        });
+const generateFromDatabase = async (user: UserModel) => {
 
+    const sheets = generateSummarySheet(
+        await database.summary.get(user.id)
+    );
+
+    return sheets;
 }

@@ -11,7 +11,7 @@ const TYPE_TIMESTAMPTZ = 1184
 types.setTypeParser(TYPE_TIMESTAMP, v => v)
 types.setTypeParser(TYPE_TIMESTAMPTZ, v => v)
 
-// -- END
+// -- END NOTE: Overriding default conversion to Date object 
 
 //TODO: should not check NODE_ENV programatically, but separate config from code 
 const config = (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") ? null : {

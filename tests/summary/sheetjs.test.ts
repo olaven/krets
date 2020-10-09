@@ -56,13 +56,13 @@ describe("Understandning sheetJS behaviour", () => {
 
     it(" Can write two different things", () => {
 
-        writeToFile(
+        /* writeToFile(
             convertToSheet([
                 { a: "first of a" },
                 { b: "first of b" },
                 { a: "second of only a" },
                 { a: "a of has both", b: "b of has both" }
             ])
-        );
+        ); */
     });
 })

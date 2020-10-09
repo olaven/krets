@@ -14,16 +14,10 @@ import { mockFetch, mockRouter } from "../frontendTestUtils";
 import { AdminPageContext } from "../../../src/context/AdminPageContext";
 import { UserContext } from "../../../src/context/UserContext";
 import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
-import { randomAnswer, randomResponse } from "../../database/databaseTestUtils";
+import { randomAnswer, randomEmotion, randomResponse } from "../../database/databaseTestUtils";
 import { randomPage } from "../../api/apiTestUtils";
 import responses from "../../../src/pages/api/pages/[id]/responses";
 import { TextCard } from "../../../src/components/Admin/TextList/TextCard";
-
-const randomEmotion = () => {
-
-    const emotions: Emotion[] = [":-)", ":-|", ":-("];
-    return emotions[faker.random.number({ min: 0, max: 2 })];
-}
 
 const fakeResponses = (amount: number): ResponseModel[] => new Array(amount).fill(0)
     .map(() => ({

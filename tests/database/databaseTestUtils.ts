@@ -25,8 +25,9 @@ export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contact
         contact_details: contactDetails
     });
 
-export const randomAnswer = (responseId: string): AnswerModel => ({
+export const randomAnswer = (responseId: string, questionId = null): AnswerModel => ({
     response_id: responseId,
+    question_id: questionId,
     text: faker.lorem.lines(1)
 });
 
@@ -35,6 +36,12 @@ export const randomQuestion = (pageId: string, archived = false): QuestionModel 
     text: faker.lorem.lines(1),
     archived
 });
+
+export const randomEmotion = () => {
+
+    const emotions: Emotion[] = [":-)", ":-|", ":-("];
+    return emotions[faker.random.number({ min: 0, max: 2 })];
+}
 
 
 //DANGER: unsafe SQL-variable injection. MUST NOT be exposed outside of test code. 
@@ -49,11 +56,12 @@ export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 2
     const user = await users.createUser(randomUser());
     const page = await pages.createPage(randomPage(user.id));
     const response = await responses.createResponse(randomResponse(page.id));
+    const question = await questions.createQuestion(randomQuestion(page.id));
 
     const persisted = [];
     for (let i = 0; i < amount; i++) {
 
-        const answer = await answers.createAnswer(randomAnswer(response.id));
+        const answer = await answers.createAnswer(randomAnswer(response.id, question.id));
         persisted.push(answer);
     }
 
