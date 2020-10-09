@@ -6,6 +6,7 @@ import { categories as _categories } from "./categories";
 import { answers as _answers } from "./answers";
 import { questions as _questions } from "./questions";
 import { embeddables as _embeddables } from "./embeddables"
+import * as summary from "./summary"
 
 
 export const pages = _pages
@@ -25,4 +26,5 @@ export const database = {
     answers: _answers,
     questions: _questions,
     embeddables: _embeddables,
+    summary
 }
