@@ -6,6 +6,7 @@ import { intro } from "../../../text";
 import { postEmail } from "../../../fetchers";
 import { CREATED, OK } from "node-kall";
 import { QRCode } from "react-qrcode-logo";
+import { StichesButton, WithHoverColor } from "../../tiny/StichesButton";
 
 const DisclaimerBox = () => <Box
     width={1}>
