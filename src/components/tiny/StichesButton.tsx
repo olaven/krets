@@ -1,7 +1,6 @@
 import { styled } from "../../stiches.config";
 
 export const StichesButton = styled('button', {
-    backgroundColor: 'orange',
     borderRadius: '50px',
     fontSize: '1.5em',
     paddingTop: '10px',
@@ -10,6 +9,12 @@ export const StichesButton = styled('button', {
     paddingRight: '16px',
     ':hover': {
         cursor: 'pointer'
+    },
+    small: {
+        backgroundColor: 'red',
+    },
+    large: {
+        backgroundColor: 'blue'
     }
 });
 

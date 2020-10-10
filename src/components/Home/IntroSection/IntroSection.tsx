@@ -83,8 +83,6 @@ export const IntroSection = () => {
 
         <RequestAccess />
         <DisclaimerBox />
-        <StichesButton>hei</StichesButton>
-        <WithHoverColor>farge</WithHoverColor>
 
         <Flex py={4}>
             <Box width={[0, 1 / 4]}> </Box>
