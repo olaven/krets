@@ -8,6 +8,7 @@ export const Emojis = ({ selectedEmotion, setSelectedEmotion }: Props) => {
     return <EmojiContainer>
         {([":-)", ":-|", ":-("] as Emotion[]).map(emotion =>
             <Emoji
+                aria-label="response-emoji-button"
                 key={emotion}
                 selected={selectedEmotion ? selectedEmotion === emotion ? 'yes' : 'no' : 'unknown'}
                 onClick={() => setSelectedEmotion(emotion)}
