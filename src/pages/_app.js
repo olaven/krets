@@ -3,7 +3,6 @@ import { ThemeProvider } from 'emotion-theming'
 import { UserContextProvider } from '../context/UserContext'
 import { Layout } from '../components/layout'
 import { KretsTheme } from '../components/theme'
-import 'tippy.js/dist/tippy.css';
 
 
 MyApp.getInitialProps = async (context) => {
@@ -42,9 +41,9 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
 
       <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} />
 
-      <style jsx global>{`
-        :global(body) {
-          margin: 0; 
+      <style>{`
+        body {
+          margin: 0;
         }
       `}</style>
 

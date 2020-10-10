@@ -9,6 +9,8 @@ import { Thanks } from "../../tiny/Thanks";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { CustomQuestions, DefaultQuestion } from "./Questions";
 import { ContactInput } from "./ContactInput";
+import { Emojis } from "./Emojis";
+
 
 
 export const ResponseSection = ({ page, showHeader, embeddable }: {
@@ -103,11 +105,12 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                     <Flex>
                         <Box>
                             {showHeader && <Heading textAlign={"center"} aria-label="response-section-header" fontSize={[21, 32]} py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>}
-                            <Flex>
+                            <Emojis selectedEmotion={emotion} setSelectedEmotion={setEmotion} />
+                            {/* <Flex>
                                 <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
                                 <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
                                 <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
-                            </Flex>
+                            </Flex> */}
                         </Box>
                     </Flex>
                     {emotion && <>
