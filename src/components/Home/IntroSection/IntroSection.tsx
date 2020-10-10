@@ -6,6 +6,7 @@ import { intro } from "../../../text";
 import { postEmail } from "../../../fetchers";
 import { CREATED, OK } from "node-kall";
 import { QRCode } from "react-qrcode-logo";
+import { StichesButton, WithHoverColor } from "../../tiny/StichesButton";
 
 const DisclaimerBox = () => <Box
     width={1}>
@@ -82,6 +83,8 @@ export const IntroSection = () => {
 
         <RequestAccess />
         <DisclaimerBox />
+        <StichesButton>hei</StichesButton>
+        <WithHoverColor>farge</WithHoverColor>
 
         <Flex py={4}>
             <Box width={[0, 1 / 4]}> </Box>

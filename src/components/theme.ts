@@ -1,3 +1,4 @@
+//NOTE: over time, planned to replace this with `stiches.config.ts`
 export const KretsTheme = {
     breakpoints: ['40em', '52em', '64em'],
     fontSizes: [

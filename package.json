@@ -16,6 +16,7 @@
     "@auth0/nextjs-auth0": "^0.13.0",
     "@emotion/core": "^10.0.28",
     "@rebass/forms": "^4.0.6",
+    "@stitches/react": "^0.0.2",
     "@tippyjs/react": "^4.0.5",
     "@types/micro-cors": "^0.1.1",
     "babel-plugin-emotion": "^10.0.33",
