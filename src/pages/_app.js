@@ -39,7 +39,8 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
       <meta property="twitter:card" content="summary_large_image"></meta>
       <meta property="og:title" content="Krets Feedback"></meta>
 
-      <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} />
+      {/* FIXME: causes annoying error on startup noe */}
+      {/* <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} /> */}
 
       <style>{`
         body {

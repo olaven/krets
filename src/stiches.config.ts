@@ -7,6 +7,7 @@ export const { styled, css } = createStyled({
         colors: {
             $primary: 'hsl(183, 80%, 20%)', //'#0A585C',
             $secondary: 'hsl(215, 90%, 96%)', //'#EBF3FE',
+            $dark: 'black'
         },
     },
     breakpoints: {

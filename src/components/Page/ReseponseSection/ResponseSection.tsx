@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import { Box, Button, Flex, Heading } from "rebass";
-import { KretsEmoji } from "../../tiny/emoji";
+import { Box, Button, Flex, } from "rebass";
 import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
@@ -10,8 +9,43 @@ import { QuestionsContext } from "../../../context/QuestionsContext";
 import { CustomQuestions, DefaultQuestion } from "./Questions";
 import { ContactInput } from "./ContactInput";
 import { Emojis } from "./Emojis";
+import { css, styled } from "../../../stiches.config";
 
 
+//TODO: move to common standard file for headings and reuse 
+const Heading = styled('h1', {
+    color: '$dark',
+    fontWeight: "lighter",
+    textAlign: "center"
+});
+
+const OuterContainer = styled("div", {
+    position: "absolute",
+    transform: "translateX(-50%)",
+
+    large: {
+        width: "80vw",
+    },
+    small: {
+        width: "100vw",
+    }
+})
+
+const InputContainer = styled('div', {
+    marginTop: "100px",
+    animationName: `${css.keyframes({
+        "0%": {
+            opacity: "0",
+            transform: "translateY(30%)",
+        },
+        "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+        }
+    })}`,
+    animationDuration: "200ms",
+    animationTimingFunction: "ease-in",
+});
 
 export const ResponseSection = ({ page, showHeader, embeddable }: {
     page: PageModel, showHeader: boolean, embeddable: {
@@ -92,7 +126,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
         }
     }
 
-
     const headerText = page.custom_title ?
         page.custom_title :
         `${uiText.response.header} ${page.name}`
@@ -101,19 +134,15 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
         {
             published ?
                 <Thanks /> :
-                <>
-                    <Flex>
-                        <Box>
-                            {showHeader && <Heading textAlign={"center"} aria-label="response-section-header" fontSize={[21, 32]} py={[1, 2, 3]} color={"primary"}>{headerText}</Heading>}
-                            <Emojis selectedEmotion={emotion} setSelectedEmotion={setEmotion} />
-                            {/* <Flex>
-                                <KretsEmoji type={":-)"} emotion={emotion} setEmotion={setEmotion} />
-                                <KretsEmoji type={":-|"} emotion={emotion} setEmotion={setEmotion} />
-                                <KretsEmoji type={":-("} emotion={emotion} setEmotion={setEmotion} />
-                            </Flex> */}
-                        </Box>
-                    </Flex>
-                    {emotion && <>
+                <OuterContainer>
+
+                    {showHeader && <Heading aria-label="response-section-header">{headerText}</Heading>}
+                    <Emojis
+                        selectedEmotion={emotion}
+                        setSelectedEmotion={setEmotion}
+                    />
+
+                    {emotion && <InputContainer>
                         {questions.length === 0 ?
                             <DefaultQuestion
                                 answers={answers}
@@ -139,8 +168,8 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                             {uiText.response.button}
                         </Button>
 
-                    </>}
-                </>
+                    </InputContainer>}
+                </OuterContainer >
         }
     </Box >;
 };
