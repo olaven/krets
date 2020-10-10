@@ -20,12 +20,11 @@ export const Emojis = ({ selectedEmotion, setSelectedEmotion }: Props) => {
 const EmojiContainer = styled('div', {
     position: 'relative',
     display: 'flex',
-    justifyContent: 'space-around',
-    justifyItems: 'center'
+    justifyContent: 'center',
 });
 
 
-const fade = css.keyframes({
+const notSelectedFade = css.keyframes({
     '20%': {
         transform: "translateY(-20%)",
         opacity: '0',
@@ -33,7 +32,6 @@ const fade = css.keyframes({
     '100%': {
         transform: "translateY(-80%)",
         opacity: '0',
-        display: 'none',
         position: 'absolute', /*Taken out of flex flow */
     }
 });
@@ -63,11 +61,13 @@ const Emoji = styled('div', {
         selected: {
             no: {
 
-                animationName: `${fade}`,
+                animationName: `${notSelectedFade}`,
                 animationDuration: "400ms",
                 animationFillMode: "forwards",
+                flexGrow: 0.00001,
             },
             yes: {
+
                 transform: 'scale(130%)',
                 borderBottomStyle: "solid",
                 borderBottomColor: "$primary",

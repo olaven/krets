@@ -36,15 +36,15 @@ const InputContainer = styled('div', {
     animationName: `${css.keyframes({
         "0%": {
             opacity: "0",
-            transform: "translateY(30%)",
+            transform: "translateY(10%)",
         },
         "100%": {
             opacity: "1",
             transform: "translateY(0)",
         }
     })}`,
-    animationDuration: "200ms",
-    animationTimingFunction: "ease-in",
+    animationDuration: "280ms",
+    animationTimingFunction: "ease",
 });
 
 export const ResponseSection = ({ page, showHeader, embeddable }: {
