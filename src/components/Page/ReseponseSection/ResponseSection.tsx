@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Box, Button, } from "rebass";
+import { Box, } from "rebass";
 import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
@@ -12,40 +12,50 @@ import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
 
 
-const BaseButton = styled('button', {
+const Button = styled('button', {
+    border: "none",
     color: "$secondary",
     backgroundColor: "$primary",
     cursor: "pointer",
     padding: "$8",
-    border: "none",
     borderRadius: "5px",
+    fontSize: "$21",
 
     ":hover": {
         transitionDuration: "50ms",
         backgroundColor: "$secondary",
         color: "$primary",
-        borderStyle: "solid",
+        underlineColor: "$primary",
+        textDecoration: "underline",
         borderWidth: "1px",
         borderColor: "$black",
     },
 
+
     variants: {
-        type: {
+        shape: {
             circular: {
                 display: "block",
-                height: "20px",
-                width: "20px",
+                height: "50px",
+                width: "50px",
                 borderRadius: "50%",
                 padding: "0px",
-                textAlign: "center"
+                textAlign: "center",
+            }
+        },
+        width: {
+            full: {
+
+                large: {
+                    width: "80%",
+                },
+                small: {
+                    width: "100%"
+                }
             }
         }
     }
 });
-
-Button.defaultProps = {
-    type: 'standard',
-};
 
 
 //TODO: move to common standard file for headings and reuse 
@@ -255,9 +265,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         setSelectedEmotion={setEmotion}
                     />
 
-                    <BaseButton>Standard</BaseButton>
-                    <BaseButton type="circular">Circular</BaseButton>
-                    <TextInput />
                     {emotion && <InputContainer>
                         {questions.length === 0 ?
                             <DefaultQuestion
@@ -277,10 +284,9 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
 
                         <Button
                             aria-label="response-button-input"
-                            fontSize={[4, 5, 6]}
-                            width={1}//width={[1, 3 / 4]}
-                            //margin="auto" //FIXME make this work and make button more narrow (e.g. 3/ 4)
-                            onClick={onPostResponse}>
+                            onClick={onPostResponse}
+                            width="full"
+                        >
                             {uiText.response.button}
                         </Button>
 
