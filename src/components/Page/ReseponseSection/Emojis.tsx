@@ -64,7 +64,6 @@ const Emoji = styled('div', {
                 animationName: `${notSelectedFade}`,
                 animationDuration: "400ms",
                 animationFillMode: "forwards",
-                flexGrow: 0.00001,
             },
             yes: {
 

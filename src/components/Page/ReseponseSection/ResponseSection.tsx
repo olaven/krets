@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Box, Button, Flex, } from "rebass";
+import { Box, Button, } from "rebass";
 import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
@@ -18,6 +18,76 @@ const Heading = styled('h1', {
     fontWeight: "lighter",
     textAlign: "center"
 });
+
+
+//TODO: move to common standard file for checkboxes and reuse 
+const Checkbox = () => {
+
+    /* const Container = styled('label', {
+
+    })
+    const Checkbox = styled('input', {
+        position: "absolute",
+        opacity: "0",
+        cursor: "pointer",
+        height: "0",
+        width: "0",
+        ":checked ~ .checkmark": {
+            backgroundColor: "orange"
+        }
+    })
+
+    const CheckMark = styled("span", {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        height: "25px",
+        width: "25px",
+        backgroundColor: "#eee",
+        ":after": {
+            content: "",
+            position: "absolute",
+            display: "none",
+        }
+    }) */
+    const Input = styled("input", {
+        transform: "scale(300%)",
+        /*         [`::checked`]: {
+                    transform: "scale(200%)",
+                    backgroundColor: "orange",
+                    color: "red"
+                } */
+    });
+
+    const Label = styled('label', {
+        borderColor: "$primary",
+        backgroundColor: "$secondary",
+        borderStyle: "solid",
+
+        position: "absolute",
+        width: "50px",
+        height: "50px",
+        borderRadius: "50%",
+
+        cursor: "pointer",
+
+        [`${Input}:checked + &`]: {
+            color: 'red',
+            fontWeight: 'bold',
+        }
+    });
+
+
+    return <div>
+        <Label for="checkbox"></Label>
+        <Input type="checkbox" id="checkbox"></Input>
+    </div>
+    /* return <Container>
+        HEI
+        <Checkbox />
+        <CheckMark className="checkmark" />
+    </Container> */
+}
 
 const OuterContainer = styled("div", {
     position: "absolute",
@@ -142,6 +212,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         setSelectedEmotion={setEmotion}
                     />
 
+                    <Checkbox />
                     {emotion && <InputContainer>
                         {questions.length === 0 ?
                             <DefaultQuestion
