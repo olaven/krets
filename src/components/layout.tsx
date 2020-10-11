@@ -60,7 +60,8 @@ export const Layout = (props) => {
         sx={{
             m: 0,
             fontFamily: "body"
-        }} backgroundColor={"secondary"}>
+        }}
+        backgroundColor={"secondary"}>
         <Flex px={2}
             color='primary'
             alignItems='center'>

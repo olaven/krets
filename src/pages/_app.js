@@ -3,7 +3,6 @@ import { ThemeProvider } from 'emotion-theming'
 import { UserContextProvider } from '../context/UserContext'
 import { Layout } from '../components/layout'
 import { KretsTheme } from '../components/theme'
-import 'tippy.js/dist/tippy.css';
 
 
 MyApp.getInitialProps = async (context) => {
@@ -40,11 +39,12 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
       <meta property="twitter:card" content="summary_large_image"></meta>
       <meta property="og:title" content="Krets Feedback"></meta>
 
-      <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} />
+      {/* FIXME: causes annoying error on startup noe */}
+      {/* <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} /> */}
 
-      <style jsx global>{`
-        :global(body) {
-          margin: 0; 
+      <style>{`
+        body {
+          margin: 0;
         }
       `}</style>
 
