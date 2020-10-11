@@ -35,7 +35,7 @@ const Checkbox = () => {
 
             svg: {
                 stroke: "$secondary",
-                fontSize: "3em"
+                fontSize: "3em",
             }
         }
     });
@@ -51,13 +51,22 @@ const Checkbox = () => {
         borderRadius: "50%",
 
         cursor: "pointer",
+        ":hover": {
+            transitionDuration: "100ms",
+            transitionTimingFunction: "linear",
+            transform: "scale(1.1)"
+        },
 
         svg: {
             transitionDuration: "200ms",
             transitionTimingFunction: "ease-out",
             stroke: "$primary",
-            width: "100%",
-            height: "100%",
+
+            ":hover": {
+                transitionDuration: "20ms",
+                transitionTimingFunction: "ease-in-out",
+                transform: "scale(1.05)"
+            }
         }
     });
 
@@ -66,7 +75,8 @@ const Checkbox = () => {
         <Input type="checkbox" id="checkbox"></Input>
         <Label for="checkbox">
             <svg
-                stroke-width="2.5"
+                viewBox="0 -2 24 24"
+                stroke-width="2"
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round">
