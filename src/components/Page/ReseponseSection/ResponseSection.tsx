@@ -12,6 +12,42 @@ import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
 
 
+const BaseButton = styled('button', {
+    color: "$secondary",
+    backgroundColor: "$primary",
+    cursor: "pointer",
+    padding: "$8",
+    border: "none",
+    borderRadius: "5px",
+
+    ":hover": {
+        transitionDuration: "50ms",
+        backgroundColor: "$secondary",
+        color: "$primary",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "$black",
+    },
+
+    variants: {
+        type: {
+            circular: {
+                display: "block",
+                height: "20px",
+                width: "20px",
+                borderRadius: "50%",
+                padding: "0px",
+                textAlign: "center"
+            }
+        }
+    }
+});
+
+Button.defaultProps = {
+    type: 'standard',
+};
+
+
 //TODO: move to common standard file for headings and reuse 
 const Heading = styled('h1', {
     color: '$dark',
@@ -48,7 +84,6 @@ const Checkbox = () => {
         position: "absolute",
         width: "50px",
         height: "50px",
-        borderRadius: "50%",
 
         cursor: "pointer",
         ":hover": {
@@ -71,8 +106,8 @@ const Checkbox = () => {
     });
 
 
-    return <div>
-        <Input type="checkbox" id="checkbox"></Input>
+    return <>
+        <Input type="checkbox" id="checkbox" />
         <Label for="checkbox">
             <svg
                 viewBox="0 -2 24 24"
@@ -83,13 +118,19 @@ const Checkbox = () => {
                 <polyline points="20 6 9 17 4 12" />
             </svg>
         </Label>
-    </div >
-    /* return <Container>
-        HEI
-        <Checkbox />
-        <CheckMark className="checkmark" />
-    </Container> */
+    </>
 }
+
+const TextInput = styled("input", {
+    padding: "$5",
+    margin: "$5 0",
+    borderRadius: "5px",
+    border: "2px solid #c6c6c6",
+    fontSize: "$21",
+    ":focus": {
+        outline: "none"
+    }
+})
 
 const OuterContainer = styled("div", {
     position: "absolute",
@@ -214,7 +255,9 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         setSelectedEmotion={setEmotion}
                     />
 
-                    <Checkbox />
+                    <BaseButton>Standard</BaseButton>
+                    <BaseButton type="circular">Circular</BaseButton>
+                    <TextInput />
                     {emotion && <InputContainer>
                         {questions.length === 0 ?
                             <DefaultQuestion
