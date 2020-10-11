@@ -23,40 +23,21 @@ const Heading = styled('h1', {
 //TODO: move to common standard file for checkboxes and reuse 
 const Checkbox = () => {
 
-    /* const Container = styled('label', {
-
-    })
-    const Checkbox = styled('input', {
-        position: "absolute",
-        opacity: "0",
-        cursor: "pointer",
-        height: "0",
-        width: "0",
-        ":checked ~ .checkmark": {
-            backgroundColor: "orange"
-        }
-    })
-
-    const CheckMark = styled("span", {
-        position: "absolute",
-        top: "0",
-        left: "0",
-        height: "25px",
-        width: "25px",
-        backgroundColor: "#eee",
-        ":after": {
-            content: "",
-            position: "absolute",
-            display: "none",
-        }
-    }) */
     const Input = styled("input", {
         transform: "scale(300%)",
-        /*         [`::checked`]: {
-                    transform: "scale(200%)",
-                    backgroundColor: "orange",
-                    color: "red"
-                } */
+        backgroundColor: "$secondary",
+        color: "$primary",
+        opacity: 0,
+
+        "&:checked + label": {
+            backgroundColor: "$primary",
+            color: "$secondary",
+
+            svg: {
+                stroke: "$secondary",
+                fontSize: "3em"
+            }
+        }
     });
 
     const Label = styled('label', {
@@ -71,17 +52,28 @@ const Checkbox = () => {
 
         cursor: "pointer",
 
-        [`${Input}:checked + &`]: {
-            color: 'red',
-            fontWeight: 'bold',
+        svg: {
+            transitionDuration: "200ms",
+            transitionTimingFunction: "ease-out",
+            stroke: "$primary",
+            width: "100%",
+            height: "100%",
         }
     });
 
 
     return <div>
-        <Label for="checkbox"></Label>
         <Input type="checkbox" id="checkbox"></Input>
-    </div>
+        <Label for="checkbox">
+            <svg
+                stroke-width="2.5"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+            </svg>
+        </Label>
+    </div >
     /* return <Container>
         HEI
         <Checkbox />
