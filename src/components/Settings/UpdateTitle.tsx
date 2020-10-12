@@ -5,7 +5,7 @@ import { NO_CONTENT } from "node-kall";
 import { useContext, useState } from "react";
 import { SettingsContext } from "../../context/SettingsContext";
 import { putPage } from "../../fetchers";
-import { TriggerLoadingButton } from "../tiny/buttons";
+import { TriggerLoadingButton } from "../standard/buttons";
 
 
 export const UpdateTitle = () => {

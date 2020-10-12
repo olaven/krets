@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { Loader } from "./tiny/loader";
+import { Loader } from "./standard/loader";
 
 /**
  * Redirects to `/user` if user is not a subscriber. 

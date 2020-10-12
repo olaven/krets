@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Box, Text, Image, Link, Heading, Button } from "rebass";
 import { Input } from "@rebass/forms";
-import { GetStartedButton, TriggerLoadingButton } from "../../tiny/buttons";
+import { GetStartedButton, TriggerLoadingButton } from "../../standard/buttons";
 import { intro } from "../../../text";
 import { postEmail } from "../../../fetchers";
 import { CREATED, OK } from "node-kall";
 import { QRCode } from "react-qrcode-logo";
-import { StichesButton, WithHoverColor } from "../../tiny/StichesButton";
+import { StichesButton, WithHoverColor } from "../../standard/StichesButton";
 
 const DisclaimerBox = () => <Box
     width={1}>

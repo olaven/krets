@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
-import { Loader, LoadMore } from "../../tiny/loader";
+import { Loader, LoadMore } from "../../standard/loader";
 import * as text from "../../../text"
 import { PagesContext } from "../../../context/PagesContext";
-import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
+import { ToAdmin, ToQR, ToPage, ToSettings } from "../../standard/buttons";
 
 const PageCard = ({ id, name }) =>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>

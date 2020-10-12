@@ -5,7 +5,7 @@ import { CREATED } from "node-kall"
 import { postEmail } from "../../../fetchers"
 import * as uiText from "../../../text";
 
-import { Thanks } from "../../tiny/Thanks"
+import { Thanks } from "../../standard/Thanks"
 
 
 const Error = () => <Text>

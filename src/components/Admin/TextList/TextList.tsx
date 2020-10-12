@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { Emotion } from "../../../models/models";
 import * as text from "../../../text";
 import { FilterButtons } from "./FilterButtons";
-import { LoadMore } from "../../tiny/loader";
+import { LoadMore } from "../../standard/loader";
 import { TextCards } from "./TextCards";
 
 

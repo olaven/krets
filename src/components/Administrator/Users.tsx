@@ -1,6 +1,6 @@
 import { Box, Flex, } from "rebass";
 import { useUsers } from "../../effects/useUsers"
-import { TriggerLoadingButton } from "../tiny/buttons";
+import { TriggerLoadingButton } from "../standard/buttons";
 import { UserCard } from "./UserCard";
 
 

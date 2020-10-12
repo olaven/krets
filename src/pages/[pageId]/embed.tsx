@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { Box, Flex } from "rebass";
 import { ErrorLoadingPage } from '../../components/Page/ErrorLoadingPage';
 import { ResponseSection } from '../../components/Page/ReseponseSection/ResponseSection';
-import { Loader } from '../../components/tiny/loader';
+import { Loader } from '../../components/standard/loader';
 import { QuestionsContextProvider } from '../../context/QuestionsContext';
 import { usePage } from '../../effects/usePage';
 

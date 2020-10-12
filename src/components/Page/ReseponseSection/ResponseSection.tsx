@@ -4,143 +4,16 @@ import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
 import { postAnswer, postResponse, putEmbeddableResponse } from "../../../fetchers";
-import { Thanks } from "../../tiny/Thanks";
+import { Thanks } from "../../standard/Thanks";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { CustomQuestions, DefaultQuestion } from "./Questions";
 import { ContactInput } from "./ContactInput";
 import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
+import { Heading } from "../../standard/Heading";
+import { Button } from "../../standard/Button";
 
 
-const Button = styled('button', {
-    border: "none",
-    color: "$secondary",
-    backgroundColor: "$primary",
-    cursor: "pointer",
-    padding: "$8",
-    borderRadius: "5px",
-    fontSize: "$21",
-
-    ":hover": {
-        transitionDuration: "50ms",
-        backgroundColor: "$secondary",
-        color: "$primary",
-        underlineColor: "$primary",
-        textDecoration: "underline",
-        borderWidth: "1px",
-        borderColor: "$black",
-    },
-
-
-    variants: {
-        shape: {
-            circular: {
-                display: "block",
-                height: "50px",
-                width: "50px",
-                borderRadius: "50%",
-                padding: "0px",
-                textAlign: "center",
-            }
-        },
-        width: {
-            full: {
-
-                large: {
-                    width: "80%",
-                },
-                small: {
-                    width: "100%"
-                }
-            }
-        }
-    }
-});
-
-
-//TODO: move to common standard file for headings and reuse 
-const Heading = styled('h1', {
-    color: '$dark',
-    fontWeight: "lighter",
-    textAlign: "center"
-});
-
-
-//TODO: move to common standard file for checkboxes and reuse 
-const Checkbox = () => {
-
-    const Input = styled("input", {
-        transform: "scale(300%)",
-        backgroundColor: "$secondary",
-        color: "$primary",
-        opacity: 0,
-
-        "&:checked + label": {
-            backgroundColor: "$primary",
-            color: "$secondary",
-
-            svg: {
-                stroke: "$secondary",
-                fontSize: "3em",
-            }
-        }
-    });
-
-    const Label = styled('label', {
-        borderColor: "$primary",
-        backgroundColor: "$secondary",
-        borderStyle: "solid",
-
-        position: "absolute",
-        width: "50px",
-        height: "50px",
-
-        cursor: "pointer",
-        ":hover": {
-            transitionDuration: "100ms",
-            transitionTimingFunction: "linear",
-            transform: "scale(1.1)"
-        },
-
-        svg: {
-            transitionDuration: "200ms",
-            transitionTimingFunction: "ease-out",
-            stroke: "$primary",
-
-            ":hover": {
-                transitionDuration: "20ms",
-                transitionTimingFunction: "ease-in-out",
-                transform: "scale(1.05)"
-            }
-        }
-    });
-
-
-    return <>
-        <Input type="checkbox" id="checkbox" />
-        <Label for="checkbox">
-            <svg
-                viewBox="0 -2 24 24"
-                stroke-width="2"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-            </svg>
-        </Label>
-    </>
-}
-
-const TextInput = styled("input", {
-    padding: "$5",
-    margin: "$5 0",
-    borderRadius: "5px",
-    border: "2px solid #c6c6c6",
-    fontSize: "$21",
-    ":focus": {
-        outline: "none"
-    }
-})
 
 const OuterContainer = styled("div", {
     position: "absolute",
@@ -285,6 +158,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         <Button
                             aria-label="response-button-input"
                             onClick={onPostResponse}
+                            shape="circular"
                             width="full"
                         >
                             {uiText.response.button}

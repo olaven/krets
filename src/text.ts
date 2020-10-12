@@ -71,7 +71,7 @@ export const response = strings({
             neutral: "What should've been different?",
             sad: "What did you dislike?"
         },
-        button: "Send",
+        button: "->",
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",

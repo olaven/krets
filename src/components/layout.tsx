@@ -2,7 +2,7 @@ import { UserContext, UserContextProvider } from "../context/UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
-import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
+import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./standard/buttons";
 
 const HeaderLogo = () => {
 
