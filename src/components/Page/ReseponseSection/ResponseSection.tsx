@@ -6,12 +6,13 @@ import * as uiText from "../../../text";
 import { postAnswer, postResponse, putEmbeddableResponse } from "../../../fetchers";
 import { Thanks } from "../../standard/Thanks";
 import { QuestionsContext } from "../../../context/QuestionsContext";
-import { CustomQuestions, DefaultQuestion } from "./Questions";
+import { CustomQuestions, DefaultQuestion, Questions } from "./Questions";
 import { ContactInput } from "./ContactInput";
 import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
 import { Heading } from "../../standard/Heading";
-import { Button } from "../../standard/Button";
+import { ArrowButton, Button } from "../../standard/Button";
+import { Checkbox } from "../../standard/Checkbox";
 
 
 
@@ -139,7 +140,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                     />
 
                     {emotion && <InputContainer>
-                        {questions.length === 0 ?
+                        {/* {questions.length === 0 ?
                             <DefaultQuestion
                                 answers={answers}
                                 emotion={emotion}
@@ -149,31 +150,17 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                                 questions={questions}
                                 setAnswers={setAnswers}
                             />
-                        }
+                        } */}
+                        <Questions />
                         <ContactInput
                             isMandatory={page.mandatory_contact_details}
                             setContactDetails={setContactDetails}
                             showContactDetailsError={showContactDetailsError} />
 
-                        <Button
+                        <ArrowButton
                             aria-label="response-button-input"
                             onClick={onPostResponse}
-                            shape="circular"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 -4 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </Button>
+                        />
 
                     </InputContainer>}
                 </OuterContainer >

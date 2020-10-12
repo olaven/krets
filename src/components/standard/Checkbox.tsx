@@ -2,6 +2,13 @@ import { styled } from "../../stiches.config";
 
 export const Checkbox = () => {
 
+    const Container = styled('div', {
+        position: "relative",
+        display: "inline",
+        textAlign: "center",
+        padding: "$4",
+    });
+
     const Input = styled("input", {
         transform: "scale(300%)",
         backgroundColor: "$secondary",
@@ -22,17 +29,21 @@ export const Checkbox = () => {
     const Label = styled('label', {
         borderColor: "$primary",
         backgroundColor: "$secondary",
+        borderWidth: "2px",
         borderStyle: "solid",
+        borderRadius: "50%",
 
         position: "absolute",
-        width: "50px",
-        height: "50px",
+        width: "3em",
+        height: "3em",
+        verticalAlign: "center",
+        transform: "translateX(-50%)",
 
         cursor: "pointer",
         ":hover": {
             transitionDuration: "100ms",
             transitionTimingFunction: "linear",
-            transform: "scale(1.1)"
+            transform: "scale(1.1) translateX(-50%)",
         },
 
         svg: {
@@ -48,17 +59,17 @@ export const Checkbox = () => {
         }
     });
 
-    return <>
+    return <Container>
         <Input type="checkbox" id="checkbox" />
-        <Label for="checkbox">
+        <Label htmlFor="checkbox">
             <svg
                 viewBox="0 -2 24 24"
-                stroke-width="2"
+                strokeWidth="2"
                 fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round">
+                strokeLinecap="round"
+                strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
             </svg>
         </Label>
-    </>
+    </Container >
 }

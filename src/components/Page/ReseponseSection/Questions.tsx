@@ -3,8 +3,28 @@ import { Input, Checkbox, Label } from "@rebass/forms";
 import { AnswerModel, Emotion, QuestionModel } from "../../../models/models";
 import * as uiText from "../../../text";
 import { useEffect, useState } from "react";
+import { styled } from "../../../stiches.config";
+import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
 
+//TODO: Make this replace every function below 
+export const Questions = () => {
 
+    const [visible, setVisible] = useState(false);
+
+    const Container = styled("div", {
+        display: "flex",
+        justifyContent: "space-between"
+    });
+
+    return <Container>
+        <StichesCheckbox checked={visible} onChange={() => setVisible(!visible)}></StichesCheckbox>
+        <span>{uiText.response.customQuestionsCheckbox}</span>
+    </Container>
+}
+
+/**
+ * TODO: deprecate in favour of stiches-approacah with new design!
+ */
 
 type QuestionProps = { placeholder: string, onChange: (text: string) => void };
 const Question = ({ onChange, placeholder }: QuestionProps) =>

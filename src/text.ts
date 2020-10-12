@@ -98,7 +98,7 @@ export const response = strings({
         thanks: "Tusen takk!",
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
-        customQuestionsCheckbox: "Jeg vil utdype svaret mitt",
+        customQuestionsCheckbox: "La meg utdype svaret mitt",
         contactCheckbox: "Jeg vil bli kontaktet igjen",
         contactPlaceholder: "Epost eller telefonnummer",
         copyButton: {
