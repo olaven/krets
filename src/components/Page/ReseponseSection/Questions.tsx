@@ -8,9 +8,24 @@ import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
 import { TextInput } from "../../standard/Input";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 
+const getDefaultPlaceholder = (emotion: Emotion) => ({
+    ":-)": uiText.response.placeholder.happy,
+    ":-|": uiText.response.placeholder.neutral,
+    ":-(": uiText.response.placeholder.sad,
+}[emotion]);
+
+const applyyDefaultQuestion = (emotion: Emotion, questions: QuestionModel[]) =>
+    questions.length === 0 ?
+        [{
+            id: null,
+            text: getDefaultPlaceholder(emotion)
+        }] :
+        questions
+
+
 //TODO: Make this replace every function below 
-type Props = { emotion: Emotion }
-export const Questions = ({ emotion }) => {
+type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }
+export const Questions = ({ emotion, answers, setAnswers }: Props) => {
 
     const { questions } = useContext(QuestionsContext);
 
@@ -18,30 +33,38 @@ export const Questions = ({ emotion }) => {
 
     const Container = styled("div", {
         display: "flex",
-        justifyContent: "center",
-        flexDirection: visible ? "column" : "row",
+        flexDirection: "column",
     });
 
-    console.log('text:', emotion)
-
-    const displayedQuestions = questions.length > 0 ?
-        questions :
-        [{
-            text: getDefaultPlaceholder(emotion)
-        }]
-
-    console.log("questions", displayedQuestions);
+    const CheckboxContainer = styled("div", {
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "row"
+    })
 
     return <Container>
-        <StichesCheckbox checked={visible} onChange={() => setVisible(!visible)}></StichesCheckbox>
-        {visible ? displayedQuestions.map(question => <TextInput
-            key={question.id}
-            aria-label="response-text-input"
-            placeholder={question.text}
-            onChange={event => {
-                console.log("En endring her!", event.target.value, "til", question.text)
-            }} />) :
+        <CheckboxContainer>
+            <StichesCheckbox
+                checked={visible}
+                onChange={() => setVisible(!visible)}
+            />
             <span>{uiText.response.customQuestionsCheckbox}</span>
+        </CheckboxContainer>
+        {visible && applyyDefaultQuestion(emotion, questions)
+            .map(question =>
+                <TextInput
+                    key={question.id || 1}
+                    aria-label="response-text-input"
+                    placeholder={question.text}
+                    onChange={event => {
+
+                        //FIXME: bad to manipulate by reference like this, instead of actually updating state
+                        answers.set(question.id || "DEFAULT", {
+                            text: event.target.value,
+                            question_id: question.id
+                        });
+                    }}
+                />)
         }
     </Container >
 }
@@ -49,7 +72,7 @@ export const Questions = ({ emotion }) => {
 /**
  * TODO: deprecate in favour of stiches-approacah with new design!
  */
-
+/*
 type QuestionProps = { placeholder: string, onChange: (text: string) => void };
 const Question = ({ onChange, placeholder }: QuestionProps) =>
     <Flex p={[1]}>
@@ -62,12 +85,6 @@ const Question = ({ onChange, placeholder }: QuestionProps) =>
         />
     </Flex>
 
-
-const getDefaultPlaceholder = (emotion: Emotion) => ({
-    ":-)": uiText.response.placeholder.happy,
-    ":-|": uiText.response.placeholder.neutral,
-    ":-(": uiText.response.placeholder.sad,
-}[emotion]);
 
 
 type DefaultProps = { setAnswers: (answers: Map<string, AnswerModel>) => void, answers: Map<string, AnswerModel>, emotion: Emotion };
@@ -110,7 +127,6 @@ export const CustomQuestions = ({ setAnswers, answers, questions }: CustomQuesti
                 checked={checked}
             />
             {uiText.response.customQuestionsCheckbox}
-            {/* {uiText.response.prefixCustomQuestionCheckbox} {questions.length} {uiText.response.suffixCustomQuestionCheckbox} */}
         </Label >
         {checked && questions.map(question =>
             <CustomQuestion
@@ -124,3 +140,4 @@ export const CustomQuestions = ({ setAnswers, answers, questions }: CustomQuesti
 
 
 }
+ */

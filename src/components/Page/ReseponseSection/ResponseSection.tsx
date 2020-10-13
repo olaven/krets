@@ -6,7 +6,7 @@ import * as uiText from "../../../text";
 import { postAnswer, postResponse, putEmbeddableResponse } from "../../../fetchers";
 import { Thanks } from "../../standard/Thanks";
 import { QuestionsContext } from "../../../context/QuestionsContext";
-import { CustomQuestions, DefaultQuestion, Questions } from "./Questions";
+import { Questions } from "./Questions";
 import { ContactInput } from "./ContactInput";
 import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
@@ -52,11 +52,12 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
 
     const { questions } = useContext(QuestionsContext);
 
-    const [answers, setAnswers] = useState(new Map<string, AnswerModel>());//NOTE: not sure if this has to be kep
+    const [answers, setAnswers] = useState(new Map<string, AnswerModel>());
     const [published, setPublished] = useState(false);
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [contactDetails, setContactDetails] = useState("");
     const [showContactDetailsError, setShowContactDetailsError] = useState(false);
+    const [showContactStep, setShowQuestions] = useState(false)
 
     const onPostResponse = async () => {
 
@@ -91,6 +92,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
             alert(uiText.response.error);
         }
     }
+
     const postStandard = async () => {
         if (page.mandatory_contact_details && !contactDetails) {
 
@@ -106,14 +108,17 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
 
         if (status === CREATED) {
 
-            await Promise.all(
-                Array.from(answers.values()).map(answer =>
-                    filterStatus(
-                        postAnswer(page.id, response.id, answer)
+            const status = await Promise.all(
+                Array
+                    .from(answers.values())
+                    .map(answer =>
+                        filterStatus(
+                            postAnswer(page.id, response.id, answer)
+                        )
                     )
-                )
             );
 
+            console.log(status);
             //FIXME: succsess regardless of wether answers were acepted or not
             // -> Easier if #279 is implemented:)
             setPublished(true);
@@ -140,30 +145,27 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         setSelectedEmotion={setEmotion}
                     />
 
-                    {emotion && <InputContainer>
-                        {/* {questions.length === 0 ?
-                            <DefaultQuestion
+                    {emotion && !showContactStep &&
+                        <InputContainer>
+                            <Questions
                                 answers={answers}
-                                emotion={emotion}
-                                setAnswers={setAnswers} /> :
-                            <CustomQuestions
-                                answers={answers}
-                                questions={questions}
                                 setAnswers={setAnswers}
+                                emotion={emotion} />
+
+                            <ArrowButton
+                                aria-label="response-button-input"
+                                onClick={() => setShowQuestions(true)}
                             />
-                        } */}
-                        <Questions emotion={emotion} />
-                        <ContactInput
-                            isMandatory={page.mandatory_contact_details}
-                            setContactDetails={setContactDetails}
-                            showContactDetailsError={showContactDetailsError} />
-
-                        <ArrowButton
-                            aria-label="response-button-input"
-                            onClick={onPostResponse}
-                        />
-
-                    </InputContainer>}
+                        </InputContainer>
+                    }
+                    {emotion && showContactStep &&
+                        <InputContainer>
+                            <ContactInput
+                                isMandatory={page.mandatory_contact_details}
+                                setContactDetails={setContactDetails}
+                                showContactDetailsError={showContactDetailsError} />
+                        </InputContainer>
+                    }
                 </OuterContainer >
         }
     </Box >;
