@@ -12,7 +12,7 @@ import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
 import { Heading } from "../../standard/Heading";
 import { ArrowButton, Button } from "../../standard/Button";
-import { Checkbox } from "../../standard/Checkbox";
+import { emotionToNumeric } from "../../Admin/Charts/ChartUtils";
 
 
 
@@ -50,12 +50,11 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
     }
 }) => {
 
-    const { questions } = useContext(QuestionsContext);
-
     const [answers, setAnswers] = useState(new Map<string, AnswerModel>());
     const [published, setPublished] = useState(false);
     const [emotion, setEmotion] = useState<Emotion>(null);
     const [contactDetails, setContactDetails] = useState("");
+    const [showSendButton, setShowSendButton] = useState(false);
     const [showContactDetailsError, setShowContactDetailsError] = useState(false);
     const [showContactStep, setShowQuestions] = useState(false)
 
@@ -94,12 +93,14 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
     }
 
     const postStandard = async () => {
+
         if (page.mandatory_contact_details && !contactDetails) {
 
             setShowContactDetailsError(true);
             return;
         }
 
+        console.log("Her er jeg med", emotion, page.id, contactDetails)
         const [status, response] = await postResponse({
             emotion,
             page_id: page.id,
@@ -140,6 +141,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                 <OuterContainer>
 
                     {showHeader && <Heading aria-label="response-section-header">{headerText}</Heading>}
+
                     <Emojis
                         selectedEmotion={emotion}
                         setSelectedEmotion={setEmotion}
@@ -162,8 +164,14 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                         <InputContainer>
                             <ContactInput
                                 isMandatory={page.mandatory_contact_details}
+                                setShowSendButton={setShowSendButton}
                                 setContactDetails={setContactDetails}
                                 showContactDetailsError={showContactDetailsError} />
+                            {showSendButton && <Button
+                                width="full"
+                                onClick={onPostResponse}>
+                                {uiText.response.button}
+                            </Button>}
                         </InputContainer>
                     }
                 </OuterContainer >

@@ -78,8 +78,13 @@ export const response = strings({
         prefixCustomQuestionCheckbox: "I want to answer", //temporary not used in favour of `customQuestionsCheckbox`
         suffixCustomQuestionCheckbox: "questions", //temporary not used in favour of `customQuestionsCheckbox`
         customQuestionsCheckbox: "Let me elaborate",
-        contactCheckbox: "I want to be contacted",
-        contactPlaceholder: "Email or phone number",
+
+        contact: {
+            heading: "I want to be contacted",
+            yes: "yes please",
+            no: "no thank you",
+            placeholder: "Email or phone number",
+        },
         copyButton: {
             copy: "Copy link!",
             copied: "Link copied!"
@@ -99,8 +104,15 @@ export const response = strings({
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
         customQuestionsCheckbox: "La meg utdype svaret mitt",
-        contactCheckbox: "Jeg vil bli kontaktet igjen",
-        contactPlaceholder: "Epost eller telefonnummer",
+
+        contact: {
+            heading: "Jeg vil bli kontaktet igjen",
+            yes: "ja takk",
+            no: "nei takk",
+            placeholder: "Epost eller telefonnummer"
+        },
+
+
         copyButton: {
             copy: "Kopier lenke!",
             copied: "Lenke kopiert!"

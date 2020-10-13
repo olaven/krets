@@ -7,6 +7,8 @@ export const Button = styled('button', {
     cursor: "pointer",
     borderRadius: "5px",
     fontSize: "$21",
+    padding: "$8 $13",
+    margin: "$3",
 
     ":hover": {
         transitionDuration: "50ms",
@@ -20,6 +22,24 @@ export const Button = styled('button', {
 
 
     variants: {
+
+        inverted: {
+
+            true: {
+                backgroundColor: "$secondary",
+                color: "$primary",
+                border: "solid $primary",
+                borderWidth: "$3",
+
+                ":hover": {
+                    borderWidth: "$5",
+                    color: "$secondary",
+                    backgroundColor: "$primary",
+                    textDecoration: "none"
+                }
+            }
+        },
+
         shape: {
             circular: {
                 display: "block",
