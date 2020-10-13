@@ -2,24 +2,48 @@ import { Flex } from "rebass";
 import { Input, Checkbox, Label } from "@rebass/forms";
 import { AnswerModel, Emotion, QuestionModel } from "../../../models/models";
 import * as uiText from "../../../text";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
+import { TextInput } from "../../standard/Input";
+import { QuestionsContext } from "../../../context/QuestionsContext";
 
 //TODO: Make this replace every function below 
-export const Questions = () => {
+type Props = { emotion: Emotion }
+export const Questions = ({ emotion }) => {
+
+    const { questions } = useContext(QuestionsContext);
 
     const [visible, setVisible] = useState(false);
 
     const Container = styled("div", {
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "center",
+        flexDirection: visible ? "column" : "row",
     });
+
+    console.log('text:', emotion)
+
+    const displayedQuestions = questions.length > 0 ?
+        questions :
+        [{
+            text: getDefaultPlaceholder(emotion)
+        }]
+
+    console.log("questions", displayedQuestions);
 
     return <Container>
         <StichesCheckbox checked={visible} onChange={() => setVisible(!visible)}></StichesCheckbox>
-        <span>{uiText.response.customQuestionsCheckbox}</span>
-    </Container>
+        {visible ? displayedQuestions.map(question => <TextInput
+            key={question.id}
+            aria-label="response-text-input"
+            placeholder={question.text}
+            onChange={event => {
+                console.log("En endring her!", event.target.value, "til", question.text)
+            }} />) :
+            <span>{uiText.response.customQuestionsCheckbox}</span>
+        }
+    </Container >
 }
 
 /**

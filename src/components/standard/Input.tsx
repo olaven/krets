@@ -14,6 +14,6 @@ const Input = styled("input", {
 });
 
 export const TextInput = (props) =>
-    <Input {...props} type="text" />
+    <Input  {...props} type="text" />
 export const NumberInput = (props) =>
     <Input {...props} type="number" />

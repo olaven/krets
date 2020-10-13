@@ -1,12 +1,13 @@
 import { styled } from "../../stiches.config";
 
-export const Checkbox = () => {
+export const Checkbox = ({ checked, onChange }) => {
 
     const Container = styled('div', {
         position: "relative",
         display: "inline",
         textAlign: "center",
-        padding: "$4",
+        paddingLeft: "$34",
+        paddingRight: "$34",
     });
 
     const Input = styled("input", {
@@ -37,13 +38,13 @@ export const Checkbox = () => {
         width: "3em",
         height: "3em",
         verticalAlign: "center",
-        transform: "translateX(-50%)",
+        transform: "translateX(-50%) translateY(-25%)",
 
         cursor: "pointer",
         ":hover": {
             transitionDuration: "100ms",
             transitionTimingFunction: "linear",
-            transform: "scale(1.1) translateX(-50%)",
+            transform: "scale(1.1) translateX(-50%) translateY(-25%)",
         },
 
         svg: {
@@ -60,7 +61,7 @@ export const Checkbox = () => {
     });
 
     return <Container>
-        <Input type="checkbox" id="checkbox" />
+        <Input onChange={onChange} checked={checked} type="checkbox" id="checkbox" />
         <Label htmlFor="checkbox">
             <svg
                 viewBox="0 -2 24 24"

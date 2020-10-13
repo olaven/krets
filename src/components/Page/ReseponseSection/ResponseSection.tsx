@@ -127,6 +127,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
         page.custom_title :
         `${uiText.response.header} ${page.name}`
 
+
     return <Box py={[4, 8, 16]} m="auto">
         {
             published ?
@@ -151,7 +152,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                                 setAnswers={setAnswers}
                             />
                         } */}
-                        <Questions />
+                        <Questions emotion={emotion} />
                         <ContactInput
                             isMandatory={page.mandatory_contact_details}
                             setContactDetails={setContactDetails}
