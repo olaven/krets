@@ -1,5 +1,4 @@
 import * as uiText from "../../../text";
-//import { Input, Label, Checkbox } from "@rebass/forms";
 import { useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Button } from "../../standard/Button";
@@ -76,29 +75,3 @@ export const ContactInput = ({ isMandatory, setContactDetails, setShowSendButton
 
 
 }
-
-/* const MandatoryContactDetails = ({ setContactDetails, showContactDetailsError }) => <Input
-    aria-label="response-contact-input"
-    color={showContactDetailsError ? "attention" : undefined}
-    placeholder={uiText.response.contactPlaceholder}
-    onChange={event => {
-        setContactDetails(event.target.value
-            .trim()
-            .toLowerCase())
-    }}
-/> */
-
-/* export const ContactInput = ({ setContactDetails, isMandatory, showContactDetailsError }) => {
-
-
-    return <Flex p={[1, 2]}>
-        {isMandatory ?
-            <MandatoryContactDetails
-                setContactDetails={setContactDetails}
-                showContactDetailsError={showContactDetailsError}
-            /> :
-            <OptionalContactDetails
-                setContactDetails={setContactDetails}
-            />}
-    </Flex>
-} */

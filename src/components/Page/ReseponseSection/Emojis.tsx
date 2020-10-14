@@ -37,13 +37,13 @@ const Emoji = styled('div', {
     },
 
     large: {
-        fontSize: "8em",
+        fontSize: "$223",
         marginLeft: "40px",
         marginRight: "40px",
     },
 
     small: {
-        fontSize: "3em",
+        fontSize: "$79",
         marginLeft: "10px",
         marginRight: "10px",
     },

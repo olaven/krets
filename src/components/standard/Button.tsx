@@ -55,12 +55,7 @@ export const Button = styled('button', {
         width: {
             full: {
 
-                large: {
-                    width: "80%",
-                },
-                small: {
-                    //width: "100%"
-                }
+                width: "100%",
             }
         }
     }
