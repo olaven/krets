@@ -86,6 +86,13 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
 
     const onPostResponse = async () => {
 
+        if (page.mandatory_contact_details && !contactDetails) {
+
+            setShowContactDetailsError(true);
+            return;
+        }
+
+
         //NOTE:impossible with current implementation, as button is hidden if no emotion is selected
         if (!emotion) {
             alert(uiText.response.chooseSmiley);
@@ -119,12 +126,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
     }
 
     const postStandard = async () => {
-
-        if (page.mandatory_contact_details && !contactDetails) {
-
-            setShowContactDetailsError(true);
-            return;
-        }
 
         const [status, response] = await postResponse({
             emotion,
