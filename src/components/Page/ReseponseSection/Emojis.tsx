@@ -21,8 +21,6 @@ const EmojiContainer = styled('div', {
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',// see without 
-    flexDirection: "row", // see without -> should be default 
 });
 
 
@@ -53,6 +51,9 @@ const Emoji = styled('div', {
             no: {
 
                 flex: "0 0 auto",
+                animationDuration: ".2s",
+                animationTimingFunction: "linear",
+                animationFillMode: "forwards",
                 animationName: `${css.keyframes({
                     '100%': {
                         width: 0,
@@ -61,8 +62,6 @@ const Emoji = styled('div', {
                         margin: 0,
                     }
                 })}`,
-                animationDuration: "280ms",
-                animationFillMode: "forwards",
             },
             yes: {
 
