@@ -23,6 +23,13 @@ const applyDefaultQuestion = (emotion: Emotion, questions: QuestionModel[]):
         }] :
         questions
 
+const QuestionInput = styled(TextInput, {
+    width: "40ch",
+    small: {
+        width: "25ch"
+    }
+})
+
 
 type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }
 export const Questions = ({ emotion, answers, setAnswers }: Props) => {
@@ -53,7 +60,7 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
             <span>{uiText.response.customQuestionsCheckbox}</span>
         </CheckboxContainer>
         {visible && applyDefaultQuestion(emotion, questions).map(question =>
-            <TextInput
+            <QuestionInput
                 key={question.id || 1}
                 aria-label="response-text-input"
                 placeholder={question.text}
