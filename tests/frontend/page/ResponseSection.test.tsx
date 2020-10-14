@@ -52,8 +52,16 @@ describe("The component for creating new responses", () => {
             const [button] = getAllByLabelText("response-emoji-button");
             fireEvent.click(button);
 
-            const checkBox = getByLabelText("response-checkbox-input");
 
+            const arrowButton = getByLabelText("response-button-input");
+            fireEvent.change(arrowButton)
+
+            waitFor(() => {
+
+                expect(getByLabelText("response-checkbox-input")).toBeInTheDocument()
+            });
+
+            const checkBox = getByLabelText("response-checkbox-input");
             fireEvent.change(checkBox)
 
             waitFor(() => {

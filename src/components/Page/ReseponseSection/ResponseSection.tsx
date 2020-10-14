@@ -54,8 +54,12 @@ const SendButton = styled(Button, {
     transition: "ease .5s",
     fontSize: "34px",
     marginTop: "21px",
-    width: "115%",
     padding: "21px",
+    width: "20vw",
+
+    small: {
+        width: "90vw",
+    },
 
     opacity: 0,
     transform: "translateY(10%)",

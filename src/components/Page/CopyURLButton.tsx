@@ -7,7 +7,7 @@ import { Button } from "../standard/Button";
 const Container = styled("div", {
     position: "fixed",
     margin: "0 auto",
-    top: "80vh",
+    bottom: "0vh",
     left: "50vw",
     transform: "translateX(-40%)",
 });

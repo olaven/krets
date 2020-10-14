@@ -47,7 +47,7 @@ export const ContactInput = ({ isMandatory, setContactDetails, setShowSendButton
 
     const Choice = () => <OuterContainer>
         <ButtonContainer>
-            <Button inverted onClick={update(true)}>
+            <Button inverted onClick={update(true)} aria-label={"response-checkbox-input"}>
                 {uiText.response.contact.yes}
             </Button>
             <Button inverted={!(hasChosen && !wantsToGiveContactDetails)} onClick={update(false)}>
