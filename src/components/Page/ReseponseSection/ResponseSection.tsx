@@ -50,6 +50,26 @@ const InputContainer = styled('div', {
     animationTimingFunction: "ease",
 });
 
+const SendButton = styled(Button, {
+    transition: "ease .5s",
+    fontSize: "34px",
+    marginTop: "21px",
+    width: "115%",
+    padding: "21px",
+
+    opacity: 0,
+    transform: "translateY(10%)",
+
+    variants: {
+        visible: {
+            true: {
+                opacity: 1,
+                transform: "translateY(0%)"
+            },
+        }
+    }
+})
+
 export const ResponseSection = ({ page, showHeader, embeddable }: {
     page: PageModel, showHeader: boolean, embeddable: {
         active: boolean, token?: string
@@ -137,7 +157,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
         page.custom_title :
         `${uiText.response.header} ${page.name}`
 
-
+    console.log("her", showSendButton || page.mandatory_contact_details)
     return <Box py={[4, 8, 16]} m="auto">
         {
             published ?
@@ -171,16 +191,11 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                                 setShowSendButton={setShowSendButton}
                                 setContactDetails={setContactDetails}
                                 showContactDetailsError={showContactDetailsError} />
-                            <Button
-                                width="full"
-                                style={{
-                                    opacity: (showSendButton || page.mandatory_contact_details) ? 1 : 0,
-                                    transform: showSendButton ? "translateY(0%)" : "translateY(10 %)",
-                                    transition: "ease .5s"
-                                }}
+                            <SendButton
+                                visible={(showSendButton || page.mandatory_contact_details)}
                                 onClick={onPostResponse}>
                                 {uiText.response.button}
-                            </Button>
+                            </SendButton>
                         </InputContainer>
                     }
                 </OuterContainer >

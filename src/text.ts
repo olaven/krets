@@ -97,7 +97,7 @@ export const response = strings({
             neutral: "Hva burde vært annerledes?",
             sad: "Hva mislikte du?"
         },
-        button: "Send",
+        button: "Send inn",
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
