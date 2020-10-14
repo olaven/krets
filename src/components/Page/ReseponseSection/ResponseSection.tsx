@@ -10,7 +10,7 @@ import { Questions } from "./Questions";
 import { ContactInput } from "./ContactInput";
 import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
-import { Heading } from "../../standard/Heading";
+import { H1 } from "../../standard/Heading";
 import { ArrowButton, Button } from "../../standard/Button";
 import { emotionToNumeric } from "../../Admin/Charts/ChartUtils";
 
@@ -19,6 +19,9 @@ import { emotionToNumeric } from "../../Admin/Charts/ChartUtils";
 const OuterContainer = styled("div", {
     position: "absolute",
     transform: "translateX(-50%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
 
     large: {
         width: "80vw",
@@ -29,6 +32,9 @@ const OuterContainer = styled("div", {
 })
 
 const InputContainer = styled('div', {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     marginTop: "100px",
     animationName: `${css.keyframes({
         "0%": {
@@ -140,7 +146,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                 <Thanks /> :
                 <OuterContainer>
 
-                    {showHeader && <Heading aria-label="response-section-header">{headerText}</Heading>}
+                    {showHeader && <H1 aria-label="response-section-header">{headerText}</H1>}
 
                     <Emojis
                         selectedEmotion={emotion}
@@ -167,11 +173,16 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                                 setShowSendButton={setShowSendButton}
                                 setContactDetails={setContactDetails}
                                 showContactDetailsError={showContactDetailsError} />
-                            {showSendButton && <Button
+                            <Button
                                 width="full"
+                                style={{
+                                    opacity: showSendButton ? 1 : 0,
+                                    transform: showSendButton ? "translateY(0%)" : "translateY(10 %)",
+                                    transition: "ease .5s"
+                                }}
                                 onClick={onPostResponse}>
                                 {uiText.response.button}
-                            </Button>}
+                            </Button>
                         </InputContainer>
                     }
                 </OuterContainer >

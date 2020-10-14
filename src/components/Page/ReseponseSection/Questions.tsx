@@ -23,7 +23,6 @@ const applyyDefaultQuestion = (emotion: Emotion, questions: QuestionModel[]) =>
         questions
 
 
-//TODO: Make this replace every function below 
 type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }
 export const Questions = ({ emotion, answers, setAnswers }: Props) => {
 
@@ -39,7 +38,8 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
     const CheckboxContainer = styled("div", {
         display: "flex",
         justifyContent: "center",
-        flexDirection: "row"
+        flexDirection: "row",
+        marginBottom: "$55",
     })
 
     return <Container>

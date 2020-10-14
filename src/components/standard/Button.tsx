@@ -38,18 +38,20 @@ export const Button = styled('button', {
                     textDecoration: "none"
                 }
             }
+
         },
 
         shape: {
             circular: {
                 display: "block",
-                height: "50px",
-                width: "50px",
+                height: "79px",
+                width: "79px",
                 borderRadius: "50%",
                 padding: "0px",
                 textAlign: "center",
             }
         },
+
         width: {
             full: {
 
@@ -71,15 +73,15 @@ export const ArrowButton = (props) => <Button
 >
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 -4 24 24"
+        width="48"
+        height="48"
+        viewBox="0 -4 48 48"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
+        <line x1="10" y1="24" x2="38" y2="24"></line>
+        <polyline points="24 10 38 24 24 38"></polyline>
     </svg>
 </Button>

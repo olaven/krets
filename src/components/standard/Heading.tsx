@@ -1,7 +1,20 @@
 import { styled } from "../../stiches.config";
 
-export const Heading = styled('h1', {
+const headingStyles: any = {
     color: '$dark',
     fontWeight: "lighter",
-    textAlign: "center"
+    textAlign: "center",
+}
+
+export const H1 = styled('h1', {
+    ...headingStyles
 });
+
+export const H2 = styled('h2', {
+    ...headingStyles
+});
+
+export const H3 = styled('h2', {
+    ...headingStyles
+});
+
