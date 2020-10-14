@@ -52,14 +52,22 @@ describe("The component for creating new responses", () => {
             const [button] = getAllByLabelText("response-emoji-button");
             fireEvent.click(button);
 
-            const checkBox = getByLabelText("response-checkbox-input");
 
-            fireEvent.change(checkBox)
+            const arrowButton = getByLabelText("response-button-input");
+            fireEvent.change(arrowButton)
 
             waitFor(() => {
 
-                expect(findByLabelText("response-contact-input")).toBeInTheDocument();
+                expect(getByLabelText("response-checkbox-input")).toBeInTheDocument()
+                const checkBox = getByLabelText("response-checkbox-input");
+                fireEvent.change(checkBox)
+
+                waitFor(() => {
+
+                    expect(findByLabelText("response-contact-input")).toBeInTheDocument();
+                });
             });
+
         });
 
         it("Does not show contact text input checkbox if contact details are mandatory", () => {

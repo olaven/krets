@@ -1,6 +1,6 @@
 import * as uiText from "../text";
 import { Box, Flex, Heading, Image, Link } from "rebass";
-import { TextBox } from "../components/tiny/TextBox";
+import { TextBox } from "../components/standard/TextBox";
 
 const About = () => <Box px={[0, "20%"]}>
 

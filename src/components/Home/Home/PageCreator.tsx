@@ -4,7 +4,6 @@ import { Input } from "@rebass/forms"
 import { PagesContext } from "../../../context/PagesContext";
 import { post, CREATED, CONFLICT } from "node-kall";
 import * as text from "../../../text"
-import { TooltipHelp } from "tooltip-help-react";
 import { PageModel } from "../../../models/models";
 
 export const nameToId = (name: string) => name
@@ -20,7 +19,6 @@ export const nameToId = (name: string) => name
 export const PageCreator = () => {
 
     const { addPage } = useContext(PagesContext);
-    const { Tooltip, HelpButton } = useContext(TooltipHelp);
 
     const [name, setName] = useState("");
     const [id, setId] = useState("");
@@ -60,25 +58,22 @@ export const PageCreator = () => {
             <Box width={[0, 1 / 3]} />
             <Box as='form' onSubmit={e => e.preventDefault()} width={[1, 1 / 3]}>
 
-                <HelpButton />
+
 
                 <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
                 <Flex>
-                    <Tooltip content={text.tooltips.pageCreatorInput}>
-                        <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
-                            setName(value)
-                        }} value={name} />
-                    </Tooltip>
-                    <Tooltip content={text.tooltips.pageCreatorButton}>
-                        <Button
-                            mx={[0, 2, 3]}
-                            width={1 / 3}
-                            aria-label={"create-button"}
-                            onClick={id === "" ? null : postPage}
-                            color={id === "" ? "inactive" : "secondary"}>
-                            {text.pageCreator.button}
-                        </Button>
-                    </Tooltip>
+                    <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
+                        setName(value)
+                    }} value={name} />
+
+                    <Button
+                        mx={[0, 2, 3]}
+                        width={1 / 3}
+                        aria-label={"create-button"}
+                        onClick={id === "" ? null : postPage}
+                        color={id === "" ? "inactive" : "secondary"}>
+                        {text.pageCreator.button}
+                    </Button>
                 </Flex>
 
             </Box>

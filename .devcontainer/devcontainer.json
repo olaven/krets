@@ -3,10 +3,10 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "web",
 	"workspaceFolder": "/workspace",
-	"forwardPorts": [
+	/* "forwardPorts": [ //NOTE: not sure if this is necessary 
 		3000,
 		5432
-	],
+	], */
 	"postCreateCommand": "yarn install",
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash"
@@ -17,7 +17,7 @@
 		"github.vscode-pull-request-github",
 		"orta.vscode-jest",
 		"vstirbu.vscode-mermaid-preview",
-		"mhutchie.git-graph", 
+		"mhutchie.git-graph",
 		"eamodio.gitlens",
 	],
 }

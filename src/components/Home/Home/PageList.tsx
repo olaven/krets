@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
-import { TooltipHelp } from "tooltip-help-react";
-import { Loader, LoadMore } from "../../tiny/loader";
+import { Loader, LoadMore } from "../../standard/loader";
 import * as text from "../../../text"
 import { PagesContext } from "../../../context/PagesContext";
-import { ToAdmin, ToQR, ToPage, ToSettings } from "../../tiny/buttons";
+import { ToAdmin, ToQR, ToPage, ToSettings } from "../../standard/buttons";
 
 const PageCard = ({ id, name }) =>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
@@ -27,16 +26,12 @@ const PageCard = ({ id, name }) =>
 export const PageList = () => {
 
     const { pages, hasLoaded, pageLoading, moreAvailable, getNextPages } = useContext(PagesContext);
-    const { Tooltip, HelpButton } = useContext(TooltipHelp)
 
     return <>
         <Flex>
             <Box width={[0, 0, 1 / 4]}></Box>
             <Box width={[1, 1, 2 / 4]}>
-                <Tooltip content={text.tooltips.pageList}>
-                    <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
-                </Tooltip>
-                <HelpButton />
+                <Heading color={"primary"} textAlign={"center"}>{text.myPages.header}</Heading>
                 {!hasLoaded && <Loader size={50} />}
                 {pages
                     .sort((a, b) => a.created_at < b.created_at ? 1 : -1)

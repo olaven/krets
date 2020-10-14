@@ -2,7 +2,7 @@ import { UserContext, UserContextProvider } from "../context/UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
-import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./tiny/buttons";
+import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./standard/buttons";
 
 const HeaderLogo = () => {
 
@@ -60,7 +60,8 @@ export const Layout = (props) => {
         sx={{
             m: 0,
             fontFamily: "body"
-        }} backgroundColor={"secondary"}>
+        }}
+        backgroundColor={"secondary"}>
         <Flex px={2}
             color='primary'
             alignItems='center'>

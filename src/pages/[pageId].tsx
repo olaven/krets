@@ -1,15 +1,18 @@
 import { useRouter } from 'next/router'
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ErrorLoadingPage } from "../components/Page/ErrorLoadingPage";
 import { ResponseSection } from "../components/Page/ReseponseSection/ResponseSection";
 import { Flex, Box } from "rebass";
 import { usePage } from "../effects/usePage";
 import { UserContext } from '../context/UserContext';
 import { CopyURLButton } from '../components/Page/CopyURLButton';
-import { Loader } from '../components/tiny/loader';
+import { Loader } from '../components/standard/loader';
 import { QuestionsContextProvider } from '../context/QuestionsContext';
+import { styled } from '../stiches.config';
+import { emojidata } from '../emojidata';
 
-export default () => {
+
+const PageId = () => {
 
     const { authUser } = useContext(UserContext);
 
@@ -18,6 +21,7 @@ export default () => {
 
     const [page, loading] = usePage(pageId);
     const userOwnsThePage = authUser && authUser.sub === page?.owner_id;
+
 
     return <>
         <Flex>
@@ -36,3 +40,4 @@ export default () => {
     </>
 };
 
+export default PageId;

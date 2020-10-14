@@ -4,7 +4,7 @@ import { useState } from "react";
 import { asyncEffect } from "../../effects/asyncEffect";
 import { getAuthUser, putUser } from "../../fetchers";
 import { AuthModel, UserModel } from "../../models/models";
-import { DoubleConfirmationButton, TriggerLoadingButton } from "../tiny/buttons";
+import { DoubleConfirmationButton, TriggerLoadingButton } from "../standard/buttons";
 
 const onToggle = (user: UserModel) =>
     async () => {

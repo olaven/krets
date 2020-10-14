@@ -5,7 +5,7 @@ import { Input } from "@rebass/forms";
 import { QuestionModel } from "../../../models/models";
 import { useContext, useState } from "react";
 import { deleteQuestion, updateQuestion } from "../../../fetchers";
-import { DoubleConfirmationButton, TriggerLoadingButton } from "../../tiny/buttons";
+import { DoubleConfirmationButton, TriggerLoadingButton } from "../../standard/buttons";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 
 /* const ArchiveQuestion = ({ question }: { question: QuestionModel }) => {

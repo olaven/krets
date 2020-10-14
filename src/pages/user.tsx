@@ -6,9 +6,9 @@ import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { deleteUser } from '../fetchers';
-import { DoubleConfirmationButton } from "../components/tiny/buttons";
-import { TextBox } from "../components/tiny/TextBox";
-import { Loader } from "../components/tiny/loader";
+import { DoubleConfirmationButton } from "../components/standard/buttons";
+import { TextBox } from "../components/standard/TextBox";
+import { Loader } from "../components/standard/loader";
 
 const DeleteAccount = () => {
 

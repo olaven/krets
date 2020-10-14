@@ -2,7 +2,7 @@ import * as text from "../../../text"
 import { useContext } from "react";
 import { Heading } from "rebass";
 import { QuestionsContext } from "../../../context/QuestionsContext";
-import { Loader } from "../../tiny/loader";
+import { Loader } from "../../standard/loader";
 import { QuestionCard } from "./QuestionCard";
 
 

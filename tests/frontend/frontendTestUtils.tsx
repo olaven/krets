@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 import { PageModel, UserModel } from '../../src/models/models';
 import { PagesContext } from "../../src/context/PagesContext";
 import { render } from '@testing-library/react';
-import { HomeTooltipProvider } from '../../src/components/Home/Home/HomeTooltipProvider';
 import { UserContext } from "../../src/context/UserContext";
 import { SettingsContext } from "../../src/context/SettingsContext";
 import { randomPage } from "../api/apiTestUtils";
@@ -59,10 +58,7 @@ export const renderWithPagesContext = (
             //@ts-expect-error -> NOTE: not passing more context than what is needed. Typechecker should complain about this 
             databaseUser: { subscription_id }
         }}>
-
-        <HomeTooltipProvider pageCount={0}>
-            {Component}
-        </HomeTooltipProvider>
+        {Component}
     </UserContext.Provider>
 </PagesContext.Provider>);
 

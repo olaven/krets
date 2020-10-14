@@ -1,6 +1,18 @@
-import { Button, Box, Flex } from "rebass";
+
 import { useState } from "react";
 import * as text from "../../text";
+import { styled } from "../../stiches.config";
+import { Button } from "../standard/Button";
+
+const Container = styled("div", {
+    position: "fixed",
+    margin: "0 auto",
+    bottom: "0vh",
+    left: "50vw",
+    transform: "translateX(-40%)",
+});
+
+
 
 export const CopyURLButton = () => {
 
@@ -13,17 +25,13 @@ export const CopyURLButton = () => {
         setCopied(true);
     }
 
-    return <Flex py={[2, 3, 4]}>
-        <Box width={[0, 2 / 5]} />
-        <Button onClick={copy}
-            opacity={copied ? 0.8 : 1}
-            width={[1, 1 / 5]}
-        >
+    return <Container>
+        <Button onClick={copy}>
             {copied ?
                 text.response.copyButton.copied :
                 text.response.copyButton.copy}
         </Button>
-        <Box width={[0, 2 / 5]} />
-    </Flex>
+    </Container>
+
 
 }
