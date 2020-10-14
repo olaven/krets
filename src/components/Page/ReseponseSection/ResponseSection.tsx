@@ -1,27 +1,27 @@
-import { useContext, useState } from "react";
-import { Box, } from "rebass";
+import { useState } from "react";
 import { CREATED, filterStatus } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
 import { postAnswer, postResponse, putEmbeddableResponse } from "../../../fetchers";
 import { Thanks } from "../../standard/Thanks";
-import { QuestionsContext } from "../../../context/QuestionsContext";
 import { Questions } from "./Questions";
 import { ContactInput } from "./ContactInput";
 import { Emojis } from "./Emojis";
 import { css, styled } from "../../../stiches.config";
 import { H1 } from "../../standard/Heading";
 import { ArrowButton, Button } from "../../standard/Button";
-import { emotionToNumeric } from "../../Admin/Charts/ChartUtils";
-
 
 
 const OuterContainer = styled("div", {
-    position: "absolute",
-    transform: "translateX(-50%)",
+
+    width: "100vw",
+    left: "0",
+    right: "0",
+    marginLeft: "auto",
+    marginRight: "auto",
+
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
 
     large: {
         width: "80vw",
@@ -158,48 +158,45 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
         page.custom_title :
         `${uiText.response.header} ${page.name}`
 
-    console.log("her", showSendButton || page.mandatory_contact_details)
-    return <Box py={[4, 8, 16]} m="auto">
-        {
-            published ?
-                <Thanks /> :
-                <OuterContainer>
+    return published ?
+        <Thanks /> :
+        <OuterContainer>
 
-                    {showHeader && <H1 aria-label="response-section-header">{headerText}</H1>}
+            {showHeader && <H1 aria-label="response-section-header">{headerText}</H1>}
 
-                    <Emojis
-                        selectedEmotion={emotion}
-                        setSelectedEmotion={setEmotion}
+            <Emojis
+                selectedEmotion={emotion}
+                setSelectedEmotion={setEmotion}
+            />
+
+            {emotion && !showContactStep &&
+                <InputContainer>
+                    <Questions
+                        answers={answers}
+                        setAnswers={setAnswers}
+                        emotion={emotion} />
+
+                    <ArrowButton
+                        aria-label="response-button-input"
+                        onClick={() => setShowQuestions(true)}
                     />
+                </InputContainer>
+            }
+            {emotion && showContactStep &&
+                <InputContainer>
+                    <ContactInput
+                        isMandatory={page.mandatory_contact_details}
+                        setShowSendButton={setShowSendButton}
+                        setContactDetails={setContactDetails}
+                        showContactDetailsError={showContactDetailsError} />
+                    <SendButton
+                        //@ts-ignore
+                        visible={(showSendButton || page.mandatory_contact_details)}
+                        onClick={onPostResponse}>
+                        {uiText.response.button}
+                    </SendButton>
+                </InputContainer>
+            }
+        </OuterContainer >
 
-                    {emotion && !showContactStep &&
-                        <InputContainer>
-                            <Questions
-                                answers={answers}
-                                setAnswers={setAnswers}
-                                emotion={emotion} />
-
-                            <ArrowButton
-                                aria-label="response-button-input"
-                                onClick={() => setShowQuestions(true)}
-                            />
-                        </InputContainer>
-                    }
-                    {emotion && showContactStep &&
-                        <InputContainer>
-                            <ContactInput
-                                isMandatory={page.mandatory_contact_details}
-                                setShowSendButton={setShowSendButton}
-                                setContactDetails={setContactDetails}
-                                showContactDetailsError={showContactDetailsError} />
-                            <SendButton
-                                visible={(showSendButton || page.mandatory_contact_details)}
-                                onClick={onPostResponse}>
-                                {uiText.response.button}
-                            </SendButton>
-                        </InputContainer>
-                    }
-                </OuterContainer >
-        }
-    </Box >;
 };
