@@ -106,7 +106,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
             return;
         }
 
-        console.log("Her er jeg med", emotion, page.id, contactDetails)
         const [status, response] = await postResponse({
             emotion,
             page_id: page.id,
@@ -125,7 +124,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                     )
             );
 
-            console.log(status);
             //FIXME: succsess regardless of wether answers were acepted or not
             // -> Easier if #279 is implemented:)
             setPublished(true);

@@ -39,7 +39,7 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "row",
-        marginBottom: "$55",
+        marginBottom: "$21",
     })
 
     return <Container>

@@ -29,6 +29,8 @@ export const { styled, css } = createStyled({
             $55: '55px',
             $79: '79px',
             $114: '114px',
+            $223: '223px',
+            $367: '367px',
         }
     },
     breakpoints: {
