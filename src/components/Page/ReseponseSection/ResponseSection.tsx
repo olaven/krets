@@ -174,7 +174,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
                             <Button
                                 width="full"
                                 style={{
-                                    opacity: showSendButton ? 1 : 0,
+                                    opacity: (showSendButton || page.mandatory_contact_details) ? 1 : 0,
                                     transform: showSendButton ? "translateY(0%)" : "translateY(10 %)",
                                     transition: "ease .5s"
                                 }}

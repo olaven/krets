@@ -18,6 +18,18 @@ const ButtonContainer = styled("div", {
     justifyContent: "space-evenly"
 });
 
+const ContactTextInput = styled(TextInput, {
+    variants: {
+        error: {
+            true: {
+                color: "$attention"
+            },
+            false: {
+                color: "$black"
+            }
+        }
+    }
+})
 
 
 export const ContactInput = ({ isMandatory, setContactDetails, setShowSendButton, showContactDetailsError }) => {
@@ -48,9 +60,9 @@ export const ContactInput = ({ isMandatory, setContactDetails, setShowSendButton
     return <>
         <H2>{uiText.response.contact.heading}</H2>
         {isMandatory || wantsToGiveContactDetails ?
-            <TextInput
+            <ContactTextInput
                 placeholder={uiText.response.contact.placeholder}
-                color={showContactDetailsError ? "$attention" : "$black"}
+                error={showContactDetailsError}
                 onChange={(event) => {
                     setContactDetails(
                         event.target.value
