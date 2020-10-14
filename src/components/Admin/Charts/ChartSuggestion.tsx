@@ -5,7 +5,7 @@ import { CREATED } from "node-kall"
 import { postEmail } from "../../../fetchers"
 import * as uiText from "../../../text";
 
-import { Thanks } from "../../tiny/Thanks"
+import { emojidata } from "../../../emojidata"
 
 
 const Error = () => <Text>
@@ -46,7 +46,7 @@ export const ChartSuggestion = () => {
     }
 
     return posted ?
-        <Thanks /> :
+        <div>Forslaget er sendt. Tusen takk {emojidata[":-)"]}</div> :
         error ?
             <Error /> :
             <Form

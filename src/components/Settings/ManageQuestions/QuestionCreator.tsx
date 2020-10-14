@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { SettingsContext } from "../../../context/SettingsContext";
 import { postQuestion } from "../../../fetchers";
-import { TriggerLoadingButton } from "../../tiny/buttons";
+import { TriggerLoadingButton } from "../../standard/buttons";
 
 
 export const QuestionCreator = () => {

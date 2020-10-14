@@ -71,15 +71,20 @@ export const response = strings({
             neutral: "What should've been different?",
             sad: "What did you dislike?"
         },
-        button: "Send",
+        button: "->",
         chooseSmiley: "You have to choose a smiley 😃",
         error: "Oh no! Something wrong happened 😧",
         thanks: "Thank you!",
         prefixCustomQuestionCheckbox: "I want to answer", //temporary not used in favour of `customQuestionsCheckbox`
         suffixCustomQuestionCheckbox: "questions", //temporary not used in favour of `customQuestionsCheckbox`
         customQuestionsCheckbox: "Let me elaborate",
-        contactCheckbox: "I want to be contacted",
-        contactPlaceholder: "Email or phone number",
+
+        contact: {
+            heading: "I want to be contacted",
+            yes: "yes please",
+            no: "no thank you",
+            placeholder: "Email or phone number",
+        },
         copyButton: {
             copy: "Copy link!",
             copied: "Link copied!"
@@ -92,15 +97,22 @@ export const response = strings({
             neutral: "Hva burde vært annerledes?",
             sad: "Hva mislikte du?"
         },
-        button: "Send",
+        button: "Send inn",
         chooseSmiley: "Velg en smiley 😃",
         error: "Auda, her skjedde det en feil 😧",
         thanks: "Tusen takk!",
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
-        customQuestionsCheckbox: "Jeg vil utdype svaret mitt",
-        contactCheckbox: "Jeg vil bli kontaktet igjen",
-        contactPlaceholder: "Epost eller telefonnummer",
+        customQuestionsCheckbox: "La meg utdype svaret mitt",
+
+        contact: {
+            heading: "Jeg vil bli kontaktet igjen",
+            yes: "ja takk",
+            no: "nei takk",
+            placeholder: "Epost eller telefonnummer"
+        },
+
+
         copyButton: {
             copy: "Kopier lenke!",
             copied: "Lenke kopiert!"

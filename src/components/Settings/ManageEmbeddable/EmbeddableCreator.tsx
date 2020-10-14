@@ -4,7 +4,7 @@ import { Flex } from "rebass";
 import { Input } from "@rebass/forms";
 import { SettingsContext } from "../../../context/SettingsContext";
 import { postEmbeddable } from "../../../fetchers";
-import { TriggerLoadingButton } from "../../tiny/buttons";
+import { TriggerLoadingButton } from "../../standard/buttons";
 import * as text from "../../../text";
 import { EmbeddableContext } from "../../../context/EmbeddableContext";
 

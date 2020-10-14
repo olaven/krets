@@ -3,13 +3,13 @@ import { UserContext } from "../../context/UserContext";
 import { AdminPageContext } from "../../context/AdminPageContext";
 import { Box, Flex, Text } from "rebass";
 import { OK } from "node-kall";
-import { LoginButton } from "../tiny/buttons";
+import { LoginButton } from "../standard/buttons";
 import { TextList } from "./TextList/TextList";
 import { Charts } from "../Charts";
 import * as text from "../../text"
 import { CompareSelect } from "./CompareSelect";
 import { getCount, getOverallAverage } from "../../fetchers";
-import { Loader } from "../tiny/loader";
+import { Loader } from "../standard/loader";
 
 const AdminBox = props => <Box
     width={props.width ? props.width : [1, 1 / 2]}

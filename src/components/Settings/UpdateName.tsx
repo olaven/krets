@@ -5,7 +5,7 @@ import { Box, Flex } from "rebass"
 import { Input } from "@rebass/forms"
 import { SettingsContext } from "../../context/SettingsContext"
 import { putPage } from "../../fetchers"
-import { TriggerLoadingButton } from "../tiny/buttons"
+import { TriggerLoadingButton } from "../standard/buttons"
 
 
 export const UpdateName = () => {

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { AdminPage } from "../../components/Admin/AdminPage";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
-import { Loader } from "../../components/tiny/loader";
+import { Loader } from "../../components/standard/loader";
 import { AdminPageContextProvider } from "../../context/AdminPageContext";
 import { CompareContextProvider } from "../../context/CompareContext";
 import { PagesContextProvider } from "../../context/PagesContext";

@@ -6,7 +6,7 @@ import { Flex, Box } from "rebass";
 import { usePage } from "../effects/usePage";
 import { UserContext } from '../context/UserContext';
 import { CopyURLButton } from '../components/Page/CopyURLButton';
-import { Loader } from '../components/tiny/loader';
+import { Loader } from '../components/standard/loader';
 import { QuestionsContextProvider } from '../context/QuestionsContext';
 import { styled } from '../stiches.config';
 import { emojidata } from '../emojidata';

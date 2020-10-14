@@ -4,7 +4,7 @@ import { useContext } from "react";
 import * as text from "../../text";
 import { deletePage } from "../../fetchers";
 import { SettingsContext } from "../../context/SettingsContext";
-import { DoubleConfirmationButton } from "../tiny/buttons";
+import { DoubleConfirmationButton } from "../standard/buttons";
 
 export const DeletePage = () => {
 

@@ -24,20 +24,9 @@ const EmojiContainer = styled('div', {
 });
 
 
-const notSelectedFade = css.keyframes({
-    '20%': {
-        transform: "translateY(-20%)",
-        opacity: '0',
-    },
-    '100%': {
-        transform: "translateY(-80%)",
-        opacity: '0',
-        position: 'absolute', /*Taken out of flex flow */
-    }
-});
-
 const Emoji = styled('div', {
 
+    flex: "1 0 auto",
     transitionDuration: "100ms",
     transitionTimingFunction: 'ease-in',
 
@@ -46,13 +35,13 @@ const Emoji = styled('div', {
     },
 
     large: {
-        fontSize: "8em",
+        fontSize: "$223",
         marginLeft: "40px",
         marginRight: "40px",
     },
 
     small: {
-        fontSize: "3em",
+        fontSize: "$79",
         marginLeft: "10px",
         marginRight: "10px",
     },
@@ -61,13 +50,22 @@ const Emoji = styled('div', {
         selected: {
             no: {
 
-                animationName: `${notSelectedFade}`,
-                animationDuration: "400ms",
+                flex: "0 0 auto",
+                animationDuration: ".2s",
+                animationTimingFunction: "linear",
                 animationFillMode: "forwards",
-                flexGrow: 0.00001,
+                animationName: `${css.keyframes({
+                    '100%': {
+                        width: 0,
+                        border: "none",
+                        opacity: 0,
+                        margin: 0,
+                    }
+                })}`,
             },
             yes: {
 
+                transitionDelay: "300ms",
                 transform: 'scale(130%)',
                 borderBottomStyle: "solid",
                 borderBottomColor: "$primary",
