@@ -12,7 +12,8 @@ import { getKey } from "../../../workarounds";
 const getPages = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
-    const requestKey = getKey(request.url) as string;
+    //const requestKey = getKey(request.url) as string;
+    const requestKey = request.query.key as string;
 
     const data = await pages.getByOwner(user.sub, {
         amount: 15,

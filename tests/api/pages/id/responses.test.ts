@@ -140,7 +140,7 @@ describe("The endpoint for responses", () => {
             const page = await pages.createPage(randomPage(user.id));
             const contactDetails = faker.internet.email();
 
-            const response = await randomResponse(page.id, ":-|", contactDetails);
+            const response = randomResponse(page.id, ":-|", contactDetails);
 
             const before = await responses.getResponses(page.id);
             const { status } = await postResponse(response);
@@ -155,7 +155,19 @@ describe("The endpoint for responses", () => {
             expect(retrievedResponse.contact_details).toEqual(contactDetails);
         });
 
-        it(" Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
+        it("Does not allow creation of a response with bad id", async () => {
+
+            const id = faker.random.uuid();
+            const page = await pages.getPage(id);
+            expect(page).toEqual(null);
+
+            const response = randomResponse(id, ":-)", undefined);
+
+            const { status } = await postResponse(response);
+            expect(status).toEqual(400);
+        });
+
+        it("Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
 
             const [_, page] = await setupPage(true);
             const response = randomResponse(page.id, ":-)", undefined);

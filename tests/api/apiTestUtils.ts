@@ -1,4 +1,5 @@
 import http from 'http'
+import { parse } from "url"
 import listen from 'test-listen'
 import { apiResolver } from 'next/dist/next-server/server/api-utils'
 import { Server } from "net";
@@ -109,7 +110,7 @@ export const setupServer = async (handler: NextApiHandler, path: string): Promis
 
     const server = http.createServer((req, res) =>
         //@ts-ignore
-        apiResolver(req, res, undefined, handler, undefined))
+        apiResolver(req, res, { ...parse(req.url || '', true).query }, handler, undefined, true, undefined as any))
     const url = (`${await listen(server)}${path}`);
     return [server, url]
 };

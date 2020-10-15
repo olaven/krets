@@ -11,7 +11,7 @@ export const withErrorHandling = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
         try {
 
-            await handler(request, response);
+            return await handler(request, response);
         } catch (error) {
 
             console.error(error);
