@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
 import { BAD_REQUEST } from "node-kall"
 
+
 /*
  * Handling errors and sending proper error response if 
  * they occur. 
  * 
  * sends error.status || BAD_REQUEST
 */
-
-
 export const withErrorHandling = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
@@ -18,7 +17,7 @@ export const withErrorHandling = (handler: NextApiHandler) =>
         } catch (error) {
 
             return response
-                .status(error.status || 400)
+                .status(error.status || BAD_REQUEST)
                 .send("Request may have been malformed :-/");
         }
     }
