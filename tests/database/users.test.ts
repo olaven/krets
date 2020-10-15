@@ -1,4 +1,4 @@
-import { pages, questions, users, embeddables } from "../../src/database/database";
+import { database } from "../../src/database/database";
 import * as faker from "faker";
 import { randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
 

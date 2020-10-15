@@ -62,7 +62,7 @@ describe("The endpoint for responses", () => {
         expect(fetchResponse.status).toEqual(200);
 
         const receivedResponses = (await fetchResponse.json()).data;
-        expect(receiveddatabase.responses.length).toEqual(2);
+        expect(receivedResponses.length).toEqual(2);
     });
 
     describe("Response creation", () => {
@@ -148,7 +148,7 @@ describe("The endpoint for responses", () => {
 
 
             const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
-            const hasCorrect = retrieveddatabase.responses.find(r =>
+            const hasCorrect = retrievedResponses.find(r =>
                 r.emotion === response.emotion &&
                 r.page_id === response.page_id)
 

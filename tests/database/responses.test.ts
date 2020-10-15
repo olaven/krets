@@ -1,7 +1,7 @@
 import * as faker from "faker";
 import { randomResponse, randomUser, randomPage, blindSetup, setupPage } from "./databaseTestUtils";
 import { convertEmotion } from "../../src/database/responses";
-import { users, pages, responses } from "../../src/database/database";
+import { database } from "../../src/database/database";
 import { DistributionModel } from "../../src/models/models";
 
 
@@ -39,31 +39,31 @@ describe("Database repository for pages", () => {
 
         it("Returns a number", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
-            const average = await responses.getAverageEmotionByPage(page.id);
+            const average = await database.responses.getAverageEmotionByPage(page.id);
             expect(average).not.toBeNaN();
         });
 
         it("Returns 0 if no responses are present", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
-            const average = await responses.getAverageEmotionByPage(page.id);
+            const average = await database.responses.getAverageEmotionByPage(page.id);
             expect(average).toEqual(0);
         })
 
         it("Returns the average of persisted responses", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
-            await responses.createResponse(randomResponse(page.id, ":-)")); //2 
-            await responses.createResponse(randomResponse(page.id, ":-|")); //1
+            await database.responses.createResponse(randomResponse(page.id, ":-)")); //2 
+            await database.responses.createResponse(randomResponse(page.id, ":-|")); //1
 
-            const average = await responses.getAverageEmotionByPage(page.id);
+            const average = await database.responses.getAverageEmotionByPage(page.id);
             expect(average).toEqual(1.5) // (2 + 1) / 2
         });
     });
@@ -73,21 +73,21 @@ describe("Database repository for pages", () => {
 
         test("Can get responses", async () => {
 
-            const result = await responses.getResponses(faker.random.uuid());
+            const result = await database.responses.getResponses(faker.random.uuid());
             expect(result).toEqual([]);
         });
 
         test("Can create response", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await await database.pages.createPage(randomPage(user.id));
 
-            const before = await responses.getResponses(page.id);
-            await responses.createResponse({
+            const before = await database.responses.getResponses(page.id);
+            await database.responses.createResponse({
                 emotion: ':-)',
                 page_id: page.id
             });
-            const after = await responses.getResponses(page.id);
+            const after = await database.responses.getResponses(page.id);
 
             expect(before.length).toEqual(0);
             expect(after.length).toEqual(1);
@@ -95,13 +95,13 @@ describe("Database repository for pages", () => {
 
         test("Can create response with contact details", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
             const contact_details = "mail@example.com";
 
-            await responses.createResponse(randomResponse(page.id, ":-)", contact_details));
+            await database.responses.createResponse(randomResponse(page.id, ":-)", contact_details));
 
-            const retrieved = await responses.getResponses(page.id);
+            const retrieved = await database.responses.getResponses(page.id);
             expect(retrieved.length).toEqual(1);
 
             const [response] = retrieved;
@@ -112,13 +112,13 @@ describe("Database repository for pages", () => {
 
             const [_u, _uu, [first, second, third]] = await blindSetup(3);
 
-            const retrievedFirst = await responses.getResponse(first.id);
+            const retrievedFirst = await database.responses.getResponse(first.id);
             expect(retrievedFirst).toEqual(first);
 
-            const retrievedSecond = await responses.getResponse(second.id);
+            const retrievedSecond = await database.responses.getResponse(second.id);
             expect(retrievedSecond).toEqual(second);
 
-            const retrievedThird = await responses.getResponse(third.id)
+            const retrievedThird = await database.responses.getResponse(third.id)
             expect(retrievedThird).toEqual(third);
         });
 
@@ -130,7 +130,7 @@ describe("Database repository for pages", () => {
                 const pageSize = 10;
                 //NOTE: persisting more than pageSize
                 const [page, owner, persisted] = await blindSetup(pageSize + 5)
-                const retrieved = await responses.getResponses(page.id)
+                const retrieved = await database.responses.getResponses(page.id)
 
                 expect(persisted.length).toBeGreaterThan(pageSize)
                 expect(retrieved.length).toEqual(pageSize);
@@ -141,7 +141,7 @@ describe("Database repository for pages", () => {
                 const pageSize = 2;
                 const [page] = await blindSetup(pageSize + 3);
 
-                const retrieved = await responses.getResponses(page.id, {
+                const retrieved = await database.responses.getResponses(page.id, {
                     amount: pageSize
                 });
                 expect(retrieved.length).toEqual(pageSize);
@@ -154,7 +154,7 @@ describe("Database repository for pages", () => {
 
                 const [first, second, third] = persisted;
 
-                const retrieved = (await responses.getResponses(page.id, {
+                const retrieved = (await database.responses.getResponses(page.id, {
                     amount: pageSize,
                     key: second.created_at //NOTE: everything _after_ second
                 })).map(r => r.id);
@@ -174,7 +174,7 @@ describe("Database repository for pages", () => {
 
                 const [first, second] = persisted;
 
-                const retrieved = (await responses.getResponses(page.id, {
+                const retrieved = (await database.responses.getResponses(page.id, {
                     amount: pageSize,
                     key: first.created_at //NOTE: everything _after_ first
                 })).map(r => r.id);
@@ -193,7 +193,7 @@ describe("Database repository for pages", () => {
         test("Does return an array", async () => {
 
             const [page] = await blindSetup();
-            const coordinates = await responses.getLineCoordinates(page.id);
+            const coordinates = await database.responses.getLineCoordinates(page.id);
 
             expect(coordinates).toBeInstanceOf(Array);
         });
@@ -201,7 +201,7 @@ describe("Database repository for pages", () => {
         it("Returns the same amount of responses as perssited", async () => {
 
             const [page, _, persisted] = await blindSetup();
-            const coordinates = await responses.getLineCoordinates(page.id);
+            const coordinates = await database.responses.getLineCoordinates(page.id);
 
             expect(persisted.length).toBeGreaterThan(0);
             expect(coordinates.length).toEqual(persisted.length)
@@ -210,7 +210,7 @@ describe("Database repository for pages", () => {
         it("Returns responses sorted by date, with newest first", async () => {
 
             const [page] = await blindSetup();
-            const retrieved = await responses.getResponses(page.id);
+            const retrieved = await database.responses.getResponses(page.id);
 
             for (let i = 1; i < retrieved.length; i++) {
 
@@ -224,7 +224,7 @@ describe("Database repository for pages", () => {
         it("Returns coordinates", async () => {
 
             const [page] = await blindSetup();
-            const [coordinate] = await responses.getLineCoordinates(page.id);
+            const [coordinate] = await database.responses.getLineCoordinates(page.id);
 
 
             expect(coordinate.x).toBeDefined();
@@ -238,7 +238,7 @@ describe("Database repository for pages", () => {
 
             const [page] = await blindSetup();
 
-            const count = await responses.getCount(page.id);
+            const count = await database.responses.getCount(page.id);
             expect(parseInt((count as unknown as string))).not.toBeNaN();
         });
 
@@ -247,14 +247,14 @@ describe("Database repository for pages", () => {
             const n = await faker.random.number({ min: 1, max: 20 });
             const [page] = await blindSetup(n);
 
-            const count = await responses.getCount(page.id);
+            const count = await database.responses.getCount(page.id);
             expect(count).toEqual(n);
         });
 
         it("Works when no responses are persisted", async () => {
 
             const [page] = await blindSetup(0);
-            const count = await responses.getCount(page.id);
+            const count = await database.responses.getCount(page.id);
             expect(count).toEqual(0)
         });
     });
@@ -264,14 +264,14 @@ describe("Database repository for pages", () => {
         const randomDistribution = async () => {
 
             const [page] = await blindSetup();
-            const distribution = await responses.getEmojiDistribution(page.id);
+            const distribution = await database.responses.getEmojiDistribution(page.id);
             return distribution;
         }
         it(" Does not throw when run", async () => {
 
             const [page] = await blindSetup();
             expect(
-                responses.getEmojiDistribution(page.id)
+                database.responses.getEmojiDistribution(page.id)
             ).resolves.not.toThrow();
         });
 
@@ -305,7 +305,7 @@ describe("Database repository for pages", () => {
 
             const n = faker.random.number({ min: 0, max: 8 })
             const [page, _, persisted] = await blindSetup(n);
-            const distribution = await responses.getEmojiDistribution(page.id);
+            const distribution = await database.responses.getEmojiDistribution(page.id);
 
             const sum = parseInt(distribution.sad) + parseInt(distribution.neutral) + parseInt(distribution.happy);
 
@@ -320,22 +320,22 @@ describe("Database repository for pages", () => {
             const [_, page] = await setupPage();
 
             //NOTE: three happy
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
 
             //NOTE: five neutral
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
 
             //NOTE: two sad 
-            await responses.createResponse(randomResponse(page.id, ":-("));
-            await responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
 
-            const distribution = await responses.getEmojiDistribution(page.id);
+            const distribution = await database.responses.getEmojiDistribution(page.id);
             expect(distribution.happy).toEqual("3");
             expect(distribution.neutral).toEqual("5");
             expect(distribution.sad).toEqual("2");
@@ -347,26 +347,26 @@ describe("Database repository for pages", () => {
             const [_, page] = await setupPage();
 
             //NOTE: eight happy
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
 
             //NOTE: two neutral
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
 
             //NOTE: four sad
-            await responses.createResponse(randomResponse(page.id, ":-("));
-            await responses.createResponse(randomResponse(page.id, ":-("));
-            await responses.createResponse(randomResponse(page.id, ":-("));
-            await responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
 
-            const distribution = await responses.getEmojiDistribution(page.id);
+            const distribution = await database.responses.getEmojiDistribution(page.id);
             expect(distribution.happy).toEqual("8");
             expect(distribution.neutral).toEqual("2");
             expect(distribution.sad).toEqual("4");
