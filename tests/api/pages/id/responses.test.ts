@@ -2,10 +2,10 @@ import { authenticatedFetch, setupServer, teardownServer } from "../../apiTestUt
 import * as faker from "faker";
 import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import { users, pages, responses } from "../../../../src/database/database";
+import { users, pages, responses, answers } from "../../../../src/database/database";
 import fetch from "cross-fetch";
-import { randomUser, randomPage, randomResponse, blindSetup, setupPage } from "../../../database/databaseTestUtils";
-import { PaginatedModel, ResponseModel } from "../../../../src/models/models";
+import { randomUser, randomPage, randomResponse, blindSetup, setupPage, randomAnswer } from "../../../database/databaseTestUtils";
+import { PaginatedModel, ResponseAnswerModel, ResponseModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -67,13 +67,32 @@ describe("The endpoint for responses", () => {
 
     describe("Response creation", () => {
 
-        const postResponse = (response: ResponseModel, pageId = response.page_id) =>
+        const randomPayload = (pageId: string, answerCount = faker.random.number({ min: 0, max: 5 })) => {
+
+            const response = randomResponse(pageId);
+
+            //NOTE: should have been done functionally, but Jest does not appear to work well with it 
+            const answers = [];
+            for (let i = 0; i < answerCount; i++) {
+
+                answers.push(
+                    randomAnswer(response.id)
+                )
+            }
+
+            return {
+                response,
+                answers
+            }
+        }
+
+        const postResponse = (payload: ResponseAnswerModel, pageId = payload.response.page_id) =>
             fetch(fullURL(pageId), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(response)
+                body: JSON.stringify(payload)
             });
 
         describe("setup of `mandatory_contact_details` with `setupPages` - test utils", () => {
@@ -119,7 +138,10 @@ describe("The endpoint for responses", () => {
                 page_id: page.id
             };
 
-            const fetchResponse = await postResponse(response)
+            const fetchResponse = await postResponse({
+                response,
+                answers: [],
+            });
 
             // Correct response 
             expect(fetchResponse.status).toEqual(201);
@@ -143,7 +165,10 @@ describe("The endpoint for responses", () => {
             const response = randomResponse(page.id, ":-|", contactDetails);
 
             const before = await responses.getResponses(page.id);
-            const { status } = await postResponse(response);
+            const { status } = await postResponse({
+                response,
+                answers: [],
+            });
 
             expect(status).toEqual(201);
 
@@ -155,7 +180,6 @@ describe("The endpoint for responses", () => {
             expect(retrievedResponse.contact_details).toEqual(contactDetails);
         });
 
-        //FIXME: won't pass because `withErrorHandling` does not catch the error thrown by page === null
         it(" Does not allow creation of a response with bad id", async () => {
 
             const id = faker.random.uuid();
@@ -164,7 +188,7 @@ describe("The endpoint for responses", () => {
 
             const response = randomResponse(id, ":-)", undefined);
 
-            const { status } = await postResponse(response);
+            const { status } = await postResponse({ response, answers: [] });
             expect(status).toEqual(400);
         });
 
@@ -174,7 +198,7 @@ describe("The endpoint for responses", () => {
             const [_, page] = await setupPage(true);
             const response = randomResponse(page.id, ":-)", undefined);
 
-            const { status } = await postResponse(response);
+            const { status } = await postResponse({ response, answers: [] });
 
             expect(page.mandatory_contact_details).toBe(true);
             expect(response.contact_details).toBeUndefined();
@@ -186,7 +210,7 @@ describe("The endpoint for responses", () => {
             const [_, page] = await setupPage(false);
 
             const response = randomResponse(page.id, ":-)", undefined);
-            const { status } = await postResponse(response);
+            const { status } = await postResponse({ response, answers: [] });
 
             expect(status).toEqual(201);
             expect(page.mandatory_contact_details).toBe(false);
@@ -197,7 +221,7 @@ describe("The endpoint for responses", () => {
 
             const [_, page] = await setupPage(true);
             const response = randomResponse(page.id, ":-|", faker.internet.email());
-            const { status } = await postResponse(response);
+            const { status } = await postResponse({ response, answers: [] });
 
             expect(status).toEqual(201);
         });
@@ -208,10 +232,41 @@ describe("The endpoint for responses", () => {
             const [_, page] = await setupPage(true);
             const contactDetails = faker.internet.email();
 
-            const persisted = await (await postResponse(randomResponse(page.id, ":-|", contactDetails))).json();
+            const persisted = (await (await postResponse({
+                response: randomResponse(page.id, ":-|", contactDetails),
+                answers: []
+            })).json());
+
             expect(persisted.contact_details).toEqual(contactDetails);
         });
-    })
+
+        it(" Accepts answers in same request as reponse", async () => {
+
+            const [_, page] = await setupPage()
+            const r = await postResponse(
+                randomPayload(page.id, 3),
+            )
+
+            expect(r.status).toEqual(201);
+        });
+
+        it("Does persist given responses", async () => {
+
+            const [_, page] = await setupPage();
+            const before = randomAnswer(page.id);
+
+            const r = await postResponse({
+                response: randomResponse(page.id),
+                answers: [before]
+            });
+
+            const response = await r.json() as ResponseModel;
+            const [after] = await answers.getByResponse(response.id);
+
+            //i.e. found the same text in database after posting 
+            expect(after.text).toEqual(after.text);
+        });
+    });
 
 
 

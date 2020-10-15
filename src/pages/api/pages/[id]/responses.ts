@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
-import { pages, responses } from "../../../../database/database";
+import { pages, responses, answers as answersDB } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers, withErrorHandling } from "../../../../middleware/middleware";
-import { ResponseModel } from "../../../../models/models";
+import { ResponseAnswerModel, ResponseModel } from "../../../../models/models";
 import { getPathParam, nullify } from "../../../../workarounds";
 
 
@@ -32,42 +32,37 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
     });
 }
 
+
 const postResponses = async (req: NextApiRequest, res: NextApiResponse) => {
 
-    const response = req.body as ResponseModel;
-    const page = await pages.getPage(response.page_id)
+    const { response, answers } = req.body as ResponseAnswerModel;
 
+    const page = await pages.getPage(response.page_id)
     if (page.mandatory_contact_details && !response.contact_details)
         return res
             .status(BAD_REQUEST)
             .end()
 
+    const persistedResponse = await responses.createResponse(response);
+    await answersDB.createAnswers(
+        answers.map(answer => ({
+            ...answer,
+            response_id: persistedResponse.id
+            //TODO: something similar for `question_id`?
+        }))
+    );
 
-    try {
-
-        const persisted = await responses.createResponse(response);
-
-        res
-            .status(CREATED)
-            .json(persisted);
-    } catch (error) {
-
-        //TODO: remove explicit error handling, as `withErrorhandling` is applied 
-        console.warn(error);
-        res
-            .status(BAD_REQUEST)
-            .send("Invalid response")
-    }
+    res
+        .status(CREATED)
+        .json(persistedResponse);
 }
 
 
 export default withCors(
     withErrorHandling(
-        withMethods(["GET", "POST"])(
-            withMethodHandlers({
-                GET: getResponses,
-                POST: postResponses
-            })
-        )
+        withMethodHandlers({
+            GET: getResponses,
+            POST: postResponses
+        })
     )
 );

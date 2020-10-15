@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel, ResponseAnswerModel } from "./models/models";
 
 
 
@@ -23,11 +23,15 @@ export const getPages = () =>
 export const getResponses = (pageId: string) =>
     get<PaginatedModel<ResponseModel>>(`/api/pages/${pageId}/responses`);
 
-export const postResponse = (response: ResponseModel) =>
+
+export const postResponse = (responseAndAnswers: ResponseAnswerModel) =>
+    post<ResponseAnswerModel>(`/api/pages/${responseAndAnswers.response.page_id}/responses`, responseAndAnswers);
+
+/* export const postResponse = (response: ResponseModel) =>
     post<ResponseModel>(`/api/pages/${response.page_id}/responses`, response);
 
 export const postAnswer = (pageId: string, responseId: string, answer: AnswerModel) =>
-    post<AnswerModel>(`/api/pages/${pageId}/responses/${responseId}/answers`, answer);
+    post<AnswerModel>(`/api/pages/${pageId}/responses/${responseId}/answers`, answer); */
 
 export const getAnswers = (pageId: string, responseId: string) =>
     get<AnswerModel[]>(`/api/pages/${pageId}/responses/${responseId}/answers`);
