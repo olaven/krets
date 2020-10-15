@@ -7,16 +7,18 @@ import { BAD_REQUEST } from "node-kall"
  * 
  * sends error.status || BAD_REQUEST
 */
+
+
 export const withErrorHandling = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
+
         try {
 
-            return await handler(request, response);
+            await handler(request, response);
         } catch (error) {
 
-            console.error(error);
-            response
-                .status(error.status || BAD_REQUEST)
-                .send(error.message);
+            return response
+                .status(error.status || 400)
+                .send("Request may have been malformed :-/");
         }
-    } 
+    }

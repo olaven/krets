@@ -155,7 +155,21 @@ describe("The endpoint for responses", () => {
             expect(retrievedResponse.contact_details).toEqual(contactDetails);
         });
 
+        //FIXME: won't pass because `withErrorHandling` does not catch the error thrown by page === null
+        it(" Does not allow creation of a response with bad id", async () => {
+
+            const id = faker.random.uuid();
+            const page = await pages.getPage(id);
+            expect(page).toEqual(null);
+
+            const response = randomResponse(id, ":-)", undefined);
+
+            const { status } = await postResponse(response);
+            expect(status).toEqual(400);
+        });
+
         it("Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
+
 
             const [_, page] = await setupPage(true);
             const response = randomResponse(page.id, ":-)", undefined);

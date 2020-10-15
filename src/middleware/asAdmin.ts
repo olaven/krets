@@ -19,5 +19,5 @@ export const asAdmin = (handler: NextApiHandler) =>
                 .status(FORBIDDEN)
                 .end();
 
-        return handler(request, response)
+        await handler(request, response)
     }

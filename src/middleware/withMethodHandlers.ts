@@ -16,12 +16,12 @@ interface Handlers {
  * NOTE: This is currently experimental. #138
  */
 export const withMethodHandlers = (handlers: Handlers) =>
-    (request: NextApiRequest, response: NextApiResponse) => {
+    async (request: NextApiRequest, response: NextApiResponse) => {
 
         const { method } = request;
         const handler = handlers[method]
 
-        if (handler) handler(request, response);
+        if (handler) await handler(request, response);
         else return response
             .status(405)
             .end();

@@ -22,5 +22,5 @@ export const asPageOwner = (extractPageId: (url: string) => string, handler: Nex
                 .status(FORBIDDEN)
                 .end();
 
-        handler(request, response);
+        await handler(request, response);
     }

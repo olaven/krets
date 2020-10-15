@@ -17,7 +17,7 @@ const asSameUser = (handler: NextApiHandler) =>
             response
                 .status(FORBIDDEN)
                 .send(null) :
-            handler(request, response);
+            await handler(request, response);
     }
 
 const getUser = asSameUser(
