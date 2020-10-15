@@ -16,6 +16,9 @@ export const withErrorHandling = (handler: NextApiHandler) =>
             await handler(request, response);
         } catch (error) {
 
+            if (process.env.NODE_ENV === 'development')
+                console.log(`Caught error: ${error}`);
+
             return response
                 .status(error.status || BAD_REQUEST)
                 .send("Request may have been malformed :-/");
