@@ -155,18 +155,6 @@ describe("The endpoint for responses", () => {
             expect(retrievedResponse.contact_details).toEqual(contactDetails);
         });
 
-        it("Does not allow creation of a response with bad id", async () => {
-
-            const id = faker.random.uuid();
-            const page = await pages.getPage(id);
-            expect(page).toEqual(null);
-
-            const response = randomResponse(id, ":-)", undefined);
-
-            const { status } = await postResponse(response);
-            expect(status).toEqual(400);
-        });
-
         it("Does not allow creation without contact_details _if it is marked as mandatory_", async () => {
 
             const [_, page] = await setupPage(true);
