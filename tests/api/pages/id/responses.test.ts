@@ -156,7 +156,7 @@ describe("The endpoint for responses", () => {
         });
 
         //FIXME: won't pass because `withErrorHandling` does not catch the error thrown by page === null
-        it("Does not allow creation of a response with bad id", async () => {
+        it(" Does not allow creation of a response with bad id", async () => {
 
             const id = faker.random.uuid();
             const page = await pages.getPage(id);

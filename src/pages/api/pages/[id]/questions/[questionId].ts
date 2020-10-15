@@ -37,7 +37,7 @@ const withQuestion = (questionHandler: (question: QuestionModel, response: NextA
                 .status(FORBIDDEN)
                 .end();
 
-        questionHandler(question, response);
+        await questionHandler(question, response);
     }
 
 
