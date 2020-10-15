@@ -1,4 +1,3 @@
-import querystring from "querystring"
 
 //FIXME: sort out test setup (as per below link) in order to remove the need for this workaround.
 //NOTE: workaround while request.query does not work in tests https://github.com/vercel/next.js/issues/13505
@@ -9,17 +8,15 @@ export const getPathParam = (url: string, splitAt: number) => {
     return decodeURIComponent(param);
 };
 
-export const getKey = (url: string) =>
-    getQueryString("key", url);
 
-export const getIncludeArchived = (url: string) =>
-    getQueryString("includeArchived", url) === 'true';
-
-//NOTE: same kind of workaround as `getId`
-//FIXME: super-naive. Update once tests are fixed as per #161
-const getQueryString = (key: string, url: string) => {
-    const parsed = querystring.decode(url.split("?")[1]);
-    return parsed[key] === "null" ?
+/**
+ * Helper to convert between query string 'null' and js `null`
+ * Useful as 'null' is truthy is JS, while we want 'null' to be falsy
+ * @example const key = nullify(request.query.key) 
+ * @param string if string is 'null', `null` is returned. Else, the string is returned
+ */
+export const nullify = (string: string) =>
+    string === 'null' ?
         null :
-        parsed[key]
-}
+        string
+
