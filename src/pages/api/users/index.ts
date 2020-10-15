@@ -2,7 +2,7 @@ import { NextApiHandler } from "next";
 import { users } from "../../../database/users";
 import { PaginatedModel, UserModel } from "../../../models/models"
 import { withCors, withAuthentication, withErrorHandling, withMethodHandlers, asAdmin } from "../../../middleware/middleware";
-import { getKey } from "../../../workarounds";
+//import { getKey } from "../../../workarounds";
 
 const applyMiddleware = (getHandler: NextApiHandler) => withCors(
     withAuthentication(
@@ -15,7 +15,8 @@ const applyMiddleware = (getHandler: NextApiHandler) => withCors(
 export default applyMiddleware(
     async (request, response) => {
 
-        const requestKey = getKey(request.url) as string;
+        //const requestKey = getKey(request.url) as string;
+        const requestKey = request.query.key as string;
         const data = await users.getAllUsers({ key: requestKey, amount: 10 });
 
         const page: PaginatedModel<UserModel> = {
