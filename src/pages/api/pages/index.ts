@@ -5,14 +5,12 @@ import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel, PaginatedModel } from "../../../models/models";
 import { NextApiResponse, NextApiRequest } from "next";
 import { withCors, withAuthentication, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
-import { getKey } from "../../../workarounds";
 
 
 
 const getPages = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
-    //const requestKey = getKey(request.url) as string;
     const requestKey = request.query.key as string;
 
     const data = await pages.getByOwner(user.sub, {
