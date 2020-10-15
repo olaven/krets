@@ -1,5 +1,5 @@
 import auth0 from '../../../auth/auth0';
-import { users } from "../../../database/database";
+import { database } from "../../../database/database";
 import { AuthModel } from '../../../models/models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
 
@@ -7,9 +7,9 @@ import { withCors, withErrorHandling } from '../../../middleware/middleware';
 //TODO: Refactor: this function is messy and does several things
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
-  const user = await users.getUser(sub);
+  const user = await database.users.getUser(sub);
   if (!user) {
-    await users.createUser({ id: sub });
+    await database.users.createUser({ id: sub });
   }
 };
 

@@ -3,7 +3,7 @@ import fetch from "cross-fetch";
 import * as faker from "faker";
 import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage } from "../apiTestUtils";
 import handler from "../../../src/pages/api/pages";
-import { users } from "../../../src/database/database";
+import { database } from "../../../src/database/database";
 import { randomUser, setupPages } from "../../database/databaseTestUtils";
 
 jest.mock("../../../src/auth/auth0");
@@ -44,7 +44,7 @@ describe("The pages endpoint", () => {
 
         it("Is possible to create a page if authenticated", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
 
             const response = await postPage({
                 id: faker.random.alphaNumeric(40), name: "My Page", owner_id: user.id, mandatory_contact_details: false
@@ -54,7 +54,7 @@ describe("The pages endpoint", () => {
         });
 
         it("Assigns a pseudo-random color value to the page", async () => {
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
             const page = randomPage(user.id);
 
             expect(page.color).toBeNull();
@@ -67,7 +67,7 @@ describe("The pages endpoint", () => {
 
         it("Assigns a hex value as the color", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
             const page = randomPage(user.id);
 
             await postPage(randomPage(user.id), url, user.id);
@@ -79,7 +79,7 @@ describe("The pages endpoint", () => {
 
         it("Assigns different colors", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
 
             await postPage(randomPage(user.id), url, user.id);
             await postPage(randomPage(user.id), url, user.id);
@@ -90,7 +90,7 @@ describe("The pages endpoint", () => {
 
         it("Returns 409 on conflict", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
             const page = randomPage(user.id);
 
             const first = await postPage(page, url, user.id);
@@ -106,7 +106,7 @@ describe("The pages endpoint", () => {
         it("/pages returns all pages belonging to given user", async () => {
 
             const n = 5;
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
 
             const before = (await getPages(url, user.id)).data;
 

@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid"
 import { NextApiRequest, NextApiResponse } from "next";
 import { BAD_REQUEST, CREATED, NOT_FOUND } from "node-kall";
-import { embeddables, responses, answers as answerDB, pages } from "../../../../database/database";
+import { database } from "../../../../database/database";
 import { withErrorHandling, withAuthentication, withMethodHandlers, asPageOwner } from "../../../../middleware/middleware"
 import { withCors } from "../../../../middleware/withCors";
 import { EmbeddableModel, EmbeddableResponseModel } from "../../../../models/models";
@@ -16,7 +16,7 @@ const getEmbeddable = withCors(
             async (request, response) => {
 
 
-                const embeddable = await embeddables.getByPage(
+                const embeddable = await database.embeddables.getByPage(
                     getPageId(request.url)
                 );
 
@@ -43,11 +43,11 @@ const postEmbeddable = withCors(
                         .status(BAD_REQUEST)
                         .end()
 
-                const page = await pages.getPage(
+                const page = await database.pages.getPage(
                     getPageId(request.url)
                 );
 
-                const persisted = await embeddables.createEmbeddable({
+                const persisted = await database.embeddables.createEmbeddable({
                     ...embeddable,
                     page_id: page.id,
                     token: nanoid(),
@@ -64,13 +64,13 @@ const postEmbeddable = withCors(
 const embeddableResponseHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { token, response, answers } = req.body as EmbeddableResponseModel;
-    const embeddable = await embeddables.getByToken(token)
+    const embeddable = await database.embeddables.getByToken(token)
 
     if (!embeddable) return res
         .status(NOT_FOUND)
         .end();
 
-    const page = await pages.getPage(
+    const page = await database.pages.getPage(
         getPageId(req.url)
     );
 
@@ -81,8 +81,8 @@ const embeddableResponseHandler = async (req: NextApiRequest, res: NextApiRespon
             .end()
 
     //Need to persist response in order to get its ID 
-    const persistedResponse = await responses.createResponse(response);
-    await answerDB.createAnswers(
+    const persistedResponse = await database.responses.createResponse(response);
+    await database.answers.createAnswers(
         answers.map(answer => ({
             ...answer,
             response_id: persistedResponse.id

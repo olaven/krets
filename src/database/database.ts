@@ -1,7 +1,17 @@
-export { pages } from "./pages";
-export { responses } from "./responses";
-export { users } from "./users";
-export { categories } from "./categories";
-export { answers } from "./answers";
-export { questions } from "./questions";
-export { embeddables } from "./embeddables"
+import { pages } from "./pages";
+import { responses } from "./responses";
+import { users } from "./users";
+import { categories } from "./categories";
+import { answers } from "./answers";
+import { questions } from "./questions";
+import { embeddables } from "./embeddables"
+
+export const database = {
+    pages,
+    responses,
+    users,
+    categories,
+    answers,
+    questions,
+    embeddables,
+}

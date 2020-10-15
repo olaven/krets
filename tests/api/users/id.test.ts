@@ -1,5 +1,5 @@
 import fetch from "cross-fetch";
-import { users } from "../../../src/database/database"
+import { database } from "../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
 import userHandler from "../../../src/pages/api/users/[id]";
@@ -48,7 +48,7 @@ describe("Endpoints for database user data", () => {
 
         it("Only responds to GET, DELETE and PUT", async () => {
 
-            const { id } = await users.createUser(randomUser())
+            const { id } = await database.users.createUser(randomUser())
 
             const getResponse = await authenticatedFetch(id, fullUrl(id), { method: "GET" });
             const deleteResponse = await authenticatedFetch(id, fullUrl(id), { method: "DELETE" });
@@ -73,7 +73,7 @@ describe("Endpoints for database user data", () => {
 
         it("Does return user as it is represented in database", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
             const response = await authenticatedFetch(user.id, fullUrl(user.id));
 
             expect(200).toEqual(response.status);
@@ -85,8 +85,8 @@ describe("Endpoints for database user data", () => {
 
         it("Does not allow returning other users data", async () => {
 
-            const actor = await users.createUser(randomUser());
-            const other = await users.createUser(randomUser());
+            const actor = await database.users.createUser(randomUser());
+            const other = await database.users.createUser(randomUser());
 
             const { status } = await authenticatedFetch(actor.id, fullUrl(other.id));
 
@@ -95,8 +95,8 @@ describe("Endpoints for database user data", () => {
 
         it("Does not allow to delete other users", async () => {
 
-            const actor = await users.createUser(randomUser());
-            const other = await users.createUser(randomUser());
+            const actor = await database.users.createUser(randomUser());
+            const other = await database.users.createUser(randomUser());
 
             const { status } = await authenticatedFetch(actor.id, fullUrl(other.id), { method: "DELETE" });
 
@@ -105,7 +105,7 @@ describe("Endpoints for database user data", () => {
 
         it("Does not allow non-admin to access PUT endpoint", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
             const { status } = await authenticatedFetch(user.id, fullUrl(user.id), { method: "PUT" });
 
             expect(user.role).not.toEqual("administrator");
@@ -132,7 +132,7 @@ describe("Endpoints for database user data", () => {
                 active: !before.active
             });
 
-            const after = await users.getUser(before.id);
+            const after = await database.users.getUser(before.id);
 
             expect(status).toEqual(204);
             expect(before.id).toEqual(after.id);
@@ -149,7 +149,7 @@ describe("Endpoints for database user data", () => {
                 active: !user.active
             });
 
-            const after = await users.getUser(user.id);
+            const after = await database.users.getUser(user.id);
 
             expect(user.id).toEqual(after.id);
             //NOTE: i.e. no change
@@ -166,7 +166,7 @@ describe("Endpoints for database user data", () => {
                 role: 'administrator'
             });
 
-            const after = await users.getUser(before.id);
+            const after = await database.users.getUser(before.id);
 
             expect(status).toEqual(204);
             expect(before.id).toEqual(after.id);
@@ -183,7 +183,7 @@ describe("Endpoints for database user data", () => {
                 role: "administrator"
             });
 
-            const after = await users.getUser(user.id);
+            const after = await database.users.getUser(user.id);
 
             expect(user.id).toEqual(after.id);
 

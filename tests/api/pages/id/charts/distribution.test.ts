@@ -2,7 +2,7 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../apiTestUtils";
 import distributionHandler from "../../../../../src/pages/api/pages/[id]/charts/distribution"
-import { responses, users } from "../../../../../src/database/database";
+import { database } from "../../../../../src/database/database";
 import { randomUser, blindSetup, randomResponse, setupPage } from "../../../../database/databaseTestUtils";
 import { DistributionModel } from "../../../../../src/models/models";
 
@@ -53,7 +53,7 @@ describe("The endpoint for average all-time score", () => {
         it("Responds with 403 if given user does not own the requested page", async () => {
 
             const [page, owner] = await blindSetup();
-            const other = await users.createUser(randomUser());
+            const other = await database.users.createUser(randomUser());
 
             //NOTE: not fethcing as owner, but as other
             const { status } = await authenticatedFetch(other.id, fullURL(page.id));
@@ -123,20 +123,20 @@ describe("The endpoint for average all-time score", () => {
             const [owner, page] = await setupPage();
 
             //NOTE: three happy
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
-            await responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.createResponse(randomResponse(page.id, ":-)"));
 
             //NOTE: five neutral
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
-            await responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.createResponse(randomResponse(page.id, ":-|"));
 
             //NOTE: two sad 
-            await responses.createResponse(randomResponse(page.id, ":-("));
-            await responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.createResponse(randomResponse(page.id, ":-("));
 
             const distribution = await (await authenticatedFetch(owner.id, fullURL(page.id))).json();
             expect(distribution.happy).toEqual("3");

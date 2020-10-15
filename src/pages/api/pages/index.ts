@@ -1,6 +1,6 @@
 import randomColor from "randomcolor"
 import auth0 from "../../../auth/auth0";
-import { pages } from "../../../database/database";
+import { database } from "../../../database/database";
 import { CREATED, OK, CONFLICT } from "node-kall";
 import { PageModel, PaginatedModel } from "../../../models/models";
 import { NextApiResponse, NextApiRequest } from "next";
@@ -13,7 +13,7 @@ const getPages = async (request: NextApiRequest, response: NextApiResponse) => {
     const { user } = await auth0.getSession(request);
     const requestKey = request.query.key as string;
 
-    const data = await pages.getByOwner(user.sub, {
+    const data = await database.pages.getByOwner(user.sub, {
         amount: 15,
         key: requestKey
     });
@@ -37,10 +37,10 @@ const postPage = withErrorHandling(
         page.owner_id = user.sub;
         page.color = randomColor();
 
-        const exists = await pages.pageExists(page.id);
+        const exists = await database.pages.pageExists(page.id);
         const [status, body] = exists ?
             [CONFLICT, null] :
-            [CREATED, await pages.createPage(page)]
+            [CREATED, await database.pages.createPage(page)]
 
         response
             .status(status)

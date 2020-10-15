@@ -2,7 +2,7 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
 import averageHandler from '../../../../src/pages/api/pages/[id]/average';
-import { users, pages, responses } from "../../../../src/database/database";
+import { database } from "../../../../src/database/database";
 import { randomUser, randomPage } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");
@@ -38,8 +38,8 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns 405 on methods other than GET", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
             for (const method of ["PUT", "PATCH", "POST", "OPTIONS", "HEAD", "DELETE"]) {
 
                 const { status } = await authenticatedFetch(user.id, fullURL(page.id), { method });
@@ -49,8 +49,8 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns 401 if not authenticated", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
             //NOTE: not claiming to be user 
             const response = await fetch(fullURL(page.id));
@@ -59,8 +59,8 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns 200 if authenticated", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
             const response = await authenticatedFetch(user.id, fullURL(page.id));
             expect(response.status).toEqual(200);
@@ -68,8 +68,8 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns a number", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
             const response = await authenticatedFetch(user.id, fullURL(page.id));
             expect(response.status).toEqual(200);
@@ -80,16 +80,16 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns actual average", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
-            await responses.createResponse({
+            await database.responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
                 //text: ""
             }); // 2
 
-            await responses.createResponse({
+            await database.responses.createResponse({
                 page_id: page.id,
                 emotion: ":-|",
                 //text: ""
@@ -107,28 +107,28 @@ describe("The endpoint for average all-time score", () => {
 
         it("Returns actual average of second combination", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
 
-            await responses.createResponse({
+            await database.responses.createResponse({
                 page_id: page.id,
                 emotion: ":-|",
                 //text: ""
             }); // 1
 
-            await responses.createResponse({
+            await database.responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
                 //text: ""
             }); // 2
 
-            await responses.createResponse({
+            await database.responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
                 //text: ""
             }); // 2
 
-            await responses.createResponse({
+            await database.responses.createResponse({
                 page_id: page.id,
                 emotion: ":-)",
                 //text: ""

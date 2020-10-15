@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { FORBIDDEN, NOT_FOUND } from "node-kall";
 import auth0 from "../auth/auth0";
-import { pages } from "../database/database";
+import { database } from "../database/database";
 
 //THINKABOUT: how to better solve the amount of dabase reads in this function 
 export const asPageOwner = (extractPageId: (url: string) => string, handler: NextApiHandler) =>
@@ -10,7 +10,7 @@ export const asPageOwner = (extractPageId: (url: string) => string, handler: Nex
         const pageId = extractPageId(request.url);
         const { user } = await auth0.getSession(request);
 
-        const page = await pages.getPage(pageId);
+        const page = await database.pages.getPage(pageId);
 
         if (!page)
             return response

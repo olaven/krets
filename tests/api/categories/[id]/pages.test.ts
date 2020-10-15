@@ -5,7 +5,7 @@ import faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { PageModel } from "../../../../src/models/models";
-import { users, categories, pages } from "../../../../src/database/database";
+import { database } from "../../../../src/database/database";
 import { randomUser } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");
@@ -49,8 +49,8 @@ describe("The pages by categories endpoint", () => {
         });
         it("Returns status code 200 on authenticated request", async () => {
 
-            const user = await users.createUser(randomUser())
-            const category = await categories.createCategory({
+            const user = await database.users.createUser(randomUser())
+            const category = await database.categories.createCategory({
                 name: faker.commerce.productName(),
                 owner_id: user.id
             })
@@ -62,8 +62,8 @@ describe("The pages by categories endpoint", () => {
 
         it("Only returns pages owned by given user and from given category", async () => {
 
-            const user = await users.createUser(randomUser())
-            const category = await categories.createCategory({
+            const user = await database.users.createUser(randomUser())
+            const category = await database.categories.createCategory({
                 name: faker.commerce.productName(),
                 owner_id: user.id
             })
@@ -71,7 +71,7 @@ describe("The pages by categories endpoint", () => {
             const persisted: PageModel[] = [];
             for (let i = 0; i < (faker.random.number(4) + 1); i++) {
 
-                const page = await pages.createPage(randomPage(user.id, "#aabbcc", category.id));
+                const page = await database.pages.createPage(randomPage(user.id, "#aabbcc", category.id));
                 persisted.push(page);
             }
 
