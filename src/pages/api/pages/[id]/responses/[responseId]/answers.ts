@@ -2,7 +2,7 @@ import { CREATED } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { asPageOwner, withAuthentication, withErrorHandling, withMethodHandlers } from "../../../../../../middleware/middleware";
 import { withCors } from "../../../../../../middleware/withCors";
-import { answers, responses } from "../../../../../../database/database";
+import { database } from "../../../../../../database/database";
 import { AnswerModel } from "../../../../../../models/models";
 import { getPathParam } from "../../../../../../workarounds";
 
@@ -13,7 +13,7 @@ export const getAnswers = withAuthentication(
         async (request: NextApiRequest, response: NextApiResponse) => {
 
             const responseId = getPathParam(request.url, 2);
-            const retrieved = await answers.getByResponse(responseId);
+            const retrieved = await database.answers.getByResponse(responseId);
 
             return response
                 .json(retrieved)
@@ -24,12 +24,12 @@ export const getAnswers = withAuthentication(
 export const postAnswers = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const responseId = getPathParam(request.url, 2);
-    const persistedResponse = await responses.getResponse(responseId);
+    const persistedResponse = await database.responses.getResponse(responseId);
 
     const answer = request.body as AnswerModel;
     answer.response_id = persistedResponse.id;
 
-    const persisted = await answers.createAnswer(answer)
+    const persisted = await database.answers.createAnswer(answer)
     return response
         .status(CREATED)
         .send(persisted);

@@ -1,6 +1,6 @@
 import { first, rows, run } from "./helpers/helpers";
 import { UserModel } from "../models/models";
-import { pages } from "./database"
+import { database } from "./database"
 import { PaginationOptions } from "./helpers/PaginationOptions";
 
 
@@ -85,10 +85,10 @@ const deleteUser = async (id: string) => {
 
    //FIXME: more performant by doing things inside queries instead of loading into memory like this
    //FIXME: either through cascade (scary..) or through more complex with-queries (safer -> see beginning in `_deleteUser`). 
-   const pagesOwnedByUser = await pages.getByOwner(id);
+   const pagesOwnedByUser = await database.pages.getByOwner(id);
    for (const page of pagesOwnedByUser) {
 
-      await pages.deletePage(page.id);
+      await database.pages.deletePage(page.id);
    }
    //TODO: crashes in test 
    await run(

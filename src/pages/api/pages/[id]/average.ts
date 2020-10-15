@@ -1,6 +1,6 @@
 import { OK } from "node-kall";
 //import { useRouter } from "next/router"; //TODO: use this once workaround not needed
-import { responses } from "../../../../database/database";
+import { database } from "../../../../database/database";
 import { withAuthentication, withCors, withMethods } from "../../../../middleware/middleware";
 import { getPathParam } from "../../../../workarounds";
 
@@ -11,7 +11,7 @@ export default withCors(
         withMethods(["GET"])(async function average(request, response) {
 
             const id = getId(request.url)
-            const average = await responses.getAverageEmotionByPage(id);
+            const average = await database.responses.getAverageEmotionByPage(id);
 
             response
                 .status(OK)

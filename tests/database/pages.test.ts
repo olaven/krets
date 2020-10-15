@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { pages, categories, responses, users, questions, answers, embeddables } from "../../src/database/database";
+import { database } from "../../src/database/database";
 import { randomUser, setupAnswers, setupEmbeddable, setupPage, setupPages, setupQuestions } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 
@@ -8,7 +8,7 @@ describe("Database interface for pages", () => {
 
     it("Can create page", async () => {
 
-        const owner = await users.createUser(randomUser())
+        const owner = await database.users.createUser(randomUser())
 
         const id = faker.random.uuid();
         const page = {
@@ -32,7 +32,7 @@ describe("Database interface for pages", () => {
         const originalName = faker.company.companyName();
         const updatedName = faker.company.companyName();
 
-        const owner = await users.createUser(randomUser())
+        const owner = await database.users.createUser(randomUser())
 
         const page = {
             owner_id: owner.id,
@@ -58,7 +58,7 @@ describe("Database interface for pages", () => {
     it("Can delete pages", async () => {
 
 
-        const owner = await users.createUser(randomUser())
+        const owner = await database.users.createUser(randomUser())
         const page = await pages.createPage(randomPage(owner.id))
         const retrievedBefore = await pages.getPage(page.id);
         expect(retrievedBefore.name).toEqual(page.name);
@@ -71,22 +71,22 @@ describe("Database interface for pages", () => {
 
     it("Deletes responses along with page", async () => {
 
-        const owner = await users.createUser(randomUser())
+        const owner = await database.users.createUser(randomUser())
         const page = await pages.createPage(randomPage(owner.id));
 
-        await responses.createResponse({
+        await database.responses.createResponse({
             emotion: ":-(",
             page_id: page.id
         });
 
 
 
-        const responsesBefore = await responses.getResponses(page.id);
+        const responsesBefore = await database.responses.getResponses(page.id);
         expect(responsesBefore.length).toEqual(1);
 
         await pages.deletePage(page.id);
 
-        const responsesAfter = await responses.getResponses(page.id);
+        const responsesAfter = await database.responses.getResponses(page.id);
         expect(responsesAfter.length).toEqual(0);
     });
 
@@ -96,8 +96,8 @@ describe("Database interface for pages", () => {
 
         await pages.deletePage(page.id);
 
-        const firstAfter = await questions.getQuestion(firstBefore.id);
-        const secondAfter = await questions.getQuestion(secondBefore.id);
+        const firstAfter = await database.questions.getQuestion(firstBefore.id);
+        const secondAfter = await database.questions.getQuestion(secondBefore.id);
 
         expect(firstBefore).toBeDefined();
         expect(secondBefore).toBeDefined();
@@ -114,8 +114,8 @@ describe("Database interface for pages", () => {
 
         await pages.deletePage(page.id);
 
-        const questionAfter = await questions.getQuestion(question.id);
-        const otherAfter = await questions.getQuestion(otherQuestion.id);
+        const questionAfter = await database.questions.getQuestion(question.id);
+        const otherAfter = await database.questions.getQuestion(otherQuestion.id);
 
         expect(questionAfter).toBeNull();
         expect(otherAfter).toEqual(otherQuestion);
@@ -126,7 +126,7 @@ describe("Database interface for pages", () => {
         const [_, page, response, [answer]] = await setupAnswers(1);
 
         await pages.deletePage(page.id);
-        const after = await answers.getAnswer(answer.id);
+        const after = await database.answers.getAnswer(answer.id);
         expect(after).toBeNull();
     });
 
@@ -137,8 +137,8 @@ describe("Database interface for pages", () => {
 
         await pages.deletePage(page.id);
 
-        const unrelatedAfter = await answers.getAnswer(unrelated.id);
-        const answerAfter = await answers.getAnswer(answer.id);
+        const unrelatedAfter = await database.answers.getAnswer(unrelated.id);
+        const answerAfter = await database.answers.getAnswer(answer.id);
 
         expect(unrelatedAfter).toEqual(unrelated);
         expect(answerAfter).toEqual(null);
@@ -148,9 +148,9 @@ describe("Database interface for pages", () => {
 
         const [user, page, embeddable] = await setupEmbeddable();
 
-        const before = await embeddables.getByPage(page.id);
+        const before = await database.embeddables.getByPage(page.id);
         await pages.deletePage(page.id);
-        const after = await embeddables.getByPage(page.id);
+        const after = await database.embeddables.getByPage(page.id);
 
         expect(before).toBeDefined();
         expect(before.id).toEqual(embeddable.id);
@@ -164,9 +164,9 @@ describe("Database interface for pages", () => {
         const [_, page, embeddable] = await setupEmbeddable();
         const [__, otherPage, ___] = await setupEmbeddable();
 
-        const before = await embeddables.getByPage(page.id);
+        const before = await database.embeddables.getByPage(page.id);
         await pages.deletePage(otherPage.id);
-        const after = await embeddables.getByPage(page.id);
+        const after = await database.embeddables.getByPage(page.id);
 
         expect(before).toBeDefined();
         expect(before.id).toEqual(embeddable.id);
@@ -179,8 +179,8 @@ describe("Database interface for pages", () => {
 
     it("Can set category", async () => {
 
-        const user = await users.createUser(randomUser())
-        const persistedCategory = await categories.createCategory({ name: "category name", owner_id: user.id });
+        const user = await database.users.createUser(randomUser())
+        const persistedCategory = await database.categories.createCategory({ name: "category name", owner_id: user.id });
 
         const page = {
             owner_id: user.id,
@@ -201,8 +201,8 @@ describe("Database interface for pages", () => {
 
         it("Can returns pages", async () => {
 
-            const owner = await users.createUser(randomUser())
-            const category = await categories.createCategory({
+            const owner = await database.users.createUser(randomUser())
+            const category = await database.categories.createCategory({
                 name: faker.commerce.productName(),
                 owner_id: owner.id
             });
@@ -221,13 +221,13 @@ describe("Database interface for pages", () => {
 
         it("Does not return pages with other owners or categories", async () => {
 
-            const owner = await users.createUser(randomUser())
-            const other = await users.createUser(randomUser())
-            const ownerCategory = await categories.createCategory({
+            const owner = await database.users.createUser(randomUser())
+            const other = await database.users.createUser(randomUser())
+            const ownerCategory = await database.categories.createCategory({
                 name: faker.commerce.productName(),
                 owner_id: owner.id
             });
-            const otherCategory = await categories.createCategory({
+            const otherCategory = await database.categories.createCategory({
                 name: faker.commerce.productName(),
                 owner_id: other.id
             });
@@ -310,7 +310,7 @@ describe("Database interface for pages", () => {
         it("Does exist", async () => {
 
             const color = '#AABBCC';
-            const owner = await users.createUser(randomUser())
+            const owner = await database.users.createUser(randomUser())
             const page = await pages.createPage(randomPage(owner.id, color));
 
             expect(page.color).toEqual(color);
@@ -319,7 +319,7 @@ describe("Database interface for pages", () => {
         it("Does not have to be specified", async () => {
 
             const color = null;
-            const owner = await users.createUser(randomUser())
+            const owner = await database.users.createUser(randomUser())
             const page = await pages.createPage(randomPage(owner.id, color));
 
             expect(page.color).toEqual(color);
@@ -329,7 +329,7 @@ describe("Database interface for pages", () => {
 
             const sixChars = '#AABBC';
             const eightChars = '#AABBCCC';
-            const owner = await users.createUser(randomUser())
+            const owner = await database.users.createUser(randomUser())
 
             await expect(async () => {
 
@@ -340,7 +340,7 @@ describe("Database interface for pages", () => {
 
         it("Can be updated", async () => {
 
-            const owner = await users.createUser(randomUser())
+            const owner = await database.users.createUser(randomUser())
             const originalColor = '#AABBCC';
 
             const page = await pages.createPage(randomPage(owner.id, originalColor))
@@ -357,7 +357,7 @@ describe("Database interface for pages", () => {
 
         it("Can check wether a page exists or not", async () => {
 
-            const owner = await users.createUser(randomUser());
+            const owner = await database.users.createUser(randomUser());
             const page = randomPage(owner.id); //NOTE: not persisted 
 
             const before = await pages.pageExists(page.id);
@@ -472,7 +472,7 @@ describe("Database interface for pages", () => {
                 await setupPages();
 
                 const rows = await pages.getCustomerToPageCount();
-                const countRegistered = await users.getActiveUserCount();
+                const countRegistered = await database.users.getActiveUserCount();
 
                 expect(rows.length).toEqual(countRegistered);
             });
@@ -492,7 +492,7 @@ describe("Database interface for pages", () => {
             it("Does not include inactive users", async () => {
 
                 const [user] = await setupPages();
-                await users.updateUser({
+                await database.users.updateUser({
                     ...user,
                     active: false
                 });
@@ -505,7 +505,7 @@ describe("Database interface for pages", () => {
             it("Does include active users", async () => {
 
                 const [user] = await setupPages();
-                await users.updateUser({
+                await database.users.updateUser({
                     ...user,
                     active: true
                 });

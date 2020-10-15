@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import auth0 from "../../../../auth/auth0";
-import { pages, questions } from "../../../../../src/database/database"
+import { database } from "../../../../../src/database/database"
 import { withAuthentication, withErrorHandling, withMethodHandlers } from "../../../../middleware/middleware";
 import { withCors } from "../../../../middleware/withCors";
 import { QuestionModel } from "../../../../models/models";
@@ -17,8 +17,8 @@ const getQuestions = async (request: NextApiRequest, response: NextApiResponse) 
     const includeArchived = request.query.includeArchived === 'true';
 
     const retrieved = includeArchived ?
-        await questions.getByPage(pageId) :
-        await questions.getNonArchivedByPage(pageId);
+        await database.questions.getByPage(pageId) :
+        await database.questions.getNonArchivedByPage(pageId);
 
     response.json(retrieved);
 };
@@ -26,7 +26,7 @@ const getQuestions = async (request: NextApiRequest, response: NextApiResponse) 
 const postQuestion = withErrorHandling(withAuthentication(async (request, response) => {
 
     const { user } = await auth0.getSession(request);
-    const page = await pages.getPage(getId(request.url));
+    const page = await database.pages.getPage(getId(request.url));
 
     const question = request.body as QuestionModel;
 
@@ -34,7 +34,7 @@ const postQuestion = withErrorHandling(withAuthentication(async (request, respon
         return response.status(FORBIDDEN).end();
 
     try {
-        const persisted = await questions.createQuestion(question);
+        const persisted = await database.questions.createQuestion(question);
         return response
             .status(CREATED)
             .send(persisted);

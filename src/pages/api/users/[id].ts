@@ -2,7 +2,7 @@ import { FORBIDDEN, NOT_FOUND, OK, NO_CONTENT } from "node-kall";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { withCors, withAuthentication, withMethodHandlers, asAdmin } from "../../../middleware/middleware";
 import auth0 from "../../../auth/auth0";
-import { users } from "../../../database/database";
+import { database } from "../../../database/database";
 import { getPathParam } from "../../../workarounds";
 import { deleteAuthUser } from "../../../auth/delete";
 import { UserModel } from "../../../models/models";
@@ -24,7 +24,7 @@ const getUser = asSameUser(
     async (request, response) => {
 
         const { user } = await auth0.getSession(request);
-        const persistedUser = await users.getUser(user.sub);
+        const persistedUser = await database.users.getUser(user.sub);
 
         const [status, payload] = persistedUser ?
             [OK, persistedUser] :
@@ -44,10 +44,10 @@ const deleteUser = asSameUser(
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const id = getPathParam(request.url, 1);
-        const dbUser = await users.getUser(id);
+        const dbUser = await database.users.getUser(id);
 
         await deleteAuthUser(id);
-        await users.deleteUser(id);
+        await database.users.deleteUser(id);
 
         response
             .status(NO_CONTENT)
@@ -59,7 +59,7 @@ const putUser = asAdmin(
 
         const user = request.body as UserModel;
 
-        const existing = await users.getUser(user.id);
+        const existing = await database.users.getUser(user.id);
         if (!existing)
             return response
                 .status(NOT_FOUND)
@@ -68,10 +68,10 @@ const putUser = asAdmin(
         //THINKABOUT: separately to make it more explicit. Does this actually increase readability/security?
         if (user.role !== existing.role) {
 
-            await users.updateRole(user);
+            await database.users.updateRole(user);
         }
 
-        await users.updateUser(user);
+        await database.users.updateUser(user);
 
         response
             .status(NO_CONTENT)

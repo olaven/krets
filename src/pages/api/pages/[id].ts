@@ -1,5 +1,5 @@
 
-import { pages, categories } from "../../../database/database";
+import { database } from "../../../database/database";
 import { NOT_FOUND, BAD_REQUEST, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models/models";
@@ -15,7 +15,7 @@ const getId = (url: string) => getPathParam(url, 1);
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getId(request.url);
-    const page = await pages.getPage(id);
+    const page = await database.pages.getPage(id);
 
 
     if (page) {
@@ -36,7 +36,7 @@ const del = withAuthentication(
         async (request: NextApiRequest, response: NextApiResponse) => {
 
             const id = getId(request.url)
-            pages.deletePage(id);
+            database.pages.deletePage(id);
 
             response
                 .status(NO_CONTENT)
@@ -61,12 +61,12 @@ const put = withAuthentication(
             }
 
             const { user } = await auth0.getSession(request);
-            if (page.category_id && !(await categories.hasOwner(user.sub, page.category_id)))
+            if (page.category_id && !(await database.categories.hasOwner(user.sub, page.category_id)))
                 return response
                     .status(BAD_REQUEST)
                     .end();
 
-            await pages.updatePage(page)
+            await database.pages.updatePage(page)
             response
                 .status(NO_CONTENT)
                 .send("");

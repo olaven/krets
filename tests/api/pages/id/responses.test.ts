@@ -2,7 +2,7 @@ import { authenticatedFetch, setupServer, teardownServer } from "../../apiTestUt
 import * as faker from "faker";
 import { Server } from "net";
 import handler from '../../../../src/pages/api/pages/[id]/responses';
-import { users, pages, responses, answers } from "../../../../src/database/database";
+import { database } from "../../../../src/database/database";
 import fetch from "cross-fetch";
 import { randomUser, randomPage, randomResponse, blindSetup, setupPage, randomAnswer } from "../../../database/databaseTestUtils";
 import { PaginatedModel, ResponseAnswerModel, ResponseModel } from "../../../../src/models/models";
@@ -39,21 +39,21 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const user = await users.createUser(randomUser());
+        const user = await database.users.createUser(randomUser());
 
-        const page = await pages.createPage({
+        const page = await database.pages.createPage({
             id: faker.random.uuid(),
             name: faker.company.companyName(),
             owner_id: user.id,
             mandatory_contact_details: false
         });
 
-        await responses.createResponse({
+        await database.responses.createResponse({
             emotion: ':-|',
             page_id: page.id
         });
 
-        await responses.createResponse({
+        await database.responses.createResponse({
             emotion: ':-)',
             page_id: page.id
         });
@@ -62,7 +62,7 @@ describe("The endpoint for responses", () => {
         expect(fetchResponse.status).toEqual(200);
 
         const receivedResponses = (await fetchResponse.json()).data;
-        expect(receivedResponses.length).toEqual(2);
+        expect(receiveddatabase.responses.length).toEqual(2);
     });
 
     describe("Response creation", () => {
@@ -123,9 +123,9 @@ describe("The endpoint for responses", () => {
 
         it("is possible to create a response", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.createUser(randomUser());
 
-            const page = await pages.createPage({
+            const page = await database.pages.createPage({
                 id: faker.random.uuid(),
                 name: faker.company.companyName(),
                 owner_id: user.id,
@@ -148,7 +148,7 @@ describe("The endpoint for responses", () => {
 
 
             const retrievedResponses = (await (await fetch(fullURL(page.id))).json()).data;
-            const hasCorrect = retrievedResponses.find(r =>
+            const hasCorrect = retrieveddatabase.responses.find(r =>
                 r.emotion === response.emotion &&
                 r.page_id === response.page_id)
 
@@ -158,13 +158,13 @@ describe("The endpoint for responses", () => {
 
         it("Is possible to have the response contain contact details", async () => {
 
-            const user = await users.createUser(randomUser());
-            const page = await pages.createPage(randomPage(user.id));
+            const user = await database.users.createUser(randomUser());
+            const page = await database.pages.createPage(randomPage(user.id));
             const contactDetails = faker.internet.email();
 
             const response = randomResponse(page.id, ":-|", contactDetails);
 
-            const before = await responses.getResponses(page.id);
+            const before = await database.responses.getResponses(page.id);
             const { status } = await postResponse({
                 response,
                 answers: [],
@@ -172,7 +172,7 @@ describe("The endpoint for responses", () => {
 
             expect(status).toEqual(201);
 
-            const after = await responses.getResponses(page.id);
+            const after = await database.responses.getResponses(page.id);
             expect(before.length).toEqual(0);
             expect(after.length).toEqual(1);
 
@@ -183,7 +183,7 @@ describe("The endpoint for responses", () => {
         it(" Does not allow creation of a response with bad id", async () => {
 
             const id = faker.random.uuid();
-            const page = await pages.getPage(id);
+            const page = await database.pages.getPage(id);
             expect(page).toEqual(null);
 
             const response = randomResponse(id, ":-)", undefined);
@@ -261,7 +261,7 @@ describe("The endpoint for responses", () => {
             });
 
             const response = await r.json() as ResponseModel;
-            const [after] = await answers.getByResponse(response.id);
+            const [after] = await database.answers.getByResponse(response.id);
 
             //i.e. found the same text in database after posting 
             expect(after.text).toEqual(after.text);

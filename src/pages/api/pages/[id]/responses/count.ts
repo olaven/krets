@@ -1,4 +1,4 @@
-import { responses } from "../../../../../database/database"
+import { database } from "../../../../../database/database"
 import { asPageOwner, withAuthentication, withCors, withMethodHandlers, withMethods } from "../../../../../middleware/middleware"
 import { getPathParam } from "../../../../../workarounds";
 
@@ -11,7 +11,7 @@ export default
                     GET: async (request, response) => {
 
                         const pageId = getPathParam(request.url, 3);
-                        const count = await responses.getCount(pageId);
+                        const count = await database.responses.getCount(pageId);
 
                         return response
                             .json({ count });

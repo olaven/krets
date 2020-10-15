@@ -2,7 +2,7 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../../apiTestUtils";
 import answersHandler from '../../../../../../src/pages/api/pages/[id]/responses/[responseId]/answers';
-import { users, } from "../../../../../../src/database/database";
+import { database, } from "../../../../../../src/database/database";
 import { randomAnswer, randomUser, setupAnswers } from "../../../../../database/databaseTestUtils";
 import { AnswerModel } from "../../../../../../src/models/models";
 
@@ -40,7 +40,7 @@ describe("The endpoint for answers on a given response", () => {
         it("Returns 403 if authenticated, but not page owner", async () => {
 
             const [owner, page, response, __] = await setupAnswers();
-            const other = await users.createUser(randomUser());
+            const other = await database.users.createUser(randomUser());
             expect(owner.id).not.toEqual(other.id);
 
             const { status } = await authenticatedFetch(other.id, fullURL(page.id, response.id));

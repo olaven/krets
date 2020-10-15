@@ -3,7 +3,7 @@ import { uid } from "../api/apiTestUtils";
 import { randomAnswer, setupAnswers } from "./databaseTestUtils";
 
 
-describe("The datbase interface for answers", () => {
+describe("The database interface for answers", () => {
     it("Is possible to create an answer", async () => {
 
         const [_, __, response] = await setupAnswers(0);

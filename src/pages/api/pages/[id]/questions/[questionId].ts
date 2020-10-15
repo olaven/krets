@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { BAD_REQUEST, NO_CONTENT, FORBIDDEN, OK } from "node-kall";
 import auth0 from "../../../../../auth/auth0";
-import { questions } from "../../../../../database/database";
+import { database } from "../../../../../database/database";
 import { pages } from "../../../../../database/pages";
 import { withErrorHandling, withAuthentication, withMethodHandlers } from "../../../../../middleware/middleware";
 import { QuestionModel } from "../../../../../models/models";
@@ -43,7 +43,7 @@ const withQuestion = (questionHandler: (question: QuestionModel, response: NextA
 
 const putQuestion = withQuestion(async (question, response) => {
 
-    await questions.updateQuestion(question);
+    await database.questions.updateQuestion(question);
 
     response
         .status(NO_CONTENT)
@@ -53,7 +53,7 @@ const putQuestion = withQuestion(async (question, response) => {
 //THINKABOUT: should probably not have to pass question has body. 
 const deleteQuestion = withQuestion(async (question, response) => {
 
-    const deleted = await questions.deleteQuestion(question.id);
+    const deleted = await database.questions.deleteQuestion(question.id);
     response
         .status(OK)
         .send(deleted);

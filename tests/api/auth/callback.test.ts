@@ -2,7 +2,7 @@ import { Server } from "net";
 import handler from "../../../src/pages/api/auth/callback";
 import { authenticatedFetch, setupServer, teardownServer } from "../apiTestUtils";
 import * as faker from "faker";
-import { users } from "../../../src/database/database";
+import { database } from "../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
 
 jest.mock("../../../src/auth/auth0");
@@ -27,9 +27,9 @@ describe("The callback endpoint", () => {
 
         const uid = faker.random.uuid();
 
-        const before = await users.userExists(uid);
+        const before = await database.users.userExists(uid);
         await authenticatedFetch(uid, url);
-        const after = await users.userExists(uid);
+        const after = await database.users.userExists(uid);
 
         expect(before).toBeFalsy();
         expect(after).toBeTruthy();
@@ -38,11 +38,11 @@ describe("The callback endpoint", () => {
     it(" does _not_ create if user already exists", async () => {
 
 
-        const user = await users.createUser(randomUser());
+        const user = await database.users.createUser(randomUser());
 
-        const before = await users.userExists(user.id);
+        const before = await database.users.userExists(user.id);
         await authenticatedFetch(user.id, url);
-        const after = await users.userExists(user.id);
+        const after = await database.users.userExists(user.id);
 
         expect(before).toBeTruthy();
         expect(after).toBeTruthy();
