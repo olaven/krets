@@ -60,6 +60,7 @@ export const ContactInput = ({ isMandatory, setContactDetails, setShowSendButton
         <H2>{uiText.response.contact.heading}</H2>
         {isMandatory || wantsToGiveContactDetails ?
             <ContactTextInput
+                autocomplete="email"
                 placeholder={uiText.response.contact.placeholder}
                 error={showContactDetailsError}
                 onChange={(event) => {
