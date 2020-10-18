@@ -9,7 +9,77 @@
 
 <body>
 
-    <iframe src="https://krets.app/side/embed?token=wP48yYV4CE8sHXEDTnjsg" frameborder=0 width="500px" height="550px" />
+
+    <ul id="krets-emoji-list">
+        <li class="krets-emoji-element">
+            <button class="krets-emoji-buttons" id="krets-happy-emoji">😄</button>
+        </li>
+        <li class="krets-emoji-element">
+            <button class="krets-emoji-buttons" id="krets-neutral-emoji">😐</button>
+        </li>
+        <li class="krets-emoji-element">
+            <button class="krets-emoji-buttons" id="krets-sad-emoji">😞</button>
+        </li>
+    </ul>
+
+
+
+    <style>
+        #krets-emoji-list {
+            display: flex;
+            align-items: stretch;
+            /* Default */
+            justify-content: space-around;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .krets-emoji-element {
+            display: block;
+            flex: 0 1 auto;
+        }
+
+        .krets-emoji-buttons {
+            transition: ease .2s;
+            font-size: 4.5em;
+            border: none;
+            cursor: pointer;
+            background-color: inherit;
+        }
+
+        .krets-emoji-buttons:hover {
+
+            transform: scale(1.1)
+        }
+
+        .krets-selected-emoji {
+            background-color: blue;
+        }
+    </style>
+    <script>
+
+
+        const get = (selector) => selector.startsWith("#") ?
+            document.getElementById(selector.substring(1)) :
+            document.querySelectorAll(selector);
+
+        get(".krets-emoji-buttons")
+            .forEach(emoji => {
+                emoji.onclick = (event) => {
+
+                    event.target.classList.add("krets-selected-emoji")
+                }
+            });
+
+        const happyEmoji = get("#krets-happy-emoji");
+        const neutralEmoji = get("#krets-neutral-emoji");
+        const sadEmoji = get("#krets-sad-emoji");
+
+        console.log(happyEmoji.innerText, neutralEmoji.innerText, sadEmoji.innerText)
+        //console.log(container)
+    </script>
 </body>
 
 </html>
