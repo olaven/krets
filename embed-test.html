@@ -11,65 +11,93 @@
 
 
     <ul id="krets-emoji-list">
-        <li class="krets-emoji-element">
-            <button class="krets-emoji-buttons" id="krets-happy-emoji">😄</button>
-        </li>
-        <li class="krets-emoji-element">
-            <button class="krets-emoji-buttons" id="krets-neutral-emoji">😐</button>
-        </li>
-        <li class="krets-emoji-element">
-            <button class="krets-emoji-buttons" id="krets-sad-emoji">😞</button>
-        </li>
+        <ul class="flex-container">
+            <li class="krets-flex-element">
+                <div class="emoji">😄</div>
+            </li>
+            <li class="krets-flex-element">
+                <div class="emoji">😐</div>
+            </li>
+            <li class="krets-flex-element">
+                <div class="emoji">😞</div>
+            </li>
+        </ul>
     </ul>
 
 
-
     <style>
-        #krets-emoji-list {
-            display: flex;
-            align-items: stretch;
-            /* Default */
-            justify-content: space-around;
-            width: 100%;
-            margin: 0;
+        ul {
+            list-style-type: none;
             padding: 0;
-            list-style: none;
         }
 
-        .krets-emoji-element {
-            display: block;
-            flex: 0 1 auto;
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20em;
         }
 
-        .krets-emoji-buttons {
-            transition: ease .2s;
-            font-size: 4.5em;
-            border: none;
+        .krets-flex-element {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5em;
+            height: 5em;
+            margin: 1em;
             cursor: pointer;
-            background-color: inherit;
+            flex: 1 0 auto;
+            transition: .4s ease, opacity .3s ease, transform .2s ease;
         }
 
-        .krets-emoji-buttons:hover {
-
-            transform: scale(1.1)
+        .krets-flex-element:hover {
+            transform: scale(1.1);
         }
 
-        .krets-selected-emoji {
-            background-color: blue;
+        .krets-flex-element-removed {
+
+            flex: 0 0 auto;
+            width: 0;
+            border: none;
+            opacity: 0;
+            margin: 0;
+        }
+
+        .emoji {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            font-size: 8em;
         }
     </style>
     <script>
 
 
-        const get = (selector) => selector.startsWith("#") ?
-            document.getElementById(selector.substring(1)) :
-            document.querySelectorAll(selector);
+        const get = (selector) =>
+            () => selector.startsWith("#") ?
+                document.getElementById(selector.substring(1)) :
+                document.querySelectorAll(selector);
 
-        get(".krets-emoji-buttons")
+
+
+        const getEmojis = get(".krets-flex-element");
+
+
+        getEmojis()
             .forEach(emoji => {
                 emoji.onclick = (event) => {
 
                     event.target.classList.add("krets-selected-emoji")
+                    getEmojis()
+                        .forEach(element => {
+
+                            if (element.innerText !== event.target.innerText) {
+
+                                element.classList.add("krets-flex-element-removed");
+                            }
+                        });
                 }
             });
 
