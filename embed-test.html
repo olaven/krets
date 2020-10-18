@@ -32,6 +32,7 @@
         }
 
         .flex-container {
+            position: relative;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -49,10 +50,11 @@
             cursor: pointer;
             flex: 1 0 auto;
             transition: .4s ease, opacity .3s ease, transform .2s ease;
+            margin: 2em;
         }
 
         .krets-flex-element:hover {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
         .krets-flex-element-removed {
@@ -74,39 +76,59 @@
     </style>
     <script>
 
-
+        /**
+         * HOF for: 
+         * returning result of query. 
+         * Returns One element if ID (i.e. "#") is targeted. 
+         * Returns JS if not. 
+        * */
         const get = (selector) =>
             () => selector.startsWith("#") ?
                 document.getElementById(selector.substring(1)) :
-                document.querySelectorAll(selector);
+                Array.from(
+                    document.querySelectorAll(selector)
+                );
 
 
 
-        const getEmojis = get(".krets-flex-element");
+        const state = {
+            selected: false,
+            page: null,
+        }
+
+        const fetchData = async () => {
+
+            const response = fetch("https://krets.app/api/pages/test");
+            const page = await response.json();
+            console.log(page);
+        }
+
+        const setupListeners = () => {
+
+            const getEmojis = get(".krets-flex-element");
+            const remove = (element) => element.classList.add("krets-flex-element-removed");
+            const select = (element) => element.classList.add("krets-selected-emoji");
+
+            getEmojis()
+                .forEach(emoji => {
+                    emoji.onclick = (event) => {
+
+                        select(event.target);
+                        getEmojis()
+                            .filter(element => element.innerText !== event.target.innerText)
+                            .map(remove);
+                    }
+                });
+        }
 
 
-        getEmojis()
-            .forEach(emoji => {
-                emoji.onclick = (event) => {
 
-                    event.target.classList.add("krets-selected-emoji")
-                    getEmojis()
-                        .forEach(element => {
+        fetchData();
+        setupListeners();
 
-                            if (element.innerText !== event.target.innerText) {
-
-                                element.classList.add("krets-flex-element-removed");
-                            }
-                        });
-                }
-            });
-
-        const happyEmoji = get("#krets-happy-emoji");
-        const neutralEmoji = get("#krets-neutral-emoji");
-        const sadEmoji = get("#krets-sad-emoji");
-
-        console.log(happyEmoji.innerText, neutralEmoji.innerText, sadEmoji.innerText)
-        //console.log(container)
+        setTimeout(() => {
+            console.log(state)
+        }, 100)
     </script>
 </body>
 
