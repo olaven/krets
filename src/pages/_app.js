@@ -42,12 +42,7 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
       {/* FIXME: causes annoying error on startup noe */}
       {/* <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} /> */}
 
-      <style>{`
-        body {
-          margin: 0;
-        }
-      `}</style>
-
+      <style>{`body {margin: 0;}`}</style>
     </Head>
     <ThemeProvider theme={KretsTheme}>
       <Layout>
