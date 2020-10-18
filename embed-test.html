@@ -89,18 +89,45 @@
                     document.querySelectorAll(selector)
                 );
 
+        const initializeState = () => {
 
 
-        const state = {
-            selected: false,
-            page: null,
+            let state = {}
+            return (updates = {}) => {
+
+                state = {
+                    ...state,
+                    ...updates,
+                }
+                return state;
+            }
         }
+
+        const useState = initializeState({
+            selected: false,
+            page: null
+        });
+
+
 
         const fetchData = async () => {
 
+            console.log(useState({
+                selected: true
+            }));
+
+            console.log(useState());
+
+            console.log(useState({
+                selected: false
+            }));
+
+            console.log(useState());
+
+            /* 
             const response = fetch("https://krets.app/api/pages/test");
             const page = await response.json();
-            console.log(page);
+            console.log(page); */
         }
 
         const setupListeners = () => {
@@ -125,10 +152,6 @@
 
         fetchData();
         setupListeners();
-
-        setTimeout(() => {
-            console.log(state)
-        }, 100)
     </script>
 </body>
 
