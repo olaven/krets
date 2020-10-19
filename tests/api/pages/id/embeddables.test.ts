@@ -4,7 +4,7 @@ import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch, randomEmbeddableResponse } from "../../apiTestUtils";
 import embeddablesHandler from '../../../../src/pages/api/pages/[id]/embeddables';
 import { setupPages, setupEmbeddable, randomEmbeddable } from "../../../database/databaseTestUtils";
-import { EmbeddableModel, EmbeddableResponseModel, PageModel } from "../../../../src/models/models";
+import { EmbeddableInformationModel, EmbeddableModel, EmbeddableResponseModel, PageModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 

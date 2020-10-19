@@ -89,10 +89,10 @@
                     document.querySelectorAll(selector)
                 );
 
-        const initializeState = () => {
+        const initializeState = (initializeState) => {
 
 
-            let state = {}
+            let state = initializeState || {}
             return (updates = {}) => {
 
                 state = {
@@ -104,38 +104,21 @@
         }
 
         const useState = initializeState({
-            selected: false,
-            page: null
+            PAGE_ID: "side",
+            TOKEN: "wP48yYV4CE8sHXEDTnjsg",
         });
-
 
 
         const fetchData = async () => {
 
-            console.log(
-                useState({
-                    selected: true
-                })
-            );
+            const { PAGE_ID, TOKEN } = useState();
+            const response = await fetch(`http://localhost:3000/api/pages/${PAGE_ID}/embeddables/information?token=${TOKEN}`);
+            const information = await response.json();
 
-            console.log(
-                useState()
-            );
 
-            console.log(
-                useState({
-                    selected: false
-                })
-            );
-
-            console.log(
-                useState()
-            );
-
-            /* 
-            const response = fetch("https://krets.app/api/pages/test");
-            const page = await response.json();
-            console.log(page); */
+            useState({
+                questions: information.questions
+            });
         }
 
         const setupListeners = () => {

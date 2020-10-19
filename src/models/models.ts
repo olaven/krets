@@ -14,3 +14,4 @@ export type { PaginatedModel } from "./PaginatedModel";
 export type { QuestionModel } from "./QuestionModel";
 export type { EmbeddableModel } from "./EmbeddableModel"
 export type { EmbeddableResponseModel } from "./EmbeddableResponseModel"
+export type { EmbeddableInformationModel } from "./EmbeddableInformationModel"

@@ -1,4 +1,4 @@
-import { UserContext, UserContextProvider } from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
