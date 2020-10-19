@@ -58,10 +58,10 @@ export const Layout = (props) => {
         minWidth={"100vw"}
         minHeight={"100vh"}
         sx={{
-            m: 0,
             fontFamily: "body"
         }}
-        backgroundColor={"secondary"}>
+        backgroundColor={"secondary"}
+    >
         <Flex px={2}
             color='primary'
             alignItems='center'>
