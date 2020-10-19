@@ -26,10 +26,10 @@
         </ul>
 
         <div id="krets-optional-input-container">
-            <h2>Valgfrie spørsmål:</h2>
+            <h2 class="krets-sub-header">Valgfri utdypning</h2>
             <ul id="krets-questions-list"></ul>
 
-            <h2>Valgfri kontaktinformasjon</h2>
+            <h2 class="krets-sub-header">Valgfri kontaktinformasjon</h2>
             <input id="krets-contact-input" class="krets-input" type="email" placeholder="e-post eller telefonnummer" />
             <button id="krets-send-button" id="krets-send-button">send</button>
         </div>
@@ -45,6 +45,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .krets-sub-header {
+
+            font-size: 1.3em;
+            opacity: .5;
+            margin-bottom: 0;
         }
 
         .flex-container {
