@@ -1,0 +1,136 @@
+.krets-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.krets-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#krets-thanks-container {
+
+    transition: 1s ease-in;
+    opacity: 0;
+    display: none;
+    text-align: center;
+    padding: 1em;
+    font-size: 5em;
+    text-decoration: underline;
+    text-decoration-color: hsl(183, 80%, 20%);
+
+}
+
+#krets-error-message {
+    display: none;
+    color: orangered;
+}
+
+.krets-sub-header {
+
+    font-size: 1em;
+    opacity: .5;
+    margin: 0;
+    margin-top: 1em;
+    margin-bottom: .25em;
+
+}
+
+.flex-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20em;
+}
+
+.krets-flex-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5em;
+    height: 5em;
+    margin: 1em;
+    cursor: pointer;
+    flex: 1 0 auto;
+    transition: .4s ease, opacity .3s ease, transform .2s ease;
+    margin: 2em;
+}
+
+.krets-flex-element:hover {
+    transform: scale(1.2);
+}
+
+.krets-flex-element-removed {
+
+    flex: 0 0 auto;
+    width: 0;
+    border: none;
+    opacity: 0;
+    margin: 0;
+}
+
+.emoji {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    font-size: 8em;
+}
+
+#krets-optional-input-container {
+    display: flex;
+    flex-direction: column;
+    transition: opacity ease-in .5s;
+    opacity: 0;
+}
+
+#krets-questions-list {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.krets-input:hover {
+
+    outline: none;
+    transition: ease .1s;
+    transform: scale(1.01);
+
+}
+
+.krets-input {
+    border: solid .1px;
+    border-radius: 10px;
+    padding: .5em;
+    font-size: 1.25em;
+}
+
+.krets-question-input {}
+
+.krets-question-input:focus {}
+
+#krets-contact-input {}
+
+#krets-send-button {
+
+    border: none;
+    margin-top: 1em;
+    padding: 1em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    font-size: 1.5em;
+    background-color: hsl(183, 80%, 20%);
+    color: white;
+    border-radius: 10px;
+}
+
+#krets-send-button:hover {
+    cursor: pointer;
+    transition: transform ease .1s;
+    transform: scale(1.05);
+}

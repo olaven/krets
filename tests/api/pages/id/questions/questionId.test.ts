@@ -29,7 +29,7 @@ describe("The endpoint for average all-time score", () => {
 
     it("Does not respond to methods other than PUT and DELETE", async () => {
 
-        for (const method of ["GET", "POST", "PATCH", "HEAD", "OPTIONS"]) {
+        for (const method of ["GET", "POST", "PATCH", "HEAD"]) {
 
             const { status } = await fetch(fullURL("somePage", "someQuestion"), { method });
             expect(status).toEqual(405);

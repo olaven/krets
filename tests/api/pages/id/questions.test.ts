@@ -28,7 +28,7 @@ describe("The endpoint for questions", () => {
 
     it("Does respond wihth 405 on any method but GET, POST", async () => {
 
-        for (const method of ["PATCH", "OPTIONS", "HEAD", "PUT", "DELETE", "PATCH"]) {
+        for (const method of ["PATCH", "HEAD", "PUT", "DELETE", "PATCH"]) {
 
             const { status } = await fetch(fullURL(uid()), { method });
             expect(status).toEqual(405);

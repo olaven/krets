@@ -1,4 +1,4 @@
-import { withChartMiddleware, getId } from "./chartMiddleware";
+import { withChartMiddleware, getId } from "./withChartMiddleware";
 import { database } from '../../../../../database/database';
 
 

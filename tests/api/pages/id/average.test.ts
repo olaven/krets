@@ -40,7 +40,7 @@ describe("The endpoint for average all-time score", () => {
 
             const user = await database.users.createUser(randomUser());
             const page = await database.pages.createPage(randomPage(user.id));
-            for (const method of ["PUT", "PATCH", "POST", "OPTIONS", "HEAD", "DELETE"]) {
+            for (const method of ["PUT", "PATCH", "POST", "HEAD", "DELETE"]) {
 
                 const { status } = await authenticatedFetch(user.id, fullURL(page.id), { method });
                 expect(status).toEqual(405);

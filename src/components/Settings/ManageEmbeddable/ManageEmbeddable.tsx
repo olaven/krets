@@ -1,6 +1,5 @@
 import { Text } from "rebass";
 import { EmbeddableCreator } from "./EmbeddableCreator"
-import * as text from "../../../text"
 import { EmbeddableContext, EmbeddableContextProvider } from "../../../context/EmbeddableContext";
 import { useContext } from "react";
 import { SettingsContext } from "../../../context/SettingsContext";

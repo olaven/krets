@@ -6,7 +6,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
  * With async handling, so errors are not swallowed anymore :-)
  */
 
-const origin = process.env.NODE_ENV === "production" ?
+const defaultOrigin = () => process.env.NODE_ENV === "production" ?
     "https://krets.app" :
     "localhost"
 
@@ -33,8 +33,14 @@ const allowCredentials = true;
 
 const DEFAULT_MAX_AGE_SECONDS = 60 * 60 * 24 // 24 hours
 
-export const withCors = (handler: NextApiHandler) =>
+/**
+ * Adds CORS-headers to the response. 
+ * @param handler 
+ * @param origin ('localhost'/'krets.app' as default, depending on environment)
+ */
+export const withCors = (handler: NextApiHandler, origin = defaultOrigin()) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
+
 
         response.setHeader("Access-Control-Allow-Origin", origin);
         //        response.setHeader('Access-Control-Allow-Origin', origin)
@@ -51,7 +57,8 @@ export const withCors = (handler: NextApiHandler) =>
             response.setHeader('Access-Control-Allow-Methods', DEFAULT_ALLOW_METHODS.join(','))
             response.setHeader('Access-Control-Allow-Headers', DEFAULT_ALLOW_HEADERS.join(','))
             response.setHeader('Access-Control-Max-Age', String(DEFAULT_MAX_AGE_SECONDS))
+            return response.end();
         }
 
-        await handler(request, response)
+        return await handler(request, response);
     }

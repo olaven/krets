@@ -1,5 +1,5 @@
 import { database } from "../../../../../database/database";
-import { getId, withChartMiddleware } from "./chartMiddleware";
+import { getId, withChartMiddleware } from "./withChartMiddleware";
 
 export default withChartMiddleware(
     async (request, response) => {

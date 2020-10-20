@@ -20,7 +20,6 @@ export const withMethodHandlers = (handlers: Handlers) =>
 
         const { method } = request;
         const handler = handlers[method]
-
         if (handler) await handler(request, response);
         else return response
             .status(405)

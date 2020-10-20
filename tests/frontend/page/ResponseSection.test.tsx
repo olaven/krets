@@ -11,8 +11,8 @@ import { randomPage, randomUser } from "../../database/databaseTestUtils";
 
 describe("The component for creating new responses", () => {
 
-    const launch = (page: PageModel, showHeader = true) =>
-        render(<ResponseSection page={page} showHeader={showHeader} embeddable={{ active: false }} />);
+    const launch = (page: PageModel) =>
+        render(<ResponseSection page={page} />);
 
     const page = () => randomPage(randomUser().id)
 
@@ -113,11 +113,13 @@ describe("The component for creating new responses", () => {
             });
         });
 
-        it("Does not show header if `showHeader` is false", () => {
+
+        //NOTE: skipping as header should always be visible -> header toggle was implemented, but removed 
+        it.skip("Does not show header if `showHeader` is false", () => {
 
             const customPage = page()
             customPage.custom_title = faker.lorem.words(4);
-            const { findByText } = launch(customPage, false);
+            const { findByText } = launch(customPage);
 
             waitFor(() => {
 
@@ -125,11 +127,11 @@ describe("The component for creating new responses", () => {
             });
         });
 
-        it("Does show header if `showHeader` is true", () => {
+        it("Header is visible", () => {
 
             const customPage = page()
             customPage.custom_title = faker.lorem.words(4);
-            const { findByText } = launch(customPage, true);
+            const { findByText } = launch(customPage);
 
             waitFor(() => {
 

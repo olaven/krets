@@ -58,7 +58,7 @@ describe("Endpoints for database user data", () => {
             expect(deleteResponse.status).not.toEqual(405);
             expect(putResponse).not.toEqual(405);
 
-            for (let method of ["PATCH", "HEAD", "OPTIONS"]) {
+            for (let method of ["PATCH", "HEAD"]) {
 
                 const { status } = await authenticatedFetch(id, fullUrl(id), { method });
                 expect(status).toEqual(405);

@@ -4,7 +4,7 @@ import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch, randomEmbeddableResponse } from "../../apiTestUtils";
 import embeddablesHandler from '../../../../src/pages/api/pages/[id]/embeddables';
 import { setupPages, setupEmbeddable, randomEmbeddable } from "../../../database/databaseTestUtils";
-import { EmbeddableModel, EmbeddableResponseModel, PageModel } from "../../../../src/models/models";
+import { EmbeddableInformationModel, EmbeddableModel, EmbeddableResponseModel, PageModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -34,7 +34,7 @@ describe("The endpoint for embeddables", () => {
             const [owner, [page]] = await setupPages(1);
 
             for (const method of [
-                "OPTIONS", "PATCH", "DELETE"
+                "PATCH", "DELETE"
             ]) {
 
                 const { status } = await authenticatedFetch(owner.id, fullURL(page.id), { method });
@@ -104,74 +104,5 @@ describe("The endpoint for embeddables", () => {
         });
 
 
-    });
-
-    describe("Verification and persisting of responses", () => {
-
-        const putEmbeddableResponse = (page: PageModel, embeddableResponse: EmbeddableResponseModel) =>
-            fetch(fullURL(page.id), {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(embeddableResponse)
-            });
-
-        it("Does _not_ respond with 401 if not authenticated ", async () => {
-
-            const [_, page, embeddable] = await setupEmbeddable();
-            const { status } = await putEmbeddableResponse(page,
-                randomEmbeddableResponse(page.id, embeddable.token)
-            );
-
-            expect(status).not.toEqual(401);
-        });
-
-        it("It returns 201 on succesful request", async () => {
-
-            const [_, page, embeddable] = await setupEmbeddable();
-            const { status } = await putEmbeddableResponse(
-                page, randomEmbeddableResponse(page.id, embeddable.token)
-            );
-            expect(status).toEqual(201)
-        });
-
-        it("Returns 404 if no embeddable with provided token exists", async () => {
-
-            const [_, [page]] = await setupPages(1);
-            const token = faker.random.uuid();
-            const { status } = await putEmbeddableResponse(page,
-                randomEmbeddableResponse(page.id, token)
-            );
-
-            expect(status).toEqual(404);
-        });
-
-        it("Does not accept a wrong token", async () => {
-
-            const [_, page, embeddable] = await setupEmbeddable();
-            const providedToken = faker.random.uuid();
-
-            const embeddableResponse = randomEmbeddableResponse(page.id, providedToken);
-
-            expect(embeddableResponse.answers).not.toContain(null);
-
-            const { status } = await putEmbeddableResponse(page, embeddableResponse);
-
-            expect(providedToken).not.toEqual(embeddable.token);
-            expect(status).toEqual(404);
-        });
-
-        it("Does not accept a wrong page / embeddable match ", async () => {
-
-            const [__, page, embeddable] = await setupEmbeddable();
-            const [_, [otherPage]] = await setupPages(1);
-
-            const embeddableResponse = randomEmbeddableResponse(otherPage.id, embeddable.token);
-            const { status } = await putEmbeddableResponse(page, embeddableResponse);
-
-            expect(otherPage.id).not.toEqual(page.id);
-            expect(status).toEqual(400);
-        });
     });
 });

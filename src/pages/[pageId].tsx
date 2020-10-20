@@ -29,9 +29,7 @@ const PageId = () => {
                 <Loader size={150} /> :
                 page ?
                     <QuestionsContextProvider pageId={page.id} includeArchived={false}>
-                        <ResponseSection page={page} showHeader={true} embeddable={{
-                            active: false
-                        }} />
+                        <ResponseSection page={page} />
                     </QuestionsContextProvider> :
                     <ErrorLoadingPage />
             }
