@@ -19,7 +19,6 @@ export const ManageEmbeddable = () => {
 
     const { page } = useContext(SettingsContext);
     return <EmbeddableContextProvider pageId={page.id}>
-        <Text color="attention">Dette er en eksperimentell funksjon som ikke er ferdig utviklet.</Text>
         <EmbeddableContent />
     </ EmbeddableContextProvider >
 }
