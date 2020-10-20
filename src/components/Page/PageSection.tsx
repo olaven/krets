@@ -7,6 +7,6 @@ export const PageSection = props => {
     const { page } = props;
 
     return <Box>
-        <ResponseSection page={page} showHeader={true} embeddable={{ active: false }} />
+        <ResponseSection page={page} />
     </Box>
 };

@@ -82,8 +82,6 @@ export const getEmbeddable = (pageId: string) =>
 export const postEmbeddable = (embeddable: EmbeddableModel) =>
     post(`/api/pages/${embeddable.page_id}/embeddables`, embeddable);
 
-export const putEmbeddableResponse = (embeddableResponse: EmbeddableResponseModel) =>
-    put(`/api/pages/${embeddableResponse.response.page_id}/embeddables`, embeddableResponse);
 export const putUser = (user: UserModel) =>
     put(`/api/users/${user.id}`, user);
 

@@ -6,6 +6,8 @@ import embeddableInformationHandler from "../../../../../src/pages/api/pages/[id
 import { setupEmbeddable, setupPages } from "../../../../database/databaseTestUtils";
 import { EmbeddableResponseModel, PageModel } from "../../../../../src/models/models";
 
+jest.mock("../../../../../src/auth/auth0");
+
 describe("Verification and persisting of responses", () => {
 
     let server: Server;

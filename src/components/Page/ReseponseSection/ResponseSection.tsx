@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CREATED } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
 import * as uiText from "../../../text";
-import { postResponse, putEmbeddableResponse } from "../../../fetchers";
+import { postResponse } from "../../../fetchers";
 import { Thanks } from "../../standard/Thanks";
 import { Questions } from "./Questions";
 import { ContactInput } from "./ContactInput";
@@ -74,10 +74,8 @@ const SendButton = styled(Button, {
     }
 })
 
-export const ResponseSection = ({ page, showHeader, embeddable }: {
-    page: PageModel, showHeader: boolean, embeddable: {
-        active: boolean, token?: string
-    }
+export const ResponseSection = ({ page }: {
+    page: PageModel
 }) => {
 
     const [answers, setAnswers] = useState(new Map<string, AnswerModel>());
@@ -102,35 +100,6 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
             return;
         }
 
-        await (embeddable.active ?
-            postEmbeddable() :
-            postStandard());
-    };
-
-    //FIXME: remove after embed 2.0, as will not be used 
-    const postEmbeddable = async () => {
-
-        const [status] = await putEmbeddableResponse({
-            token: embeddable.token,
-            response: {
-                emotion,
-                page_id: page.id,
-                contact_details: contactDetails ? contactDetails : null
-            },
-            answers: Array.from(answers.values())
-        });
-
-        if (status === CREATED) {
-
-            setPublished(true);
-        } else {
-
-            alert(uiText.response.error);
-        }
-    }
-
-    const postStandard = async () => {
-
         const [status] = await postResponse({
             response: {
                 emotion,
@@ -145,19 +114,18 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
 
         if (status === CREATED) setPublished(true);
         else alert(uiText.response.error);
-
-    }
+    };
 
 
     return published ?
         <Thanks /> :
         <OuterContainer>
 
-            {showHeader && <H1 aria-label="response-section-header">{
+            <H1 aria-label="response-section-header">{
                 page.custom_title ?
                     page.custom_title :
                     `${uiText.response.header} ${page.name}`
-            }</H1>}
+            }</H1>
 
             <Emojis
                 selectedEmotion={emotion}

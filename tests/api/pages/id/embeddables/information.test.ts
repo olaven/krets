@@ -7,6 +7,8 @@ import { randomQuestion, setupEmbeddable, setupPage } from "../../../../database
 import { EmbeddableInformationModel } from "../../../../../src/models/models";
 import { database } from "../../../../../src/database/database";
 
+jest.mock("../../../../../src/auth/auth0");
+
 describe("The endpoint for information required fetched by embeddable frontend", () => {
 
     let server: Server;
