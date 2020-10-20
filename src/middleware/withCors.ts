@@ -33,8 +33,15 @@ const allowCredentials = true;
 
 const DEFAULT_MAX_AGE_SECONDS = 60 * 60 * 24 // 24 hours
 
+/**
+ * Adds CORS-headers to the response. 
+ * @param handler 
+ * @param origin ('localhost'/'krets.app' as default, depending on environment)
+ */
 export const withCors = (handler: NextApiHandler, origin = defaultOrigin()) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
+
+        console.log("INSIDE WITHCORS with origin", origin);
 
         response.setHeader("Access-Control-Allow-Origin", origin);
         //        response.setHeader('Access-Control-Allow-Origin', origin)
@@ -53,5 +60,5 @@ export const withCors = (handler: NextApiHandler, origin = defaultOrigin()) =>
             response.setHeader('Access-Control-Max-Age', String(DEFAULT_MAX_AGE_SECONDS))
         }
 
-        await handler(request, response)
+        return await handler(request, response);
     }

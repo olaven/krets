@@ -29,9 +29,9 @@
             <h2 class="krets-sub-header">Valgfri utdypning</h2>
             <ul id="krets-questions-list"></ul>
 
-            <h2 class="krets-sub-header">Valgfri kontaktinformasjon</h2>
+            <h2 id="krets-contact-header" class="krets-sub-header">Valgfri kontaktinformasjon</h2>
             <input id="krets-contact-input" class="krets-input" type="email" placeholder="e-post eller telefonnummer" />
-            <button id="krets-send-button" id="krets-send-button">send</button>
+            <button id="krets-send-button">send</button>
         </div>
     </div>
 
@@ -49,9 +49,12 @@
 
         .krets-sub-header {
 
-            font-size: 1.3em;
+            font-size: 1em;
             opacity: .5;
-            margin-bottom: 0;
+            margin: 0;
+            margin-top: 1em;
+            margin-bottom: .25em;
+
         }
 
         .flex-container {
@@ -105,6 +108,7 @@
         }
 
         #krets-questions-list {
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -123,7 +127,6 @@
             border: solid .1px;
             border-radius: 10px;
             padding: .5em;
-            margin: .25em;
             font-size: 1.25em;
         }
 
@@ -155,6 +158,8 @@
 
     <script>
 
+        //TODO: UPDATE BEFORE LIVE TEST 
+        const API_BASE = "http://localhost:3000/"
         let useState;
 
         /**
@@ -175,7 +180,9 @@
         const getEmojis = get(".krets-flex-element");
         const getOptionalInuptContainer = get("#krets-optional-input-container");
         const getQuestionContainer = get("#krets-questions-list");
-        const getContactInput = get("#krets-contact-input")
+        const getContactInput = get("#krets-contact-input");
+        const getContactHeader = get("#krets-contact-header");
+        const getSendButton = get("#krets-send-button");
 
         const initializeState = (initializeState) => {
 
@@ -194,18 +201,66 @@
         const loadEmbedInformation = async () => {
 
             const { PAGE_ID, TOKEN } = useState();
-            const response = await fetch(`http://localhost:3000/api/pages/${PAGE_ID}/embeddables/information?token=${TOKEN}`);
+            const response = await fetch(`${API_BASE}api/pages/${PAGE_ID}/embeddables/information?token=${TOKEN}`);
+
+            if (response.status !== 200) {
+                console.error(`${response.status} when loading Krets. Perhaps the token is wrong?`);
+                return;
+            }
+
             const information = await response.json();
+
+            if (information.mandatoryContactDetails) {
+                getContactHeader().innerText = "Kontaktinformasjon"
+            }
+
             useState({
                 ...information
             });
-
-            console.log(useState());
         }
 
         const showOptionalInput = () => {
 
             getOptionalInuptContainer().style.opacity = 1;
+        }
+
+
+        const onSend = async () => {
+
+            const { TOKEN, PAGE_ID, answers, emotion, contactDetails, mandatoryContactDetails } = useState();
+
+            if (mandatoryContactDetails && !contactDetails) {
+
+                getContactInput().style.borderColor = "red";
+                return;
+            }
+
+            /*
+            token: string,
+            response: ResponseModel
+            answers: AnswerModel[]
+            */
+
+            const embeddableResponse = {
+                token: TOKEN,
+                response: {
+                    page_id: PAGE_ID,
+                    emotion,
+                    contact_details: contactDetails,
+                },
+                answers: answers.values()
+            }
+
+            const { status } = await fetch(`${API_BASE}/api/pages/${PAGE_ID}/embeddables`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(embeddableResponse)
+            });
+
+            console.log(status);
+
         }
 
         const setupClickListeners = () => {
@@ -224,6 +279,7 @@
                 });
             }
 
+            getSendButton().onclick = onSend;
             getEmojis()
                 .forEach(emoji => {
                     emoji.onclick = (event) => {
@@ -241,14 +297,17 @@
 
         const renderQuestions = () => {
 
-            const renderQuestion = (text) => {
+            const renderQuestion = (question) => {
 
                 const input = document.createElement("input");
-                input.placeholder = text;
+                input.placeholder = question.text;
                 input.classList.add("krets-question-input", "krets-input");
                 input.onkeyup = event => {
 
-                    console.log(event.target.value)
+                    useState().answers.set(question.id, {
+                        text: event.target.value,
+                        question_id: question.id
+                    });
                 }
                 getQuestionContainer().appendChild(input);
             }
@@ -257,10 +316,12 @@
 
             if (questions.length > 0) {
 
-                questions.forEach(question => { renderQuestion(question.text) })
+                questions.forEach(question => { renderQuestion(question) })
             } else {
 
-                renderQuestion("Hva likte du?");
+                renderQuestion({
+                    text: "Dine betraktninger?"
+                });
             }
         }
 
@@ -271,8 +332,6 @@
                 useState({
                     contactDetails: event.target.value
                 });
-
-                console.log(useState());
             }
         }
 

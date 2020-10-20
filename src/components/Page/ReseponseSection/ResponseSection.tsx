@@ -107,7 +107,7 @@ export const ResponseSection = ({ page, showHeader, embeddable }: {
             postStandard());
     };
 
-    //TODO: make more similar to postStandard. Ideally, combine somehwo 
+    //FIXME: remove after embed 2.0, as will not be used 
     const postEmbeddable = async () => {
 
         const [status] = await putEmbeddableResponse({
