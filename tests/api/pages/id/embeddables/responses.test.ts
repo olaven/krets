@@ -1,11 +1,10 @@
 import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { setupServer, teardownServer, } from "../../../apiTestUtils";
+import { setupServer, teardownServer, randomEmbeddableResponse } from "../../../apiTestUtils";
 import embeddableInformationHandler from "../../../../../src/pages/api/pages/[id]/embeddables/responses"
-import { randomQuestion, setupEmbeddable, setupPage } from "../../../../database/databaseTestUtils";
-import { EmbeddableInformationModel, EmbeddableResponseModel, PageModel } from "../../../../../src/models/models";
-import { database } from "../../../../../src/database/database";
+import { setupEmbeddable, setupPages } from "../../../../database/databaseTestUtils";
+import { EmbeddableResponseModel, PageModel } from "../../../../../src/models/models";
 
 describe("Verification and persisting of responses", () => {
 
@@ -25,9 +24,9 @@ describe("Verification and persisting of responses", () => {
         await teardownServer(server);
     });
 
-    const putEmbeddableResponse = (page: PageModel, embeddableResponse: EmbeddableResponseModel) =>
+    const postEmbeddableResponse = (page: PageModel, embeddableResponse: EmbeddableResponseModel) =>
         fetch(fullURL(page.id), {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -37,7 +36,7 @@ describe("Verification and persisting of responses", () => {
     it("Does _not_ respond with 401 if not authenticated ", async () => {
 
         const [_, page, embeddable] = await setupEmbeddable();
-        const { status } = await putEmbeddableResponse(page,
+        const { status } = await postEmbeddableResponse(page,
             randomEmbeddableResponse(page.id, embeddable.token)
         );
 
@@ -47,7 +46,7 @@ describe("Verification and persisting of responses", () => {
     it("It returns 201 on succesful request", async () => {
 
         const [_, page, embeddable] = await setupEmbeddable();
-        const { status } = await putEmbeddableResponse(
+        const { status } = await postEmbeddableResponse(
             page, randomEmbeddableResponse(page.id, embeddable.token)
         );
         expect(status).toEqual(201)
@@ -57,7 +56,7 @@ describe("Verification and persisting of responses", () => {
 
         const [_, [page]] = await setupPages(1);
         const token = faker.random.uuid();
-        const { status } = await putEmbeddableResponse(page,
+        const { status } = await postEmbeddableResponse(page,
             randomEmbeddableResponse(page.id, token)
         );
 
@@ -73,7 +72,7 @@ describe("Verification and persisting of responses", () => {
 
         expect(embeddableResponse.answers).not.toContain(null);
 
-        const { status } = await putEmbeddableResponse(page, embeddableResponse);
+        const { status } = await postEmbeddableResponse(page, embeddableResponse);
 
         expect(providedToken).not.toEqual(embeddable.token);
         expect(status).toEqual(404);
@@ -85,7 +84,7 @@ describe("Verification and persisting of responses", () => {
         const [_, [otherPage]] = await setupPages(1);
 
         const embeddableResponse = randomEmbeddableResponse(otherPage.id, embeddable.token);
-        const { status } = await putEmbeddableResponse(page, embeddableResponse);
+        const { status } = await postEmbeddableResponse(page, embeddableResponse);
 
         expect(otherPage.id).not.toEqual(page.id);
         expect(status).toEqual(400);

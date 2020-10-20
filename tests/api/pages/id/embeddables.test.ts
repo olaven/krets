@@ -34,7 +34,7 @@ describe("The endpoint for embeddables", () => {
             const [owner, [page]] = await setupPages(1);
 
             for (const method of [
-                "OPTIONS", "PATCH", "DELETE"
+                "PATCH", "DELETE"
             ]) {
 
                 const { status } = await authenticatedFetch(owner.id, fullURL(page.id), { method });

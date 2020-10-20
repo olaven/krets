@@ -39,7 +39,7 @@ describe("The endpoint for average all-time score", () => {
 
             const [page, user] = await blindSetup();
 
-            for (let method of ["POST", "PUT", "PATCH", "OPTIONS", "HEAD"]) {
+            for (let method of ["POST", "PUT", "PATCH", "HEAD"]) {
 
                 const { status } = await authenticatedFetch(user.id, fullURL(page.id), { method })
                 expect(status).toEqual(405);
