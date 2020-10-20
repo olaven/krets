@@ -19,6 +19,8 @@ export const withMethodHandlers = (handlers: Handlers) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const { method } = request;
+        console.log("INSIDE WITHMETHODHANDLERS");
+        console.log(`method: ${method}, handlers: ${handlers}`);
         const handler = handlers[method]
         if (handler) await handler(request, response);
         else return response

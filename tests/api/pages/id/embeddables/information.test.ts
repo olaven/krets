@@ -78,6 +78,24 @@ describe("The endpoint for information required fetched by embeddable frontend",
             expect(information.questions[0]).toEqual(question);
         });
 
+        it("Does not return archived questions", async () => {
+
+            const [__, page, embeddable] = await setupEmbeddable();
+            await database.questions.createQuestion({
+                ...randomQuestion(page.id),
+                archived: true
+            });
+
+            const response = await fetch(fullURL(page.id, embeddable.token));
+            const information = (await response.json()) as EmbeddableInformationModel;
+
+
+            const allIncludingArchived = await database.questions.getByPage(page.id);
+
+            expect(allIncludingArchived.length).toEqual(1);
+            expect(information.questions.length).toEqual(0);
+        });
+
         it("Does return correct embeddable", async () => {
 
             const [__, page, embeddable] = await setupEmbeddable();

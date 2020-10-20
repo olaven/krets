@@ -19,7 +19,7 @@ export default withCors(
                         .status(NOT_FOUND)
                         .end()
 
-                const questions = await database.questions.getByPage(embeddable.page_id);
+                const questions = await database.questions.getNonArchivedByPage(embeddable.page_id);
                 const page = await database.pages.getPage(pageId);
 
                 const embeddableInformation: EmbeddableInformationModel = {

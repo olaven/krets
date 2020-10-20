@@ -41,7 +41,6 @@ const DEFAULT_MAX_AGE_SECONDS = 60 * 60 * 24 // 24 hours
 export const withCors = (handler: NextApiHandler, origin = defaultOrigin()) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
-        console.log("INSIDE WITHCORS with origin", origin);
 
         response.setHeader("Access-Control-Allow-Origin", origin);
         //        response.setHeader('Access-Control-Allow-Origin', origin)
@@ -58,6 +57,7 @@ export const withCors = (handler: NextApiHandler, origin = defaultOrigin()) =>
             response.setHeader('Access-Control-Allow-Methods', DEFAULT_ALLOW_METHODS.join(','))
             response.setHeader('Access-Control-Allow-Headers', DEFAULT_ALLOW_HEADERS.join(','))
             response.setHeader('Access-Control-Max-Age', String(DEFAULT_MAX_AGE_SECONDS))
+            return response.end();
         }
 
         return await handler(request, response);
