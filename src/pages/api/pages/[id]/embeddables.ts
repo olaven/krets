@@ -17,6 +17,8 @@ const getEmbeddable = async (request, response) => {
         return response
             .status(NOT_FOUND)
             .end();
+
+    response.json(embeddable);
 }
 
 
@@ -38,7 +40,7 @@ const postEmbeddable = async (request, response) => {
         token: nanoid(),
     });
 
-    response
+    return response
         .status(CREATED)
         .send(persisted);
 }

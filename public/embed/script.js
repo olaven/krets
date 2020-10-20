@@ -1,4 +1,4 @@
-const API_BASE = "https://krets.app/" // "http://localhost:3000/"
+const API_BASE = "https://krets.app/"; //"http://localhost:3000/"
 let useState;
 
 /**
@@ -64,6 +64,7 @@ const loadEmbedInformation = async () => {
 
 const showOptionalInput = () => {
 
+    renderQuestions();
     getOptionalInuptContainer().style.opacity = 1;
 }
 
@@ -162,7 +163,7 @@ const renderQuestions = () => {
         getQuestionContainer().appendChild(input);
     }
 
-    const { questions } = useState()
+    const { questions, emotion } = useState()
 
     if (questions.length > 0) {
 
@@ -170,7 +171,11 @@ const renderQuestions = () => {
     } else {
 
         renderQuestion({
-            text: "Dine betraktninger?"
+            text: ({
+                ":-)": "Hva likte du?",
+                ":-|": "Hva burde vært annerledes",
+                ":-(": "Hva mislikte du",
+            }[emotion])
         });
     }
 }
@@ -237,6 +242,4 @@ const IntializeKrets = async (PAGE_ID, TOKEN) => {
     setupClickListeners();
     setupContactListener();
     await loadEmbedInformation();
-
-    renderQuestions();
 }
