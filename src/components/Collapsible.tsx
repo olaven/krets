@@ -1,5 +1,4 @@
 import { useState, ReactChild } from "react"
-import { Box } from "rebass";
 import { styled } from "../stiches.config";
 
 
@@ -29,6 +28,19 @@ const CollapsibleButton = styled("button", {
     paddingTop: "$21"
 });
 
+const ContentContainer = styled("div", {
+
+    display: "none",
+
+    variants: {
+        visible: {
+            true: {
+                display: "inherit"
+            }
+        }
+    }
+})
+
 
 
 type Props = { text: string, children: ReactChild }
@@ -41,10 +53,8 @@ export const Collapsible = ({ text, children }: Props) => {
             onClick={toggle}>
             {text}
         </CollapsibleButton>
-        <Box style={{
-            display: visible ? "inherit" : "none"
-        }}>
+        <ContentContainer visible={visible}>
             {children}
-        </Box>
+        </ContentContainer>
     </>
 }

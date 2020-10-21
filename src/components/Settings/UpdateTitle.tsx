@@ -1,4 +1,4 @@
-import { Box, Flex } from "rebass";
+import { Flex } from "rebass";
 import { Input } from "@rebass/forms"
 import * as text from "../../text";
 import { NO_CONTENT } from "node-kall";
