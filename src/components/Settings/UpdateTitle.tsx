@@ -25,16 +25,15 @@ export const UpdateTitle = () => {
         //updatePage(); //NOTE: Not needed, as the update title only is shown in the input field where it's already entered
     }
 
-    return <Box py={[1, 2, 3]}>
-        <Flex>
-            <Input
-                id='name'
-                name='name'
-                value={title}
-                onChange={(event) => { setTitle(event.target.value) }} />
-            <TriggerLoadingButton
-                text={text.settings.changeTitleButton}
-                action={updateTitle} />
-        </Flex>
-    </Box >
+    return <Flex>
+        <Input
+            id='name'
+            name='name'
+            value={title}
+            onChange={(event) => { setTitle(event.target.value) }} />
+        <TriggerLoadingButton
+            text={text.settings.changeTitleButton}
+            action={updateTitle} />
+    </Flex>
+
 }

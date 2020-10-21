@@ -9,18 +9,22 @@ import { Loader } from "../../components/standard/loader";
 import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../components/Settings/Settings"
 import { ManageEmbeddable } from "../../components/Settings/ManageEmbeddable/ManageEmbeddable";
 import { ToggleMandatoryContactDetails } from "../../components/Settings/ToggleMandatoryContactDetails";
+import { styled } from "../../stiches.config";
 
 
+const Container = styled("div", {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "left",
+    justifyItems: "center",
+    margin: "auto",
 
+    width: "79%",
 
-//TODO: use other places, if useful here
-const WidthContainer = ({ children }) => <Flex>
-    <Box width={[0, 1 / 4, 1 / 3]}></Box>
-    <Box width={[1, 2 / 4, 1 / 3]}>
-        {children}
-    </Box>
-    <Box width={[0, 1 / 4, 1 / 3]}></Box>
-</Flex >
+    small: {
+        width: "100%"
+    }
+});
 
 export const SettingsContent = () => {
 
@@ -28,7 +32,7 @@ export const SettingsContent = () => {
 
     return pageLoading ?
         <Loader size={150} /> :
-        <WidthContainer>
+        <Container>
             <Heading fontSize={[3, 4, 5]}>
                 {text.settings.heading} {page.name}
             </Heading>
@@ -50,7 +54,7 @@ export const SettingsContent = () => {
             <Collapsible text={text.settings.deletePageButton}>
                 <DeletePage />
             </Collapsible>
-        </WidthContainer>
+        </Container>
 }
 
 const Settings = SubscriberWrapper(() => {

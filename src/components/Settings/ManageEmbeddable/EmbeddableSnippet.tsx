@@ -2,13 +2,19 @@ import { useContext } from "react";
 import { CopyBlock, github } from "react-code-blocks";
 import { Text } from "rebass";
 import { EmbeddableContext } from "../../../context/EmbeddableContext";
+import { styled } from "../../../stiches.config";
 import * as text from "../../../text";
+
+const Container = styled("div", {
+    display: "flex",
+    flexDirection: "column"
+});
 
 export const EmbeddableSnippet = () => {
 
     const { embeddable } = useContext(EmbeddableContext);
 
-    return <>
+    return <Container>
         <Text>{text.settings.embeddable.copyInstructions}</Text>
         <CopyBlock
             text={`
@@ -23,6 +29,6 @@ export const EmbeddableSnippet = () => {
              `}
             theme={github}
             language="markup" />
-    </>
+    </Container >
 }
 

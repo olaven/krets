@@ -1,10 +1,8 @@
-import { Text } from "rebass";
 import { EmbeddableCreator } from "./EmbeddableCreator"
 import { EmbeddableContext, EmbeddableContextProvider } from "../../../context/EmbeddableContext";
 import { useContext } from "react";
 import { SettingsContext } from "../../../context/SettingsContext";
 import { EmbeddableSnippet } from "./EmbeddableSnippet";
-
 
 //NOTE: exported to tests
 export const EmbeddableContent = () => {
