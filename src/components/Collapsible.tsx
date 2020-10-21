@@ -1,53 +1,60 @@
 import { useState, ReactChild } from "react"
-import { Box, Button } from "rebass";
+import { styled } from "../stiches.config";
+
+
+//TODO: split out if fun enough :) 
+const useToggle = (initial: boolean): [boolean, () => any] => {
+
+    const [value, setValue] = useState(initial);
+    const toggle = () => {
+
+        setValue(!value);
+    }
+
+    return [
+        value,
+        toggle
+    ]
+}
+
+
+const CollapsibleButton = styled("button", {
+    border: "none",
+    color: "$primary",
+    backgroundColor: "$secondary",
+    cursor: "pointer",
+    fontSize: "$34",
+    textAlign: "left",
+    paddingTop: "$21"
+});
+
+const ContentContainer = styled("div", {
+
+    display: "none",
+
+    variants: {
+        visible: {
+            true: {
+                display: "inherit"
+            }
+        }
+    }
+})
+
+
 
 type Props = { text: string, children: ReactChild }
-
-const CollapsibleButton = ({ text, setVisible, visible }) => <>
-    <style type="text/css">
-        {`
-            .collapsible {
-                cursor: pointer;
-            }
-        `}
-    </style>
-    <Button
-        aria-label={"collapsible-button"}
-        onClick={() => {
-            setVisible(!visible);
-        }}
-        backgroundColor="secondary"
-        color="primary"
-        width={1}
-        fontSize={[2, 3, 4]}
-        opacity={visible ? 0.5 : 1}
-        style={{
-            alignContent: "left",
-            textAlign: "left",
-        }}
-        px={0}
-        className="collapsible"
-    >
-        {text}
-    </Button>
-</>
-
 export const Collapsible = ({ text, children }: Props) => {
 
-    const [visible, setVisible] = useState(false);
-
-
+    const [visible, toggle] = useToggle(false);
 
     return <>
         <CollapsibleButton
-            text={text}
-            visible={visible}
-            setVisible={setVisible}
-        />
-        <Box style={{
-            display: visible ? "inherit" : "none"
-        }}>
+            onClick={toggle}>
+            {text}
+        </CollapsibleButton>
+        <ContentContainer visible={visible}>
             {children}
-        </Box>
+        </ContentContainer>
     </>
 }
