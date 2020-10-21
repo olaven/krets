@@ -1,11 +1,15 @@
 import { useContext, useEffect } from "react";
 import { AdminPageContext } from "../context/AdminPageContext";
 import { CompareContext } from "../context/CompareContext";
+import { styled } from "../stiches.config";
 import * as text from "../text";
 import { LineChart, BarChart, DistributionChart, ChartSuggestion } from "./Admin/Charts/Charts";
 import { Collapsible } from "./Collapsible"
 
-
+const Container = styled("div", {
+    display: "flex",
+    flexDirection: "column",
+});
 
 export const Charts = () => {
 
@@ -16,8 +20,7 @@ export const Charts = () => {
         setSelected([page.id]);
     }, []);
 
-
-    return <>
+    return <Container>
         <Collapsible text={text.charts.lineChartCollapsible}>
             <LineChart pageInformations={pageInformations} />
         </Collapsible>
@@ -30,5 +33,5 @@ export const Charts = () => {
         <Collapsible text={text.charts.suggestion.collapsible}>
             <ChartSuggestion />
         </Collapsible>
-    </>;
+    </Container>;
 }
