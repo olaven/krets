@@ -157,7 +157,7 @@ export const buttons = strings({
         toAdmin: "Oversikt",
         toQR: "QR-kode",
         toPage: "Landingsside",
-        toSettings: "Instillinger",
+        toSettings: "Innstillinger",
         loadMore: "Last flere",
     }
 });
@@ -309,7 +309,7 @@ export const settings = strings({
         }
     },
     no: {
-        heading: "Instillinger for",
+        heading: "Innstillinger for",
         changeNameHeader: "Oppdater sidens navn",
         changeNameButton: "Oppdater navn",
         changeTitleHeader: "Oppdater sidens tittel",
