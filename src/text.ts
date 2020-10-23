@@ -309,7 +309,7 @@ export const settings = strings({
         }
     },
     no: {
-        heading: "Instillinger for",
+        heading: "Innstillinger for",
         changeNameHeader: "Oppdater sidens navn",
         changeNameButton: "Oppdater navn",
         changeTitleHeader: "Oppdater sidens tittel",
