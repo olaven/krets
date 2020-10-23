@@ -157,7 +157,7 @@ export const buttons = strings({
         toAdmin: "Oversikt",
         toQR: "QR-kode",
         toPage: "Landingsside",
-        toSettings: "Instillinger",
+        toSettings: "Innstillinger",
         loadMore: "Last flere",
     }
 });
