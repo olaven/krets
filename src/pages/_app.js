@@ -37,6 +37,7 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
 
       {/* <meta property="og:image" content="https://www.mugshotbot.com/m?url=https://krets.app"></meta> */}
       {/* <meta property="twitter:card" content="summary_large_image"></meta> */}
+      <meta property="og:type" content="website" />
       <meta property="og:title" content="Krets"></meta>
       <meta property="og:description" content="Friksjonsfri tilbakemelding"></meta>
 
