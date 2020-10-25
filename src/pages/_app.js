@@ -35,9 +35,11 @@ export default function MyApp({ Component, pageProps, TAWKTO_EMBED_SOURCE }) {
       <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800' rel='stylesheet' />
       <link rel='icon' href='logo.svg' sizes='any' type='image/svg+xml' />
 
-      <meta property="og:image" content="https://www.mugshotbot.com/m?url=https://krets.app"></meta>
-      <meta property="twitter:card" content="summary_large_image"></meta>
-      <meta property="og:title" content="Krets Feedback"></meta>
+      {/* <meta property="og:image" content="https://www.mugshotbot.com/m?url=https://krets.app"></meta> */}
+      {/* <meta property="twitter:card" content="summary_large_image"></meta> */}
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Krets"></meta>
+      <meta property="og:description" content="Friksjonsfri tilbakemelding"></meta>
 
       {/* FIXME: causes annoying error on startup noe */}
       {/* <TawkToEmbedding source={TAWKTO_EMBED_SOURCE} /> */}
