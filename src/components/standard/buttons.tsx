@@ -1,7 +1,7 @@
 import { Box, Button, Link, Flex, Text } from "rebass";
 import React, { useState } from "react"
 import * as uiText from "../../text"
-import { Button as StitchesButton } from "./Button.tsx" // Planned to replace Rebass Button
+import { Button as StitchesButton } from "./Button" // Planned to replace Rebass Button
 import { Loader } from "./loader";
 import { RowContainer } from "./Containers";
 

@@ -14,7 +14,7 @@ export const QuestionsList = () => {
     return loading ?
         <Loader size={150} /> :
         <>
-            <H1 alignment="left">{text.settings.questions.listHeader}</H1>
+            <H1 left>{text.settings.questions.listHeader}</H1>
             {questions.map(question =>
                 <QuestionCard key={question.id} question={question} />)}
         </>

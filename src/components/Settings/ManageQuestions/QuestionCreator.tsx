@@ -8,6 +8,7 @@ import { TriggerLoadingButton } from "../../standard/buttons";
 import { ColumnContainer } from "../../standard/Containers";
 import { H1 } from "../../standard/Heading"
 import { TextInput } from "../../standard/Input";
+import { styled } from "../../../stiches.config";
 
 
 export const QuestionCreator = () => {
@@ -32,11 +33,12 @@ export const QuestionCreator = () => {
         }
     }
 
+
     //TODO: Different message if more questions aren't allowed 
     return moreQuestionsAreAllowed &&
         <ColumnContainer as='form' onSubmit={e => e.preventDefault()}>
-            <H1 alignment="left" >{uiText.settings.questions.createQuestion}</H1>
 
+            <H1 left>{uiText.settings.questions.createQuestion}</H1>
             <TextInput
                 aria-label="questionname-input"
                 placeholder={uiText.settings.questions.placeholder}
@@ -51,6 +53,6 @@ export const QuestionCreator = () => {
             />
 
 
-        </ColumnContainer>
+        </ColumnContainer >
 
 }
