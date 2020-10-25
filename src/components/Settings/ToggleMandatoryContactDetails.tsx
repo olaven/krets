@@ -1,11 +1,24 @@
 import { NO_CONTENT } from "node-kall";
 import { useContext } from "react"
-import { Box, Text, Button } from "rebass";
 import { SettingsContext } from "../../context/SettingsContext"
 import { putPage } from "../../fetchers"
+import { styled } from "../../stiches.config";
 import * as text from "../../text";
+import { Button } from "../standard/Button";
+import { ColumnContainer } from "../standard/Containers";
 
 const { enabledText, disabledText, updateWhenEnabled, updateWhenDisabled } = text.settings.mandatoryContact
+
+
+//TODO: something like this in ./standard? 
+const Paragraph = styled("p", {
+    fontSize: "$21",
+    paddingLeft: "$8",
+
+    small: {
+        fontSize: "$13",
+    }
+});
 
 export const ToggleMandatoryContactDetails = () => {
 
@@ -27,18 +40,14 @@ export const ToggleMandatoryContactDetails = () => {
     const text = page.mandatory_contact_details ? enabledText : disabledText;
     const update = page.mandatory_contact_details ? updateWhenEnabled : updateWhenDisabled;
 
-    return <Box>
+    return <ColumnContainer>
+        <Paragraph>
+            {text}
+        </Paragraph>
         <Button
             aria-label="toggle-mandatory-button"
-            width={1}
-            onClick={onUpdate}
-        >
+            onClick={onUpdate}>
             {update}
         </Button>
-        <Text
-            fontSize={[21]}
-        >
-            {text}
-        </Text>
-    </Box>
+    </ColumnContainer>
 }

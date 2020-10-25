@@ -1,11 +1,12 @@
 import * as text from "../../text"
 import { NO_CONTENT } from "node-kall"
 import { useContext, useState } from "react"
-import { Box, Flex } from "rebass"
-import { Input } from "@rebass/forms"
 import { SettingsContext } from "../../context/SettingsContext"
 import { putPage } from "../../fetchers"
 import { TriggerLoadingButton } from "../standard/buttons"
+import { TextInput } from "../standard/Input";
+import { styled } from "../../stiches.config"
+import { ColumnContainer } from "../standard/Containers"
 
 
 export const UpdateName = () => {
@@ -21,16 +22,14 @@ export const UpdateName = () => {
         await updatePage();
     }
 
-    return <Box py={[1, 2, 3]}>
-        <Flex>
-            <Input
-                id='name'
-                name='name'
-                value={name}
-                onChange={(event) => { setName(event.target.value) }} />
-            <TriggerLoadingButton
-                text={text.settings.changeNameButton}
-                action={updateName} />
-        </Flex>
-    </Box >
+    return <ColumnContainer>
+        <TextInput
+            id='name'
+            name='name'
+            value={name}
+            onChange={(event) => { setName(event.target.value) }} />
+        <TriggerLoadingButton
+            text={text.settings.changeNameButton}
+            action={updateName} />
+    </ColumnContainer>
 }

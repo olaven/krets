@@ -25,7 +25,15 @@ const CollapsibleButton = styled("button", {
     cursor: "pointer",
     fontSize: "$34",
     textAlign: "left",
-    paddingTop: "$21"
+    paddingTop: "$21",
+
+    variants: {
+        visible: {
+            true: {
+                opacity: "0.7",
+            }
+        }
+    }
 });
 
 const ContentContainer = styled("div", {
@@ -35,7 +43,7 @@ const ContentContainer = styled("div", {
     variants: {
         visible: {
             true: {
-                display: "inherit"
+                display: "inherit",
             }
         }
     }
@@ -50,10 +58,12 @@ export const Collapsible = ({ text, children }: Props) => {
 
     return <>
         <CollapsibleButton
+            visible={visible}
             onClick={toggle}>
             {text}
         </CollapsibleButton>
-        <ContentContainer visible={visible}>
+        <ContentContainer
+            visible={visible}>
             {children}
         </ContentContainer>
     </>

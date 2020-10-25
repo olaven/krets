@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { Box, Heading, Flex } from "rebass";
 import { useContext } from "react";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
@@ -10,6 +9,7 @@ import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../comp
 import { ManageEmbeddable } from "../../components/Settings/ManageEmbeddable/ManageEmbeddable";
 import { ToggleMandatoryContactDetails } from "../../components/Settings/ToggleMandatoryContactDetails";
 import { styled } from "../../stiches.config";
+import { H1 } from "../../components/standard/Heading";
 
 
 const Container = styled("div", {
@@ -26,6 +26,10 @@ const Container = styled("div", {
     }
 });
 
+const Heading = styled(H1, {
+    textAlign: "left"
+});
+
 export const SettingsContent = () => {
 
     const { pageLoading, page } = useContext(SettingsContext);
@@ -33,7 +37,7 @@ export const SettingsContent = () => {
     return pageLoading ?
         <Loader size={150} /> :
         <Container>
-            <Heading fontSize={[3, 4, 5]}>
+            <Heading>
                 {text.settings.heading} {page.name}
             </Heading>
             <Collapsible text={text.settings.changeNameHeader}>
