@@ -4,8 +4,27 @@ import { Loader, LoadMore } from "../../standard/loader";
 import * as text from "../../../text"
 import { PagesContext } from "../../../context/PagesContext";
 import { ToAdmin, ToQR, ToPage, ToSettings } from "../../standard/buttons";
+import { css, styled } from "../../../stiches.config";
 
-const PageCard = ({ id, name }) =>
+const random = (max: number) => Math.floor(Math.random() * max + 1)
+
+const AppearContainer = styled("div", {
+    animationDuration: `800ms`,
+    animmationDirection: "forwards",
+    animationTimingFunction: "linear",
+    animationName: `${css.keyframes({
+        "0%": {
+            opacity: 0,
+            transform: `translateX(5%)`,
+        },
+        "100%": {
+            opacity: 1,
+            transform: "translateX(0%)",
+        }
+    })}`
+})
+
+const PageCard = ({ id, name }) => <AppearContainer style={{ animationDuration: `${random(500)}ms` }}>
     <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
 
         <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{name}</Heading>
@@ -20,7 +39,9 @@ const PageCard = ({ id, name }) =>
                 <ToQR id={id} />
             </Box>
         </Flex>
-    </Card>;
+    </Card>
+</AppearContainer>
+
 
 
 export const PageList = () => {
