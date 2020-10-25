@@ -4,6 +4,14 @@ const headingStyles: any = {
     color: '$dark',
     fontWeight: "lighter",
     textAlign: "center",
+
+    variants: {
+        alignment: {
+            left: {
+                textAlign: "left"
+            }
+        }
+    }
 }
 
 export const H1 = styled('h1', {

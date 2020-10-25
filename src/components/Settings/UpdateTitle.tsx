@@ -1,11 +1,11 @@
-import { Flex } from "rebass";
-import { Input } from "@rebass/forms"
 import * as text from "../../text";
 import { NO_CONTENT } from "node-kall";
 import { useContext, useState } from "react";
 import { SettingsContext } from "../../context/SettingsContext";
 import { putPage } from "../../fetchers";
 import { TriggerLoadingButton } from "../standard/buttons";
+import { ColumnContainer } from "../standard/Containers";
+import { TextInput } from "../standard/Input";
 
 
 export const UpdateTitle = () => {
@@ -25,8 +25,8 @@ export const UpdateTitle = () => {
         //updatePage(); //NOTE: Not needed, as the update title only is shown in the input field where it's already entered
     }
 
-    return <Flex>
-        <Input
+    return <ColumnContainer>
+        <TextInput
             id='name'
             name='name'
             value={title}
@@ -34,6 +34,6 @@ export const UpdateTitle = () => {
         <TriggerLoadingButton
             text={text.settings.changeTitleButton}
             action={updateTitle} />
-    </Flex>
+    </ColumnContainer>
 
 }

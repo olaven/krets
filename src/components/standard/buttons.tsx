@@ -1,7 +1,9 @@
 import { Box, Button, Link, Flex, Text } from "rebass";
 import React, { useState } from "react"
 import * as uiText from "../../text"
+import { Button as StitchesButton } from "./Button.tsx" // Planned to replace Rebass Button
 import { Loader } from "./loader";
+import { RowContainer } from "./Containers";
 
 const HeaderButton = ({ href, text }: { href: string, text: string }) =>
     <Button backgroundColor={"secondary"} minWidth={"8em"}>
@@ -47,17 +49,17 @@ export const DoubleConfirmationButton = ({ text, action }) => {
     const [triggered, setTriggered] = useState(false);
 
     return triggered ?
-        <Flex width={1}>
-            <Button fontSize={[1, 2]} width={[1]} onClick={() => { setTriggered(false) }} backgroundColor="primary" m={[1]}>
-                <Text>{uiText.upgrade.notSure}</Text>
-            </Button>
-            <Button fontSize={[1, 2]} width={[1]} onClick={action} backgroundColor="failure" m={[1]}>
-                <Text>{uiText.upgrade.sure}</Text>
-            </Button>
-        </Flex > :
-        <Button width={[1]} mx={1} onClick={() => { setTriggered(true) }} backgroundColor="failure" >
-            <Text>{text}</Text>
-        </Button >
+        <RowContainer>
+            <StitchesButton onClick={() => { setTriggered(false) }}>
+                {uiText.upgrade.notSure}
+            </StitchesButton>
+            <StitchesButton onClick={action} danger >
+                {uiText.upgrade.sure}
+            </StitchesButton>
+        </RowContainer > :
+        <StitchesButton onClick={() => { setTriggered(true) }} danger >
+            {text}
+        </StitchesButton >
 }
 
 export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: { text: string, action: () => any, backgroundColor?: string, label?: string }) => {
@@ -66,19 +68,15 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: {
 
     return loading ?
         <Loader size={80} /> :
-        <Button
+        <StitchesButton
             aria-label={label}
-            fontSize={[13, 21]}
-            width={1}
-            mx={1}
-            backgroundColor={backgroundColor ? backgroundColor : "primary"}
             onClick={async () => {
 
                 setLoading(true);
                 await action();
                 setLoading(false);
             }}
-        >{text}</Button>
+        >{text}</StitchesButton>
 }
 
 

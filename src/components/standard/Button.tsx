@@ -11,7 +11,7 @@ export const Button = styled('button', {
     margin: "$3",
 
     ":hover": {
-        transitionDuration: "50ms",
+        transitionDuration: "55ms",
         backgroundColor: "$secondary",
         color: "$primary",
         underlineColor: "$primary",
@@ -39,6 +39,17 @@ export const Button = styled('button', {
                 }
             }
 
+        },
+
+        danger: {
+
+            true: {
+
+                backgroundColor: "$danger",
+                ":hover": {
+                    color: "$danger",
+                }
+            }
         },
 
         shape: {

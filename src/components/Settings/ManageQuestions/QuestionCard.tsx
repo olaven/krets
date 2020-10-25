@@ -1,33 +1,25 @@
 import * as uiText from "../../../text";
-import { NO_CONTENT, OK } from "node-kall";
-import { Button, Card, Flex } from "rebass";
-import { Input } from "@rebass/forms";
+import { NO_CONTENT } from "node-kall";
 import { QuestionModel } from "../../../models/models";
 import { useContext, useState } from "react";
-import { deleteQuestion, updateQuestion } from "../../../fetchers";
+import { updateQuestion } from "../../../fetchers";
 import { DoubleConfirmationButton, TriggerLoadingButton } from "../../standard/buttons";
 import { QuestionsContext } from "../../../context/QuestionsContext";
+import { ColumnContainer, RowContainer } from "../../standard/Containers";
+import { TextInput } from "../../standard/Input";
+import { styled } from "../../../stiches.config";
 
-/* const ArchiveQuestion = ({ question }: { question: QuestionModel }) => {
 
-    const { refreshQuestions } = useContext(QuestionsContext);
+const ButtonContainer = styled(RowContainer, {
 
-    const onDelete = async () => {
+    justifyContent: "space-between",
+});
 
-        const [status] = await updateQuestion({
-            ...question,
-            archived: true
-        });
+const Container = styled(ColumnContainer, {
 
-        if (status !== NO_CONTENT) alert(`error deleting question..`);
-        else refreshQuestions();
-    }
-    return <TriggerLoadingButton
-        text={uiText.settings.questions.deleteButton}
-        action={onDelete}
-        backgroundColor="failure"
-    />
-} */
+    paddingBottom: "$21",
+});
+
 
 export const QuestionCard = ({ question }: { question: QuestionModel }) => {
 
@@ -47,9 +39,10 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
             await refreshQuestions();
         }
 
-    return <Card my={[1]}>
-        <Flex>
-            <Input value={text} onChange={(event) => { setText(event.target.value) }} />
+    return <Container>
+        <TextInput value={text} onChange={(event) => { setText(event.target.value) }} />
+        <ButtonContainer>
+
             <TriggerLoadingButton
                 action={onUpdate(question => ({ ...question, text }))}
                 text={uiText.settings.questions.updateButton} />
@@ -57,11 +50,6 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
                 text={uiText.settings.questions.archiveButton}
                 action={onUpdate(question => ({ ...question, archived: true }))}
             />
-            {/* <TriggerLoadingButton
-                text={uiText.settings.questions.archiveButton}
-                action={onUpdate(question => ({ ...question, archived: true }))}
-                backgroundColor="failure"
-            /> */}
-        </Flex>
-    </Card>
+        </ButtonContainer>
+    </Container>
 }

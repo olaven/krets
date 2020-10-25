@@ -9,6 +9,7 @@ export const { styled, css } = createStyled({
             $secondary: 'hsl(215, 90%, 96%)', //'#EBF3FE',
             $dark: 'black',
             $attention: '#F99C39',
+            $danger: '#F32013',
         },
         space: {
             $1: '1px',
@@ -24,6 +25,9 @@ export const { styled, css } = createStyled({
             $114: '114px',
         },
         fontSizes: {
+            $5: '5px',
+            $8: '8px',
+            $13: '13px',
             $21: '21px',
             $34: '34px',
             $55: '55px',
