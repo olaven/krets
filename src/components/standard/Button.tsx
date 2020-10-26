@@ -74,7 +74,7 @@ export const Button = styled('button', {
 });
 
 
-type ArrowProps = { direction: "left" | "right" | "up" | "down", size: number, circular: boolean, inverted: boolean }
+type ArrowProps = { direction?: "left" | "right" | "up" | "down", size: number, onClick?: any, circular?: boolean, inverted?: boolean }
 export const ArrowButton = (props: ArrowProps) => {
 
     const rotation = {

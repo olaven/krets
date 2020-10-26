@@ -1,8 +1,9 @@
 import { createContext, useState, useEffect, ReactChildren } from "react";
-import { OK } from "node-kall";
+import { OK, filterBody } from "node-kall";
 import { QuestionModel } from "../models/models";
 import { getQuestions, updateQuestion } from "../fetchers";
 import arrayMove from "array-move";
+import { reorder } from "./reorder";
 
 interface IQuestionsContext {
     loading: boolean,
@@ -19,10 +20,11 @@ export const QuestionsContext = createContext<IQuestionsContext>({
 });
 
 
-
 const sendOrderToBackend = (questions: QuestionModel[]) =>
-    questions
-        .map(question => updateQuestion(question))
+    Promise.all(
+        questions
+            .map(question => filterBody(updateQuestion(question))) //FIXME: make backend return updated question + use that as new state here
+    )
 
 
 type Props = { pageId: string, includeArchived: boolean, children: React.ReactNode }
