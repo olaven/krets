@@ -7,12 +7,13 @@ import { DoubleConfirmationButton, TriggerLoadingButton } from "../../standard/b
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { TextInput } from "../../standard/Input";
+import { ArrowButton } from "../../standard/Button"
 import { styled } from "../../../stiches.config";
 
 
 const ButtonContainer = styled(RowContainer, {
 
-    justifyContent: "space-between",
+    justifyContent: "right",
 });
 
 const Container = styled(ColumnContainer, {
@@ -20,6 +21,9 @@ const Container = styled(ColumnContainer, {
     paddingBottom: "$21",
 });
 
+const QuestionInput = styled(TextInput, {
+    width: "40ch"
+});
 
 export const QuestionCard = ({ question }: { question: QuestionModel }) => {
 
@@ -40,16 +44,24 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
         }
 
     return <Container>
-        <TextInput value={text} onChange={(event) => { setText(event.target.value) }} />
-        <ButtonContainer>
+        <RowContainer>
+            <QuestionInput value={text} onChange={(event) => { setText(event.target.value) }} />
+        </RowContainer>
+        <RowContainer>
+            <ColumnContainer>
+                <ArrowButton size={35} direction="up" inverted circular />
+                <ArrowButton size={35} direction="down" inverted circular />
+            </ColumnContainer>
+            <ButtonContainer>
 
-            <TriggerLoadingButton
-                action={onUpdate(question => ({ ...question, text }))}
-                text={uiText.settings.questions.updateButton} />
-            <DoubleConfirmationButton
-                text={uiText.settings.questions.archiveButton}
-                action={onUpdate(question => ({ ...question, archived: true }))}
-            />
-        </ButtonContainer>
+                <TriggerLoadingButton
+                    action={onUpdate(question => ({ ...question, text }))}
+                    text={uiText.settings.questions.updateButton} />
+                <DoubleConfirmationButton
+                    text={uiText.settings.questions.archiveButton}
+                    action={onUpdate(question => ({ ...question, archived: true }))}
+                />
+            </ButtonContainer>
+        </RowContainer>
     </Container>
 }

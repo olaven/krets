@@ -139,10 +139,14 @@ export const ResponseSection = ({ page }: {
                         setAnswers={setAnswers}
                         emotion={emotion} />
 
-                    <ArrowButton
-                        aria-label="response-button-input"
-                        onClick={() => setShowQuestions(true)}
-                    />
+                    <div>
+                        <ArrowButton
+                            circular
+                            size={79}
+                            aria-label="response-button-input"
+                            onClick={() => setShowQuestions(true)}
+                        />
+                    </div>
                 </InputContainer>
             }
             {emotion && showContactStep &&
