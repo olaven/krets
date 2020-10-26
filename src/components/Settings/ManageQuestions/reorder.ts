@@ -2,7 +2,6 @@
 import arrayMove from "array-move";
 
 
-type Direction = "left" | "right"
 const generate = <T>(direction: Direction, element: T, array: T[]): [number, number, boolean] => {
 
     const index = array.indexOf(element);
@@ -16,6 +15,8 @@ const generate = <T>(direction: Direction, element: T, array: T[]): [number, num
 
     return [index, nextIndex, atEnd];
 }
+
+export type Direction = "left" | "right"
 
 /**
  * Returns a function for moving elements in array, 

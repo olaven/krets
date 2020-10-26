@@ -98,7 +98,6 @@ export const ArrowButton = (props: ArrowProps) => {
         y2: props.size * (14 / 48),
     };
 
-    console.log(poly);
 
     return <Button
         {...props}

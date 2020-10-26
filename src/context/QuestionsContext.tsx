@@ -3,7 +3,7 @@ import { OK, filterBody } from "node-kall";
 import { QuestionModel } from "../models/models";
 import { getQuestions, updateQuestion } from "../fetchers";
 import arrayMove from "array-move";
-import { reorder } from "./reorder";
+import { reorder } from "../components/Settings/ManageQuestions/reorder";
 
 interface IQuestionsContext {
     loading: boolean,
@@ -18,13 +18,6 @@ export const QuestionsContext = createContext<IQuestionsContext>({
     moreQuestionsAreAllowed: true,
     refreshQuestions: async () => { }
 });
-
-
-const sendOrderToBackend = (questions: QuestionModel[]) =>
-    Promise.all(
-        questions
-            .map(question => filterBody(updateQuestion(question))) //FIXME: make backend return updated question + use that as new state here
-    )
 
 
 type Props = { pageId: string, includeArchived: boolean, children: React.ReactNode }
