@@ -195,8 +195,9 @@ describe("User repository", () => {
 
         const after = await database.questions.getNonArchivedByPage(page.id);
 
-        expect(before).toEqual(persisted);
-        expect(after).not.toEqual(before);
+
+        expect(before.sort()).toEqual(persisted.sort());
+        expect(after.sort()).not.toEqual(before.sort());
         expect(after).toEqual([]);
     });
 
@@ -211,8 +212,8 @@ describe("User repository", () => {
 
         const after = await database.questions.getNonArchivedByPage(otherPage.id);
 
-        expect(before).toEqual(otherQuestions);
-        expect(before).toEqual(after);
+        expect(before.sort()).toEqual(otherQuestions.sort());
+        expect(before.sort()).toEqual(after.sort());
         expect(after).not.toEqual([]);
     });
 

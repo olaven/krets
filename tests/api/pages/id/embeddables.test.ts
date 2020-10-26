@@ -1,10 +1,9 @@
-import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { setupServer, teardownServer, authenticatedFetch, randomEmbeddableResponse } from "../../apiTestUtils";
+import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
 import embeddablesHandler from '../../../../src/pages/api/pages/[id]/embeddables';
-import { setupPages, setupEmbeddable, randomEmbeddable } from "../../../database/databaseTestUtils";
-import { EmbeddableInformationModel, EmbeddableModel, EmbeddableResponseModel, PageModel } from "../../../../src/models/models";
+import { setupPages, randomEmbeddable } from "../../../database/databaseTestUtils";
+import { EmbeddableModel, PageModel } from "../../../../src/models/models";
 
 jest.mock("../../../../src/auth/auth0");
 

@@ -8,16 +8,25 @@ const getQuestion = (id: string) =>
         [id]
     );
 
-//NOTE: returns both archived- and non-archived questions 
+/**
+ * Returns all questions related to the given page.
+ * NOTE: Returns all questions, regardless of `archived`-status
+ * @param pageId 
+ */
 const getByPage = (pageId: string) =>
     rows<QuestionModel>(
-        `select * from questions where page_id = $1 order by created_at desc`,
+        `select * from questions where page_id = $1 order by "order" asc`,
         [pageId]
     );
 
+/**
+ * Returns questions that are not archived and 
+ * related to the giving page. 
+ * @param pageId 
+ */
 const getNonArchivedByPage = (pageId: string) =>
     rows<QuestionModel>(
-        `select * from questions where page_id = $1 and archived = false order by created_at desc`,
+        `select * from questions where page_id = $1 and archived = false order by "order" asc`,
         [pageId]
     );
 
@@ -29,9 +38,9 @@ const createQuestion = (question: QuestionModel) =>
 
 const updateQuestion = (question: QuestionModel) =>
     run(
-        `update questions set text = $2, archived = $3 where id = $1`,
-        [question.id, question.text, question.archived]
-    )
+        `update questions set text = $2, archived = $3, "order" = $4 where id = $1`,
+        [question.id, question.text, question.archived, question.order]
+    );
 
 const deleteQuestion = (id: string) =>
     first<QuestionModel>(
