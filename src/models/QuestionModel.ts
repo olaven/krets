@@ -19,7 +19,7 @@ export interface QuestionModel {
      * Low -> High 
      * 0 by default
      */
-    display_order: number,
+    display_order?: number,
     /**
      * Text-content of question 
      * (The question itself)

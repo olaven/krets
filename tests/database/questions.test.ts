@@ -65,7 +65,7 @@ describe("The API interface for questions", () => {
             expect(retrieved).toEqual(question);
         });
 
-        it("Returns questions ordered by `.order`", async () => {
+        it("Returns questions ordered by `.display_order`", async () => {
 
             const [_, page, [a, b, c]] = await setupQuestions(3);
 
@@ -83,13 +83,13 @@ describe("The API interface for questions", () => {
                 display_order: firstOrder
             });
 
+
             await database.questions.updateQuestion({
                 ...c,
                 display_order: thirdOrder
             });
 
             const [first, second, third] = await database.questions.getByPage(page.id);
-
 
             expect(first.display_order).toEqual(firstOrder);
             expect(second.display_order).toEqual(secondOrder);
@@ -100,28 +100,46 @@ describe("The API interface for questions", () => {
             expect(third.id).toEqual(c.id);
         });
 
-        it("Returns non-archived questions ordered by `.order`", async () => {
+        it("Returns non-archived questions ordered by `.display_order`", async () => {
+
+            const [_, __, [question]] = await setupQuestions();
+
+            const retrieved = await database.questions.getQuestion(question.id);
+            expect(retrieved).toEqual(question);
+        });
+
+        it("Returns questions ordered by `.display_order`", async () => {
 
             const [_, page, [a, b, c]] = await setupQuestions(3);
-            database.questions.updateQuestion({
+
+            const firstOrder = 10;
+            const secondOrder = 20;
+            const thirdOrder = 30;
+
+            await database.questions.updateQuestion({
                 ...a,
-                display_order: 20,
+                display_order: secondOrder,
                 archived: false,
             });
 
-            database.questions.updateQuestion({
+            await database.questions.updateQuestion({
                 ...b,
-                display_order: 10,
+                display_order: firstOrder,
                 archived: false,
             });
 
-            database.questions.updateQuestion({
+
+            await database.questions.updateQuestion({
                 ...c,
-                display_order: 30,
+                display_order: thirdOrder,
                 archived: false,
             });
 
-            const [first, second, third] = await database.questions.getNonArchivedByPage(page.id);
+            const [first, second, third] = await database.questions.getByPage(page.id);
+
+            expect(first.display_order).toEqual(firstOrder);
+            expect(second.display_order).toEqual(secondOrder);
+            expect(third.display_order).toEqual(thirdOrder);
 
             expect(first.id).toEqual(b.id);
             expect(second.id).toEqual(a.id);
