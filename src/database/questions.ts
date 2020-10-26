@@ -15,7 +15,7 @@ const getQuestion = (id: string) =>
  */
 const getByPage = (pageId: string) =>
     rows<QuestionModel>(
-        `select * from questions where page_id = $1 order by "order" asc`,
+        `select * from questions where page_id = $1 order by display_order asc`,
         [pageId]
     );
 
@@ -26,7 +26,7 @@ const getByPage = (pageId: string) =>
  */
 const getNonArchivedByPage = (pageId: string) =>
     rows<QuestionModel>(
-        `select * from questions where page_id = $1 and archived = false order by "order" asc`,
+        `select * from questions where page_id = $1 and archived = false order by display_order asc`,
         [pageId]
     );
 
@@ -38,8 +38,8 @@ const createQuestion = (question: QuestionModel) =>
 
 const updateQuestion = (question: QuestionModel) =>
     run(
-        `update questions set text = $2, archived = $3, "order" = $4 where id = $1`,
-        [question.id, question.text, question.archived, question.order]
+        `update questions set text = $2, archived = $3, display_order = $4 where id = $1`,
+        [question.id, question.text, question.archived, question.display_order]
     );
 
 const deleteQuestion = (id: string) =>

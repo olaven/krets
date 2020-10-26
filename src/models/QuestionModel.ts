@@ -17,8 +17,9 @@ export interface QuestionModel {
     /**
      * A number indicating display order. 
      * Low -> High 
+     * 0 by default
      */
-    order: number,
+    display_order: number,
     /**
      * Text-content of question 
      * (The question itself)

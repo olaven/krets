@@ -65,7 +65,7 @@ describe("The API interface for questions", () => {
             expect(retrieved).toEqual(question);
         });
 
-        it(" Returns questions ordered by `.order`", async () => {
+        it("Returns questions ordered by `.order`", async () => {
 
             const [_, page, [a, b, c]] = await setupQuestions(3);
 
@@ -75,57 +75,57 @@ describe("The API interface for questions", () => {
 
             await database.questions.updateQuestion({
                 ...a,
-                order: secondOrder
+                display_order: secondOrder
             });
 
             await database.questions.updateQuestion({
                 ...b,
-                order: firstOrder
+                display_order: firstOrder
             });
 
             await database.questions.updateQuestion({
                 ...c,
-                order: thirdOrder
+                display_order: thirdOrder
             });
 
             const [first, second, third] = await database.questions.getByPage(page.id);
 
 
-            expect(first.order).toEqual(firstOrder);
-            expect(second.order).toEqual(secondOrder);
-            expect(third.order).toEqual(thirdOrder);
+            expect(first.display_order).toEqual(firstOrder);
+            expect(second.display_order).toEqual(secondOrder);
+            expect(third.display_order).toEqual(thirdOrder);
 
-            expect(first).toEqual(b);
-            expect(second).toEqual(a);
-            expect(third).toEqual(c);
+            expect(first.id).toEqual(b.id);
+            expect(second.id).toEqual(a.id);
+            expect(third.id).toEqual(c.id);
         });
 
-        it(" Returns non-archived questions ordered by `.order`", async () => {
+        it("Returns non-archived questions ordered by `.order`", async () => {
 
             const [_, page, [a, b, c]] = await setupQuestions(3);
             database.questions.updateQuestion({
                 ...a,
-                order: 20,
+                display_order: 20,
                 archived: false,
             });
 
             database.questions.updateQuestion({
                 ...b,
-                order: 10,
+                display_order: 10,
                 archived: false,
             });
 
             database.questions.updateQuestion({
                 ...c,
-                order: 30,
+                display_order: 30,
                 archived: false,
             });
 
             const [first, second, third] = await database.questions.getNonArchivedByPage(page.id);
 
-            expect(first).toEqual(b);
-            expect(second).toEqual(a);
-            expect(third).toEqual(c);
+            expect(first.id).toEqual(b.id);
+            expect(second.id).toEqual(a.id);
+            expect(third.id).toEqual(c.id);
         });
     });
 
@@ -152,16 +152,14 @@ describe("The API interface for questions", () => {
             const [_, __, [before]] = await setupQuestions();
             await database.questions.updateQuestion({
                 ...before,
-                order: 1
+                display_order: 1
             });
 
             const after = await database.questions.getQuestion(before.id);
 
-            expect(before.order).toBeNull();
-            expect(after.order).not.toBeNull();
+            expect(before.display_order).toEqual(0);
+            expect(after.display_order).toEqual(1);
         });
-
-
 
         it("Is possible to update the order of a question", async () => {
 
@@ -170,13 +168,13 @@ describe("The API interface for questions", () => {
             const order = faker.random.number();
             await database.questions.updateQuestion({
                 ...original,
-                order
+                display_order: order
             });
 
             const retrieved = await database.questions.getQuestion(original.id);
 
-            expect(original.order).not.toEqual(order);
-            expect(retrieved.order).toEqual(order);
+            expect(original.display_order).not.toEqual(order);
+            expect(retrieved.display_order).toEqual(order);
         });
 
         describe("question archivation", () => {

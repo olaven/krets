@@ -5,8 +5,9 @@ exports.shorthands = undefined;
 exports.up = pgm => {
 
     pgm.addColumn("questions", {
-        order: {
+        display_order: {
             type: "integer",
+            default: 0,
         }
     })
 };
