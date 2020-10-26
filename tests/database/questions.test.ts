@@ -25,7 +25,7 @@ describe("The API interface for questions", () => {
 
 
 
-        it("Is possible to get questions by page", async () => {
+        it(" Is possible to get questions by page", async () => {
 
             const user = await database.users.createUser(randomUser());
 
@@ -42,7 +42,7 @@ describe("The API interface for questions", () => {
             expect(retrievedSecond).toEqual(secondQuestion);
         });
 
-        it("`nonArchivedByPage` only returns questions that are _not_ archived", async () => {
+        it(" `nonArchivedByPage` only returns questions that are _not_ archived", async () => {
 
             const user = await database.users.createUser(randomUser());
             const page = await database.pages.createPage(randomPage(user.id));
@@ -64,10 +64,90 @@ describe("The API interface for questions", () => {
             const retrieved = await database.questions.getQuestion(question.id);
             expect(retrieved).toEqual(question);
         });
-    })
+
+        it("Returns questions ordered by `.display_order`", async () => {
+
+            const [_, page, [a, b, c]] = await setupQuestions(3);
+
+            const firstOrder = 10;
+            const secondOrder = 20;
+            const thirdOrder = 30;
+
+            await database.questions.updateQuestion({
+                ...a,
+                display_order: secondOrder
+            });
+
+            await database.questions.updateQuestion({
+                ...b,
+                display_order: firstOrder
+            });
+
+
+            await database.questions.updateQuestion({
+                ...c,
+                display_order: thirdOrder
+            });
+
+            const [first, second, third] = await database.questions.getByPage(page.id);
+
+            expect(first.display_order).toEqual(firstOrder);
+            expect(second.display_order).toEqual(secondOrder);
+            expect(third.display_order).toEqual(thirdOrder);
+
+            expect(first.id).toEqual(b.id);
+            expect(second.id).toEqual(a.id);
+            expect(third.id).toEqual(c.id);
+        });
+
+        it("Returns non-archived questions ordered by `.display_order`", async () => {
+
+            const [_, __, [question]] = await setupQuestions();
+
+            const retrieved = await database.questions.getQuestion(question.id);
+            expect(retrieved).toEqual(question);
+        });
+
+        it("Returns questions ordered by `.display_order`", async () => {
+
+            const [_, page, [a, b, c]] = await setupQuestions(3);
+
+            const firstOrder = 10;
+            const secondOrder = 20;
+            const thirdOrder = 30;
+
+            await database.questions.updateQuestion({
+                ...a,
+                display_order: secondOrder,
+                archived: false,
+            });
+
+            await database.questions.updateQuestion({
+                ...b,
+                display_order: firstOrder,
+                archived: false,
+            });
+
+
+            await database.questions.updateQuestion({
+                ...c,
+                display_order: thirdOrder,
+                archived: false,
+            });
+
+            const [first, second, third] = await database.questions.getByPage(page.id);
+
+            expect(first.display_order).toEqual(firstOrder);
+            expect(second.display_order).toEqual(secondOrder);
+            expect(third.display_order).toEqual(thirdOrder);
+
+            expect(first.id).toEqual(b.id);
+            expect(second.id).toEqual(a.id);
+            expect(third.id).toEqual(c.id);
+        });
+    });
 
     describe("Updating of a question", () => {
-
 
         it("Is possible to update text of question", async () => {
 
@@ -85,15 +165,45 @@ describe("The API interface for questions", () => {
             expect(before.text).not.toEqual(after.text);
         });
 
+        it("Does define ordering after updating it", async () => {
+
+            const [_, __, [before]] = await setupQuestions();
+            await database.questions.updateQuestion({
+                ...before,
+                display_order: 1
+            });
+
+            const after = await database.questions.getQuestion(before.id);
+
+            expect(before.display_order).toEqual(0);
+            expect(after.display_order).toEqual(1);
+        });
+
+        it("Is possible to update the order of a question", async () => {
+
+            const [_, __, [original]] = await setupQuestions();
+
+            const order = faker.random.number();
+            await database.questions.updateQuestion({
+                ...original,
+                display_order: order
+            });
+
+            const retrieved = await database.questions.getQuestion(original.id);
+
+            expect(original.display_order).not.toEqual(order);
+            expect(retrieved.display_order).toEqual(order);
+        });
+
         describe("question archivation", () => {
-            it("Stores an `archived` prop", async () => {
+            it(" Stores an `archived` prop", async () => {
 
                 const [_, __, [question]] = await setupQuestions();
                 const persisted = await database.questions.getQuestion(question.id);
                 expect(persisted.archived).toBeDefined();
             });
 
-            it("Can be false", async () => {
+            it(" Can be false", async () => {
 
                 const [_, __, [question]] = await setupQuestions(1, false);
                 const persisted = await database.questions.getQuestion(question.id);

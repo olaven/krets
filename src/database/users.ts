@@ -90,7 +90,7 @@ const deleteUser = async (id: string) => {
 
       await database.pages.deletePage(page.id);
    }
-   //TODO: crashes in test 
+
    await run(
       `delete from users where id = $1`,
       [id]
@@ -109,19 +109,19 @@ const _deleteUser = (id: string) => run(
          where page_id in pages_owned_by_user
       )
       WITH answers_on_questions as (
-   DELETE FROM answers
-WHERE question_id IN(
-   SELECT id FROM questions_in_pages
-)
+         DELETE FROM answers
+         WHERE question_id IN(
+            SELECT id FROM questions_in_pages
+         )
       )
-DELETE FROM questions
-WHERE id IN(
-   SELECT id from questions_in_pages
-)
-DELETE FROM pages
-WHERE id IN(
-   SELECT id FROM pages_owned_by_user
-)
+      DELETE FROM questions
+      WHERE id IN(
+         SELECT id from questions_in_pages
+      )
+      DELETE FROM pages
+      WHERE id IN(
+         SELECT id FROM pages_owned_by_user
+      )
    `,
    [id]
 )

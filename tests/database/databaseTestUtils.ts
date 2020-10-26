@@ -33,7 +33,7 @@ export const randomAnswer = (responseId: string): AnswerModel => ({
 export const randomQuestion = (pageId: string, archived = false): QuestionModel => ({
     page_id: pageId,
     text: faker.lorem.lines(1),
-    archived
+    archived,
 });
 
 
