@@ -11,14 +11,13 @@ import { ArrowButton } from "../../standard/Button"
 import { styled } from "../../../stiches.config";
 
 
-const ButtonContainer = styled(RowContainer, {
-
-    justifyContent: "right",
-});
-
-const Container = styled(ColumnContainer, {
+const PaddedColumnContainer = styled(ColumnContainer, {
 
     paddingBottom: "$21",
+});
+
+const CenteredRowContainer = styled(RowContainer, {
+    justifyContent: "center"
 });
 
 const QuestionInput = styled(TextInput, {
@@ -43,25 +42,23 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
             await refreshQuestions();
         }
 
-    return <Container>
-        <RowContainer>
-            <QuestionInput value={text} onChange={(event) => { setText(event.target.value) }} />
-        </RowContainer>
+    return <PaddedColumnContainer>
         <RowContainer>
             <ColumnContainer>
                 <ArrowButton size={35} direction="up" inverted circular />
                 <ArrowButton size={35} direction="down" inverted circular />
             </ColumnContainer>
-            <ButtonContainer>
-
-                <TriggerLoadingButton
-                    action={onUpdate(question => ({ ...question, text }))}
-                    text={uiText.settings.questions.updateButton} />
-                <DoubleConfirmationButton
-                    text={uiText.settings.questions.archiveButton}
-                    action={onUpdate(question => ({ ...question, archived: true }))}
-                />
-            </ButtonContainer>
+            <QuestionInput value={text} onChange={(event) => { setText(event.target.value) }} />
         </RowContainer>
-    </Container>
+        <CenteredRowContainer>
+
+            <TriggerLoadingButton
+                action={onUpdate(question => ({ ...question, text }))}
+                text={uiText.settings.questions.updateButton} />
+            <DoubleConfirmationButton
+                text={uiText.settings.questions.archiveButton}
+                action={onUpdate(question => ({ ...question, archived: true }))}
+            />
+        </CenteredRowContainer>
+    </PaddedColumnContainer>
 }

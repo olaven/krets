@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect, ReactChildren } from "react";
 import { OK } from "node-kall";
 import { QuestionModel } from "../models/models";
-import { getQuestions } from "../fetchers";
+import { getQuestions, updateQuestion } from "../fetchers";
+import arrayMove from "array-move";
 
 interface IQuestionsContext {
     loading: boolean,
@@ -16,6 +17,12 @@ export const QuestionsContext = createContext<IQuestionsContext>({
     moreQuestionsAreAllowed: true,
     refreshQuestions: async () => { }
 });
+
+
+
+const sendOrderToBackend = (questions: QuestionModel[]) =>
+    questions
+        .map(question => updateQuestion(question))
 
 
 type Props = { pageId: string, includeArchived: boolean, children: React.ReactNode }
