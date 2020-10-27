@@ -69,7 +69,8 @@ export const response = strings({
         placeholder: {
             happy: "What did you like?",
             neutral: "What should've been different?",
-            sad: "What did you dislike?"
+            sad: "What did you dislike?",
+            standard: "Your answer..",
         },
         button: "->",
         chooseSmiley: "You have to choose a smiley 😃",
@@ -95,7 +96,8 @@ export const response = strings({
         placeholder: {
             happy: "Hva likte du?",
             neutral: "Hva burde vært annerledes?",
-            sad: "Hva mislikte du?"
+            sad: "Hva mislikte du?",
+            standard: "Ditt svar"
         },
         button: "Send inn",
         chooseSmiley: "Velg en smiley 😃",
