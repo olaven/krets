@@ -6,6 +6,7 @@ import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
 import { TextInput, QuestionInput } from "../../standard/Input";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { Label } from "../../standard/Text";
+import { ColumnContainer } from "../../standard/Containers";
 
 const getDefaultPlaceholder = (emotion: Emotion) => ({
     ":-)": uiText.response.placeholder.happy,
@@ -36,6 +37,9 @@ const CheckboxContainer = styled("div", {
     marginBottom: "$21",
 });
 
+const QuestionContainer = styled(ColumnContainer, {
+    paddingLeft: "$21",
+});
 
 type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }
 export const Questions = ({ emotion, answers, setAnswers }: Props) => {
@@ -53,7 +57,7 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
             <span>{uiText.response.customQuestionsCheckbox}</span>
         </CheckboxContainer>
         {visible && applyDefaultQuestion(emotion, questions).map(question => (
-            <>
+            <QuestionContainer>
                 <Label>{question.text}</Label>
                 <QuestionInput
                     key={question.id || 1}
@@ -68,7 +72,7 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
                         });
                     }}
                 />
-            </>)
+            </QuestionContainer >)
         )
         }
     </Container >
