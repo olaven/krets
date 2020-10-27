@@ -18,7 +18,7 @@ const PaddedColumnContainer = styled(ColumnContainer, {
 });
 
 const CenteredRowContainer = styled(RowContainer, {
-    justifyContent: "center"
+    justifyContent: "space-around"
 });
 
 
@@ -58,7 +58,7 @@ export const QuestionCard = ({ question }: { question: QuestionModel }) => {
         }
 
     return <PaddedColumnContainer>
-        <RowContainer>
+        <RowContainer style={{ width: "80vw" }}>
             <ColumnContainer>
                 <ArrowButton size={35} direction="up" inverted circular onClick={onReorder("left")} />
                 <ArrowButton size={35} direction="down" inverted circular onClick={onReorder("right")} />
