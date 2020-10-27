@@ -38,8 +38,11 @@ const CheckboxContainer = styled("div", {
 });
 
 const QuestionContainer = styled(ColumnContainer, {
+    alignItems: "center",
     paddingLeft: "$21",
+    alignItems: "left",
 });
+
 
 type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }
 export const Questions = ({ emotion, answers, setAnswers }: Props) => {
