@@ -57,10 +57,9 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
             <span>{uiText.response.customQuestionsCheckbox}</span>
         </CheckboxContainer>
         {visible && applyDefaultQuestion(emotion, questions).map(question => (
-            <QuestionContainer>
+            <QuestionContainer key={question.id || 1}>
                 <Label>{question.text}</Label>
                 <QuestionInput
-                    key={question.id || 1}
                     aria-label="response-text-input"
                     placeholder={uiText.response.placeholder.standard}
                     onChange={event => {
