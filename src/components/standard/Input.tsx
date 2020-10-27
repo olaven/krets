@@ -32,3 +32,9 @@ export const TextInput = (props) =>
     <Input  {...props} type="text" />
 export const NumberInput = (props) =>
     <Input {...props} type="number" />
+
+
+//TODO: find better home 
+export const QuestionInput = styled(TextInput, {
+    width: "79ch"
+});

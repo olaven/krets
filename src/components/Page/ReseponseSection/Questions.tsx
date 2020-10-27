@@ -1,9 +1,9 @@
 import { AnswerModel, Emotion, QuestionModel } from "../../../models/models";
 import * as uiText from "../../../text";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
-import { TextInput } from "../../standard/Input";
+import { TextInput, QuestionInput } from "../../standard/Input";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 
 const getDefaultPlaceholder = (emotion: Emotion) => ({
@@ -23,12 +23,7 @@ const applyDefaultQuestion = (emotion: Emotion, questions: QuestionModel[]):
         }] :
         questions
 
-const QuestionInput = styled(TextInput, {
-    width: "40ch",
-    small: {
-        width: "25ch"
-    }
-})
+
 
 
 type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }

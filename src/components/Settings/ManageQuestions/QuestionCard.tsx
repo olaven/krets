@@ -6,7 +6,7 @@ import { updateQuestion } from "../../../fetchers";
 import { DoubleConfirmationButton, TriggerLoadingButton } from "../../standard/buttons";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
-import { TextInput } from "../../standard/Input";
+import { TextInput, QuestionInput } from "../../standard/Input";
 import { ArrowButton } from "../../standard/Button"
 import { styled } from "../../../stiches.config";
 import { reorder, Direction } from "./reorder";
@@ -21,9 +21,6 @@ const CenteredRowContainer = styled(RowContainer, {
     justifyContent: "center"
 });
 
-const QuestionInput = styled(TextInput, {
-    width: "40ch"
-});
 
 
 const sendOrderToBackend = (questions: QuestionModel[]) =>
