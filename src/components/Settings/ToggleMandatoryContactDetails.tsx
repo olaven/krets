@@ -5,20 +5,11 @@ import { putPage } from "../../fetchers"
 import { styled } from "../../stiches.config";
 import * as text from "../../text";
 import { Button } from "../standard/Button";
+import { Paragraph } from "../standard/Text";
 import { ColumnContainer } from "../standard/Containers";
 
 const { enabledText, disabledText, updateWhenEnabled, updateWhenDisabled } = text.settings.mandatoryContact
 
-
-//TODO: something like this in ./standard? 
-const Paragraph = styled("p", {
-    fontSize: "$21",
-    paddingLeft: "$8",
-
-    small: {
-        fontSize: "$13",
-    }
-});
 
 export const ToggleMandatoryContactDetails = () => {
 
