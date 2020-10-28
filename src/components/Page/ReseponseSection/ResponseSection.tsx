@@ -50,20 +50,19 @@ const InputContainer = styled('div', {
     animationDuration: "280ms",
     animationTimingFunction: "ease",
     ">*": {
-        marginTop: "$79",
-        border: "solid orange"
+        marginTop: "$21",
     }
 });
 
 const SendButton = styled(Button, {
     transition: "ease .5s",
-    fontSize: "34px",
-    marginTop: "21px",
-    padding: "21px",
+    fontSize: "$21",
     width: "20vw",
+    margin: "auto",
 
     small: {
         width: "90vw",
+        margin: "$21",
     },
 
     opacity: 0,

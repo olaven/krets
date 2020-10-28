@@ -1,17 +1,17 @@
 import { styled } from "../../stiches.config";
+import { useToggle } from "../../effects/useToggle";
 
 export const Checkbox = ({ checked, onChange }) => {
 
+
+    const [selected, toggle] = useToggle(false);
+
     const Container = styled('div', {
         display: "flex",
-        //position: "relative",
-        //display: "inline",
-        //textAlign: "center",
-        //margin: "$21",
     });
 
     const Input = styled("input", {
-        opacity: 1,
+        opacity: 0,
 
         verticalAlign: "middle",
 
@@ -29,7 +29,10 @@ export const Checkbox = ({ checked, onChange }) => {
         }
     });
 
+
+
     const Label = styled('label', {
+
         borderColor: "$primary",
         backgroundColor: "$secondary",
         borderWidth: "2px",
@@ -38,41 +41,39 @@ export const Checkbox = ({ checked, onChange }) => {
 
         display: "inline-block",
 
-        /*         position: "absolute",
-                width: "4em",
-                height: "4em",
-                transform: "translateX(-50%) translateY(10%)",
-                transformOrigin: "center", */
         width: "4em",
         height: "4em",
-
         cursor: "pointer",
-        ":hover": {
-            transitionDuration: "100ms",
-            transitionTimingFunction: "linear",
-            transform: "scale(1.2) translateX(-50%) translateY(10%)",
-        },
 
         span: {
-
-            verticalAlign: "middle",
             svg: {
                 stroke: "$primary",
-
-                ":hover": {
-                    transitionDuration: "20ms",
-                    transitionTimingFunction: "ease-in-out",
-                    transform: "scale(1.05)"
-                }
             }
-        }
+        },
+
+        variants: {
+            selected: {
+                true: {
+                    backgroundColor: "$primary",
+                    color: "$secondary",
+                    span: {
+                        svg: {
+                            stroke: "$secondary",
+                        }
+                    }
+                },
+            },
+        },
     });
 
     return <Container>
-        <Label htmlFor="checkbox">
-            <Input onChange={onChange} checked={checked} type="checkbox" id="checkbox" />
-            <span>
+        <Label htmlFor="checkbox" selected={selected}>
+            <Input onChange={(event) => {
 
+                toggle();
+                onChange(event);
+            }} checked={checked} type="checkbox" id="checkbox" />
+            <span>
                 <svg
                     viewBox="0 6 24 24 "
                     strokeWidth="2"
