@@ -34,8 +34,9 @@ const OuterContainer = styled("div", {
 const InputContainer = styled('div', {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    marginTop: "100px",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    marginTop: "$79",
     animationName: `${css.keyframes({
         "0%": {
             opacity: "0",
@@ -48,6 +49,10 @@ const InputContainer = styled('div', {
     })}`,
     animationDuration: "280ms",
     animationTimingFunction: "ease",
+    ">*": {
+        marginTop: "$79",
+        border: "solid orange"
+    }
 });
 
 const SendButton = styled(Button, {
@@ -72,7 +77,14 @@ const SendButton = styled(Button, {
             },
         }
     }
-})
+});
+
+
+const ArrowButtonContainer = styled("div", {
+
+    display: "flex",
+    justifyContent: "center",
+});
 
 export const ResponseSection = ({ page }: {
     page: PageModel
@@ -138,15 +150,14 @@ export const ResponseSection = ({ page }: {
                         answers={answers}
                         setAnswers={setAnswers}
                         emotion={emotion} />
-
-                    <div>
+                    <ArrowButtonContainer>
                         <ArrowButton
                             circular
                             size={79}
                             aria-label="response-button-input"
                             onClick={() => setShowQuestions(true)}
                         />
-                    </div>
+                    </ArrowButtonContainer>
                 </InputContainer>
             }
             {emotion && showContactStep &&

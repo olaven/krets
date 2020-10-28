@@ -3,10 +3,12 @@ import * as uiText from "../../../text";
 import { useContext, useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
-import { TextInput, QuestionInput } from "../../standard/Input";
+import { QuestionInput } from "../../standard/Input";
 import { QuestionsContext } from "../../../context/QuestionsContext";
-import { Label } from "../../standard/Text";
+import { Choice } from "./Choice";
+import { Label, Paragraph } from "../../standard/Text";
 import { ColumnContainer } from "../../standard/Containers";
+import { Button } from "../../standard/Button";
 
 const getDefaultPlaceholder = (emotion: Emotion) => ({
     ":-)": uiText.response.placeholder.happy,
@@ -33,15 +35,18 @@ const Container = styled("div", {
 const CheckboxContainer = styled("div", {
     display: "flex",
     justifyContent: "center",
-    flexDirection: "row",
-    marginBottom: "$21",
+
+    alignItems: "center",
+    flexDirection: "column",
+    marginBottom: "$55",
 });
 
 const QuestionContainer = styled(ColumnContainer, {
-    alignItems: "center",
     paddingLeft: "$21",
-    alignItems: "left",
+    alignItems: "left"
 });
+
+
 
 
 type Props = { emotion: Emotion, answers: Map<string, AnswerModel>, setAnswers: (answers: Map<string, AnswerModel>) => void }
@@ -53,11 +58,11 @@ export const Questions = ({ emotion, answers, setAnswers }: Props) => {
 
     return <Container>
         <CheckboxContainer>
+            <span>{uiText.response.customQuestionsCheckbox}</span>
             <StichesCheckbox
                 checked={visible}
                 onChange={() => setVisible(!visible)}
             />
-            <span>{uiText.response.customQuestionsCheckbox}</span>
         </CheckboxContainer>
         {visible && applyDefaultQuestion(emotion, questions).map(question => (
             <QuestionContainer key={question.id || 1}>

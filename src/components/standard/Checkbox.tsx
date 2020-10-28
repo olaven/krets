@@ -3,26 +3,28 @@ import { styled } from "../../stiches.config";
 export const Checkbox = ({ checked, onChange }) => {
 
     const Container = styled('div', {
-        position: "relative",
-        display: "inline",
-        textAlign: "center",
-        paddingLeft: "$34",
-        paddingRight: "$34",
+        display: "flex",
+        //position: "relative",
+        //display: "inline",
+        //textAlign: "center",
+        //margin: "$21",
     });
 
     const Input = styled("input", {
-        transform: "scale(300%)",
-        backgroundColor: "$secondary",
-        color: "$primary",
-        opacity: 0,
+        opacity: 1,
+
+        verticalAlign: "middle",
 
         "&:checked + label": {
             backgroundColor: "$primary",
             color: "$secondary",
 
-            svg: {
-                stroke: "$secondary",
-                fontSize: "3em",
+            span: {
+
+                svg: {
+                    stroke: "$secondary",
+                    fontSize: "3em",
+                }
             }
         }
     });
@@ -34,43 +36,52 @@ export const Checkbox = ({ checked, onChange }) => {
         borderStyle: "solid",
         borderRadius: "50%",
 
-        position: "absolute",
-        width: "3em",
-        height: "3em",
-        verticalAlign: "center",
-        transform: "translateX(-50%) translateY(-25%)",
+        display: "inline-block",
+
+        /*         position: "absolute",
+                width: "4em",
+                height: "4em",
+                transform: "translateX(-50%) translateY(10%)",
+                transformOrigin: "center", */
+        width: "4em",
+        height: "4em",
 
         cursor: "pointer",
         ":hover": {
             transitionDuration: "100ms",
             transitionTimingFunction: "linear",
-            transform: "scale(1.1) translateX(-50%) translateY(-25%)",
+            transform: "scale(1.2) translateX(-50%) translateY(10%)",
         },
 
-        svg: {
-            transitionDuration: "200ms",
-            transitionTimingFunction: "ease-out",
-            stroke: "$primary",
+        span: {
 
-            ":hover": {
-                transitionDuration: "20ms",
-                transitionTimingFunction: "ease-in-out",
-                transform: "scale(1.05)"
+            verticalAlign: "middle",
+            svg: {
+                stroke: "$primary",
+
+                ":hover": {
+                    transitionDuration: "20ms",
+                    transitionTimingFunction: "ease-in-out",
+                    transform: "scale(1.05)"
+                }
             }
         }
     });
 
     return <Container>
-        <Input onChange={onChange} checked={checked} type="checkbox" id="checkbox" />
         <Label htmlFor="checkbox">
-            <svg
-                viewBox="0 -2 24 24"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-            </svg>
+            <Input onChange={onChange} checked={checked} type="checkbox" id="checkbox" />
+            <span>
+
+                <svg
+                    viewBox="0 6 24 24 "
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>
+            </span>
         </Label>
     </Container >
 }
