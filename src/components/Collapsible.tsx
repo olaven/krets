@@ -1,21 +1,6 @@
-import { useState, ReactChild } from "react"
+import { useState, ReactChild } from "react";
+import { useToggle } from "../effects/useToggle";
 import { styled } from "../stiches.config";
-
-
-//TODO: split out if fun enough :) 
-const useToggle = (initial: boolean): [boolean, () => any] => {
-
-    const [value, setValue] = useState(initial);
-    const toggle = () => {
-
-        setValue(!value);
-    }
-
-    return [
-        value,
-        toggle
-    ]
-}
 
 
 const CollapsibleButton = styled("button", {

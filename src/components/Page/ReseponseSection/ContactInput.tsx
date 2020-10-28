@@ -14,10 +14,11 @@ const OuterContainer = styled("div", {
 const ButtonContainer = styled("div", {
     display: "flex",
     justifyItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "center"
 });
 
 const ContactTextInput = styled(TextInput, {
+    margin: "0 auto",
     variants: {
         error: {
             true: {

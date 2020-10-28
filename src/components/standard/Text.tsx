@@ -14,5 +14,5 @@ export const Paragraph = styled("p", {
 export const Label = styled("label", {
 
     fontSize: "$21",
-    paddingTop: "$21",
+    paddingTop: "$13",
 });
