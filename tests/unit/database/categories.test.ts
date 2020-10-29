@@ -1,8 +1,8 @@
 import * as faker from "faker";
-import { categories } from "../../src/database/categories";
+import { categories } from "../../../src/database/categories";
 import { randomUser } from "./databaseTestUtils";
-import { CategoryModel } from "../../src/models/models";
-import { users } from "../../src/database/users";
+import { CategoryModel } from "../../../src/models/models";
+import { users } from "../../../src/database/users";
 
 describe("Database interface for categories", () => {
 

@@ -1,15 +1,15 @@
 import fetch from "cross-fetch";
-import { database } from "../../../src/database/database"
+import { database } from "../../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
-import userHandler from "../../../src/pages/api/users/[id]";
-import { UserModel } from "../../../src/models/models";
+import userHandler from "../../../../src/pages/api/users/[id]";
+import { UserModel } from "../../../../src/models/models";
 import { mockFetch } from "../../frontend/frontendTestUtils";
 import { createAdmin, createBasicUser } from "./userTestUtils";
 
 
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../../../src/auth/auth0");
 jest.mock("request")
 
 describe("Endpoints for database user data", () => {

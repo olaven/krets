@@ -1,13 +1,13 @@
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../apiTestUtils";
-import userHandler from "../../../src/pages/api/users/index";
+import userHandler from "../../../../src/pages/api/users/index";
 import { createAdmin, createBasicUser } from "./userTestUtils";
 import { setupUsers } from "../../database/databaseTestUtils";
-import { PageModel, PaginatedModel, UserModel } from "../../../src/models/models";
+import { PageModel, PaginatedModel, UserModel } from "../../../../src/models/models";
 
 
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../../../src/auth/auth0");
 
 describe("Endpoints for database user data", () => {
 

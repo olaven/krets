@@ -1,8 +1,8 @@
 import * as faker from "faker";
 import { randomResponse, randomUser, randomPage, blindSetup, setupPage } from "./databaseTestUtils";
-import { convertEmotion } from "../../src/database/responses";
-import { database } from "../../src/database/database";
-import { DistributionModel } from "../../src/models/models";
+import { convertEmotion } from "../../../src/database/responses";
+import { database } from "../../../src/database/database";
+import { DistributionModel } from "../../../src/models/models";
 
 
 describe("Database repository for pages", () => {

@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { database } from "../../src/database/database";
+import { database } from "../../../src/database/database";
 import { randomUser, setupAnswers, setupEmbeddable, setupPage, setupPages, setupQuestions } from "../database/databaseTestUtils";
 import { randomPage } from "../api/apiTestUtils";
 

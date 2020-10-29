@@ -3,10 +3,10 @@
  */
 
 import React from "react";
-import IndexPage from "../../../src/pages/index"
+import IndexPage from "../../../../src/pages/index"
 import { waitFor, render } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
-import * as text from "../../../src/text"
+import * as text from "../../../../src/text"
 
 describe("The home page", () => {
 

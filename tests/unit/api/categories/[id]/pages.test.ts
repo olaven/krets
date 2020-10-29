@@ -1,14 +1,14 @@
 
 import { authenticatedFetch, setupServer, teardownServer, authenticatedGet, randomPage } from "../../apiTestUtils";
-import handler from "../../../../src/pages/api/categories/[id]/pages";
+import handler from "../../../../../src/pages/api/categories/[id]/pages";
 import faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { PageModel } from "../../../../src/models/models";
-import { database } from "../../../../src/database/database";
-import { randomUser } from "../../../database/databaseTestUtils";
+import { PageModel } from "../../../../../src/models/models";
+import { database } from "../../../../../src/database/database";
+import { randomUser } from "../../../../../src/database/databaseTestUtils";
 
-jest.mock("../../../../src/auth/auth0");
+jest.mock("../../../../../src/auth/auth0");
 
 describe("The pages by categories endpoint", () => {
 

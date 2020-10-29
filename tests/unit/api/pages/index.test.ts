@@ -2,11 +2,11 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import * as faker from "faker";
 import { authenticatedFetch, getPages, postPage, setupServer, teardownServer, uid, randomPage } from "../apiTestUtils";
-import handler from "../../../src/pages/api/pages";
-import { database } from "../../../src/database/database";
+import handler from "../../../../src/pages/api/pages";
+import { database } from "../../../../src/database/database";
 import { randomUser, setupPages } from "../../database/databaseTestUtils";
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../../../src/auth/auth0");
 
 describe("The pages endpoint", () => {
 

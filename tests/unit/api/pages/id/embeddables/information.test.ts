@@ -2,12 +2,12 @@ import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, } from "../../../apiTestUtils";
-import embeddableInformationHandler from "../../../../../src/pages/api/pages/[id]/embeddables/information"
+import embeddableInformationHandler from "../../../../../../src/pages/api/pages/[id]/embeddables/information"
 import { randomQuestion, setupEmbeddable, setupPage } from "../../../../database/databaseTestUtils";
-import { EmbeddableInformationModel } from "../../../../../src/models/models";
-import { database } from "../../../../../src/database/database";
+import { EmbeddableInformationModel } from "../../../../../../src/models/models";
+import { database } from "../../../../../../src/database/database";
 
-jest.mock("../../../../../src/auth/auth0");
+jest.mock("../../../../../../src/auth/auth0");
 
 describe("The endpoint for information required fetched by embeddable frontend", () => {
 

@@ -1,13 +1,13 @@
 import fetch from "cross-fetch";
 import * as faker from "faker";
 import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
-import authUserHandler from "../../../../src/pages/api/users/[id]/auth";
+import authUserHandler from "../../../../../src/pages/api/users/[id]/auth";
 import { createAdmin, createBasicUser } from "../userTestUtils";
 import { mockFetch } from "../../../frontend/frontendTestUtils";
 
 
 
-jest.mock("../../../../src/auth/auth0");
+jest.mock("../../../../../src/auth/auth0");
 jest.mock("request");
 
 describe("Endpoints for database user data", () => {

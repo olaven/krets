@@ -1,14 +1,14 @@
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { database } from "../../../src/database/database"
+import { database } from "../../../../src/database/database"
 import { randomUser } from "../../database/databaseTestUtils";
 import { setupServer, teardownServer, uid, authenticatedFetch, randomPage } from "../apiTestUtils";
-import handler from "../../../src/pages/api/pages/[id]";
-import { PageModel } from "../../../src/models/models";
+import handler from "../../../../src/pages/api/pages/[id]";
+import { PageModel } from "../../../../src/models/models";
 
 
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../../../src/auth/auth0");
 
 describe("Endpoints for specific page", () => {
 

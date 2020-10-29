@@ -2,11 +2,11 @@ import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, randomEmbeddableResponse } from "../../../apiTestUtils";
-import embeddableInformationHandler from "../../../../../src/pages/api/pages/[id]/embeddables/responses"
+import embeddableInformationHandler from "../../../../../../src/pages/api/pages/[id]/embeddables/responses"
 import { setupEmbeddable, setupPages } from "../../../../database/databaseTestUtils";
-import { EmbeddableResponseModel, PageModel } from "../../../../../src/models/models";
+import { EmbeddableResponseModel, PageModel } from "../../../../../../src/models/models";
 
-jest.mock("../../../../../src/auth/auth0");
+jest.mock("../../../../../../src/auth/auth0");
 
 describe("Verification and persisting of responses", () => {
 

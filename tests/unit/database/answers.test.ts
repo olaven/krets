@@ -1,4 +1,4 @@
-import { answers } from "../../src/database/answers";
+import { answers } from "../../../src/database/answers";
 import { uid } from "../api/apiTestUtils";
 import { randomAnswer, setupAnswers } from "./databaseTestUtils";
 

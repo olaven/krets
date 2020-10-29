@@ -1,13 +1,13 @@
 import * as faker from "faker";
 import * as nextRouter from 'next/router';
 import { ReactElement } from 'react';
-import { PageModel, UserModel } from '../../src/models/models';
-import { PagesContext } from "../../src/context/PagesContext";
+import { PageModel, UserModel } from '../../../src/models/models';
+import { PagesContext } from "../../../src/context/PagesContext";
 import { render } from '@testing-library/react';
-import { UserContext } from "../../src/context/UserContext";
-import { SettingsContext } from "../../src/context/SettingsContext";
+import { UserContext } from "../../../src/context/UserContext";
+import { SettingsContext } from "../../../src/context/SettingsContext";
 import { randomPage } from "../api/apiTestUtils";
-import { EmbeddableContext } from "../../src/context/EmbeddableContext";
+import { EmbeddableContext } from "../../../src/context/EmbeddableContext";
 import { randomEmbeddable } from "../database/databaseTestUtils";
 
 

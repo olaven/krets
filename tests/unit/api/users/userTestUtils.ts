@@ -1,4 +1,4 @@
-import { database } from "../../../src/database/database";
+import { database } from "../../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
 
 export const createAdmin = async () => {

@@ -1,11 +1,11 @@
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
-import embeddablesHandler from '../../../../src/pages/api/pages/[id]/embeddables';
+import embeddablesHandler from '../../../../../src/pages/api/pages/[id]/embeddables';
 import { setupPages, randomEmbeddable } from "../../../database/databaseTestUtils";
-import { EmbeddableModel, PageModel } from "../../../../src/models/models";
+import { EmbeddableModel, PageModel } from "../../../../../src/models/models";
 
-jest.mock("../../../../src/auth/auth0");
+jest.mock("../../../../../src/auth/auth0");
 
 describe("The endpoint for embeddables", () => {
 

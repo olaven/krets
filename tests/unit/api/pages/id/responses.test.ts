@@ -1,13 +1,13 @@
 import { authenticatedFetch, setupServer, teardownServer } from "../../apiTestUtils";
 import * as faker from "faker";
 import { Server } from "net";
-import handler from '../../../../src/pages/api/pages/[id]/responses';
-import { database } from "../../../../src/database/database";
+import handler from '../../../../../src/pages/api/pages/[id]/responses';
+import { database } from "../../../../../src/database/database";
 import fetch from "cross-fetch";
 import { randomUser, randomPage, randomResponse, blindSetup, setupPage, randomAnswer } from "../../../database/databaseTestUtils";
-import { PaginatedModel, ResponseAnswerModel, ResponseModel } from "../../../../src/models/models";
+import { PaginatedModel, ResponseAnswerModel, ResponseModel } from "../../../../../src/models/models";
 
-jest.mock("../../../../src/auth/auth0");
+jest.mock("../../../../../src/auth/auth0");
 
 describe("The endpoint for responses", () => {
 

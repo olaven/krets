@@ -1,4 +1,4 @@
-import { reorder } from "../../../../src/components/Settings/ManageQuestions/reorder";
+import { reorder } from "../../../../../src/components/Settings/ManageQuestions/reorder";
 
 describe("Helper function for reordering questions", () => {
 

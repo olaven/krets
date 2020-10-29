@@ -2,10 +2,7 @@
  * @jest-environment jsdom
  */
 import '@testing-library/jest-dom/extend-expect'
-import { waitFor } from '@testing-library/react';
-import { addProtocol, EmbeddableCreator, validURL } from "../../../../src/components/Settings/ManageEmbeddable/EmbeddableCreator";
-import { randomEmbeddable } from "../../../database/databaseTestUtils";
-import { mockFetch, renderWithPagesContext, renderWithEmbeddableContext } from "../../frontendTestUtils";
+import { addProtocol, validURL } from "../../../../../src/components/Settings/ManageEmbeddable/EmbeddableCreator";
 
 
 describe("URL validation", () => {

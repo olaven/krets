@@ -3,15 +3,15 @@
  */
 
 import React from "react";
-import { Charts } from "../../../src/components/Charts"
+import { Charts } from "../../../../src/components/Charts"
 import { render, waitFor, fireEvent } from "@testing-library/react"
-import * as text from "../../../src/text"
+import * as text from "../../../../src/text"
 import '@testing-library/jest-dom/extend-expect'
-import { AdminPageContext } from "../../../src/context/AdminPageContext";
-import { UserContext } from "../../../src/context/UserContext";
-import { CompareContext } from "../../../src/context/CompareContext";
+import { AdminPageContext } from "../../../../src/context/AdminPageContext";
+import { UserContext } from "../../../../src/context/UserContext";
+import { CompareContext } from "../../../../src/context/CompareContext";
 import { mockFetch } from "../frontendTestUtils";
-import { AuthModel, UserModel } from "../../../src/models/models";
+import { AuthModel, UserModel } from "../../../../src/models/models";
 
 
 const launch = () => {

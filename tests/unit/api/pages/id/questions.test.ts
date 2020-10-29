@@ -1,11 +1,11 @@
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch, uid } from "../../apiTestUtils";
-import questionsHandler from '../../../../src/pages/api/pages/[id]/questions';
+import questionsHandler from '../../../../../src/pages/api/pages/[id]/questions';
 import { randomQuestion, setupQuestions } from "../../../database/databaseTestUtils";
-import { QuestionModel } from "../../../../src/models/models";
+import { QuestionModel } from "../../../../../src/models/models";
 
-jest.mock("../../../../src/auth/auth0");
+jest.mock("../../../../../src/auth/auth0");
 
 
 describe("The endpoint for questions", () => {

@@ -6,7 +6,7 @@ import { Server } from "net";
 import { NextApiHandler } from "next";
 import * as faker from "faker";
 import fetch from "cross-fetch";
-import { PageModel, CategoryModel, PaginatedModel, EmbeddableResponseModel } from '../../src/models/models';
+import { PageModel, CategoryModel, PaginatedModel, EmbeddableResponseModel } from '../../../src/models/models';
 import { randomAnswer, randomResponse } from '../database/databaseTestUtils';
 
 

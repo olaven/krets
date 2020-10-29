@@ -5,8 +5,8 @@
 import * as faker from "faker";
 import { waitFor, fireEvent, render } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
-import { ResponseSection } from "../../../src/components/Page/ReseponseSection/ResponseSection"
-import { PageModel } from "../../../src/models/models";
+import { ResponseSection } from "../../../../src/components/Page/ReseponseSection/ResponseSection"
+import { PageModel } from "../../../../src/models/models";
 import { randomPage, randomUser } from "../../database/databaseTestUtils";
 
 describe("The component for creating new responses", () => {

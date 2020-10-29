@@ -1,4 +1,4 @@
-import { database } from "../../src/database/database"
+import { database } from "../../../src/database/database"
 import { randomEmbeddable, setupEmbeddable, setupPages } from "./databaseTestUtils";
 
 describe("The database interface for embeddables", () => {

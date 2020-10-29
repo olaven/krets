@@ -3,7 +3,7 @@
  */
 import '@testing-library/jest-dom/extend-expect'
 import { waitFor } from '@testing-library/react';
-import { EmbeddableContent } from "../../../../src/components/Settings/ManageEmbeddable/ManageEmbeddable";
+import { EmbeddableContent } from "../../../../../src/components/Settings/ManageEmbeddable/ManageEmbeddable";
 import { randomEmbeddable } from "../../../database/databaseTestUtils";
 import { mockFetch, renderWithEmbeddableContext } from "../../frontendTestUtils";
 

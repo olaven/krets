@@ -1,11 +1,11 @@
 import { Server } from "net";
-import handler from "../../../src/pages/api/auth/callback";
+import handler from "../../../../src/pages/api/auth/callback";
 import { authenticatedFetch, setupServer, teardownServer } from "../apiTestUtils";
 import * as faker from "faker";
-import { database } from "../../../src/database/database";
+import { database } from "../../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../../../src/auth/auth0");
 
 describe("The callback endpoint", () => {
 

@@ -8,8 +8,8 @@ import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
 import { renderWithUserContext } from "../frontendTestUtils";
 import { randomUser } from "../../database/databaseTestUtils";
-import { UserRole } from "../../../src/models/UserModel";
-import { AdminWrapper } from "../../../src/components/AdminWrapper";
+import { UserRole } from "../../../../src/models/UserModel";
+import { AdminWrapper } from "../../../../src/components/AdminWrapper";
 
 describe("The admin wrapper HOC", () => {
 

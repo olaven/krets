@@ -2,12 +2,12 @@ import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch, uid } from "../../../apiTestUtils";
-import questionHandler from "../../../../../src/pages/api/pages/[id]/questions/[questionId]"
-import { QuestionModel } from "../../../../../src/models/models";
+import questionHandler from "../../../../../../src/pages/api/pages/[id]/questions/[questionId]"
+import { QuestionModel } from "../../../../../../src/models/models";
 import { setupQuestions } from "../../../../database/databaseTestUtils";
-import { database } from "../../../../../src/database/database";
+import { database } from "../../../../../../src/database/database";
 
-jest.mock("../../../../../src/auth/auth0");
+jest.mock("../../../../../../src/auth/auth0");
 
 describe("The endpoint for average all-time score", () => {
 

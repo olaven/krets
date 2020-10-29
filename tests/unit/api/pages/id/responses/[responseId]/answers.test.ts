@@ -1,12 +1,12 @@
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../../apiTestUtils";
-import answersHandler from '../../../../../../src/pages/api/pages/[id]/responses/[responseId]/answers';
-import { database, } from "../../../../../../src/database/database";
+import answersHandler from '../../../../../../../src/pages/api/pages/[id]/responses/[responseId]/answers';
+import { database, } from "../../../../../../../src/database/database";
 import { randomAnswer, randomUser, setupAnswers } from "../../../../../database/databaseTestUtils";
-import { AnswerModel } from "../../../../../../src/models/models";
+import { AnswerModel } from "../../../../../../../src/models/models";
 
-jest.mock("../../../../../../src/auth/auth0");
+jest.mock("../../../../../../../src/auth/auth0");
 
 describe("The endpoint for answers on a given response", () => {
 

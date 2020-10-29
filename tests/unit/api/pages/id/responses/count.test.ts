@@ -2,10 +2,10 @@ import * as faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../apiTestUtils";
-import countHandler from '../../../../../src/pages/api/pages/[id]/responses/count';
+import countHandler from '../../../../../../src/pages/api/pages/[id]/responses/count';
 import { blindSetup } from "../../../../database/databaseTestUtils";
 
-jest.mock("../../../../../src/auth/auth0");
+jest.mock("../../../../../../src/auth/auth0");
 
 describe("The endpoint for answers on a given response", () => {
 
