@@ -22,8 +22,8 @@ jobs:
           - 5432:5432
     steps:
     - uses: actions/checkout@v2
-    - name: Use Cypress 
-      uses: cypress-io/github-action
+    - name: Run Cypress Tests
+      uses: cypress-io/github-action@v2.2.7
       with: 
         command: yarn test:integration
       env:
