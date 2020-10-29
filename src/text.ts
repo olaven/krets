@@ -127,7 +127,7 @@ export const page = strings({
         download: "Download!"
     },
     no: {
-        header: "Scan og gi tilbakemelding til",
+        header: "Scan for å gi tilbakemelding til",
         loading: "(Laster...)",
         download: "Last ned"
     }
@@ -150,15 +150,15 @@ export const buttons = strings({
     no: {
         logout: "Logg ut",
         login: "Logg inn",
-        myPage: "Konto",
+        myPage: "Din konto",
         guide: "Help",
         aboutPage: "Om",
         getStarted: "Kom i gang!",
-        toAdmin: "Oversikt",
-        toQR: "QR-kode",
-        toPage: "Landingsside",
+        toAdmin: "Mottate tilbakemeldinger",
+        toQR: "Se QR-kode",
+        toPage: "Se svarside",
         toSettings: "Innstillinger",
-        loadMore: "Last flere",
+        loadMore: "Last flere sider",
     }
 });
 
@@ -209,10 +209,10 @@ export const pageCreator = strings({
     },
     no: {
         preview: "Din side:",
-        placeholder: "Sidens navn",
+        placeholder: "Skriv navnet på den nye siden her",
         button: "Lag side",
         error: "En feil oppsto😐",
-        conflict: "En side med denne ID-en finnes alt"
+        conflict: "Dette sidenavnet er opptatt."
     }
 });
 
@@ -310,10 +310,10 @@ export const settings = strings({
     },
     no: {
         heading: "Innstillinger for",
-        changeNameHeader: "Oppdater sidens navn",
-        changeNameButton: "Oppdater navn",
-        changeTitleHeader: "Oppdater sidens tittel",
-        changeTitleButton: "Oppdater tittel",
+        changeNameHeader: "Legg inn nytt navn",
+        changeNameButton: "Legg inn",
+        changeTitleHeader: "Legg inn ny tittel",
+        changeTitleButton: "Legg inn",
         changeNameError: "Det skjedde en feil med oppdatering av navn..",
         deletePageButton: "Slett side.",
         deleteWarning: "Er du sikker? Siden og all tilbakemelding slettes permanent. Du kan ikke gjøre om dette.",
@@ -321,10 +321,10 @@ export const settings = strings({
         deleteCancelation: "Ikke slett.",
         deleteError: "En feil oppsto med slettingen..",
         questions: {
-            heading: "Egne spørsmål",
-            createQuestion: "Lag spørsmål",
-            placeholder: "Enter question",
-            createButton: "Opprett",
+            heading: "Still dine egne spørsmål",
+            createQuestion: "Lag nye spørsmål",
+            placeholder: "Legg inn spørsmålstekst",
+            createButton: "Lag",
             listHeader: "Dine spørsmål",
             updateButton: "Oppdater",
             archiveButton: "Arkiver.",
@@ -339,10 +339,10 @@ export const settings = strings({
         },
         mandatoryContact: {
             heading: "Om kontaktinformasjon",
-            enabledText: "Dine kunder må legge igjen kontakinformasjon",
-            updateWhenEnabled: "Gjør det frivillig å legge inn kontaktinformasjon",
-            disabledText: "Dine kunder kan nå være anonyme",
-            updateWhenDisabled: "Gjør det obligatorisk med kontaktinformasjon",
+            enabledText: "Nå er kundene dine nødt til å legge igjen kontaktinformasjon.",
+            updateWhenEnabled: "Gjør det frivillig!",
+            disabledText: "Kundene dine kan være anonyme om de ønsker det.",
+            updateWhenDisabled: "Gjør det obligatorisk å legge igjen kontaktinformasjon",
         }
     }
 })
@@ -462,11 +462,11 @@ export const upgrade = strings({
         thanks: {
             heading: "Tusen takk,",
             subscription: "Du har dette abonnementet: ",
-            aboutFeedback: "Tilbakemeldinger er det eneste som muliggjør forbedring 👊",
+            aboutFeedback: "Tilbakemeldinger er helt nødnvendig for å bli enda bedre.",
             aboutKrets: "Krets er et lite og uavhengig selskap som ønsker å gjøre tilbakemelding så enkelt som mulig, for så mange som mulig.",
             contactPrefix: "Ta kontakt på",
-            contactSuffix: "👋",
-            greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet"
+            contactSuffix: ".",
+            greetings: "- daglig leder, utvikler, og alt annet"
         },
         getHelp: "Hvordan bruker jeg Krets?",
         back: "Tilbake til Krets",
@@ -511,13 +511,14 @@ export const about = strings({
     no: {
         heading: "Heisann 👋 ",
         first: `
-            Tilbakemelding er essensielt for deg som vil bli bedre 👊
-            De fleste verktøy er bare store, detaljerte skjemaer 🥱 
+            Vil du bli bedre, er tilbakemeldinger nødvendig. 
+            Dessverre er de talt for vanlig med lange, detaljerte skjemaer 🥱 
+            Vi er et alternativ til det!
         `,
-        second: "Store skjemaer = lite tilbakemelding = ingen forbedring 😔",
+        second: "Store skjemaer = lite tilbakemelding = ingen forbedring",
         third: "Krets er et nytt alternativ.",
         fourth: "Krets er et lite, uavhengig selskap som jobber for friksjonsfri tilbakemelding.",
-        greetings: "- daglig leder, utvikler, 👨‍💻 og alt annet",
+        greetings: "- daglig leder, utvikler og alt annet",
         badAlternative: "Tradisjonell 🗒️",
         goodAlternative: "Krets 🎉",
     }

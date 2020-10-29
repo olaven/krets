@@ -28,6 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     "tests/globalTeardown.js",
-    "tests/globalSetup.js"
+    "tests/globalSetup.js",
+    "tests/integration/plugins/index.js"
   ]
 }

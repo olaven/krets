@@ -1,7 +1,6 @@
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import * as text from "../../src/text"
-import { Loader } from "./standard/loader";
 
 /**
  * Blocks content if user is not admin
