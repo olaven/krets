@@ -1,0 +1,33 @@
+name: Running Integration Tests
+
+on: [push, pull_request]
+
+jobs:
+  integration-tests:
+
+    runs-on: ubuntu-latest
+    services:
+      localhost:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: pass
+          POSTGRES_USER: user
+          POSTGRES_DB: data
+        options: 
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Cypress 
+      uses: cypress-io/github-action
+      with: 
+        command: yarn test:integration
+      env:
+        PGHOST: localhost
+        PGUSER: user
+        PGPASSWORD: pass
+        PGDATABASE: data

@@ -1,9 +1,9 @@
-name: Tests
+name: Running Unit Tests
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  unit-test:
 
     runs-on: ubuntu-latest
     services:
