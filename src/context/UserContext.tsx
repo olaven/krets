@@ -29,6 +29,7 @@ const getAndSet = <T extends unknown>(path: string, setter: React.Dispatch<SetSt
 
         const [status, retrievedData] = await get<any>(path);
 
+        console.log(retrievedData);
         setter(
             status === OK ?
                 retrievedData :

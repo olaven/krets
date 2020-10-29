@@ -4,5 +4,6 @@
     "integrationFolder": "./tests/integration/integration",
     "pluginsFile": "./tests/integration/plugins/index.js",
     "supportFile": "./tests/integration/support/index.js",
-    "videosFolder": "./tests/integration/videos"
+    "videosFolder": "./tests/integration/videos",
+    "experimentalNetworkStubbing": true
 }
