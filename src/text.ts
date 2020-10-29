@@ -33,15 +33,13 @@ export const intro = strings({
     },
     no: {
         requestAccess: {
-            button: "Etterspør tilgang",
+            button: "Be om tilgang",
             placeholder: "Din e-post",
-            success: "Velkommen✋ Vi kommer tilbake til deg så fort vi kan!"
+            success: "Vi er glade for å ha deg med. Du hører snart fra oss."
         },
-        requestAccessButton: "Etterspør tilgang",
-        requestAccessPlaceholder: "Din e-post",
-        about: "Tilbakemeldinger er nødvendig for forbedring 👊",
-        aim: "Krets ønsker å gjøre det friksjonsfritt 😁",
-        instructions: "Se hvordan det funker - Scan med telefonen 🤳✨",
+        about: "Krets hjelper din bedrift med å få tilbakemeldinger.",
+        aim: "Slik kan du ta de beste valgene for din bedrift 👍",
+        instructions: "Scan denne med telefonen din - Se hvor enkelt det er 🤳",
         create: "Å lage en Krets-side er kjapt!",
         visiting: "Ditt publikum besøker din side, med link eller QR-kode",
         insight: "Få innsikt!",
