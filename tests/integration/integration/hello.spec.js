@@ -9,4 +9,11 @@ describe("My first test", () => {
 
         cy.visit("https://duckduckgo.com")
     });
+
+    it("Krets should load by default with baseURL", () => {
+
+        cy
+            .visit("/")
+            .contains("Krets")
+    });
 });
