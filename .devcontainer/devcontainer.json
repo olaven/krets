@@ -7,7 +7,7 @@
 		3000,
 		5432
 	], */
-	"postCreateCommand": "yarn install",
+	"postCreateCommand": "yarn install && yarn cypress install",
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},

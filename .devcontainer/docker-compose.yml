@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: node:14
+    image: cypress/base:14.15.0 # Node + Cypress 
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
