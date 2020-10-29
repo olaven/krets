@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "noEmit": false,
+        "isolatedModules": false,
+        "types": [
+            "cypress"
+        ]
+    },
+    "include": [
+        //        "../../node_modules/cypress",
+        "./*/*.ts"
+    ]
+}

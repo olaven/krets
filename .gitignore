@@ -1,10 +1,18 @@
-
 .next/
 # Created by https://www.gitignore.io/api/node,macos,dotenv
 # Edit at https://www.gitignore.io/?templates=node,macos,dotenv
 
 ### dotenv ###
 .env
+
+### CypressIO ###
+# gitignore template for the CypressIO, browser test framework
+# website: https://www.cypress.io/
+
+tests/integration/results/*
+tests/integration/reports/*
+tests/integration/screenshots/*
+tests/integration/videos/*
 
 ### macOS ###
 # General

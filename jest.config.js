@@ -3,6 +3,10 @@ require("dotenv").config();
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  roots: [
+    //    '<rootDir>/src',
+    '<rootDir>/tests/unit' //NOTE: Only unit tests, as integration tests use cypress instead
+  ],
   testPathIgnorePatterns: [
     "./tests/api/apiTestUtils.ts",
     "./tests/frontend/frontendTestUtils.tsx",

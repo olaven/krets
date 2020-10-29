@@ -10,6 +10,9 @@
     "build": "next build",
     "start": "yarn migrate up --no-check-order --no-reject-unauthorized && NODE_ENV='production' next start",
     "test": "yarn migrate up && NODE_ENV=test jest --runInBand ./tests --forceExit --detectOpenHandles",
+    "dev:integration": "yarn dev --port 3052",
+    "cy:run": "cypress run",
+    "test:integration": "start-server-and-test dev:integration 3052 cy:run",
     "migrate": "node-pg-migrate"
   },
   "dependencies": {
@@ -56,11 +59,13 @@
     "babel-jest": "^26.1.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.0",
     "canvas": "^2.6.1",
+    "cypress": "^5.5.0",
     "dotenv": "^8.2.0",
     "faker": "^4.1.0",
     "jest": "^26.1.0",
     "jest-config": "^26.1.0",
     "node-fetch": "^2.6.1",
+    "start-server-and-test": "^1.11.5",
     "test-listen": "^1.1.0",
     "ts-jest": "^26.1.1"
   }
