@@ -1,14 +1,14 @@
 
 import { authenticatedFetch, setupServer, teardownServer, postCategory, authenticatedGet } from "../apiTestUtils";
-import handler from "../../../src/pages/api/categories/index";
+import handler from "../../../../src/pages/api/categories/index";
 import faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
-import { CategoryModel } from "../../../src/models/models";
-import { users } from "../../../src/database/users";
+import { CategoryModel } from "../../../../src/models/models";
+import { users } from "../../../../src/database/users";
 import { randomUser } from "../../database/databaseTestUtils";
 
-jest.mock("../../../src/auth/auth0");
+jest.mock("../../../../src/auth/auth0");
 
 describe("The categories endpoint", () => {
 

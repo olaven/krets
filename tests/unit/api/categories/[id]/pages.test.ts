@@ -6,7 +6,7 @@ import { Server } from "net";
 import fetch from "cross-fetch";
 import { PageModel } from "../../../../../src/models/models";
 import { database } from "../../../../../src/database/database";
-import { randomUser } from "../../../../../src/database/databaseTestUtils";
+import { randomUser } from "../../../database/databaseTestUtils";
 
 jest.mock("../../../../../src/auth/auth0");
 

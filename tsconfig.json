@@ -20,7 +20,8 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "./tests/integration"
   ],
   "include": [
     "next-env.d.ts",

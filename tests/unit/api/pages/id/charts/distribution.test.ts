@@ -1,12 +1,12 @@
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer, authenticatedFetch } from "../../../apiTestUtils";
-import distributionHandler from "../../../../../src/pages/api/pages/[id]/charts/distribution"
-import { database } from "../../../../../src/database/database";
+import distributionHandler from "../../../../../../src/pages/api/pages/[id]/charts/distribution"
+import { database } from "../../../../../../src/database/database";
 import { randomUser, blindSetup, randomResponse, setupPage } from "../../../../database/databaseTestUtils";
-import { DistributionModel } from "../../../../../src/models/models";
+import { DistributionModel } from "../../../../../../src/models/models";
 
-jest.mock("../../../../../src/auth/auth0");
+jest.mock("../../../../../../src/auth/auth0");
 
 describe("The endpoint for average all-time score", () => {
 
