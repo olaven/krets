@@ -29,7 +29,7 @@ describe("Endpoints for specific page", () => {
             mandatory_contact_details: false,
         };
 
-        await database.pages.createPage(page)
+        await database.pages.create(page)
         return page;
     }
 
@@ -142,9 +142,9 @@ describe("Endpoints for specific page", () => {
 
             page.category_id = category.id;
 
-            const pageBeforeUpdate = await database.pages.getPage(page.id);
+            const pageBeforeUpdate = await database.pages.get(page.id);
             await putFetch(user.id, page.id, page);
-            const pageAfterUpdate = await database.pages.getPage(page.id);
+            const pageAfterUpdate = await database.pages.get(page.id);
 
             expect(pageBeforeUpdate.category_id).toBeNull();
             expect(pageAfterUpdate.category_id).toEqual(category.id);
@@ -160,9 +160,9 @@ describe("Endpoints for specific page", () => {
             //NOTE: category id does not exist (may fail due to randomness, but very unlikely)
             page.category_id = faker.random.number().toString();
 
-            const pageBeforeUpdate = await database.pages.getPage(page.id);
+            const pageBeforeUpdate = await database.pages.get(page.id);
             const { status } = await putFetch(user.id, page.id, page);
-            const pageAfterUpdate = await database.pages.getPage(page.id);
+            const pageAfterUpdate = await database.pages.get(page.id);
 
             expect(status).toEqual(400);
             expect(pageBeforeUpdate.category_id).toBeNull();

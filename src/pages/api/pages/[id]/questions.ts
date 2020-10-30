@@ -26,7 +26,7 @@ const getQuestions = async (request: NextApiRequest, response: NextApiResponse) 
 const postQuestion = withErrorHandling(withAuthentication(async (request, response) => {
 
     const { user } = await auth0.getSession(request);
-    const page = await database.pages.getPage(getId(request.url));
+    const page = await database.pages.get(getId(request.url));
 
     const question = request.body as QuestionModel;
 

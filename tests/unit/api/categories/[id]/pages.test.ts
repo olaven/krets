@@ -71,7 +71,7 @@ describe("The pages by categories endpoint", () => {
             const persisted: PageModel[] = [];
             for (let i = 0; i < (faker.random.number(4) + 1); i++) {
 
-                const page = await database.pages.createPage(randomPage(user.id, "#aabbcc", category.id));
+                const page = await database.pages.create(randomPage(user.id, "#aabbcc", category.id));
                 persisted.push(page);
             }
 

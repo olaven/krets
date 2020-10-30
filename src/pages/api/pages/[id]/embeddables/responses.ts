@@ -29,7 +29,7 @@ export default applyMiddleware(
             .status(NOT_FOUND)
             .end();
 
-        const page = await database.pages.getPage(
+        const page = await database.pages.get(
             getPageId(req.url)
         );
 

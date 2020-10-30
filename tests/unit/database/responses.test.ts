@@ -40,7 +40,7 @@ describe("Database repository for pages", () => {
         it("Returns a number", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const page = await database.pages.create(randomPage(user.id));
 
             const average = await database.responses.getAverageEmotionByPage(page.id);
             expect(average).not.toBeNaN();
@@ -49,7 +49,7 @@ describe("Database repository for pages", () => {
         it("Returns 0 if no responses are present", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const page = await database.pages.create(randomPage(user.id));
 
             const average = await database.responses.getAverageEmotionByPage(page.id);
             expect(average).toEqual(0);
@@ -58,7 +58,7 @@ describe("Database repository for pages", () => {
         it("Returns the average of persisted responses", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const page = await database.pages.create(randomPage(user.id));
 
             await database.responses.createResponse(randomResponse(page.id, ":-)")); //2 
             await database.responses.createResponse(randomResponse(page.id, ":-|")); //1
@@ -80,7 +80,7 @@ describe("Database repository for pages", () => {
         test("Can create response", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await await database.pages.createPage(randomPage(user.id));
+            const page = await await database.pages.create(randomPage(user.id));
 
             const before = await database.responses.getResponses(page.id);
             await database.responses.createResponse({
@@ -96,7 +96,7 @@ describe("Database repository for pages", () => {
         test("Can create response with contact details", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const page = await database.pages.create(randomPage(user.id));
             const contact_details = "mail@example.com";
 
             await database.responses.createResponse(randomResponse(page.id, ":-)", contact_details));

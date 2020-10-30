@@ -19,9 +19,9 @@ describe("Database interface for pages", () => {
             mandatory_contact_details: false,
         };
 
-        const before = await database.pages.getPage(id);
-        await database.pages.createPage(page);
-        const after = await database.pages.getPage(id);
+        const before = await database.pages.get(id);
+        await database.pages.create(page);
+        const after = await database.pages.get(id);
 
         expect(before).toBeFalsy();
         expect(after).toBeTruthy;
@@ -42,15 +42,15 @@ describe("Database interface for pages", () => {
             mandatory_contact_details: false,
         }
 
-        await database.pages.createPage(page);
+        await database.pages.create(page);
 
         expect(originalName).not.toEqual(updatedName);
         expect(page.name).toEqual(originalName);
 
         page.name = updatedName;
-        await database.pages.updatePage(page);
+        await database.pages.update(page);
 
-        const after = await database.pages.getPage(page.id);
+        const after = await database.pages.get(page.id);
 
         expect(after.name).toEqual(updatedName);
     });
@@ -59,20 +59,20 @@ describe("Database interface for pages", () => {
 
 
         const owner = await database.users.createUser(randomUser())
-        const page = await database.pages.createPage(randomPage(owner.id))
-        const retrievedBefore = await database.pages.getPage(page.id);
+        const page = await database.pages.create(randomPage(owner.id))
+        const retrievedBefore = await database.pages.get(page.id);
         expect(retrievedBefore.name).toEqual(page.name);
 
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
 
-        const retrievedAfter = await database.pages.getPage(page.id);
+        const retrievedAfter = await database.pages.get(page.id);
         expect(retrievedAfter).toBeNull();
     });
 
     it("Deletes responses along with page", async () => {
 
         const owner = await database.users.createUser(randomUser())
-        const page = await database.pages.createPage(randomPage(owner.id));
+        const page = await database.pages.create(randomPage(owner.id));
 
         await database.responses.createResponse({
             emotion: ":-(",
@@ -84,7 +84,7 @@ describe("Database interface for pages", () => {
         const responsesBefore = await database.responses.getResponses(page.id);
         expect(responsesBefore.length).toEqual(1);
 
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
 
         const responsesAfter = await database.responses.getResponses(page.id);
         expect(responsesAfter.length).toEqual(0);
@@ -94,7 +94,7 @@ describe("Database interface for pages", () => {
 
         const [_, page, [firstBefore, secondBefore]] = await setupQuestions(2);
 
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
 
         const firstAfter = await database.questions.getQuestion(firstBefore.id);
         const secondAfter = await database.questions.getQuestion(secondBefore.id);
@@ -112,7 +112,7 @@ describe("Database interface for pages", () => {
         const [_, page, [question]] = await setupQuestions(1);
         const [__, ___, [otherQuestion]] = await setupQuestions(1);
 
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
 
         const questionAfter = await database.questions.getQuestion(question.id);
         const otherAfter = await database.questions.getQuestion(otherQuestion.id);
@@ -125,7 +125,7 @@ describe("Database interface for pages", () => {
 
         const [_, page, response, [answer]] = await setupAnswers(1);
 
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
         const after = await database.answers.getAnswer(answer.id);
         expect(after).toBeNull();
     });
@@ -135,7 +135,7 @@ describe("Database interface for pages", () => {
         const [_, __, ___, [unrelated]] = await setupAnswers(1);
         const [____, page, _____, [answer]] = await setupAnswers(1);
 
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
 
         const unrelatedAfter = await database.answers.getAnswer(unrelated.id);
         const answerAfter = await database.answers.getAnswer(answer.id);
@@ -149,7 +149,7 @@ describe("Database interface for pages", () => {
         const [user, page, embeddable] = await setupEmbeddable();
 
         const before = await database.embeddables.getByPage(page.id);
-        await database.pages.deletePage(page.id);
+        await database.pages._delete(page.id);
         const after = await database.embeddables.getByPage(page.id);
 
         expect(before).toBeDefined();
@@ -165,7 +165,7 @@ describe("Database interface for pages", () => {
         const [__, otherPage, ___] = await setupEmbeddable();
 
         const before = await database.embeddables.getByPage(page.id);
-        await database.pages.deletePage(otherPage.id);
+        await database.pages._delete(otherPage.id);
         const after = await database.embeddables.getByPage(page.id);
 
         expect(before).toBeDefined();
@@ -190,9 +190,9 @@ describe("Database interface for pages", () => {
             mandatory_contact_details: false
         }
 
-        await database.pages.createPage(page);
+        await database.pages.create(page);
 
-        const retrievedPage = await database.pages.getPage(page.id);
+        const retrievedPage = await database.pages.get(page.id);
         expect(retrievedPage.category_id).toEqual(persistedCategory.id);
     });
 
@@ -210,7 +210,7 @@ describe("Database interface for pages", () => {
             const persisted = [];
             for (let i = 0; i < 4; i++) {
 
-                const page = await database.pages.createPage(randomPage(owner.id, "#aabbcc", category.id));
+                const page = await database.pages.create(randomPage(owner.id, "#aabbcc", category.id));
                 persisted.push(page);
             }
 
@@ -232,8 +232,8 @@ describe("Database interface for pages", () => {
                 owner_id: other.id
             });
 
-            const ownerPage = await database.pages.createPage(randomPage(owner.id, "#aabbcc", ownerCategory.id));
-            const otherPage = await database.pages.createPage(randomPage(other.id, "#aabbcc", otherCategory.id));
+            const ownerPage = await database.pages.create(randomPage(owner.id, "#aabbcc", ownerCategory.id));
+            const otherPage = await database.pages.create(randomPage(other.id, "#aabbcc", otherCategory.id));
 
             const retrieved = await database.pages.getByOwnerAndCategory(owner.id, ownerCategory.id);
 
@@ -260,7 +260,7 @@ describe("Database interface for pages", () => {
         it("Can be updated", async () => {
 
             const [_, original] = await setupPage();
-            const updated = await database.pages.updatePage({
+            const updated = await database.pages.update({
                 ...original,
                 mandatory_contact_details: true
             });
@@ -272,7 +272,7 @@ describe("Database interface for pages", () => {
         it("Can be set to its current state without crashing", async () => {
 
             const [_, before] = await setupPage();
-            const after = await database.pages.updatePage({
+            const after = await database.pages.update({
                 ...before, mandatory_contact_details: before.mandatory_contact_details
             });
 
@@ -283,17 +283,17 @@ describe("Database interface for pages", () => {
 
             const [_, first] = await setupPage();
 
-            const second = await database.pages.updatePage({
+            const second = await database.pages.update({
                 ...first,
                 mandatory_contact_details: !first.mandatory_contact_details
             });
 
-            const third = await database.pages.updatePage({
+            const third = await database.pages.update({
                 ...second,
                 mandatory_contact_details: !second.mandatory_contact_details
             });
 
-            const fourth = await database.pages.updatePage({
+            const fourth = await database.pages.update({
                 ...third,
                 mandatory_contact_details: !third.mandatory_contact_details
             });
@@ -311,7 +311,7 @@ describe("Database interface for pages", () => {
 
             const color = '#AABBCC';
             const owner = await database.users.createUser(randomUser())
-            const page = await database.pages.createPage(randomPage(owner.id, color));
+            const page = await database.pages.create(randomPage(owner.id, color));
 
             expect(page.color).toEqual(color);
         });
@@ -320,7 +320,7 @@ describe("Database interface for pages", () => {
 
             const color = null;
             const owner = await database.users.createUser(randomUser())
-            const page = await database.pages.createPage(randomPage(owner.id, color));
+            const page = await database.pages.create(randomPage(owner.id, color));
 
             expect(page.color).toEqual(color);
         });
@@ -333,8 +333,8 @@ describe("Database interface for pages", () => {
 
             await expect(async () => {
 
-                await database.pages.createPage(randomPage(owner.id, sixChars));
-                await database.pages.createPage(randomPage(owner.id, eightChars));
+                await database.pages.create(randomPage(owner.id, sixChars));
+                await database.pages.create(randomPage(owner.id, eightChars));
             }).rejects.toThrow();
         });
 
@@ -343,11 +343,11 @@ describe("Database interface for pages", () => {
             const owner = await database.users.createUser(randomUser())
             const originalColor = '#AABBCC';
 
-            const page = await database.pages.createPage(randomPage(owner.id, originalColor))
+            const page = await database.pages.create(randomPage(owner.id, originalColor))
             expect(page.color).toEqual(originalColor);
 
             const newColor = '#CCBBAA';
-            const updated = await database.pages.updatePage(
+            const updated = await database.pages.update(
                 { ...page, color: newColor }
             );
 
@@ -360,9 +360,9 @@ describe("Database interface for pages", () => {
             const owner = await database.users.createUser(randomUser());
             const page = randomPage(owner.id); //NOTE: not persisted 
 
-            const before = await database.pages.pageExists(page.id);
-            await database.pages.createPage(page)
-            const after = await database.pages.pageExists(page.id);
+            const before = await database.pages.exists(page.id);
+            await database.pages.create(page)
+            const after = await database.pages.exists(page.id);
 
             expect(before).toEqual(false);
             expect(after).toEqual(true);
@@ -428,7 +428,7 @@ describe("Database interface for pages", () => {
             const [_, [original]] = await setupPages(1);
             const NEW_TITLE = faker.random.words(10);
 
-            const updated = await database.pages.updatePage({
+            const updated = await database.pages.update({
                 ...original,
                 custom_title: NEW_TITLE
             });

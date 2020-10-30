@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { BAD_REQUEST, NO_CONTENT, FORBIDDEN, OK } from "node-kall";
 import auth0 from "../../../../../auth/auth0";
 import { database } from "../../../../../database/database";
-import { pages } from "../../../../../database/pages";
 import { withErrorHandling, withAuthentication, withMethodHandlers } from "../../../../../middleware/middleware";
 import { QuestionModel } from "../../../../../models/models";
 import { getPathParam } from "../../../../../workarounds";
@@ -31,7 +30,7 @@ const withQuestion = (questionHandler: (question: QuestionModel, response: NextA
                 .end();
 
         const { user } = await auth0.getSession(request);
-        const page = await pages.getPage(givenPageId);
+        const page = await database.pages.get(givenPageId);
         if (page?.owner_id !== user.sub)
             return response
                 .status(FORBIDDEN)

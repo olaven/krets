@@ -29,8 +29,8 @@ describe("The API interface for questions", () => {
 
             const user = await database.users.createUser(randomUser());
 
-            const firstPage = await database.pages.createPage(randomPage(user.id));
-            const secondPage = await database.pages.createPage(randomPage(user.id));
+            const firstPage = await database.pages.create(randomPage(user.id));
+            const secondPage = await database.pages.create(randomPage(user.id));
 
             const firstQuestion = await database.questions.createQuestion(randomQuestion(firstPage.id));
             const secondQuestion = await database.questions.createQuestion(randomQuestion(secondPage.id));
@@ -45,7 +45,7 @@ describe("The API interface for questions", () => {
         it(" `nonArchivedByPage` only returns questions that are _not_ archived", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const page = await database.pages.create(randomPage(user.id));
 
             const notArchived = await database.questions.createQuestion(randomQuestion(page.id, false));
             const archived = await database.questions.createQuestion(randomQuestion(page.id, true));

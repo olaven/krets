@@ -47,7 +47,7 @@ export const setupAnswers = async (amount = faker.random.number({ min: 1, max: 2
     : Promise<[UserModel, PageModel, ResponseModel, AnswerModel[]]> => {
 
     const user = await database.users.createUser(randomUser());
-    const page = await database.pages.createPage(randomPage(user.id));
+    const page = await database.pages.create(randomPage(user.id));
     const response = await database.responses.createResponse(randomResponse(page.id));
 
     const persisted = [];
@@ -64,7 +64,7 @@ export const setupQuestions = async (amount = faker.random.number({ min: 1, max:
     : Promise<[UserModel, PageModel, QuestionModel[]]> => {
 
     const user = await database.users.createUser(randomUser());
-    const page = await database.pages.createPage(randomPage(user.id));
+    const page = await database.pages.create(randomPage(user.id));
 
     const persisted = [];
     for (let i = 0; i < amount; i++) {
@@ -97,7 +97,7 @@ export const blindSetup = async (responseCount = faker.random.number({ min: 1, m
     : Promise<[PageModel, UserModel, ResponseModel[]]> => {
 
     const user = await database.users.createUser(randomUser());
-    const page = await database.pages.createPage(randomPage(user.id));
+    const page = await database.pages.create(randomPage(user.id));
     const createdResonses = [];
 
     for (let i = 0; i < responseCount; i++) {
@@ -126,13 +126,13 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
     for (let i = 0; i < amount; i++) {
 
 
-        const original = await database.pages.createPage(
+        const original = await database.pages.create(
             randomPage(user.id, null, null)
         );
 
         const alteredDate = await fakeCreation<PageModel>("pages", original.id);
         const withMandatoryProp = mandatoryContactDetails ?
-            await database.pages.updatePage({
+            await database.pages.update({
                 ...alteredDate,
                 mandatory_contact_details: true
             }) :
@@ -149,7 +149,7 @@ export const setupPages = async (amount = faker.random.number({ min: 2, max: 15 
 export const setupEmbeddable = async (): Promise<[UserModel, PageModel, EmbeddableModel]> => {
 
     const user = await database.users.createUser(randomUser(faker.random.uuid()));
-    const page = await database.pages.createPage(randomPage(user.id));
+    const page = await database.pages.create(randomPage(user.id));
     const embeddable = await database.embeddables.createEmbeddable(randomEmbeddable(page.id))
 
     return [user, page, embeddable];

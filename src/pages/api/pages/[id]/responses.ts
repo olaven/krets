@@ -12,7 +12,7 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
     const id = getPathParam(request.url, 2);
     const requestKey = nullify(request.query.key as string);
 
-    const page = await database.pages.getPage(id);
+    const page = await database.pages.get(id);
 
     if (!page)
         return response
@@ -37,7 +37,7 @@ const postResponses = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { response, answers } = req.body as ResponseAnswerModel;
 
-    const page = await database.pages.getPage(response.page_id)
+    const page = await database.pages.get(response.page_id)
     if (page.mandatory_contact_details && !response.contact_details)
         return res
             .status(BAD_REQUEST)

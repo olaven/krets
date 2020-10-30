@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { FORBIDDEN, NOT_FOUND, UNAUTHORIZED } from "node-kall";
+import { FORBIDDEN, UNAUTHORIZED } from "node-kall";
 import auth0 from "../auth/auth0";
 import { database } from "../database/database";
 

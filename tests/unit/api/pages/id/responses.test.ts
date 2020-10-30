@@ -41,7 +41,7 @@ describe("The endpoint for responses", () => {
 
         const user = await database.users.createUser(randomUser());
 
-        const page = await database.pages.createPage({
+        const page = await database.pages.create({
             id: faker.random.uuid(),
             name: faker.company.companyName(),
             owner_id: user.id,
@@ -125,7 +125,7 @@ describe("The endpoint for responses", () => {
 
             const user = await database.users.createUser(randomUser());
 
-            const page = await database.pages.createPage({
+            const page = await database.pages.create({
                 id: faker.random.uuid(),
                 name: faker.company.companyName(),
                 owner_id: user.id,
@@ -159,7 +159,7 @@ describe("The endpoint for responses", () => {
         it("Is possible to have the response contain contact details", async () => {
 
             const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const page = await database.pages.create(randomPage(user.id));
             const contactDetails = faker.internet.email();
 
             const response = randomResponse(page.id, ":-|", contactDetails);
@@ -183,7 +183,7 @@ describe("The endpoint for responses", () => {
         it(" Does not allow creation of a response with bad id", async () => {
 
             const id = faker.random.uuid();
-            const page = await database.pages.getPage(id);
+            const page = await database.pages.get(id);
             expect(page).toEqual(null);
 
             const response = randomResponse(id, ":-)", undefined);

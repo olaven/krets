@@ -15,7 +15,7 @@ const getId = (url: string) => getPathParam(url, 1);
 const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const id = getId(request.url);
-    const page = await database.pages.getPage(id);
+    const page = await database.pages.get(id);
 
 
     if (page) {
@@ -36,7 +36,7 @@ const del = withAuthentication(
         async (request: NextApiRequest, response: NextApiResponse) => {
 
             const id = getId(request.url)
-            database.pages.deletePage(id);
+            database.pages._delete(id);
 
             response
                 .status(NO_CONTENT)
@@ -66,7 +66,7 @@ const put = withAuthentication(
                     .status(BAD_REQUEST)
                     .end();
 
-            await database.pages.updatePage(page)
+            await database.pages.update(page)
             response
                 .status(NO_CONTENT)
                 .send("");

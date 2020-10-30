@@ -10,7 +10,7 @@ export const asPageOwner = (extractPageId: (url: string) => string, handler: Nex
         const pageId = extractPageId(request.url);
         const { user } = await auth0.getSession(request);
 
-        const page = await database.pages.getPage(pageId);
+        const page = await database.pages.get(pageId);
 
         if (!page)
             return response

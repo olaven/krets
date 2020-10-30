@@ -30,7 +30,7 @@ const postEmbeddable = async (request, response) => {
             .status(BAD_REQUEST)
             .end()
 
-    const page = await database.pages.getPage(
+    const page = await database.pages.get(
         getPageId(request.url)
     );
 

@@ -3,12 +3,12 @@ import { PageModel } from "../models/models";
 import { PaginationOptions } from "./helpers/PaginationOptions";
 
 
-const createPage = (page: PageModel) => first<PageModel>(
+export const create = (page: PageModel) => first<PageModel>(
     "insert into pages(id, owner_id, name, category_id, color) values($1, $2, $3, $4, $5) returning *",
     [page.id, page.owner_id, page.name, page.category_id, page.color]
 );
 
-const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }) =>
+export const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }) =>
     rows<PageModel>(
         `
             select * from pages 
@@ -24,7 +24,7 @@ const getByOwner = (ownerId: string, options: PaginationOptions = { amount: 15 }
 
 //NOTE: not used after Stripe Removal. May prove useful in the future. 
 //NOTE: count is `string` due to bigint > max `number` value. See: https://github.com/brianc/node-postgres/issues/378
-const getCustomerToPageCount = () => rows<{
+export const getCustomerToPageCount = () => rows<{
     id: string, count: string
 }>(
     `
@@ -38,19 +38,19 @@ const getCustomerToPageCount = () => rows<{
 )
 
 //THINKABOUT: use pagination?
-const getByOwnerAndCategory = (ownerId: string, categoryId: string) =>
+export const getByOwnerAndCategory = (ownerId: string, categoryId: string) =>
     rows<PageModel>(
         `select * from pages where owner_id = $1 and category_id = $2`,
         [ownerId, categoryId]
     );
 
-const getPage = (id: string) =>
+export const get = (id: string) =>
     first<PageModel>(
         "select * from pages where id = $1",
         [id]
     );
 
-const updatePage = (page: PageModel) =>
+export const update = (page: PageModel) =>
     first<PageModel>(
         `
             update pages 
@@ -68,7 +68,7 @@ const updatePage = (page: PageModel) =>
  * * all questions 
  * @param id id of page
  */
-const deletePage = async (id: string) => {
+export const _delete = async (id: string) => {
 
     await run(
         `delete from answers 
@@ -83,7 +83,7 @@ const deletePage = async (id: string) => {
     return first<PageModel>("delete from pages where id = $1", [id]);
 }
 
-const pageExists = async (id: string) => {
+export const exists = async (id: string) => {
 
     const result = await first<{ count: string }>(
         "select count(*) from pages where id = $1",
@@ -92,14 +92,3 @@ const pageExists = async (id: string) => {
 
     return result.count === '1';
 }
-
-export const pages = ({
-    getPage,
-    getByOwner,
-    getByOwnerAndCategory,
-    getCustomerToPageCount,
-    createPage,
-    updatePage,
-    deletePage,
-    pageExists,
-});
