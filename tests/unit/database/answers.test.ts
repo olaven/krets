@@ -1,4 +1,4 @@
-import { answers } from "../../../src/database/answers";
+import { database } from "../../../src/database/database";
 import { uid } from "../api/apiTestUtils";
 import { randomAnswer, setupAnswers } from "./databaseTestUtils";
 
@@ -9,7 +9,7 @@ describe("The database interface for answers", () => {
         const [_, __, response] = await setupAnswers(0);
 
         const before = await randomAnswer(response.id)
-        const persisted = await answers.createAnswer(before);
+        const persisted = await database.answers.createAnswer(before);
 
         expect(persisted).toBeDefined();
         expect(persisted.text).toEqual(before.text);
@@ -27,9 +27,9 @@ describe("The database interface for answers", () => {
             randomAnswer(response.id),
         ];
 
-        await answers.createAnswers(before);
+        await database.answers.createAnswers(before);
 
-        const persisted = await answers.getByResponse(response.id)
+        const persisted = await database.answers.getByResponse(response.id)
 
         expect(persisted.length).toEqual(before.length);
 
@@ -48,28 +48,28 @@ describe("The database interface for answers", () => {
 
         expect(async () => {
 
-            await answers.createAnswer(before);
+            await database.answers.createAnswer(before);
         }).rejects.toThrow()
     });
 
     it("Is possible to retrieve answers by response id", async () => {
 
         const [_, __, response, persisted] = await setupAnswers();
-        const retrieved = await answers.getByResponse(response.id);
+        const retrieved = await database.answers.getByResponse(response.id);
 
         expect(retrieved).toEqual(persisted);
     });
 
     it("Returns an empty array if requesting from response that does not exist", async () => {
 
-        const retrieved = await answers.getByResponse("-1");
+        const retrieved = await database.answers.getByResponse("-1");
         expect(retrieved).toEqual([]);
     });
 
     it("Retrieving does not timeout or crash on its own", async () => {
 
         const [_, __, response] = await setupAnswers();
-        await answers.getByResponse(response.id);
+        await database.answers.getByResponse(response.id);
         expect(true).toBeTruthy(); //NOTEjust asserting something at the ned 
     });
 });

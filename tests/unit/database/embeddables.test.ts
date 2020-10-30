@@ -39,7 +39,7 @@ describe("The database interface for embeddables", () => {
     describe("Creation of embeddables", () => {
         it("exports a method to create embeddable", () => {
 
-            expect(database.embeddables.createEmbeddable).toBeDefined();
+            expect(database.embeddables.create).toBeDefined();
         });
 
         it("Is possible to create an embeddable without crashing ", async () => {

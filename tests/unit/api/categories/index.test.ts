@@ -5,7 +5,7 @@ import faker from "faker";
 import { Server } from "net";
 import fetch from "cross-fetch";
 import { CategoryModel } from "../../../../src/models/models";
-import { users } from "../../../../src/database/users";
+import { database } from "../../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
 
 jest.mock("../../../../src/auth/auth0");
@@ -42,7 +42,7 @@ describe("The categories endpoint", () => {
 
         it("Returns status code OK", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const response = await authenticatedFetch(user.id, url);
 
             expect(response.status)
@@ -51,7 +51,7 @@ describe("The categories endpoint", () => {
 
         it("Returns an array", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const categories = await authenticatedGet(user.id, url);
 
             //NOTE: user is just created, and has no categories 
@@ -60,7 +60,7 @@ describe("The categories endpoint", () => {
 
         it.skip("Returns category objects", async () => {
 
-            const user = await users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const n = faker.random.number(8) + 2;
 
             const persisted: CategoryModel[] = [];
