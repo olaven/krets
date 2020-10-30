@@ -1,6 +1,6 @@
 //import { useRouter } from "next/router";
 import auth0 from "../../../../auth/auth0";
-import { pages } from "../../../../../src/database/pages"
+import { database } from "../../../../../src/database/database"
 import { OK } from "node-kall";
 import { withCors, withAuthentication } from "../../../../middleware/middleware";
 import { getPathParam } from "../../../../workarounds";
@@ -14,7 +14,7 @@ export default withCors(
         const { user } = await auth0.getSession(request);
         const id = getId(request.url); //useRouter().query.id as string
 
-        const retrieved = await pages.getByOwnerAndCategory(user.sub, id)
+        const retrieved = await database.pages.getByOwnerAndCategory(user.sub, id)
         response
             .status(OK)
             .send(retrieved);

@@ -39,14 +39,14 @@ describe("The database interface for embeddables", () => {
     describe("Creation of embeddables", () => {
         it("exports a method to create embeddable", () => {
 
-            expect(database.embeddables.createEmbeddable).toBeDefined();
+            expect(database.embeddables.create).toBeDefined();
         });
 
         it("Is possible to create an embeddable without crashing ", async () => {
 
             const [_, [page]] = await setupPages(1);
             const original = randomEmbeddable(page.id);
-            const persisted = await database.embeddables.createEmbeddable(original);
+            const persisted = await database.embeddables.create(original);
 
             expect(original.id).not.toBeDefined();
             expect(persisted.id).toBeDefined();

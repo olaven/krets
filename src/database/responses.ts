@@ -1,6 +1,6 @@
 import { rows, first } from "./helpers/helpers";
 import { ResponseModel, Emotion, CoordinateModel, DistributionModel } from "../models/models";
-import { pages } from "./pages";
+import { database } from "./database";
 import { PaginationOptions } from "./helpers/PaginationOptions";
 
 /**
@@ -24,7 +24,8 @@ export const convertEmotion = {
 const defaultOptions: PaginationOptions = {
     amount: 10,
 }
-const getResponses = async (pageId: string, options = defaultOptions) => {
+
+export const getByPage = async (pageId: string, options = defaultOptions) => {
 
     //THINKABOUT: how to handle absence of options.key in a cleaner way 
 
@@ -44,13 +45,13 @@ const getResponses = async (pageId: string, options = defaultOptions) => {
     return responses;
 }
 
-const getResponse = (id: string) =>
+export const get = (id: string) =>
     first<ResponseModel>(
         `select * from responses where id = $1`,
         [id]
     );
 
-const createResponse = async (response: ResponseModel) => {
+export const create = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
     return first<ResponseModel>(
@@ -59,7 +60,7 @@ const createResponse = async (response: ResponseModel) => {
     );
 }
 
-const getAverageEmotionByPage = async (pageId: string) => {
+export const getAverageEmotionByPage = async (pageId: string) => {
 
     const average = await first<{ avg: string | null }>(
         `SELECT AVG(emotion) FROM responses WHERE page_id = $1`,
@@ -75,7 +76,7 @@ const getAverageEmotionByPage = async (pageId: string) => {
  * Returns the amount of responses on given page
  * @param pageId 
  */
-const getCount = async (pageId: string) => {
+export const getCount = async (pageId: string) => {
 
     const result = await first<{ count: string }>(
         "select count(*) from responses where page_id = $1",
@@ -85,7 +86,7 @@ const getCount = async (pageId: string) => {
     return parseInt(result.count);
 }
 
-const getEmojiDistribution = (pageId: string) =>
+export const getEmojiDistribution = (pageId: string) =>
     first<DistributionModel>(`
         select page_id, 
             (SELECT COUNT(*) FROM responses WHERE emotion='2' and page_id = $1) as happy,
@@ -136,18 +137,9 @@ export const getLineCoordinates = async (pageId: string) => {
         coordinates.push(coordinate)
     }
 
-    const page = await pages.getPage(pageId)
+    const page = await database.pages.get(pageId)
     coordinates[coordinates.length - 1].label = page.name
 
     return coordinates;
 };
 
-export const responses = ({
-    getResponses,
-    getResponse,
-    getCount,
-    createResponse,
-    getAverageEmotionByPage,
-    getEmojiDistribution,
-    getLineCoordinates
-});

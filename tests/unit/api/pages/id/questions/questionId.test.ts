@@ -77,12 +77,12 @@ describe("The endpoint for average all-time score", () => {
         it("Actually updates on succesful request", async () => {
 
             const [owner, _, [question]] = await setupQuestions();
-            const before = await database.questions.getQuestion(question.id);
+            const before = await database.questions.get(question.id);
             await putQuestion(owner.id, {
                 ...question,
                 text: faker.lorem.word()
             });
-            const after = await database.questions.getQuestion(question.id);
+            const after = await database.questions.get(question.id);
             //TODO 
             expect(before.id).toEqual(after.id);
             expect(before.page_id).toEqual(after.page_id);
@@ -92,12 +92,12 @@ describe("The endpoint for average all-time score", () => {
         it("Can update `archived` through put request", async () => {
 
             const [owner, _, [question]] = await setupQuestions();
-            const before = await database.questions.getQuestion(question.id);
+            const before = await database.questions.get(question.id);
             await putQuestion(owner.id, {
                 ...question,
                 archived: !question.archived
             });
-            const after = await database.questions.getQuestion(question.id);
+            const after = await database.questions.get(question.id);
 
             //TODO 
             expect(before.id).toEqual(after.id);
@@ -184,9 +184,9 @@ describe("The endpoint for average all-time score", () => {
 
             const [owner, _, [question]] = await setupQuestions();
 
-            const before = await database.questions.getQuestion(question.id);
+            const before = await database.questions.get(question.id);
             await deleteQuestion(owner.id, question);
-            const after = await database.questions.getQuestion(question.id);
+            const after = await database.questions.get(question.id);
 
             expect(before).toBeDefined();
             expect(before).toEqual(question);
@@ -200,8 +200,8 @@ describe("The endpoint for average all-time score", () => {
             const [owner, _, [firstQuestion, secondQuestion]] = await setupQuestions(2);
             await deleteQuestion(owner.id, firstQuestion);
 
-            const firstAfter = await database.questions.getQuestion(firstQuestion.id);
-            const secondAfter = await database.questions.getQuestion(secondQuestion.id);
+            const firstAfter = await database.questions.get(firstQuestion.id);
+            const secondAfter = await database.questions.get(secondQuestion.id);
 
             expect(firstAfter).toBeNull();
             expect(secondAfter).not.toBeNull();

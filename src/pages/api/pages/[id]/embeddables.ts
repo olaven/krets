@@ -30,11 +30,11 @@ const postEmbeddable = async (request, response) => {
             .status(BAD_REQUEST)
             .end()
 
-    const page = await database.pages.getPage(
+    const page = await database.pages.get(
         getPageId(request.url)
     );
 
-    const persisted = await database.embeddables.createEmbeddable({
+    const persisted = await database.embeddables.create({
         ...embeddable,
         page_id: page.id,
         token: nanoid(),

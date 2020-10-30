@@ -71,7 +71,7 @@ describe("The endpoint for information required fetched by embeddable frontend",
         it(" Does return questions for the given correct page", async () => {
 
             const [__, page, embeddable] = await setupEmbeddable();
-            const question = await database.questions.createQuestion(randomQuestion(page.id));
+            const question = await database.questions.create(randomQuestion(page.id));
 
             const response = await fetch(fullURL(page.id, embeddable.token));
             const information = (await response.json()) as EmbeddableInformationModel;
@@ -83,7 +83,7 @@ describe("The endpoint for information required fetched by embeddable frontend",
         it("Does not return archived questions", async () => {
 
             const [__, page, embeddable] = await setupEmbeddable();
-            await database.questions.createQuestion({
+            await database.questions.create({
                 ...randomQuestion(page.id),
                 archived: true
             });

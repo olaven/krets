@@ -37,10 +37,10 @@ const postPage = withErrorHandling(
         page.owner_id = user.sub;
         page.color = randomColor();
 
-        const exists = await database.pages.pageExists(page.id);
+        const exists = await database.pages.exists(page.id);
         const [status, body] = exists ?
             [CONFLICT, null] :
-            [CREATED, await database.pages.createPage(page)]
+            [CREATED, await database.pages.create(page)]
 
         response
             .status(status)

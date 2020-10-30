@@ -24,7 +24,7 @@ export const getAnswers = withAuthentication(
 export const postAnswers = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const responseId = getPathParam(request.url, 2);
-    const persistedResponse = await database.responses.getResponse(responseId);
+    const persistedResponse = await database.responses.get(responseId);
 
     const answer = request.body as AnswerModel;
     answer.response_id = persistedResponse.id;
