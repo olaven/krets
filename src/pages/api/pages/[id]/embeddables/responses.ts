@@ -40,7 +40,7 @@ export default applyMiddleware(
                 .end()
 
         //Need to persist response in order to get its ID 
-        const persistedResponse = await database.responses.createResponse(response);
+        const persistedResponse = await database.responses.create(response);
         await database.answers.createAnswers(
             answers.map(answer => ({
                 ...answer,

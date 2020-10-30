@@ -25,7 +25,7 @@ const defaultOptions: PaginationOptions = {
     amount: 10,
 }
 
-export const getResponses = async (pageId: string, options = defaultOptions) => {
+export const getByPage = async (pageId: string, options = defaultOptions) => {
 
     //THINKABOUT: how to handle absence of options.key in a cleaner way 
 
@@ -45,13 +45,13 @@ export const getResponses = async (pageId: string, options = defaultOptions) => 
     return responses;
 }
 
-export const getResponse = (id: string) =>
+export const get = (id: string) =>
     first<ResponseModel>(
         `select * from responses where id = $1`,
         [id]
     );
 
-export const createResponse = async (response: ResponseModel) => {
+export const create = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
     return first<ResponseModel>(

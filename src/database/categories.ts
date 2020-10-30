@@ -7,7 +7,7 @@ export const getByOwner = (ownerId: string) =>
         [ownerId]
     )
 
-export const createCategory = (category: CategoryModel) =>
+export const create = (category: CategoryModel) =>
     first<CategoryModel>(
         "insert into categories(owner_id, name) values($1, $2) returning *",
         [category.owner_id, category.name]

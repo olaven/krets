@@ -42,7 +42,7 @@ const withQuestion = (questionHandler: (question: QuestionModel, response: NextA
 
 const putQuestion = withQuestion(async (question, response) => {
 
-    await database.questions.updateQuestion(question);
+    await database.questions.update(question);
 
     response
         .status(NO_CONTENT)
@@ -52,7 +52,7 @@ const putQuestion = withQuestion(async (question, response) => {
 //THINKABOUT: should probably not have to pass question has body. 
 const deleteQuestion = withQuestion(async (question, response) => {
 
-    const deleted = await database.questions.deleteQuestion(question.id);
+    const deleted = await database.questions._delete(question.id);
     response
         .status(OK)
         .send(deleted);

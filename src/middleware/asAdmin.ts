@@ -7,7 +7,7 @@ export const asAdmin = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const { user: { sub } } = await auth0.getSession(request);
-        const user = await database.users.getUser(sub);
+        const user = await database.users.get(sub);
 
         if (!user)
             return response

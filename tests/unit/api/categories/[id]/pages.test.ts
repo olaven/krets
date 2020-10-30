@@ -49,8 +49,8 @@ describe("The pages by categories endpoint", () => {
         });
         it("Returns status code 200 on authenticated request", async () => {
 
-            const user = await database.users.createUser(randomUser())
-            const category = await database.categories.createCategory({
+            const user = await database.users.create(randomUser())
+            const category = await database.categories.create({
                 name: faker.commerce.productName(),
                 owner_id: user.id
             })
@@ -62,8 +62,8 @@ describe("The pages by categories endpoint", () => {
 
         it("Only returns pages owned by given user and from given category", async () => {
 
-            const user = await database.users.createUser(randomUser())
-            const category = await database.categories.createCategory({
+            const user = await database.users.create(randomUser())
+            const category = await database.categories.create({
                 name: faker.commerce.productName(),
                 owner_id: user.id
             })

@@ -34,7 +34,7 @@ const postQuestion = withErrorHandling(withAuthentication(async (request, respon
         return response.status(FORBIDDEN).end();
 
     try {
-        const persisted = await database.questions.createQuestion(question);
+        const persisted = await database.questions.create(question);
         return response
             .status(CREATED)
             .send(persisted);

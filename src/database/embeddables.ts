@@ -18,7 +18,7 @@ export const getByToken = (token: string) =>
         [token]
     );
 
-export const createEmbeddable = (embeddable: EmbeddableModel) =>
+export const create = (embeddable: EmbeddableModel) =>
     first<EmbeddableModel>(
         "insert into embeddables(token, page_id) values($1, $2) RETURNING *",
         [embeddable.token, embeddable.page_id]

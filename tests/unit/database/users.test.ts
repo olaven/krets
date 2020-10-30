@@ -7,8 +7,8 @@ describe("User repository", () => {
 
     test("Can get user", async () => {
 
-        const persisted = await database.users.createUser(randomUser());
-        const user = await database.users.getUser(persisted.id);
+        const persisted = await database.users.create(randomUser());
+        const user = await database.users.get(persisted.id);
         expect(user).toBeDefined();
     });
 
@@ -16,8 +16,8 @@ describe("User repository", () => {
     test("id of user has to be unique", async () => {
 
         const user = randomUser();
-        await expect(database.users.createUser(user)).resolves.toBeTruthy();
-        await expect(database.users.createUser(user)).rejects.toBeTruthy();
+        await expect(database.users.create(user)).resolves.toBeTruthy();
+        await expect(database.users.create(user)).rejects.toBeTruthy();
     });
 
 
@@ -25,9 +25,9 @@ describe("User repository", () => {
 
         const id = faker.random.uuid();
 
-        const before = await database.users.userExists(id);
-        await database.users.createUser(randomUser(id));
-        const after = await database.users.userExists(id);
+        const before = await database.users.exists(id);
+        await database.users.create(randomUser(id));
+        const after = await database.users.exists(id);
 
         expect(before).toBeFalsy();
         expect(after).toBeTruthy();
@@ -35,32 +35,32 @@ describe("User repository", () => {
 
     test(" User has prop for wether it is active or not", async () => {
 
-        const user = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
         expect(user.active).toBeDefined();
     });
 
     test(" `.active` is a boolean", async () => {
 
-        const user = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
         expect(typeof user.active).toEqual("boolean");
     });
 
     test("user has a `role`", async () => {
 
-        const user = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
         expect(user.role).toBeDefined();
     });
 
     test("A role is 'basic' by default", async () => {
 
-        const user = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
         expect(user.role).toEqual("basic");
     });
 
     test("A role _can not_ be udpated with regular update function", async () => {
 
-        const original = await database.users.createUser(randomUser());
-        const updated = await database.users.updateUser({
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.update({
             ...original,
             role: 'administrator'
         });
@@ -71,7 +71,7 @@ describe("User repository", () => {
 
     test(" A role can be updated with specific `updateRole`-function", async () => {
 
-        const original = await database.users.createUser(randomUser());
+        const original = await database.users.create(randomUser());
         const updated = await database.users.updateRole({
             ...original,
             role: "administrator"
@@ -83,7 +83,7 @@ describe("User repository", () => {
 
     test(" `updateRole` updates only role", async () => {
 
-        const original = await database.users.createUser(randomUser());
+        const original = await database.users.create(randomUser());
         const updated = await database.users.updateRole({
             ...original,
             active: !original.active, //NOTE updating something other than `role`
@@ -95,7 +95,7 @@ describe("User repository", () => {
 
     test(" valid `UserRole`-values are accepted", async () => {
 
-        const original = await database.users.createUser(randomUser());
+        const original = await database.users.create(randomUser());
         expect(database.users.updateRole({
             ...original,
             role: "administrator"
@@ -109,7 +109,7 @@ describe("User repository", () => {
 
     test("non-`UserRole`-values are _not_ accepted", async () => {
 
-        const original = await database.users.createUser(randomUser());
+        const original = await database.users.create(randomUser());
         expect(database.users.updateRole({
             ...original,
             //@ts-expect-error
@@ -125,8 +125,8 @@ describe("User repository", () => {
 
     test("Can update user `active` status through `updateUser`", async () => {
 
-        const original = await database.users.createUser(randomUser());
-        const updated = await database.users.updateUser({
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.update({
             ...original,
             active: !original.active
         });
@@ -137,9 +137,9 @@ describe("User repository", () => {
 
     test("Can delete user after creation", async () => {
 
-        const before = await database.users.createUser(randomUser());
+        const before = await database.users.create(randomUser());
         await database.users.deleteUser(before.id);
-        const after = await database.users.getUser(before.id);
+        const after = await database.users.get(before.id);
 
         expect(before).toBeDefined();
         expect(after).toBeNull();
@@ -147,13 +147,13 @@ describe("User repository", () => {
 
     test("Deleting a user ownly deletes that single user", async () => {
 
-        const user = await database.users.createUser(randomUser());
-        const other = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
+        const other = await database.users.create(randomUser());
 
         await database.users.deleteUser(user.id);
 
-        const userAfter = await database.users.getUser(user.id);
-        const otherAfter = await database.users.getUser(other.id);
+        const userAfter = await database.users.get(user.id);
+        const otherAfter = await database.users.get(other.id);
 
         expect(userAfter).toBeNull();
         expect(otherAfter).toEqual(other);
@@ -238,7 +238,7 @@ describe("User repository", () => {
             const amountPersisted = pageSize + 5;
 
             const persisted = await setupUsers(amountPersisted);
-            const retrieved = await database.users.getAllUsers();
+            const retrieved = await database.users.getAll();
 
             expect(pageSize).toBeLessThan(amountPersisted);
             expect(persisted.length).toEqual(amountPersisted);
@@ -248,7 +248,7 @@ describe("User repository", () => {
         it(" Returns pages ordered by creation date", async () => {
 
             await setupUsers(3)
-            const [first, second, third] = (await database.users.getAllUsers())
+            const [first, second, third] = (await database.users.getAll())
                 .map(user => new Date(user.created_at).getTime());
 
             expect(first).toBeGreaterThan(second);
@@ -261,7 +261,7 @@ describe("User repository", () => {
             const [first, second, third] = await setupUsers(3);
 
             expect(first.created_at).toBeDefined();
-            const retrieved = (await database.users.getAllUsers({
+            const retrieved = (await database.users.getAll({
                 amount: 10,
                 key: first.created_at
             })).map(user => user.id);
@@ -275,7 +275,7 @@ describe("User repository", () => {
         it.skip(" Contraints both by page size and key", async () => {
 
             const [first, second, third, fourth] = await setupUsers(4);
-            const retrieved = (await database.users.getAllUsers({
+            const retrieved = (await database.users.getAll({
                 amount: 1,
                 key: second.created_at
             })).map(user => user.id);

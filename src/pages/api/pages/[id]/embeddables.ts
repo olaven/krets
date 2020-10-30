@@ -34,7 +34,7 @@ const postEmbeddable = async (request, response) => {
         getPageId(request.url)
     );
 
-    const persisted = await database.embeddables.createEmbeddable({
+    const persisted = await database.embeddables.create({
         ...embeddable,
         page_id: page.id,
         token: nanoid(),

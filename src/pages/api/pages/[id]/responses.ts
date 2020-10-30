@@ -20,7 +20,7 @@ const getResponses = async (request: NextApiRequest, response: NextApiResponse) 
             .send("No page found");
 
 
-    const data = await database.responses.getResponses(id, {
+    const data = await database.responses.getByPage(id, {
         key: requestKey,
         amount: 10
     });
@@ -43,7 +43,7 @@ const postResponses = async (req: NextApiRequest, res: NextApiResponse) => {
             .status(BAD_REQUEST)
             .end()
 
-    const persistedResponse = await database.responses.createResponse(response);
+    const persistedResponse = await database.responses.create(response);
     await database.answers.createAnswers(
         answers.map(answer => ({
             ...answer,

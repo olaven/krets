@@ -29,7 +29,7 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
             .send("You don't own this category.");
     }
 
-    const persisted = await database.categories.createCategory(category);
+    const persisted = await database.categories.create(category);
     response
         .status(CREATED)
         .send(persisted);

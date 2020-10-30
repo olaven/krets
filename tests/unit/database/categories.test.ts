@@ -12,17 +12,17 @@ describe("Database interface for categories", () => {
 
     it("is possible to create a category", async () => {
 
-        const owner = await database.users.createUser(randomUser())
+        const owner = await database.users.create(randomUser())
         const category = randomCategory(owner.id);
-        const persisted = await database.categories.createCategory(category);
+        const persisted = await database.categories.create(category);
 
         expect(persisted.name).toEqual(category.name);
     });
 
     it("Method for creation does return the persisted category", async () => {
 
-        const owner = await database.users.createUser(randomUser())
-        const category = await database.categories.createCategory(randomCategory(owner.id));
+        const owner = await database.users.create(randomUser())
+        const category = await database.categories.create(randomCategory(owner.id));
 
         expect(category).not.toBeUndefined();
         expect(category.owner_id).toEqual(owner.id);
@@ -31,12 +31,12 @@ describe("Database interface for categories", () => {
     it("Is possible to get by owner", async () => {
 
         const n = faker.random.number(15);
-        const owner = await database.users.createUser(randomUser())
+        const owner = await database.users.create(randomUser())
 
         for (let i = 0; i < n; i++) {
 
             const category = randomCategory(owner.id);
-            await database.categories.createCategory(category);
+            await database.categories.create(category);
         };
 
         const retrieved = await database.categories.getByOwner(owner.id);
@@ -47,21 +47,21 @@ describe("Database interface for categories", () => {
     it("Does not return from other owners", async () => {
 
         const n = faker.random.number(15);
-        const owner = await database.users.createUser(randomUser())
+        const owner = await database.users.create(randomUser())
 
         for (let i = 0; i < n; i++) {
 
             const category = randomCategory(owner.id);
-            await database.categories.createCategory(category);
+            await database.categories.create(category);
         };
 
         const m = faker.random.number(15);
-        const other = await database.users.createUser(randomUser());
+        const other = await database.users.create(randomUser());
 
         for (let i = 0; i < m; i++) {
 
             const category = randomCategory(other.id);
-            await database.categories.createCategory(category);
+            await database.categories.create(category);
         };
 
         const retrieved = await database.categories.getByOwner(owner.id);
@@ -71,7 +71,7 @@ describe("Database interface for categories", () => {
 
     it("returns category objects", async () => {
 
-        const owner = await database.users.createUser(randomUser())
+        const owner = await database.users.create(randomUser())
         const n = faker.random.number(10) + 1;
 
         /* 
@@ -79,13 +79,13 @@ describe("Database interface for categories", () => {
         const persisted = await Promise.allSettled(
             new Array(n)
                 .map(() => randomCategory(owner.id))
-                .map((category) => database.categories.createCategory(category))
+                .map((category) => database.categories.create(category))
         ); */
 
         const persisted: CategoryModel[] = [];
         for (let i = 0; i < n; i++) {
 
-            const category = await database.categories.createCategory(randomCategory(owner.id));
+            const category = await database.categories.create(randomCategory(owner.id));
             persisted.push(category);
         }
 
@@ -98,8 +98,8 @@ describe("Database interface for categories", () => {
 
     it("Is possible to check wether a page is owned by a user ", async () => {
 
-        const owner = await database.users.createUser(randomUser())
-        const category = await database.categories.createCategory(randomCategory(owner.id));
+        const owner = await database.users.create(randomUser())
+        const category = await database.categories.create(randomCategory(owner.id));
 
         const result = await database.categories.hasOwner(owner.id, category.id);
         expect(result).toBe(true);
@@ -108,9 +108,9 @@ describe("Database interface for categories", () => {
     it("Returns false if category is not owned by user ", async () => {
 
 
-        const owner = await database.users.createUser(randomUser())
-        const other = await database.users.createUser(randomUser())
-        const category = await database.categories.createCategory(randomCategory(owner.id));
+        const owner = await database.users.create(randomUser())
+        const other = await database.users.create(randomUser())
+        const category = await database.categories.create(randomCategory(owner.id));
 
         //NOTE: not passing `owner`, but `other`
         const result = await database.categories.hasOwner(other.id, category.id);

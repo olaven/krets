@@ -1,7 +1,7 @@
 import { AnswerModel } from "../models/models"
 import { first, rows } from "./helpers/query"
 
-export const getAnswer = (id: number) =>
+export const get = (id: number) =>
     first<AnswerModel>(
         `select * from answers where id = $1`,
         [id]

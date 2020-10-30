@@ -39,7 +39,7 @@ describe("The endpoint for responses", () => {
 
     it("Returns 200 with responses if they exist", async () => {
 
-        const user = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
 
         const page = await database.pages.create({
             id: faker.random.uuid(),
@@ -48,12 +48,12 @@ describe("The endpoint for responses", () => {
             mandatory_contact_details: false
         });
 
-        await database.responses.createResponse({
+        await database.responses.create({
             emotion: ':-|',
             page_id: page.id
         });
 
-        await database.responses.createResponse({
+        await database.responses.create({
             emotion: ':-)',
             page_id: page.id
         });
@@ -123,7 +123,7 @@ describe("The endpoint for responses", () => {
 
         it("is possible to create a response", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
 
             const page = await database.pages.create({
                 id: faker.random.uuid(),
@@ -158,13 +158,13 @@ describe("The endpoint for responses", () => {
 
         it("Is possible to have the response contain contact details", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const page = await database.pages.create(randomPage(user.id));
             const contactDetails = faker.internet.email();
 
             const response = randomResponse(page.id, ":-|", contactDetails);
 
-            const before = await database.responses.getResponses(page.id);
+            const before = await database.responses.getByPage(page.id);
             const { status } = await postResponse({
                 response,
                 answers: [],
@@ -172,7 +172,7 @@ describe("The endpoint for responses", () => {
 
             expect(status).toEqual(201);
 
-            const after = await database.responses.getResponses(page.id);
+            const after = await database.responses.getByPage(page.id);
             expect(before.length).toEqual(0);
             expect(after.length).toEqual(1);
 

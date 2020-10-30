@@ -16,7 +16,7 @@ export default applyMiddleware(
 
         //const requestKey = getKey(request.url) as string;
         const requestKey = request.query.key as string;
-        const data = await database.users.getAllUsers({ key: requestKey, amount: 10 });
+        const data = await database.users.getAll({ key: requestKey, amount: 10 });
 
         const page: PaginatedModel<UserModel> = {
             data: data,

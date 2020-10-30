@@ -13,7 +13,7 @@ export const getActiveUserCount = async () => {
    return parseInt(result.count);
 }
 
-export const getUser = (id: string) =>
+export const get = (id: string) =>
    first<UserModel>(
       "select * from users where id = $1",
       [id]
@@ -23,7 +23,7 @@ export const getUser = (id: string) =>
  * DANGER: returns user data that must _not_ be exposed other than to administrators
  * @param options 
  */
-export const getAllUsers = (options: PaginationOptions = { amount: 10 }) =>
+export const getAll = (options: PaginationOptions = { amount: 10 }) =>
    options.key ?
       rows<UserModel>(
          `
@@ -49,13 +49,13 @@ export const getAllUsers = (options: PaginationOptions = { amount: 10 }) =>
  * The supplied ID must match the Auth0-ID.
  * @param user 
  */
-export const createUser = (user: UserModel) =>
+export const create = (user: UserModel) =>
    first<UserModel>(
       "insert into users(id) values($1) RETURNING *",
       [user.id] //NOTE: passed explicity, as it needs to mirror Auth0
    );
 
-export const updateUser = (user: UserModel) =>
+export const update = (user: UserModel) =>
    first<UserModel>(
       `update users set active = $2 where id = $1 returning * `,
       [user.id, user.active]
@@ -67,7 +67,7 @@ export const updateRole = (user: UserModel) =>
       [user.id, user.role]
    );
 
-export const userExists = async (id: string) => {
+export const exists = async (id: string) => {
 
    const result = await first<{ count: string }>(
       "select count(*) from users where id = $1",

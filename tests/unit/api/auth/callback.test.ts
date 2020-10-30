@@ -27,9 +27,9 @@ describe("The callback endpoint", () => {
 
         const uid = faker.random.uuid();
 
-        const before = await database.users.userExists(uid);
+        const before = await database.users.exists(uid);
         await authenticatedFetch(uid, url);
-        const after = await database.users.userExists(uid);
+        const after = await database.users.exists(uid);
 
         expect(before).toBeFalsy();
         expect(after).toBeTruthy();
@@ -38,11 +38,11 @@ describe("The callback endpoint", () => {
     it(" does _not_ create if user already exists", async () => {
 
 
-        const user = await database.users.createUser(randomUser());
+        const user = await database.users.create(randomUser());
 
-        const before = await database.users.userExists(user.id);
+        const before = await database.users.exists(user.id);
         await authenticatedFetch(user.id, url);
-        const after = await database.users.userExists(user.id);
+        const after = await database.users.exists(user.id);
 
         expect(before).toBeTruthy();
         expect(after).toBeTruthy();

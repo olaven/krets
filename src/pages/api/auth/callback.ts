@@ -7,9 +7,9 @@ import { withCors, withErrorHandling } from '../../../middleware/middleware';
 //TODO: Refactor: this function is messy and does several things
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
-  const user = await database.users.getUser(sub);
+  const user = await database.users.get(sub);
   if (!user) {
-    await database.users.createUser({ id: sub });
+    await database.users.create({ id: sub });
   }
 };
 

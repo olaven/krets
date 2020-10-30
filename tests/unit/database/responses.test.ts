@@ -39,7 +39,7 @@ describe("Database repository for pages", () => {
 
         it("Returns a number", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const page = await database.pages.create(randomPage(user.id));
 
             const average = await database.responses.getAverageEmotionByPage(page.id);
@@ -48,7 +48,7 @@ describe("Database repository for pages", () => {
 
         it("Returns 0 if no responses are present", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const page = await database.pages.create(randomPage(user.id));
 
             const average = await database.responses.getAverageEmotionByPage(page.id);
@@ -57,11 +57,11 @@ describe("Database repository for pages", () => {
 
         it("Returns the average of persisted responses", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const page = await database.pages.create(randomPage(user.id));
 
-            await database.responses.createResponse(randomResponse(page.id, ":-)")); //2 
-            await database.responses.createResponse(randomResponse(page.id, ":-|")); //1
+            await database.responses.create(randomResponse(page.id, ":-)")); //2 
+            await database.responses.create(randomResponse(page.id, ":-|")); //1
 
             const average = await database.responses.getAverageEmotionByPage(page.id);
             expect(average).toEqual(1.5) // (2 + 1) / 2
@@ -73,21 +73,21 @@ describe("Database repository for pages", () => {
 
         test("Can get responses", async () => {
 
-            const result = await database.responses.getResponses(faker.random.uuid());
+            const result = await database.responses.getByPage(faker.random.uuid());
             expect(result).toEqual([]);
         });
 
         test("Can create response", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const page = await await database.pages.create(randomPage(user.id));
 
-            const before = await database.responses.getResponses(page.id);
-            await database.responses.createResponse({
+            const before = await database.responses.getByPage(page.id);
+            await database.responses.create({
                 emotion: ':-)',
                 page_id: page.id
             });
-            const after = await database.responses.getResponses(page.id);
+            const after = await database.responses.getByPage(page.id);
 
             expect(before.length).toEqual(0);
             expect(after.length).toEqual(1);
@@ -95,13 +95,13 @@ describe("Database repository for pages", () => {
 
         test("Can create response with contact details", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
             const page = await database.pages.create(randomPage(user.id));
             const contact_details = "mail@example.com";
 
-            await database.responses.createResponse(randomResponse(page.id, ":-)", contact_details));
+            await database.responses.create(randomResponse(page.id, ":-)", contact_details));
 
-            const retrieved = await database.responses.getResponses(page.id);
+            const retrieved = await database.responses.getByPage(page.id);
             expect(retrieved.length).toEqual(1);
 
             const [response] = retrieved;
@@ -112,13 +112,13 @@ describe("Database repository for pages", () => {
 
             const [_u, _uu, [first, second, third]] = await blindSetup(3);
 
-            const retrievedFirst = await database.responses.getResponse(first.id);
+            const retrievedFirst = await database.responses.get(first.id);
             expect(retrievedFirst).toEqual(first);
 
-            const retrievedSecond = await database.responses.getResponse(second.id);
+            const retrievedSecond = await database.responses.get(second.id);
             expect(retrievedSecond).toEqual(second);
 
-            const retrievedThird = await database.responses.getResponse(third.id)
+            const retrievedThird = await database.responses.get(third.id)
             expect(retrievedThird).toEqual(third);
         });
 
@@ -130,7 +130,7 @@ describe("Database repository for pages", () => {
                 const pageSize = 10;
                 //NOTE: persisting more than pageSize
                 const [page, owner, persisted] = await blindSetup(pageSize + 5)
-                const retrieved = await database.responses.getResponses(page.id)
+                const retrieved = await database.responses.getByPage(page.id)
 
                 expect(persisted.length).toBeGreaterThan(pageSize)
                 expect(retrieved.length).toEqual(pageSize);
@@ -141,7 +141,7 @@ describe("Database repository for pages", () => {
                 const pageSize = 2;
                 const [page] = await blindSetup(pageSize + 3);
 
-                const retrieved = await database.responses.getResponses(page.id, {
+                const retrieved = await database.responses.getByPage(page.id, {
                     amount: pageSize
                 });
                 expect(retrieved.length).toEqual(pageSize);
@@ -154,7 +154,7 @@ describe("Database repository for pages", () => {
 
                 const [first, second, third] = persisted;
 
-                const retrieved = (await database.responses.getResponses(page.id, {
+                const retrieved = (await database.responses.getByPage(page.id, {
                     amount: pageSize,
                     key: second.created_at //NOTE: everything _after_ second
                 })).map(r => r.id);
@@ -174,7 +174,7 @@ describe("Database repository for pages", () => {
 
                 const [first, second] = persisted;
 
-                const retrieved = (await database.responses.getResponses(page.id, {
+                const retrieved = (await database.responses.getByPage(page.id, {
                     amount: pageSize,
                     key: first.created_at //NOTE: everything _after_ first
                 })).map(r => r.id);
@@ -210,7 +210,7 @@ describe("Database repository for pages", () => {
         it("Returns responses sorted by date, with newest first", async () => {
 
             const [page] = await blindSetup();
-            const retrieved = await database.responses.getResponses(page.id);
+            const retrieved = await database.responses.getByPage(page.id);
 
             for (let i = 1; i < retrieved.length; i++) {
 
@@ -320,20 +320,20 @@ describe("Database repository for pages", () => {
             const [_, page] = await setupPage();
 
             //NOTE: three happy
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
 
             //NOTE: five neutral
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
 
             //NOTE: two sad 
-            await database.responses.createResponse(randomResponse(page.id, ":-("));
-            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.create(randomResponse(page.id, ":-("));
+            await database.responses.create(randomResponse(page.id, ":-("));
 
             const distribution = await database.responses.getEmojiDistribution(page.id);
             expect(distribution.happy).toEqual("3");
@@ -347,24 +347,24 @@ describe("Database repository for pages", () => {
             const [_, page] = await setupPage();
 
             //NOTE: eight happy
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
-            await database.responses.createResponse(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
+            await database.responses.create(randomResponse(page.id, ":-)"));
 
             //NOTE: two neutral
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
-            await database.responses.createResponse(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
+            await database.responses.create(randomResponse(page.id, ":-|"));
 
             //NOTE: four sad
-            await database.responses.createResponse(randomResponse(page.id, ":-("));
-            await database.responses.createResponse(randomResponse(page.id, ":-("));
-            await database.responses.createResponse(randomResponse(page.id, ":-("));
-            await database.responses.createResponse(randomResponse(page.id, ":-("));
+            await database.responses.create(randomResponse(page.id, ":-("));
+            await database.responses.create(randomResponse(page.id, ":-("));
+            await database.responses.create(randomResponse(page.id, ":-("));
+            await database.responses.create(randomResponse(page.id, ":-("));
 
             const distribution = await database.responses.getEmojiDistribution(page.id);
             expect(distribution.happy).toEqual("8");

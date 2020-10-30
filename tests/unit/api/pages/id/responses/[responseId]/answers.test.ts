@@ -40,7 +40,7 @@ describe("The endpoint for answers on a given response", () => {
         it("Returns 403 if authenticated, but not page owner", async () => {
 
             const [owner, page, response, __] = await setupAnswers();
-            const other = await database.users.createUser(randomUser());
+            const other = await database.users.create(randomUser());
             expect(owner.id).not.toEqual(other.id);
 
             const { status } = await authenticatedFetch(other.id, fullURL(page.id, response.id));

@@ -24,7 +24,7 @@ const getUser = asSameUser(
     async (request, response) => {
 
         const { user } = await auth0.getSession(request);
-        const persistedUser = await database.users.getUser(user.sub);
+        const persistedUser = await database.users.get(user.sub);
 
         const [status, payload] = persistedUser ?
             [OK, persistedUser] :
@@ -44,7 +44,7 @@ const deleteUser = asSameUser(
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const id = getPathParam(request.url, 1);
-        const dbUser = await database.users.getUser(id);
+        const dbUser = await database.users.get(id);
 
         await deleteAuthUser(id);
         await database.users.deleteUser(id);
@@ -59,7 +59,7 @@ const putUser = asAdmin(
 
         const user = request.body as UserModel;
 
-        const existing = await database.users.getUser(user.id);
+        const existing = await database.users.get(user.id);
         if (!existing)
             return response
                 .status(NOT_FOUND)
@@ -71,7 +71,7 @@ const putUser = asAdmin(
             await database.users.updateRole(user);
         }
 
-        await database.users.updateUser(user);
+        await database.users.update(user);
 
         response
             .status(NO_CONTENT)

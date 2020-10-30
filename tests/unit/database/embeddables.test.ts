@@ -46,7 +46,7 @@ describe("The database interface for embeddables", () => {
 
             const [_, [page]] = await setupPages(1);
             const original = randomEmbeddable(page.id);
-            const persisted = await database.embeddables.createEmbeddable(original);
+            const persisted = await database.embeddables.create(original);
 
             expect(original.id).not.toBeDefined();
             expect(persisted.id).toBeDefined();
