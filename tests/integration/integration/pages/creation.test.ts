@@ -4,7 +4,8 @@ import * as uiText from "../../../../src/text";
 import { randomUser } from "../../../unit/database/databaseTestUtils";
 import { randomAuthUser } from "../../../unit/api/apiTestUtils";
 import { database } from "../../../../src/database/database";
-describe("Testing creation of pages", () => {
+
+describe.skip("Testing creation of pages", () => {
 
 
     /**
