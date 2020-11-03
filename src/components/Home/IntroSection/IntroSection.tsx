@@ -49,10 +49,10 @@ const RequestAccess = () => {
         }
     }
 
-    return <Flex width={[1, 1 / 2, 1 / 3]} m="auto" p={[1, 2, 3]} flexDirection="column">
+    return <Flex width={[1]} m="auto" flexDirection="column">
         {success ?
             <Text textAlign="center" backgroundColor="success" color="secondary" px={[1, 2]} py={[2, 3, 4]} fontSize={[3, 4, 5]}>{intro.requestAccess.success}</Text> :
-            <>
+            <Flex alignItems="center" flexDirection="column">
                 <Input
                     fontSize={[13, 21]}
                     color={valid ? 'black' : 'attention'}
@@ -66,7 +66,7 @@ const RequestAccess = () => {
                     text={intro.requestAccess.button}
                     action={onRequestAccess}
                 />
-            </>
+            </Flex >
         }
     </Flex >
 }
@@ -74,15 +74,21 @@ const RequestAccess = () => {
 export const IntroSection = () => {
 
 
-    return <Box >
+    return <Box>
 
-        <Flex py={1}>
-            <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.about}</Text>
-            <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]} textAlign="center">{intro.aim}</Text>
+        <Flex py={[1, 2, 3]} justifyContent="space-around" >
+
+            <Flex flexDirection="column" width={[1, 1 / 3]}>
+                <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]}>{intro.about}</Text>
+                <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]}>{intro.aim}</Text>
+            </Flex>
+
+            <Flex flexDirection="column" width={[1, 1 / 3]}>
+
+                <RequestAccess />
+                <DisclaimerBox />
+            </Flex>
         </Flex>
-
-        <RequestAccess />
-        <DisclaimerBox />
 
         <Flex py={4}>
             <Box width={[0, 1 / 4]}> </Box>
@@ -101,20 +107,5 @@ export const IntroSection = () => {
             </Box>
             <Box width={[0, 1 / 4]}> </Box>
         </Flex>
-
-        {/*  <Flex width={1} flexWrap="wrap">
-            <IntroTextBox>
-                {intro.create}
-            </IntroTextBox>
-            <IntroImageBox source="/creation.svg" />
-            <IntroImageBox source="/feedback.svg" />
-            <IntroTextBox>
-                {intro.visiting}
-            </IntroTextBox>
-            <IntroTextBox>
-                {intro.insight}
-            </IntroTextBox>
-            <IntroImageBox source="/insight.svg" />
-        </Flex> */}
     </Box>
 };

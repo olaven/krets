@@ -11,6 +11,7 @@
     "start": "yarn migrate up --no-check-order --no-reject-unauthorized && NODE_ENV='production' next start",
     "test": "yarn migrate up && NODE_ENV=test jest --runInBand ./tests --forceExit --detectOpenHandles",
     "dev:integration": "yarn dev --port 3052",
+    "cy:open": "cypress open --config baseUrl=http://localhost:3000",
     "cy:run": "cypress run",
     "test:integration": "start-server-and-test dev:integration 3052 cy:run",
     "migrate": "node-pg-migrate"

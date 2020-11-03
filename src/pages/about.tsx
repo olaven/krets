@@ -6,8 +6,8 @@ const About = () => <Box px={[0, "20%"]}>
 
     <Heading fontSize={[5, 6, 7]} textAlign="center">{uiText.about.heading}</Heading>
     <TextBox>{uiText.about.first}</TextBox>
-    <TextBox>{uiText.about.second}</TextBox>
-    <TextBox>{uiText.about.third}</TextBox>
+    {/*     <TextBox>{uiText.about.second}</TextBox>
+    <TextBox>{uiText.about.third}</TextBox> */}
     <TextBox>{uiText.about.fourth}</TextBox>
     <TextBox>- <Link href="https://olaven.org">Olav</Link>{uiText.about.greetings}</TextBox>
     <Flex>

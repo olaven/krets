@@ -1,6 +1,6 @@
 import fetch from "cross-fetch";
 import * as faker from "faker";
-import { setupServer, teardownServer, authenticatedFetch } from "../../apiTestUtils";
+import { setupServer, teardownServer, authenticatedFetch, randomAuthUser } from "../../apiTestUtils";
 import authUserHandler from "../../../../../src/pages/api/users/[id]/auth";
 import { createAdmin, createBasicUser } from "../userTestUtils";
 import { mockFetch } from "../../../frontend/frontendTestUtils";
@@ -33,15 +33,9 @@ describe("Endpoints for database user data", () => {
 
     describe("security of endpoint", () => {
 
-        const randomAuth = () => ({
-            name: faker.name.firstName(),
-            sub: faker.random.uuid(),
-            email: faker.internet.email(),
-        });
-
         it("Does not respond if not authenticated", async () => {
 
-            mockFetch(randomAuth(), 200);
+            mockFetch(randomAuthUser(), 200);
             const { status } = await fetch(fullUrl("some-user"));
             expect(status).toEqual(401);
         });
@@ -63,7 +57,7 @@ describe("Endpoints for database user data", () => {
 
         it(" Does respond if user is admin, requesting themselves", async () => {
 
-            mockFetch(randomAuth(), 200);
+            mockFetch(randomAuthUser(), 200);
             const admin = await createAdmin();
             const { status } = await authenticatedFetch(admin.id, fullUrl(admin.id));
             expect(status).toEqual(200);
@@ -71,7 +65,7 @@ describe("Endpoints for database user data", () => {
 
         it(" Does respond if user is admin, requesting someone else", async () => {
 
-            mockFetch(randomAuth(), 200);
+            mockFetch(randomAuthUser(), 200);
             const admin = await createAdmin();
             const other = await createBasicUser();
             const { status } = await authenticatedFetch(admin.id, fullUrl(other.id));

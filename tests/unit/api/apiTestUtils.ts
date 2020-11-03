@@ -21,6 +21,12 @@ export const randomPage = (ownerId: string, color: string = null, categoryId: st
 });
 
 
+export const randomAuthUser = (id = faker.random.uuid()) => ({
+    sub: id,
+    name: faker.name.firstName(),
+    email: faker.internet.email(),
+});
+
 
 export const postPage = (page: PageModel, url: string, userId: string = uid()) => authenticatedFetch(userId, url, {
     method: "POST",
