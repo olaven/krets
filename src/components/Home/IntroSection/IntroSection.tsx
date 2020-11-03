@@ -78,9 +78,12 @@ export const IntroSection = () => {
 
         <Flex py={[1, 2, 3]} justifyContent="space-around" >
 
-            <Flex flexDirection="column" width={[1, 1 / 3]}>
-                <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]}>{intro.about}</Text>
-                <Text width={[1, 1 / 2]} m={[2, 3]} fontSize={[3, 4, 5]}>{intro.aim}</Text>
+            <Flex flexDirection="row" width={[1, 1 / 3]}>
+                <Text width={[1]} m={[2, 3]} fontSize={[3, 4, 5]}>
+                    {intro.about}
+                    <br /><br />
+                    {intro.aim}
+                </Text>
             </Flex>
 
             <Flex flexDirection="column" width={[1, 1 / 3]}>
@@ -107,5 +110,5 @@ export const IntroSection = () => {
             </Box>
             <Box width={[0, 1 / 4]}> </Box>
         </Flex>
-    </Box>
+    </Box >
 };
