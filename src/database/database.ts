@@ -1,10 +1,10 @@
-import { pages } from "./pages";
-import { responses } from "./responses";
-import { users } from "./users";
-import { categories } from "./categories";
-import { answers } from "./answers";
+import * as pages from "./pages";
+import * as responses from "./responses";
+import * as users from "./users";
+import * as categories from "./categories";
+import * as answers from "./answers";
 import * as questions from "./questions";
-import { embeddables } from "./embeddables"
+import * as embeddables from "./embeddables"
 
 export const database = {
     pages,

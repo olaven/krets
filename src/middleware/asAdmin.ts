@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { FORBIDDEN, NOT_FOUND, UNAUTHORIZED } from "node-kall";
+import { FORBIDDEN, UNAUTHORIZED } from "node-kall";
 import auth0 from "../auth/auth0";
 import { database } from "../database/database";
 
@@ -7,7 +7,7 @@ export const asAdmin = (handler: NextApiHandler) =>
     async (request: NextApiRequest, response: NextApiResponse) => {
 
         const { user: { sub } } = await auth0.getSession(request);
-        const user = await database.users.getUser(sub);
+        const user = await database.users.get(sub);
 
         if (!user)
             return response

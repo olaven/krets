@@ -2,7 +2,7 @@ import auth0 from "../../../auth/auth0";
 import { CREATED, OK, FORBIDDEN } from "node-kall";
 import { CategoryModel } from "../../../models/models";
 import { NextApiRequest, NextApiResponse } from "next";
-import { categories } from "../../../database/categories";
+import { database } from "../../../database/database";
 import { withAuthentication, withCors, withErrorHandling } from "../../../middleware/middleware";
 
 
@@ -10,7 +10,7 @@ const get = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const { user } = await auth0.getSession(request);
 
-    const retrievedCategories = await categories.getByOwner(user.sub);
+    const retrievedCategories = await database.categories.getByOwner(user.sub);
     response
         .status(OK)
         .send(retrievedCategories);
@@ -29,7 +29,7 @@ const post = async (request: NextApiRequest, response: NextApiResponse) => {
             .send("You don't own this category.");
     }
 
-    const persisted = await categories.createCategory(category);
+    const persisted = await database.categories.create(category);
     response
         .status(CREATED)
         .send(persisted);

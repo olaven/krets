@@ -12,7 +12,7 @@ describe("The API interface for questions", () => {
 
             const [_, page] = await setupQuestions();
             const question = await randomQuestion(page.id);
-            const persisted = await database.questions.createQuestion(question);
+            const persisted = await database.questions.create(question);
 
             expect(question.id).not.toBeDefined();
             expect(persisted.id).toBeDefined();
@@ -27,13 +27,13 @@ describe("The API interface for questions", () => {
 
         it(" Is possible to get questions by page", async () => {
 
-            const user = await database.users.createUser(randomUser());
+            const user = await database.users.create(randomUser());
 
-            const firstPage = await database.pages.createPage(randomPage(user.id));
-            const secondPage = await database.pages.createPage(randomPage(user.id));
+            const firstPage = await database.pages.create(randomPage(user.id));
+            const secondPage = await database.pages.create(randomPage(user.id));
 
-            const firstQuestion = await database.questions.createQuestion(randomQuestion(firstPage.id));
-            const secondQuestion = await database.questions.createQuestion(randomQuestion(secondPage.id));
+            const firstQuestion = await database.questions.create(randomQuestion(firstPage.id));
+            const secondQuestion = await database.questions.create(randomQuestion(secondPage.id));
 
             const [retrievedFirst] = await database.questions.getByPage(firstPage.id);
             const [retrievedSecond] = await database.questions.getByPage(secondPage.id);
@@ -44,11 +44,11 @@ describe("The API interface for questions", () => {
 
         it(" `nonArchivedByPage` only returns questions that are _not_ archived", async () => {
 
-            const user = await database.users.createUser(randomUser());
-            const page = await database.pages.createPage(randomPage(user.id));
+            const user = await database.users.create(randomUser());
+            const page = await database.pages.create(randomPage(user.id));
 
-            const notArchived = await database.questions.createQuestion(randomQuestion(page.id, false));
-            const archived = await database.questions.createQuestion(randomQuestion(page.id, true));
+            const notArchived = await database.questions.create(randomQuestion(page.id, false));
+            const archived = await database.questions.create(randomQuestion(page.id, true));
 
             const retrieved = await database.questions.getNonArchivedByPage(page.id);
 
@@ -61,7 +61,7 @@ describe("The API interface for questions", () => {
 
             const [_, __, [question]] = await setupQuestions();
 
-            const retrieved = await database.questions.getQuestion(question.id);
+            const retrieved = await database.questions.get(question.id);
             expect(retrieved).toEqual(question);
         });
 
@@ -73,18 +73,18 @@ describe("The API interface for questions", () => {
             const secondOrder = 20;
             const thirdOrder = 30;
 
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...a,
                 display_order: secondOrder
             });
 
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...b,
                 display_order: firstOrder
             });
 
 
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...c,
                 display_order: thirdOrder
             });
@@ -104,7 +104,7 @@ describe("The API interface for questions", () => {
 
             const [_, __, [question]] = await setupQuestions();
 
-            const retrieved = await database.questions.getQuestion(question.id);
+            const retrieved = await database.questions.get(question.id);
             expect(retrieved).toEqual(question);
         });
 
@@ -116,20 +116,20 @@ describe("The API interface for questions", () => {
             const secondOrder = 20;
             const thirdOrder = 30;
 
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...a,
                 display_order: secondOrder,
                 archived: false,
             });
 
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...b,
                 display_order: firstOrder,
                 archived: false,
             });
 
 
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...c,
                 display_order: thirdOrder,
                 archived: false,
@@ -153,12 +153,12 @@ describe("The API interface for questions", () => {
 
             const [_, __, [question]] = await setupQuestions();
 
-            const before = await database.questions.getQuestion(question.id);
-            await database.questions.updateQuestion({
+            const before = await database.questions.get(question.id);
+            await database.questions.update({
                 ...before,
                 text: faker.lorem.words(10)
             });
-            const after = await database.questions.getQuestion(question.id);
+            const after = await database.questions.get(question.id);
 
             expect(before.id).toEqual(after.id);
             expect(before.page_id).toEqual(after.page_id);
@@ -168,12 +168,12 @@ describe("The API interface for questions", () => {
         it("Does define ordering after updating it", async () => {
 
             const [_, __, [before]] = await setupQuestions();
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...before,
                 display_order: 1
             });
 
-            const after = await database.questions.getQuestion(before.id);
+            const after = await database.questions.get(before.id);
 
             expect(before.display_order).toEqual(0);
             expect(after.display_order).toEqual(1);
@@ -184,12 +184,12 @@ describe("The API interface for questions", () => {
             const [_, __, [original]] = await setupQuestions();
 
             const order = faker.random.number();
-            await database.questions.updateQuestion({
+            await database.questions.update({
                 ...original,
                 display_order: order
             });
 
-            const retrieved = await database.questions.getQuestion(original.id);
+            const retrieved = await database.questions.get(original.id);
 
             expect(original.display_order).not.toEqual(order);
             expect(retrieved.display_order).toEqual(order);
@@ -199,33 +199,33 @@ describe("The API interface for questions", () => {
             it(" Stores an `archived` prop", async () => {
 
                 const [_, __, [question]] = await setupQuestions();
-                const persisted = await database.questions.getQuestion(question.id);
+                const persisted = await database.questions.get(question.id);
                 expect(persisted.archived).toBeDefined();
             });
 
             it(" Can be false", async () => {
 
                 const [_, __, [question]] = await setupQuestions(1, false);
-                const persisted = await database.questions.getQuestion(question.id);
+                const persisted = await database.questions.get(question.id);
                 expect(persisted.archived).toBe(false);
             });
 
             it("Can be true ", async () => {
 
                 const [_, __, [question]] = await setupQuestions(1, true);
-                const persisted = await database.questions.getQuestion(question.id);
+                const persisted = await database.questions.get(question.id);
                 expect(persisted.archived).toBe(true);
             });
 
             it("Is possible to update archivation status", async () => {
 
                 const [_, __, [before]] = await setupQuestions(1, true);
-                await database.questions.updateQuestion({
+                await database.questions.update({
                     ...before,
                     archived: !before.archived
                 });
 
-                const after = await database.questions.getQuestion(before.id);
+                const after = await database.questions.get(before.id);
 
                 expect(before.id).toEqual(after.id);
                 expect(before.text).toEqual(after.text);
