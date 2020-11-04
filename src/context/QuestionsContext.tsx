@@ -40,7 +40,7 @@ export const QuestionsContextProvider = ({ pageId, includeArchived, children }: 
 
     useEffect(() => {
         setMoreQuestionsAreAllowed(
-            questions.length < 3
+            questions.length < 10
         );
     }, [questions.length]);
 
