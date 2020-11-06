@@ -17,7 +17,8 @@ export const intro = strings({
         requestAccess: {
             button: "Request access",
             placeholder: "Your work-email",
-            success: "Welcome✋ We'll get back to you as quickly as possible!"
+            success: "Welcome✋ We'll get back to you as quickly as possible!",
+            curious: "Curious?"
         },
         about: "You'll only improve through feedback 👊",
         aim: "Krets aims to make it frictionless 😁",
@@ -35,7 +36,8 @@ export const intro = strings({
         requestAccess: {
             button: "Be om tilgang",
             placeholder: "Din e-post",
-            success: "Vi er glade for å ha deg med. Du hører snart fra oss."
+            success: "Vi er glade for å ha deg med. Du hører snart fra oss.",
+            curious: "Nysgjerrig?"
         },
         about: "Krets hjelper din bedrift med å få tilbakemeldinger.",
         aim: "Slik kan du ta de beste valgene for din bedrift 👍",
