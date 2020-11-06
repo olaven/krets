@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Box, Text, Image, Link, Heading, Button } from "rebass";
+import { Flex, Box, Text, Image, Link, Button, Heading } from "rebass";
 import { Input } from "@rebass/forms";
 import { GetStartedButton, TriggerLoadingButton } from "../../standard/buttons";
 import { intro } from "../../../text";
@@ -50,6 +50,7 @@ const RequestAccess = () => {
     }
 
     return <Flex width={[1]} m="auto" flexDirection="column">
+        <Text fontSize={[2, 3, 4]}>{intro.requestAccess.curious}</Text>
         {success ?
             <Text textAlign="center" backgroundColor="success" color="secondary" px={[1, 2]} py={[2, 3, 4]} fontSize={[3, 4, 5]}>{intro.requestAccess.success}</Text> :
             <Flex alignItems="center" flexDirection="column">
@@ -87,7 +88,6 @@ export const IntroSection = () => {
             </Flex>
 
             <Flex flexDirection="column" width={[1, 1 / 3]}>
-
                 <RequestAccess />
                 <DisclaimerBox />
             </Flex>
