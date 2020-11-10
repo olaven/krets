@@ -1,4 +1,4 @@
-import { useToggle } from "../../../effects/useToggle";
+import { ReactElement, useEffect, useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Button } from "../../standard/Button";
 import { RowContainer } from "../../standard/Containers";
@@ -20,14 +20,33 @@ const TabButton = styled(Button, {
             }
         }
     }
-})
+});
 
-export const Tabs = () => {
+type Props = {
+    elements: {
+        label: string,
+        Component: ReactElement,
+    }[],
+    setComponent: (component: ReactElement) => any,
+}
+export const Tabs = ({ elements, setComponent }: Props) => {
 
-    const [s, toggle] = useToggle(false)
+    if (elements.length <= 0) throw "please specify elements to `Tabs`"
 
-    return <RowContainer>
-        <TabButton selected={!s} onClick={toggle}>first thing</TabButton>
-        <TabButton selected={s} onClick={toggle}>Second thing</TabButton>
-    </RowContainer>
+    const [selected, setSelected] = useState(elements[0].label)
+
+    return <RowContainer>{
+        elements.map(element =>
+            <TabButton
+                onClick={() => {
+                    setComponent(element.Component);
+                    setSelected(element.label)
+                }}
+                //@ts-ignore
+                selected={element.label === selected}
+            >
+                {element.label}
+            </TabButton>
+        )
+    }</RowContainer >
 }
