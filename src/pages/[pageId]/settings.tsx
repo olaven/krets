@@ -72,4 +72,16 @@ const Settings = SubscriberWrapper(() => {
         null
 });
 
-export default Settings; 
+export default Settings;
+
+//FIXME: temp replacement for `Settings`, as query.pageId will not be the source of page when new design is implmented
+export const NewDesignSettings = SubscriberWrapper(
+    ({ pageId }) => {
+
+        return pageId ?
+            <SettingsContextProvider pageId={pageId}>
+                <SettingsContent />
+            </SettingsContextProvider> :
+            null
+    }
+);
