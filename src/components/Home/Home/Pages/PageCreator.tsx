@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Flex, Heading, Text } from "rebass";
 import { Input } from "@rebass/forms"
-import { PagesContext } from "../../../context/PagesContext";
+import { PagesContext } from "../../../../context/PagesContext";
 import { post, CREATED, CONFLICT } from "node-kall";
-import * as text from "../../../text"
-import { PageModel } from "../../../models/models";
+import * as text from "../../../../text"
+import { PageModel } from "../../../../models/models";
 
 export const nameToId = (name: string) => name
     .toLowerCase()

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
-import { Loader, LoadMore } from "../../standard/loader";
-import * as text from "../../../text"
-import { PagesContext } from "../../../context/PagesContext";
-import { ToAdmin, ToQR, ToPage, ToSettings } from "../../standard/buttons";
-import { css, styled } from "../../../stiches.config";
+import { Loader, LoadMore } from "../../../standard/loader";
+import * as text from "../../../../text"
+import { PagesContext } from "../../../../context/PagesContext";
+import { ToAdmin, ToQR, ToPage, ToSettings } from "../../../standard/buttons";
+import { css, styled } from "../../../../stiches.config";
 
 const random = (max: number) => Math.floor(Math.random() * max + 1)
 

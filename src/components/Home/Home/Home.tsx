@@ -4,8 +4,9 @@ import { UserContext } from "../../../context/UserContext";
 import { styled } from "../../../stiches.config";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { SubscriberWrapper } from "../../SubscriberWrapper";
-import { PageCreator } from "./PageCreator";
-import { PageList } from "./PageList";
+import { PageCreator } from "./Pages/PageCreator";
+import { PageList } from "./Pages/PageList";
+import { Tabs } from "./Tabs";
 import { NewDesignSettings as Settings } from "../../../pages/[pageId]/settings"; //TODO: no loger page whe ndesign is doen 
 
 
@@ -28,6 +29,7 @@ export const Home = SubscriberWrapper(() => {
 
     return <RowContainer>
         <Section>
+            <Tabs />
             <Settings pageId="side" />
         </Section>
         <Section>
