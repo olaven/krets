@@ -18,14 +18,20 @@ const Card = styled(RowContainer, {
     width: "100%",
     justifyContent: "space-between",
     transitionTimingFunction: "ease",
-    transitionDuration: "50ms",
+    transitionDuration: "100ms",
+    opacity: ".55",
+
+    ":hover": {
+        opacity: "1",
+    },
 
     variants: {
 
         focus: {
             true: {
-
+                opacity: "1",
                 transform: "scale(1.15)",
+                paddingBottom: "$21",
             }
         }
     }
@@ -39,7 +45,7 @@ const LeftContainer = styled(ColumnContainer, {
 
 const RightContainer = styled(ColumnContainer, {
 
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     width: "33%",
 });
 
@@ -99,11 +105,11 @@ export const PageCard = (page) => {
                 <Card focus={page.id === homeContext.page?.id}>
                     <LeftContainer onClick={onSelect}>
                         <H2>{page.name}</H2>
-                        <SelectButton selected={selected}>{
-                            selected ?
+                        <SelectButton selected={selected}>
+                            {selected ?
                                 uiText.pageList.card.selected :
-                                uiText.pageList.card.unselected
-                        }</SelectButton>
+                                uiText.pageList.card.unselected}
+                        </SelectButton>
                     </LeftContainer>
                     <RightContainer>
                         <ToPage id={page.id} />
