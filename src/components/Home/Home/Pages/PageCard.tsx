@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { HomeContext } from "../../../../context/HomeContext";
 import { styled, css } from "../../../../stiches.config";
 import { ToQR, ToPage } from "../../../standard/buttons";
+import * as uiText from "../../../../text"
 import { Button } from "../../../standard/Button";
 import { RowContainer, ColumnContainer } from "../../../standard/Containers";
 import { H2 } from "../../../standard/Heading";
@@ -16,6 +17,18 @@ const Card = styled(RowContainer, {
     border: "solid black 1px",
     width: "100%",
     justifyContent: "space-between",
+    transitionTimingFunction: "ease",
+    transitionDuration: "50ms",
+
+    variants: {
+
+        focus: {
+            true: {
+
+                transform: "scale(1.15)",
+            }
+        }
+    }
 });
 
 const LeftContainer = styled(ColumnContainer, {
@@ -42,6 +55,17 @@ const SelectButton = styled(Button, {
     ":hover": {
         transform: "scale(1.15)",
         boxShadow: "4px 4px 5px grey",
+    },
+
+    variants: {
+        selected: {
+            true: {
+
+                transform: "scale(1.15)",
+                color: "$primary",
+                backgroundColor: "$secondary",
+            }
+        }
     }
 });
 
@@ -64,15 +88,22 @@ const FadeIn = styled("div", {
 
 export const PageCard = (page) => {
 
-    const { setPage } = useContext(HomeContext);
+    const homeContext = useContext(HomeContext);
+    const selected = homeContext.page?.id === page.id;
+
+    const onSelect = () => { homeContext.setPage(page) };
 
     return (
         <Margin>
             <FadeIn style={{ animationDuration: `${random(500)}ms` }}>
-                <Card>
-                    <LeftContainer>
+                <Card focus={page.id === homeContext.page?.id}>
+                    <LeftContainer onClick={onSelect}>
                         <H2>{page.name}</H2>
-                        <SelectButton onClick={() => { setPage(page) }}>VELG</SelectButton>
+                        <SelectButton selected={selected}>{
+                            selected ?
+                                uiText.pageList.card.selected :
+                                uiText.pageList.card.unselected
+                        }</SelectButton>
                     </LeftContainer>
                     <RightContainer>
                         <ToPage id={page.id} />

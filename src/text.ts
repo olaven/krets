@@ -133,7 +133,22 @@ export const page = strings({
         loading: "(Laster...)",
         download: "Last ned"
     }
-})
+});
+
+export const pageList = strings({
+    en: {
+        card: {
+            selected: "Chosen",
+            unselected: "Choose",
+        }
+    },
+    no: {
+        card: {
+            selected: "VALGT",
+            unselected: "VELG",
+        }
+    }
+});
 
 export const buttons = strings({
     en: {
