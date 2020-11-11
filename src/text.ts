@@ -157,8 +157,8 @@ export const buttons = strings({
         aboutPage: "Om",
         getStarted: "Kom i gang!",
         toAdmin: "Mottate tilbakemeldinger",
-        toQR: "Se QR-kode",
-        toPage: "Se svarside",
+        toQR: "SE KODE",
+        toPage: "SE SIDE",
         toSettings: "Innstillinger",
         loadMore: "Last flere sider",
     }

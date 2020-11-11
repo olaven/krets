@@ -81,14 +81,17 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: {
 
 
 
-const ListButton = (href: string, text: string) =>
-    <Box m={[1]}>
-        <Button width={1}>
-            <Link color={"secondary"} href={href}>
-                {text}
-            </Link>
-        </Button>
-    </Box >;
+const ListButton = (href: string, text: string) => (
+
+    <StitchesButton inverted>
+        <a>
+            {text}
+        </a>
+    </StitchesButton>
+
+)
+
+
 
 export const ToAdmin = ({ id }) =>
     ListButton(`/${id}/admin`, uiText.buttons.toAdmin);

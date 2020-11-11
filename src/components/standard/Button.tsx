@@ -30,10 +30,9 @@ export const Button = styled('button', {
                 backgroundColor: "$secondary",
                 color: "$primary",
                 border: "solid $primary",
-                borderWidth: "$3",
+                borderWidth: "$1",
 
                 ":hover": {
-                    borderWidth: "$5",
                     color: "$secondary",
                     backgroundColor: "$primary",
                     textDecoration: "none"
