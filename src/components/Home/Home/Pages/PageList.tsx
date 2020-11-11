@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
 import { Loader, LoadMore } from "../../../standard/loader";
 import * as text from "../../../../text"
 import { PagesContext } from "../../../../context/PagesContext";
+import { HomeContext } from "../../../../context/HomeContext";
 import { ToAdmin, ToQR, ToPage, ToSettings } from "../../../standard/buttons";
 import { css, styled } from "../../../../stiches.config";
 
@@ -24,29 +25,43 @@ const AppearContainer = styled("div", {
     })}`
 })
 
-const PageCard = ({ id, name }) => <AppearContainer style={{ animationDuration: `${random(500)}ms` }}>
-    <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
+const PageCard = (page) => {
 
-        <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{name}</Heading>
-        <Flex justifyContent="center">
-            {/* FIXME: Tooltips added here has wrong position */}
-            <Box width={[1 / 2]}>
-                <ToAdmin id={id} />
-                <ToSettings id={id} />
-            </Box>
-            <Box width={[1 / 2]}>
-                <ToPage id={id} />
-                <ToQR id={id} />
-            </Box>
-        </Flex>
-    </Card>
-</AppearContainer>
+    const { setPage } = useContext(HomeContext);
 
+    return <AppearContainer style={{ animationDuration: `${random(500)}ms` }}>
+
+        <Card sx={{ boxShadow: "0px 10px 20px .25px grey" }} p={[0, 1, 2]} my={[0, 1, 2]}>
+            <button onClick={() => { setPage(page) }}>test select click</button>
+            <Heading mx={[1, 2, 3]} mt={[1, 2, 3]} fontSize={[3, 4, 5]}>{page.name}</Heading>
+            <Flex justifyContent="center">
+                <Box width={[1 / 2]}>
+                    <ToAdmin id={page.id} />
+                    <ToSettings id={page.id} />
+                </Box>
+                <Box width={[1 / 2]}>
+                    <ToPage id={page.id} />
+                    <ToQR id={page.id} />
+                </Box>
+            </Flex>
+        </Card>
+    </AppearContainer >
+}
 
 
 export const PageList = () => {
 
+    const { setPage } = useContext(HomeContext);
     const { pages, hasLoaded, pageLoading, moreAvailable, getNextPages } = useContext(PagesContext);
+
+    useEffect(() => {
+
+        if (pages.length) {
+
+            const [firstPage] = pages;
+            setPage(firstPage);
+        }
+    }, [pages.length])
 
     return <>
         <Flex>

@@ -1,5 +1,6 @@
 import React, { ReactElement, useContext, useState } from "react";
 import { PagesContextProvider } from "../../../context/PagesContext";
+import { HomeContextProvider, HomeContext } from "../../../context/HomeContext";
 import { UserContext } from "../../../context/UserContext";
 import { styled } from "../../../stiches.config";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
@@ -8,12 +9,11 @@ import { PageCreator } from "./Pages/PageCreator";
 import { PageList } from "./Pages/PageList";
 import { Tabs } from "./Tabs";
 import { NewDesignSettings as Settings } from "../../../pages/[pageId]/settings"; //TODO: no loger page whe ndesign is doen 
+import { NewDesignAdmin as Admin } from "../../../pages/[pageId]/admin"; //TODO: no loger page whe ndesign is doen 
 
 
 
 const Section = styled(ColumnContainer, {
-
-    //border: 'solid black 1px',
 
     width: '50vw',
 
@@ -23,8 +23,9 @@ const Section = styled(ColumnContainer, {
 });
 
 
-export const Home = SubscriberWrapper(() => {
+export const HomeContent = () => {
 
+    const { page } = useContext(HomeContext);
     const { authUser } = useContext(UserContext);
 
     const [component, setComponent] = useState<ReactElement>(null)
@@ -36,11 +37,11 @@ export const Home = SubscriberWrapper(() => {
                 elements={[
                     {
                         label: "Vis innstillinger",
-                        Component: <Settings pageId={"side"} />,
+                        Component: <Settings pageId={page?.id} />,
                     },
                     {
-                        label: "other",
-                        Component: <div>other component</div>
+                        label: "Se tilbakemeldinger",
+                        Component: <Admin pageId={page?.id} />,
                     }
                 ]} />
             {component}
@@ -52,4 +53,11 @@ export const Home = SubscriberWrapper(() => {
             </PagesContextProvider >
         </Section>
     </RowContainer>
-});
+
+}
+
+export const Home = SubscriberWrapper(() =>
+    <HomeContextProvider>
+        <HomeContent />
+    </HomeContextProvider>
+)

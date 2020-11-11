@@ -6,7 +6,7 @@ import React from "react";
 import { waitFor, render, fireEvent, findByText, getByText } from "@testing-library/react"
 import '@testing-library/jest-dom/extend-expect'
 import * as text from "../../../../../src/text"
-import { PageCreator, nameToId } from "../../../../../src/components/Home/Home/PageCreator";
+import { PageCreator, nameToId } from "../../../../../src/components/Home/Home/Pages/PageCreator";
 import { renderWithPagesContext, mockFetch } from "../../frontendTestUtils";
 
 describe("The nameToId function", () => {

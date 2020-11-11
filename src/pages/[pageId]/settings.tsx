@@ -78,6 +78,7 @@ export default Settings;
 export const NewDesignSettings = SubscriberWrapper(
     ({ pageId }) => {
 
+        //TODO: use HomeContext instead of pageId prop
         return pageId ?
             <SettingsContextProvider pageId={pageId}>
                 <SettingsContent />

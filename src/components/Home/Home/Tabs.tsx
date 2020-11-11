@@ -37,12 +37,12 @@ export const Tabs = ({ elements, setComponent }: Props) => {
 
     return <RowContainer>{
         elements.map(element =>
+            //@ts-ignore
             <TabButton
                 onClick={() => {
                     setComponent(element.Component);
                     setSelected(element.label)
                 }}
-                //@ts-ignore
                 selected={element.label === selected}
             >
                 {element.label}
