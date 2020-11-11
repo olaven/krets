@@ -20,6 +20,17 @@ const Section = styled(ColumnContainer, {
     small: {
         width: '100vw',
     },
+
+    transition: "50ms ease",
+
+    variants: {
+        faded: {
+            right: {
+                transform: "translateX(20vw)",
+                backgroundColor: "orange"
+            }
+        }
+    }
 });
 
 
@@ -46,7 +57,7 @@ export const HomeContent = () => {
                 ]} />
             {component}
         </Section>
-        <Section>
+        <Section faded="right">
             <PagesContextProvider user={authUser}>
                 <PageList />
                 <PageCreator />

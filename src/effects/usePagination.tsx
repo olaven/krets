@@ -36,7 +36,7 @@ export const usePagination = function <T>(basePath: string): [
         const page = await filterBody(get<PaginatedModel<T>>(next));
 
         setPage(page);
-        setPageLoading(false)
+        setPageLoading(false);
         setMoreAvailable(page.data.length > 0);
     }, [next]);
 

@@ -106,6 +106,7 @@ export const ToSettings = ({ id }) =>
     ListButton(`/${id}/settings`, uiText.buttons.toSettings);
 
 
+//NOTE: Deprecated, should be replaced over time with a normal button. 
 export const LoadMoreButton = ({ onClick }) =>
     <Button width={1} onClick={onClick}>
         {uiText.buttons.loadMore}
