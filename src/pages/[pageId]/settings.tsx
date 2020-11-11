@@ -75,14 +75,12 @@ const Settings = SubscriberWrapper(() => {
 export default Settings;
 
 //FIXME: temp replacement for `Settings`, as query.pageId will not be the source of page when new design is implmented
-export const NewDesignSettings = SubscriberWrapper(
-    ({ pageId }) => {
+export const NewDesignSettings = ({ pageId }) => {
 
-        //TODO: use HomeContext instead of pageId prop
-        return pageId ?
-            <SettingsContextProvider pageId={pageId}>
-                <SettingsContent />
-            </SettingsContextProvider> :
-            null
-    }
-);
+    //TODO: use HomeContext instead of pageId prop
+    return pageId ?
+        <SettingsContextProvider pageId={pageId}>
+            <SettingsContent />
+        </SettingsContextProvider> :
+        null
+}

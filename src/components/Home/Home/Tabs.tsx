@@ -39,6 +39,7 @@ export const Tabs = ({ elements, setComponent }: Props) => {
         elements.map(element =>
             //@ts-ignore
             <TabButton
+                key={element.label}
                 onClick={() => {
                     setComponent(element.Component);
                     setSelected(element.label)

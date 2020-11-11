@@ -28,20 +28,18 @@ export default SubscriberWrapper(() => {
 });
 
 //FIXME: temp replacement for `Admin`, as query.pageId will not be the source of page when new design is implmented
-export const NewDesignAdmin = SubscriberWrapper(
-    ({ pageId }) => {
+export const NewDesignAdmin = ({ pageId }) => {
 
-        const { authUser } = useContext(UserContext)
+    const { authUser } = useContext(UserContext)
 
-        //TODO: use HomeContext instead of pageId prop
-        return pageId ?
-            <AdminPageContextProvider pageId={pageId}>
-                <CompareContextProvider>
-                    <PagesContextProvider user={authUser}>
-                        <AdminPage />
-                    </PagesContextProvider>
-                </CompareContextProvider>
-            </AdminPageContextProvider> :
-            null
-    }
-);
+    //TODO: use HomeContext instead of pageId prop
+    return pageId ?
+        <AdminPageContextProvider pageId={pageId}>
+            <CompareContextProvider>
+                <PagesContextProvider user={authUser}>
+                    <AdminPage />
+                </PagesContextProvider>
+            </CompareContextProvider>
+        </AdminPageContextProvider> :
+        null
+}
