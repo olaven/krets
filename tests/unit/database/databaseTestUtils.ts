@@ -6,6 +6,7 @@ import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionMode
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
     active: true,
+    wants_email_summary: false,
 });
 
 export const randomPage = (ownerId: string, color: string = null, categoryId: string = null, mandatoryContactDetails = false): PageModel => ({
@@ -18,12 +19,12 @@ export const randomPage = (ownerId: string, color: string = null, categoryId: st
 });
 
 export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
-    ({
-        id: faker.random.uuid(),
-        page_id: pageId,
-        emotion: emotion,
-        contact_details: contactDetails
-    });
+({
+    id: faker.random.uuid(),
+    page_id: pageId,
+    emotion: emotion,
+    contact_details: contactDetails
+});
 
 export const randomAnswer = (responseId: string): AnswerModel => ({
     response_id: responseId,
