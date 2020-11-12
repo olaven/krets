@@ -33,3 +33,4 @@ jobs:
         PGUSER: user
         PGPASSWORD: pass
         PGDATABASE: data
+        EMAIL_SUMMARY_SECRET: "ci-value-for-summary-secret"
