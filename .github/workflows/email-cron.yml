@@ -1,8 +1,8 @@
-name: Email Cron Job
+name: Email Summary Cron
 
 on:
   schedule:
-  - cron: '5 * * * *'
+  - cron: '30 07 1,15 * *' # 1 and 15 every month, at 07:30
 
 jobs:
   triggers:
@@ -10,4 +10,4 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - run: date && curl -sm 60 https://timeout.now.sh/20
+    - run: curl "https://krets.app/api/summary-email-trigger?secret=${{secrets.SUMMARY_EMAIL_SECRET}}" #krets.app/api/summary-email-trigger
