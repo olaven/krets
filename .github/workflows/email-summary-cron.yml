@@ -1,0 +1,18 @@
+name: Email Summary Cron
+
+on:
+  schedule:
+  - cron: '30 07 1,15 * *' # 1 and 15 every month, at 07:30
+
+jobs:
+  triggers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Trigger Email Summary Endpoint 
+      uses: satak/webrequest-action@master
+      with:
+        url: https://krets.app/api/cron/email-summary-trigger
+        method: GET
+        headers: '{"x-krets-email-summary-secret": "${{ env.EMAIL_SUMMARY_SECRET }}"}'
