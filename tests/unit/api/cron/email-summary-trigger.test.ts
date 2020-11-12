@@ -5,6 +5,9 @@ import handler from "../../../../src/pages/api/cron/email-summary-trigger";
 import { Server } from "net";
 import { FORBIDDEN, NOT_FOUND } from "node-kall";
 
+
+jest.mock("../../../../src/auth/auth0");
+
 describe("Email Summary API endpont", () => {
 
     let server: Server;
