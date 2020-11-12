@@ -135,6 +135,38 @@ describe("User repository", () => {
         expect(updated.active).toEqual(!original.active);
     });
 
+    test("Can update user `contact_email`", async () => {
+
+        const newEmail = faker.internet.email();
+        const original = await database.users.create(randomUser());
+
+        const updated = await database.users.update({
+            ...original,
+            contact_email: newEmail
+        });
+
+        expect(original.id).toEqual(updated.id);
+        expect(updated.contact_email).not.toEqual(original.contact_email);
+        expect(updated.contact_email).toEqual(newEmail);
+    });
+
+    test("Can update wether user wants email or not", async () => {
+
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.update({
+            ...original,
+            wants_email_summary: !original.wants_email_summary
+        });
+
+        expect(original.wants_email_summary).not.toEqual(updated.wants_email_summary);
+    });
+
+    test("`wants_email_summary` is false by default", async () => {
+
+        const user = await database.users.create(randomUser());
+        expect(user.wants_email_summary).toBe(false);
+    });
+
     test("Can delete user after creation", async () => {
 
         const before = await database.users.create(randomUser());
