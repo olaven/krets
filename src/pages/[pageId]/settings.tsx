@@ -5,7 +5,7 @@ import * as text from "../../text"
 import { Collapsible } from "../../components/Collapsible";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
 import { Loader } from "../../components/standard/loader";
-import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../components/Settings/Settings"
+import { UpdateName, UpdateTitle, ManageQuestions, DeletePage, EnableEmailSummaries } from "../../components/Settings/Settings"
 import { ManageEmbeddable } from "../../components/Settings/ManageEmbeddable/ManageEmbeddable";
 import { ToggleMandatoryContactDetails } from "../../components/Settings/ToggleMandatoryContactDetails";
 import { styled } from "../../stiches.config";
@@ -51,6 +51,9 @@ export const SettingsContent = () => {
             </Collapsible>
             <Collapsible text={text.settings.questions.heading}>
                 <ManageQuestions />
+            </Collapsible>
+            <Collapsible text={text.settings.email.heading}>
+                <EnableEmailSummaries />
             </Collapsible>
             <Collapsible text={text.settings.mandatoryContact.heading}>
                 <ToggleMandatoryContactDetails />
