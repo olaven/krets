@@ -34,6 +34,7 @@ export const EnableEmailSummaries = () => {
     const onClick = async () => {
         const [status] = await putUser({
             ...databaseUser, //FIXME: only available to admins..
+            contact_email: email,
             wants_email_summary: !databaseUser.wants_email_summary
         });
 
