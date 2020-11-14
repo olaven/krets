@@ -103,15 +103,25 @@ describe("Endpoints for database user data", () => {
             expect(status).toEqual(403);
         });
 
-        it("Does not allow non-admin to access PUT endpoint", async () => {
+
+
+        it("Does not allow other user to access PUT endpoint", async () => {
 
             const user = await database.users.create(randomUser());
-            const { status } = await authenticatedFetch(user.id, fullUrl(user.id), { method: "PUT" });
+            const other = await database.users.create(randomUser());
+            const { status } = await authenticatedFetch(user.id, fullUrl(other.id), { method: "PUT" });
 
-            expect(user.role).not.toEqual("administrator");
+            expect(user.id).not.toEqual(other.id);
             expect(status).toEqual(403);
         });
 
+        it("Does allow same user to access put endpoint", async () => {
+
+            const user = await database.users.create(randomUser());
+            const { status } = await putUser(user.id, user);
+
+            expect(status).toEqual(204);
+        });
 
         it("Does allow admin to access PUT endpoint", async () => {
 
@@ -140,8 +150,6 @@ describe("Endpoints for database user data", () => {
         });
 
         it("Does not allow non-admin user to update `active` on themselves", async () => {
-
-
 
             const user = await createBasicUser();
             await putUser(user.id, {

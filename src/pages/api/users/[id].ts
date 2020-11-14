@@ -54,29 +54,39 @@ const deleteUser = asSameUser(
             .end();
     });
 
-const putUser = asAdmin(
-    async (request, response) => {
+/**
+ * A user may update data about themselves. 
+ * Admin users may update any user. 
+ * Admin users may also update `.role`. 
+ */
+const putUser = (request: NextApiRequest, response: NextApiResponse) => {
 
-        const user = request.body as UserModel;
+    const user = request.body as UserModel;
+    request.query.admin === "true" ?
+        asAdmin(async () => {
 
-        const existing = await database.users.get(user.id);
-        if (!existing)
-            return response
-                .status(NOT_FOUND)
-                .end();
-
-        //THINKABOUT: separately to make it more explicit. Does this actually increase readability/security?
-        if (user.role !== existing.role) {
+            const existing = await database.users.get(user.id);
+            if (!existing)
+                return response
+                    .status(NOT_FOUND)
+                    .end();
 
             await database.users.updateRole(user);
-        }
+            await database.users.update(user);
 
-        await database.users.update(user);
+            response
+                .status(NO_CONTENT)
+                .end()
+        }) :
+        asSameUser(async () => {
 
-        response
-            .status(NO_CONTENT)
-            .end()
-    });
+            await database.users.update(user);
+
+            response
+                .status(NO_CONTENT)
+                .end()
+        });
+};
 
 export default withAuthentication(
     withCors(
