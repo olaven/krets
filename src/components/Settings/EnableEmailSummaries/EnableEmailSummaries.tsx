@@ -16,6 +16,7 @@ placeholder: "e-posten som skal motta"
 import { useContext, useState } from "react";
 import { NO_CONTENT } from "node-kall";
 import * as uiText from "../../../text";
+import { validateEmail } from "../../../email";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { Button } from "../../standard/Button";
 import { TextInput } from "../../standard/Input";
@@ -32,6 +33,7 @@ export const EnableEmailSummaries = () => {
     const text = uiText.settings.email;
 
     const onClick = async () => {
+
         const [status] = await putUser({
             ...databaseUser, //FIXME: only available to admins..
             contact_email: email,
@@ -39,8 +41,7 @@ export const EnableEmailSummaries = () => {
         });
 
         if (status !== NO_CONTENT)
-            console.error(`${status} when updating wants email..`)
-
+            console.error(`${status} when updating wants email..`);
     }
 
     if (!databaseUser) return <div>varer ikke lenge??</div>
@@ -48,8 +49,14 @@ export const EnableEmailSummaries = () => {
         <ColumnContainer>
             <Paragraph>{text.explanation}</Paragraph>
             <RowContainer>
-                <TextInput placeholder={text.placeholder} />
-                <Button >
+                <TextInput
+                    placeholder={text.placeholder}
+                    onChange={event => {
+                        setEmail(event.target.value);
+                    }} />
+                <Button
+                    onClick={onClick}
+                    disabled={!validateEmail(email)}>
                     {databaseUser.wants_email_summary ?
                         text.button.off :
                         text.button.on
