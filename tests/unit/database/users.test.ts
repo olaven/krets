@@ -147,7 +147,7 @@ describe("User repository", () => {
         })).rejects.toThrow();
     });
 
-    test("Can  not update user `active` status through `update`", async () => {
+    test("Can not update user `active` status through `update`", async () => {
 
         const original = await database.users.create(randomUser());
         const updated = await database.users.update({
@@ -157,7 +157,6 @@ describe("User repository", () => {
 
         //i.e. no change. 
         expect(original.active).toEqual(updated.active);
-        expect(updated.active).not.toEqual(!original.active);
     });
 
     test("Can update user `contact_email`", async () => {

@@ -57,8 +57,8 @@ export const create = (user: UserModel) =>
 
 export const update = (user: UserModel) =>
    first<UserModel>(
-      `update users set active = $2, contact_email = $3, wants_email_summary = $4 where id = $1 returning * `,
-      [user.id, user.active, user.contact_email, user.wants_email_summary]
+      `update users set contact_email = $2, wants_email_summary = $3 where id = $1 returning * `,
+      [user.id, user.contact_email, user.wants_email_summary]
    );
 
 export const updateActive = (user: UserModel) =>
