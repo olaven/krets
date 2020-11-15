@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
+import { UserContext } from "../../context/UserContext";
 import * as text from "../../text"
 import { Collapsible } from "../../components/Collapsible";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
@@ -32,9 +33,10 @@ const Heading = styled(H1, {
 
 export const SettingsContent = () => {
 
+    const { databaseUser } = useContext(UserContext)
     const { pageLoading, page } = useContext(SettingsContext);
 
-    return pageLoading ?
+    return (pageLoading || !databaseUser) ?
         <Loader size={150} /> :
         <Container>
             <Heading>

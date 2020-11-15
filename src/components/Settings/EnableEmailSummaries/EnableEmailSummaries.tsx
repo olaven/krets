@@ -23,28 +23,31 @@ import { TextInput } from "../../standard/Input";
 import { UserContext } from "../../../context/UserContext";
 import { putUser } from "../../../fetchers";
 import { Paragraph } from "../../standard/Text";
+import { UserModel } from "../../../models/models";
 
 
 export const EnableEmailSummaries = () => {
 
-    const { databaseUser, authUser } = useContext(UserContext);
-    const [email, setEmail] = useState(databaseUser?.contact_email);
+    const { databaseUser, updateUser } = useContext(UserContext);
+    const [email, setEmail] = useState(databaseUser.contact_email);
 
     const text = uiText.settings.email;
 
-    const onClick = async () => {
+
+    const update = async () => {
 
         const [status] = await putUser({
-            ...databaseUser, //FIXME: only available to admins..
+            ...databaseUser,
             contact_email: email,
-            wants_email_summary: !databaseUser.wants_email_summary
+            wants_email_summary: !databaseUser.wants_email_summary,
         });
 
         if (status !== NO_CONTENT)
-            console.error(`${status} when updating wants email..`);
+            console.error(`${status} when updating`);
+
+        await updateUser();
     }
 
-    if (!databaseUser) return <div>varer ikke lenge??</div>
     return (
         <ColumnContainer>
             <Paragraph>{text.explanation}</Paragraph>
@@ -53,9 +56,11 @@ export const EnableEmailSummaries = () => {
                     placeholder={text.placeholder}
                     onChange={event => {
                         setEmail(event.target.value);
-                    }} />
+                    }}
+                    value={email}
+                />
                 <Button
-                    onClick={onClick}
+                    onClick={update}
                     disabled={!validateEmail(email)}>
                     {databaseUser.wants_email_summary ?
                         text.button.off :
