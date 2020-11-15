@@ -39,7 +39,7 @@ export const HomeContent = () => {
                 elements={[
                     {
                         label: "Vis innstillinger",
-                        Component: <Settings pageId={page?.id} />,
+                        Component: <Settings />,
                     },
                     {
                         label: "Se tilbakemeldinger",

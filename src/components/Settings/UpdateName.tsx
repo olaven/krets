@@ -1,11 +1,10 @@
 import * as text from "../../text"
 import { NO_CONTENT } from "node-kall"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { HomeContext } from "../../context/HomeContext"
 import { putPage } from "../../fetchers"
 import { TriggerLoadingButton } from "../standard/buttons"
 import { TextInput } from "../standard/Input";
-import { styled } from "../../stiches.config"
 import { ColumnContainer } from "../standard/Containers"
 
 
@@ -13,6 +12,11 @@ export const UpdateName = () => {
 
     const { page, updatePage } = useContext(HomeContext);
     const [name, setName] = useState(page.name);
+
+    useEffect(() => {
+
+        setName(page.name);
+    }, [page]) 
 
     const updateName = async () => {
 

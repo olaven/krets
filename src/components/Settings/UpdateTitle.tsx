@@ -1,17 +1,31 @@
 import * as text from "../../text";
 import { NO_CONTENT } from "node-kall";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { HomeContext } from "../../context/HomeContext";
 import { putPage } from "../../fetchers";
 import { TriggerLoadingButton } from "../standard/buttons";
 import { ColumnContainer } from "../standard/Containers";
 import { TextInput } from "../standard/Input";
+import { PageModel } from "../../models/models";
 
 
 export const UpdateTitle = () => {
 
+    const getTitle = (page: PageModel) => page.custom_title 
+        ? page.custom_title :
+        `${text.response.header} ${page.name}`
+
     const { page, updatePage } = useContext(HomeContext);
-    const [title, setTitle] = useState(page.custom_title ? page.custom_title : `${text.response.header} ${page.name}`);
+    const [title, setTitle] = useState(
+        getTitle(page)
+    );
+
+    useEffect(() => {
+
+        setTitle(
+            getTitle(page)
+        );
+    }, [page]) 
 
     const updateTitle = async () => {
 

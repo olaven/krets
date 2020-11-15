@@ -7,6 +7,7 @@ import { AdminPageContextProvider } from "../../context/AdminPageContext";
 import { CompareContextProvider } from "../../context/CompareContext";
 import { PagesContextProvider } from "../../context/PagesContext";
 import { UserContext } from "../../context/UserContext";
+import { HomeContext } from "../../context/HomeContext";
 
 
 export default SubscriberWrapper(() => {
@@ -28,13 +29,13 @@ export default SubscriberWrapper(() => {
 });
 
 //FIXME: temp replacement for `Admin`, as query.pageId will not be the source of page when new design is implmented
-export const NewDesignAdmin = ({ pageId }) => {
+export const NewDesignAdmin = () => {
 
-    const { authUser } = useContext(UserContext)
+    const { authUser } = useContext(UserContext); 
+    const { page } = useContext(HomeContext); 
 
-    //TODO: use HomeContext instead of pageId prop
-    return pageId ?
-        <AdminPageContextProvider pageId={pageId}>
+    return page ?
+        <AdminPageContextProvider>
             <CompareContextProvider>
                 <PagesContextProvider user={authUser}>
                     <AdminPage />
