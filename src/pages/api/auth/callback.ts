@@ -3,8 +3,6 @@ import { database } from "../../../database/database";
 import { AuthModel } from '../../../models/models';
 import { withCors, withErrorHandling } from '../../../middleware/middleware';
 
-
-//TODO: Refactor: this function is messy and does several things
 const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
   const user = await database.users.get(sub);

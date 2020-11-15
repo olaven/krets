@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import * as text from "../../text"
 import { Collapsible } from "../../components/Collapsible";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
@@ -10,6 +9,7 @@ import { ManageEmbeddable } from "../../components/Settings/ManageEmbeddable/Man
 import { ToggleMandatoryContactDetails } from "../../components/Settings/ToggleMandatoryContactDetails";
 import { styled } from "../../stiches.config";
 import { H1 } from "../../components/standard/Heading";
+import { HomeContext } from "../../context/HomeContext";
 
 
 const Container = styled("div", {
@@ -32,7 +32,7 @@ const Heading = styled(H1, {
 
 export const SettingsContent = () => {
 
-    const { pageLoading, page } = useContext(SettingsContext);
+    const { pageLoading, page } = useContext(HomeContext);
 
     return pageLoading ?
         <Loader size={150} /> :
@@ -66,21 +66,17 @@ const Settings = SubscriberWrapper(() => {
     const { query: { pageId } } = useRouter();
 
     return pageId ?
-        <SettingsContextProvider pageId={pageId}>
-            <SettingsContent />
-        </SettingsContextProvider> :
+        <SettingsContent /> :
         null
 });
 
 export default Settings;
 
 //FIXME: temp replacement for `Settings`, as query.pageId will not be the source of page when new design is implmented
-export const NewDesignSettings = ({ pageId }) => {
+export const NewDesignSettings = () => {
 
-    //TODO: use HomeContext instead of pageId prop
-    return pageId ?
-        <SettingsContextProvider pageId={pageId}>
-            <SettingsContent />
-        </SettingsContextProvider> :
+    const { page } = useContext(HomeContext);
+    return page ?
+        <SettingsContent /> :
         null
 }

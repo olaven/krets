@@ -6,12 +6,12 @@
 import { useContext } from "react";
 import { Box } from "rebass";
 import { Label, Select } from "@rebass/forms";
-import { SettingsContext } from "../../context/SettingsContext";
+import { HomeContext } from "../../context/HomeContext";
 
 //TODO: actually pull categories (from context etc.)
 export const UpdateCategory = () => {
 
-    const { page } = useContext(SettingsContext);
+    const { page } = useContext(HomeContext);
     const options = [
         { value: "first_id", name: "My First Category" },
         { value: "second_id", name: "My Second Category" },

@@ -1,7 +1,7 @@
 import * as text from "../../text"
 import { NO_CONTENT } from "node-kall"
 import { useContext, useState } from "react"
-import { SettingsContext } from "../../context/SettingsContext"
+import { HomeContext } from "../../context/HomeContext"
 import { putPage } from "../../fetchers"
 import { TriggerLoadingButton } from "../standard/buttons"
 import { TextInput } from "../standard/Input";
@@ -11,7 +11,7 @@ import { ColumnContainer } from "../standard/Containers"
 
 export const UpdateName = () => {
 
-    const { page, updatePage } = useContext(SettingsContext);
+    const { page, updatePage } = useContext(HomeContext);
     const [name, setName] = useState(page.name);
 
     const updateName = async () => {

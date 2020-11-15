@@ -48,7 +48,7 @@ export const HomeContent = () => {
                 ]} />
             {component}
         </Section>
-        <Section faded="right">
+        <Section>
             <PagesContextProvider user={authUser}>
                 <PageList />
                 <PageCreator />
