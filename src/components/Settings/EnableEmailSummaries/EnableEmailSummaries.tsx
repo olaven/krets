@@ -1,18 +1,3 @@
-/**
- *
-heading: "Integrer med din e-post",
-button: {
-    on: "Skru på",
-    off: "Skru av"
-},
-explanation: `
-    Passer det dårlig å logge inn på Krets?
-    Da kan du motta tilbakemeldingene dine på e-post, i nyttige sammendrag.
-    E-postene kommer hver 14. dag
-`,
-placeholder: "e-posten som skal motta"
- */
-
 import { useContext, useState } from "react";
 import { NO_CONTENT } from "node-kall";
 import * as uiText from "../../../text";
@@ -23,7 +8,6 @@ import { TextInput } from "../../standard/Input";
 import { UserContext } from "../../../context/UserContext";
 import { putUser } from "../../../fetchers";
 import { Paragraph } from "../../standard/Text";
-import { UserModel } from "../../../models/models";
 
 
 export const EnableEmailSummaries = () => {
