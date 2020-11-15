@@ -1,15 +1,14 @@
 import { NO_CONTENT, OK } from "node-kall";
 import { Button, Card, Heading, Text } from "rebass";
 import { useState } from "react";
-import { asyncEffect } from "../../effects/asyncEffect";
-import { getAuthUser, putUser } from "../../fetchers";
+import { getAuthUser, putUserAdmin } from "../../fetchers";
 import { AuthModel, UserModel } from "../../models/models";
 import { DoubleConfirmationButton, TriggerLoadingButton } from "../standard/buttons";
 
 const onToggle = (user: UserModel) =>
     async () => {
 
-        const [status] = await putUser(user);
+        const [status] = await putUserAdmin(user);
         if (status === NO_CONTENT) {
 
             //TODO: update viewed user 

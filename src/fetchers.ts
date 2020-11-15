@@ -85,5 +85,13 @@ export const postEmbeddable = (embeddable: EmbeddableModel) =>
 export const putUser = (user: UserModel) =>
     put(`/api/users/${user.id}`, user);
 
+/**
+ * PUT request on user, as admin. 
+ * //DANGER: Can update `active` and `role`. 
+ * Use with caution. 
+ */
+export const putUserAdmin = (user: UserModel) =>
+    put(`/api/users/${user.id}?admin=true`, user);
+
 export const getAuthUser = (user: UserModel) =>
     get<AuthModel>(`/api/users/${user.id}/auth`); 

@@ -66,13 +66,15 @@ const putUser = async (request: NextApiRequest, response: NextApiResponse) => {
                         .status(NOT_FOUND)
                         .end();
 
+                //NOTE: kind of wonky and inefficient.. But explicit and therefore harder to implement security mistakes. 
                 await database.users.updateActive(user);
                 await database.users.updateRole(user);
                 await database.users.update(user);
 
                 res
                     .status(NO_CONTENT)
-                    .end()
+                    .end();
+
             })(request, response) :
         await asSameUser(
             getId,

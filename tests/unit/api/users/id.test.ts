@@ -33,13 +33,18 @@ describe("Endpoints for database user data", () => {
         await teardownServer(server)
     });
 
-    const putUser = (callerId: string, user: UserModel, admin = false) => authenticatedFetch(callerId, fullUrl(user.id, admin), {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user),
-    });
+    const putUser = (callerId: string, user: UserModel, admin = false) =>
+        authenticatedFetch(
+            callerId,
+            fullUrl(user.id, admin),
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user),
+            }
+        );
 
 
     describe("The endpoint for user data from database", () => {
