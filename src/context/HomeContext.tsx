@@ -17,6 +17,7 @@ export const HomeContextProvider = ({ children }) => {
 
     const [page, setPage] = useState<PageModel>(null);
 
+    console.log(`${page}, page`)
 
     const updatePage = async () => {
         const [status, updated] = await getPage(page.id);

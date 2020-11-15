@@ -16,7 +16,7 @@ const defaultValues: ContextInterface =
 
 export const AdminPageContext = createContext<ContextInterface>(defaultValues);
 
-export const AdminPageContextProvider = ({ pageId, children }) => {
+export const AdminPageContextProvider = ({  children }) => {
 
     const { page } = useContext(HomeContext)
     const [responses, moreResponsesAvailable, responsesLoading, getNextResponses] = useResponses(page.id);
