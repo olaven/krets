@@ -66,6 +66,7 @@ const putUser = async (request: NextApiRequest, response: NextApiResponse) => {
                         .status(NOT_FOUND)
                         .end();
 
+                await database.users.updateActive(user);
                 await database.users.updateRole(user);
                 await database.users.update(user);
 

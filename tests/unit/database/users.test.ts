@@ -81,7 +81,7 @@ describe("User repository", () => {
         expect(updated.role).toEqual("administrator");
     });
 
-    test(" `updateRole` updates only role", async () => {
+    test("`updateRole` updates only role", async () => {
 
         const original = await database.users.create(randomUser());
         const updated = await database.users.updateRole({
@@ -91,6 +91,30 @@ describe("User repository", () => {
 
         expect(updated.role).not.toEqual(!original.active);
         expect(updated.role).toEqual(original.role);
+    });
+
+    test("`updateActive` updates active status", async () => {
+
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.updateActive({
+            ...original,
+            active: !original.active, //NOTE updating something other than `role`
+        });
+
+        expect(original.active).not.toEqual(updated.active);
+    });
+
+    test("`updateActive` does not update anything other than active", async () => {
+
+        const newEmail = faker.internet.email();
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.updateActive({
+            ...original,
+            contact_email: newEmail,
+        });
+
+        //i.e. was not updated. 
+        expect(updated.contact_email).not.toEqual(newEmail);
     });
 
     test(" valid `UserRole`-values are accepted", async () => {
@@ -123,7 +147,7 @@ describe("User repository", () => {
         })).rejects.toThrow();
     });
 
-    test("Can update user `active` status through `updateUser`", async () => {
+    test("Can  not update user `active` status through `update`", async () => {
 
         const original = await database.users.create(randomUser());
         const updated = await database.users.update({
@@ -131,8 +155,9 @@ describe("User repository", () => {
             active: !original.active
         });
 
-        expect(original.active).not.toEqual(updated.active);
-        expect(updated.active).toEqual(!original.active);
+        //i.e. no change. 
+        expect(original.active).toEqual(updated.active);
+        expect(updated.active).not.toEqual(!original.active);
     });
 
     test("Can update user `contact_email`", async () => {

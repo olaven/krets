@@ -61,6 +61,12 @@ export const update = (user: UserModel) =>
       [user.id, user.active, user.contact_email, user.wants_email_summary]
    );
 
+export const updateActive = (user: UserModel) =>
+   first<UserModel>(
+      `update users set active = $2 where id = $1 returning * `,
+      [user.id, user.active]
+   );
+
 export const updateRole = (user: UserModel) =>
    first<UserModel>(
       `update users set role = $2 where id = $1 returning * `,
