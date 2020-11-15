@@ -8,7 +8,7 @@ import { SubscriberWrapper } from "../../SubscriberWrapper";
 import { PageCreator } from "./Pages/PageCreator";
 import { PageList } from "./Pages/PageList";
 import { Tabs } from "./Tabs";
-import { NewDesignAdmin as Admin } from "../../../pages/[pageId]/admin"; //TODO: no loger page whe ndesign is doen 
+import { Admin } from "../../Admin/Admin";
 import { Settings } from "../../Settings/Settings";
 
 
