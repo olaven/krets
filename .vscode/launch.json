@@ -7,7 +7,7 @@
       "request": "launch",
       "runtimeExecutable": "yarn",
       "runtimeArgs": [
-        "test"
+        "test:watch"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

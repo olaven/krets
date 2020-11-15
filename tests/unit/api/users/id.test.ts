@@ -18,7 +18,8 @@ describe("Endpoints for database user data", () => {
     let server;
     let url;
 
-    const fullUrl = (uid) =>
+    const fullUrl = (uid: string, admin = false) => admin ?
+        `${url}${uid}?admin=${admin}` :
         `${url}${uid}`;
 
     beforeAll(async () => {
@@ -32,8 +33,7 @@ describe("Endpoints for database user data", () => {
         await teardownServer(server)
     });
 
-
-    const putUser = (callerId: string, user: UserModel) => authenticatedFetch(callerId, fullUrl(user.id), {
+    const putUser = (callerId: string, user: UserModel, admin = false) => authenticatedFetch(callerId, fullUrl(user.id, admin), {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -126,7 +126,7 @@ describe("Endpoints for database user data", () => {
         it("Does allow admin to access PUT endpoint", async () => {
 
             const user = await createAdmin();
-            const { status } = await putUser(user.id, user);
+            const { status } = await putUser(user.id, user, true);
 
             expect(user.role).toEqual("administrator");
             expect(status).toEqual(204);
@@ -137,10 +137,14 @@ describe("Endpoints for database user data", () => {
             const admin = await createAdmin();
 
             const before = await createBasicUser();
-            const { status } = await putUser(admin.id, {
-                ...before,
-                active: !before.active
-            });
+            const { status } = await putUser(
+                admin.id,
+                {
+                    ...before,
+                    active: !before.active
+                },
+                true
+            );
 
             const after = await database.users.get(before.id);
 
@@ -152,10 +156,14 @@ describe("Endpoints for database user data", () => {
         it("Does not allow non-admin user to update `active` on themselves", async () => {
 
             const user = await createBasicUser();
-            await putUser(user.id, {
-                ...user,
-                active: !user.active
-            });
+            await putUser(
+                user.id,
+                {
+                    ...user,
+                    active: !user.active
+                },
+                true //NOTE: attempting to be admin
+            );
 
             const after = await database.users.get(user.id);
 
@@ -163,16 +171,19 @@ describe("Endpoints for database user data", () => {
             //NOTE: i.e. no change
             expect(user.active).toEqual(after.active);
         });
-
         it("Does allow admin user to update `role` of another user", async () => {
 
             const admin = await createAdmin();
 
             const before = await createBasicUser();
-            const { status } = await putUser(admin.id, {
-                ...before,
-                role: 'administrator'
-            });
+            const { status } = await putUser(
+                admin.id,
+                {
+                    ...before,
+                    role: 'administrator'
+                },
+                true
+            );
 
             const after = await database.users.get(before.id);
 

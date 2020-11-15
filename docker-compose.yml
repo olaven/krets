@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    image: node:14
+    volumes:
+      - .:.
+    command: sleep infinity
+    links:
+      - db
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: user
+      POSTGRES_DB: data
+  

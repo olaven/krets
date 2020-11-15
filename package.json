@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "yarn migrate up --no-check-order --no-reject-unauthorized && NODE_ENV='production' next start",
     "test": "yarn migrate up && NODE_ENV=test jest --runInBand ./tests --forceExit --detectOpenHandles",
+    "test:watch": "yarn test --watch --only-failures",
     "dev:integration": "yarn dev --port 3052",
     "cy:open": "cypress open --config baseUrl=http://localhost:3000",
     "cy:run": "cypress run",

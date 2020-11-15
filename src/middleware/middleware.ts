@@ -5,3 +5,4 @@ export { withMethods } from "./withMethods";
 export { withMethodHandlers } from "./withMethodHandlers";
 export { asPageOwner } from "./asPageOwner"
 export { asAdmin } from "./asAdmin";
+export { asSameUser } from "./asSameUser";
