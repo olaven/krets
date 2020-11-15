@@ -22,15 +22,6 @@ const Section = styled(ColumnContainer, {
     },
 
     transition: "50ms ease",
-
-    variants: {
-        faded: {
-            right: {
-                transform: "translateX(20vw)",
-                backgroundColor: "orange"
-            }
-        }
-    }
 });
 
 
