@@ -105,7 +105,7 @@ export const response = strings({
         thanks: "Tusen takk!",
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
-        customQuestionsCheckbox: "Huk av for å fortelle mer:",
+        customQuestionsCheckbox: "Huk av for å svare på spørsmål:",
 
         contact: {
             heading: "Jeg vil bli kontaktet igjen",
@@ -153,10 +153,10 @@ export const buttons = strings({
         logout: "Logg ut",
         login: "Logg inn",
         myPage: "Din konto",
-        guide: "Help",
+        guide: "Hjelp",
         aboutPage: "Om",
         getStarted: "Kom i gang!",
-        toAdmin: "Mottate tilbakemeldinger",
+        toAdmin: "Mottatte tilbakemeldinger",
         toQR: "Se QR-kode",
         toPage: "Se svarside",
         toSettings: "Innstillinger",
