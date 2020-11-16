@@ -9,7 +9,19 @@ const createIfNotPresent = async ({ sub, email }: AuthModel) => {
 
   const user = await database.users.get(sub);
   if (!user) {
-    await database.users.create({ id: sub });
+    await database.users.create({
+      id: sub,
+      contact_email: email
+    });
+  }
+
+  //NOTE: some users may have been registered before `contact_email` was implemented
+  if (user && !user.contact_email) {
+
+    await database.users.update({
+      ...user,
+      contact_email: email
+    });
   }
 };
 

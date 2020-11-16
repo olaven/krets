@@ -33,7 +33,29 @@ describe("User repository", () => {
         expect(after).toBeTruthy();
     });
 
-    test(" User has prop for wether it is active or not", async () => {
+    test("User can be created with `contact_email`", async () => {
+
+        const email = faker.internet.email();
+        const user = await database.users.create({
+            ...randomUser(),
+            contact_email: email
+        });
+
+        expect(user.contact_email).toEqual(email);
+    });
+
+    test("User may be created without a contact_email", async () => {
+
+        const email = faker.internet.email();
+        const user = await database.users.create({
+            ...randomUser(),
+            contact_email: null
+        });
+
+        expect(user.contact_email).toBe(null);
+    });
+
+    test("User has prop for wether it is active or not", async () => {
 
         const user = await database.users.create(randomUser());
         expect(user.active).toBeDefined();

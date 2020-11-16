@@ -4,6 +4,8 @@ import { authenticatedFetch, setupServer, teardownServer } from "../apiTestUtils
 import * as faker from "faker";
 import { database } from "../../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
+import { validateEmail } from "../../../../src/email";
+import users from "../../../../src/pages/api/users";
 
 jest.mock("../../../../src/auth/auth0");
 
@@ -47,4 +49,38 @@ describe("The callback endpoint", () => {
         expect(before).toBeTruthy();
         expect(after).toBeTruthy();
     });
+
+    it("Does set `contact_email` to default something", async () => {
+
+        const before = await database.users.create(randomUser());
+        await authenticatedFetch(before.id, url);
+        const after = await database.users.get(before.id);
+
+        expect(before.contact_email).toBeFalsy();
+        expect(after.contact_email).toBeTruthy();
+    });
+
+    it("Does set contact_email on completely new user", async () => {
+
+        //NOTE: The email is set from faker.internet.email() in Auth0-mock
+        const uid = faker.random.uuid();
+        await authenticatedFetch(uid, url);
+        const user = await database.users.get(uid);
+
+        expect(user.contact_email).toBeDefined()
+        expect(validateEmail(user.contact_email)).toBe(true);
+    });
+
+    it("Does not replace contact email", async () => {
+
+        const uid = faker.random.uuid();
+
+        await authenticatedFetch(uid, url);
+        const first = await database.users.get(uid);
+
+        await authenticatedFetch(uid, url)
+        const second = await database.users.get(uid);
+
+        expect(first.contact_email).toEqual(second.contact_email);
+    })
 });

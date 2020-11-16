@@ -51,8 +51,8 @@ export const getAll = (options: PaginationOptions = { amount: 10 }) =>
  */
 export const create = (user: UserModel) =>
    first<UserModel>(
-      "insert into users(id) values($1) RETURNING *",
-      [user.id] //NOTE: passed explicity, as it needs to mirror Auth0
+      "insert into users(id, contact_email) values($1, $2) RETURNING *",
+      [user.id, user.contact_email] //NOTE: passed explicity, as it needs to mirror Auth0
    );
 
 export const update = (user: UserModel) =>
