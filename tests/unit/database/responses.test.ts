@@ -180,15 +180,15 @@ describe("Database repository for pages", () => {
             it("only returns those younger than requested date", async () => {
 
                 const [page, [first, second, third]] = await createAt(
-                    date().last(1).day(),
-                    date().last(3).day(),
-                    date().last(5).day(),
+                    date().last(1).days(),
+                    date().last(3).days(),
+                    date().last(5).days(),
                 );
 
                 const retrieved = comparable(
                     await database.responses.getAfter(
                         page.id,
-                        date().last(4).day()
+                        date().last(4).days()
                     )
                 )
 
@@ -200,7 +200,7 @@ describe("Database repository for pages", () => {
 
             it("excludes excact equal days", async () => {
 
-                const d = date().last(1).day();
+                const d = date().last(1).days();
                 const [page, [response]] = await createAt(
                     d
                 );
