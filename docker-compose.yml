@@ -5,7 +5,6 @@ services:
     command: sc -c "yarn && yarn dev"
     working_dir: /app
     volumes:
-#      - nodemodules:node_modules 
       - .:/app
     ports:
       - "3000:3000"

@@ -22,8 +22,6 @@ export const HomeContextProvider = ({ children }) => {
         setPage(updated);
     }
 
-
-
     return <HomeContext.Provider value={{ page, setPage, updatePage }}>
         {children}
     </HomeContext.Provider>
