@@ -6,6 +6,7 @@ import { DistributionModel, PageModel, ResponseModel } from "../../../src/models
 import { uid } from "../api/apiTestUtils";
 import { first } from "../../../src/database/helpers/query";
 import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
+import { date } from "../../../src/date";
 
 
 describe("Database repository for pages", () => {
@@ -130,18 +131,6 @@ describe("Database repository for pages", () => {
             //TODO: extract to common file 
             const comparable = (array: { id?: string }[]) =>
                 array.map(it => it.id).sort();
-
-            //TODO: extract to common file 
-            const date = (base = new Date()) => ({
-                last: (n: number) => ({
-                    day: () => new Date(
-                        base.getTime() - 1000 * 60 * 60 * 24 * n
-                    ),
-                    year: () => new Date(
-                        base.setFullYear(base.getFullYear() - n),
-                    ),
-                }),
-            });
 
             const createAt = async (...dates: Date[]): Promise<[PageModel, ResponseModel[]]> => {
 
