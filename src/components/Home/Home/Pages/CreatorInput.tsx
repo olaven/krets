@@ -7,22 +7,32 @@ import { Button } from "../../../standard/Button";
 
 const Container = styled(ColumnContainer, {
     border: "solid black 1px",
-    animationDuration: `800ms`,
-    animmationDirection: "forwards",
-    animationTimingFunction: "linear",
+    borderRadius: "15px",
+    backgroundColor: "$secondary",
+    animationDuration: `250ms`,
+    animationFillMode: "forwards",
+    animationTimingFunction: "ease",
     animationName: `${css.keyframes({
         "0%": {
             opacity: 0,
-            transform: `translateY(10%)`,
+            transform: `translateY(10%) translateX(100%) scale(1)`,
         },
         "100%": {
-            opacity: 1,
-            transform: "translateY(-100%)",
+            opacity: "1 !important",
+            transform: "translateY(-100%) translateX(-10%) scale(1.25)",
         }
     })}`
 });
 
-const InputContainer = styled(RowContainer, {});
+const InputContainer = styled(RowContainer, {
+    backgroundColor: "red",
+    justifyContent: "center",
+
+    "> *": {
+        backgroundColor: "blue",
+        padding: "20px"
+    }
+});
 
 
 export const nameToId = (name: string) => name
@@ -54,7 +64,7 @@ export const CreatorInput = () => {
             }} />
             <Button
                 disabled={name.length <= 2}>
-                Jeg er fornøyd med navnet
+                OK
             </Button>
         </InputContainer>
     </Container>
