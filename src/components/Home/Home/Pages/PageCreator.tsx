@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Button, Flex, Heading, Text } from "rebass";
-import { Input } from "@rebass/forms"
 import { PagesContext } from "../../../../context/PagesContext";
 import { post, CREATED, CONFLICT } from "node-kall";
 import * as text from "../../../../text"
 import { PageModel } from "../../../../models/models";
+import { styled } from "../../../../stiches.config";
+import { RowContainer } from "../../../standard/Containers";
+import { CreatorInput } from "./CreatorInput";
+import { CreatorButton } from "./CreatorButton";
+import { Button } from "../../../standard/Button";
 
 export const nameToId = (name: string) => name
     .toLowerCase()
@@ -13,13 +16,15 @@ export const nameToId = (name: string) => name
     .replace(/(Å|å)/g, "aa")
     .replace("?", "")
     .replace("!", "")
-    .replace(/[^a-zA-Z0-9s|]/g, "-")
+    .replace(/[^a-zA-Z0-9s|]/g, "-");
 
 
 export const PageCreator = () => {
 
     const { addPage } = useContext(PagesContext);
 
+    
+    const [ visible, setVisible ] = useState(false);
     const [name, setName] = useState("");
     const [id, setId] = useState("");
 
@@ -52,33 +57,37 @@ export const PageCreator = () => {
         }
     };
 
-    return <>
-        <Flex py={[1, 2, 3]}>
+    return visible?
+        <CreatorInput/>:
+        <CreatorButton
+    onClick={() => {setVisible(true)}}
+        >Lag ny side</CreatorButton>; 
+//     return <>
+//         <Flex py={[1, 2, 3]}>
 
-            <Box width={[0, 1 / 3]} />
-            <Box as='form' onSubmit={e => e.preventDefault()} width={[1, 1 / 3]}>
+//             <Box width={[0, 1 / 3]} />
+//             <Box as='form' onSubmit={e => e.preventDefault()} width={[1, 1 / 3]}>
 
 
 
-                <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
-                <Flex>
-                    <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
-                        setName(value)
-                    }} value={name} />
+//                 <Text fontSize={3} width={1}>{text.pageCreator.preview} {`krets.app/${id}`}</Text>
+//                 <Flex>
+//                     <Input aria-label="pagename-input" placeholder={text.pageCreator.placeholder} onChange={({ target: { value } }) => {
+//                         setName(value)
+//                     }} value={name} />
 
-                    <Button
-                        mx={[0, 2, 3]}
-                        width={1 / 3}
-                        aria-label={"create-button"}
-                        onClick={id === "" ? null : postPage}
-                        color={id === "" ? "inactive" : "secondary"}>
-                        {text.pageCreator.button}
-                    </Button>
-                </Flex>
+//                     <Button
+//                         mx={[0, 2, 3]}
+//                         width={1 / 3}
+//                         aria-label={"create-button"}
+//                         onClick={id === "" ? null : postPage}
+//                         color={id === "" ? "inactive" : "secondary"}>
+//                         {text.pageCreator.button}
+//                     </Button>
+//                 </Flex>
 
-            </Box>
-            <Box width={[0, 1 / 3]} />
-        </Flex>
-    </>
-
-};
+//             </Box>
+//             <Box width={[0, 1 / 3]} />
+//         </Flex>
+//     </>
+}; 
