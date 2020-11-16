@@ -2,7 +2,10 @@ import * as faker from "faker";
 import { randomResponse, randomUser, randomPage, blindSetup, setupPage } from "./databaseTestUtils";
 import { convertEmotion } from "../../../src/database/responses";
 import { database } from "../../../src/database/database";
-import { DistributionModel } from "../../../src/models/models";
+import { DistributionModel, PageModel, ResponseModel } from "../../../src/models/models";
+import { uid } from "../api/apiTestUtils";
+import { first } from "../../../src/database/helpers/query";
+import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
 
 
 describe("Database repository for pages", () => {
@@ -120,6 +123,109 @@ describe("Database repository for pages", () => {
 
             const retrievedThird = await database.responses.get(third.id)
             expect(retrievedThird).toEqual(third);
+        });
+
+        describe("Getting after specific date", () => {
+
+            //TODO: extract to common file 
+            const comparable = (array: { id?: string }[]) =>
+                array.map(it => it.id).sort();
+
+            //TODO: extract to common file 
+            const date = (base = new Date()) => ({
+                last: (n: number) => ({
+                    day: () => new Date(
+                        base.getTime() - 1000 * 60 * 60 * 24 * n
+                    ),
+                    year: () => new Date(
+                        base.setFullYear(base.getFullYear() - n),
+                    ),
+                }),
+            });
+
+            const createAt = async (...dates: Date[]): Promise<[PageModel, ResponseModel[]]> => {
+
+                const [_, page] = await setupPage();
+                const response = randomResponse(page.id);
+
+                const persisted: ResponseModel[] = [];
+                for (const date of dates) {
+
+                    persisted.push(
+                        await first<ResponseModel>(
+                            "insert into responses(emotion, page_id, contact_details, created_at) values($1, $2, $3, $4) RETURNING *",
+                            [emotionToNumeric(response.emotion), response.page_id, response.contact_details, date]
+                        )
+                    );
+                }
+
+                return [page, persisted];
+            }
+
+            it("does not crash", async () => {
+
+                const [page] = await blindSetup();
+                expect(database.responses.getAfter(page.id, faker.date.past(1)))
+                    .resolves.not.toThrow();
+            });
+
+            it("does return an array", async () => {
+
+                const [page] = await blindSetup();
+                const retrieved = await database.responses.getAfter(page.id, faker.date.past(1));
+
+                expect(retrieved.push).toBeDefined();
+                expect(retrieved.slice).toBeDefined();
+            });
+
+            it("does return all elements if younger", async () => {
+
+                //NOTE: This test assumes that `blindSetup`/`databaseTestUtils` creates dates with `faker.date.past(1)`
+                const [page, _, persisted] = await blindSetup();
+                const retrieved = await database.responses.getAfter(page.id, date().last(1).year());
+
+                expect(persisted.length).toEqual(retrieved.length);
+                expect(comparable(persisted)).toEqual(comparable(retrieved));
+            });
+
+            it("only returns those younger than requested date", async () => {
+
+                const [page, [first, second, third]] = await createAt(
+                    date().last(1).day(),
+                    date().last(3).day(),
+                    date().last(5).day(),
+                );
+
+                const retrieved = comparable(
+                    await database.responses.getAfter(
+                        page.id,
+                        date().last(4).day()
+                    )
+                )
+
+                expect(retrieved.length).toEqual(2);
+                expect(retrieved).toContain(first.id);
+                expect(retrieved).toContain(second.id);
+                expect(retrieved).not.toContain(third.id);
+            });
+
+            it("excludes excact equal days", async () => {
+
+                const d = date().last(1).day();
+                const [page, [response]] = await createAt(
+                    d
+                );
+
+                const retrieved = comparable(
+                    await database.responses.getAfter(
+                        page.id,
+                        d
+                    )
+                );
+
+                expect(retrieved.length).toEqual(0);
+                expect(retrieved).not.toContain(response.id);
+            });
         });
 
 

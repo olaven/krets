@@ -51,6 +51,16 @@ export const get = (id: string) =>
         [id]
     );
 
+export const getAfter = (pageId: string, date: Date) =>
+    rows<ResponseModel>(
+        `
+                select * from responses 
+                where page_id = $1
+                and created_at > $2
+            `,
+        [pageId, date]
+    );
+
 export const create = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);
