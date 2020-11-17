@@ -22,7 +22,7 @@ const getContent = async (owner: UserModel) => {
     )).map(async ({ page, responses }) => ({
         page,
         responses,
-        answers: await responses.map(response => database.answers.getByResponse(response.id))
+        answers: await Promise.all(responses.map(async response => await database.answers.getByResponse(response.id)))
     }));
 
     //TODO: convert object retrieved above to some email data or something.

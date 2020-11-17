@@ -13,6 +13,12 @@ export const getActiveUserCount = async () => {
    return parseInt(result.count);
 }
 
+export const getActive = () =>
+   rows<UserModel>(
+      `select * from users where active = true`,
+      []
+   );
+
 export const get = (id: string) =>
    first<UserModel>(
       "select * from users where id = $1",

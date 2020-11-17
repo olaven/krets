@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { randomResponse, randomUser, randomPage, blindSetup, setupPage } from "./databaseTestUtils";
+import { randomResponse, randomUser, randomPage, blindSetup, setupPage, comparable } from "./databaseTestUtils";
 import { convertEmotion } from "../../../src/database/responses";
 import { database } from "../../../src/database/database";
 import { DistributionModel, PageModel, ResponseModel } from "../../../src/models/models";
@@ -127,10 +127,6 @@ describe("Database repository for pages", () => {
         });
 
         describe("Getting after specific date", () => {
-
-            //TODO: extract to common file 
-            const comparable = (array: { id?: string }[]) =>
-                array.map(it => it.id).sort();
 
             const createAt = async (...dates: Date[]): Promise<[PageModel, ResponseModel[]]> => {
 

@@ -1,6 +1,6 @@
 import { database } from "../../../src/database/database";
 import * as faker from "faker";
-import { randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
+import { comparable, randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
 
 
 describe("User repository", () => {
@@ -305,6 +305,60 @@ describe("User repository", () => {
 
         expect(before).toBeDefined();
         expect(after).toBeNull();
+    });
+
+    describe("Gettint active users", () => {
+
+        const createWithActive = async (active: boolean) => {
+
+            const user = await database.users.create({ ...randomUser() });
+            return database.users.updateActive({ ...user, active });
+        }
+
+        it("Does return an array", async () => {
+
+            const users = await database.users.getActive();
+            expect(users.push).toBeDefined();
+            expect(users.pop).toBeDefined();
+            expect(users.splice).toBeDefined();
+        });
+
+        it("Does return only active users", async () => {
+
+
+            const retrieved = await database.users.getActive();
+
+            expect(retrieved.length).toBeGreaterThan(0);
+            for (const user of retrieved) {
+
+                expect(user.active).toBe(true);
+            }
+        });
+
+        it("Does not return inactive user", async () => {
+
+            const user = await createWithActive(false);
+
+            const retrieved = comparable(
+                await database.users.getActive()
+            );
+
+            expect(user.active).toBe(false);
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("contains active but not inactive", async () => {
+
+            const active = await createWithActive(true);
+            const inactive = await createWithActive(false);
+
+            const retrieved = comparable(
+                await database.users.getActive()
+            );
+
+            expect(retrieved).toContain(active.id);
+            expect(retrieved).not.toContain(inactive.id);
+        });
     });
 
 

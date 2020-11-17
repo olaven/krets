@@ -1,7 +1,12 @@
 import * as faker from "faker";
 import { database } from "../../../src/database/database";
-import { first, run } from "../../../src/database/helpers/query";
+import { first } from "../../../src/database/helpers/query";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel, EmbeddableModel } from "../../../src/models/models";
+
+
+export const comparable = (array: { id?: string }[]) =>
+    array.map(it => it.id).sort();
+
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
