@@ -1,8 +1,9 @@
-import { FORBIDDEN, NOT_IMPLEMENTED } from "node-kall";
+import { FORBIDDEN, ACCEPTED } from "node-kall";
+import { asyncForEach } from "../../../asyncForEach";
 import { database } from "../../../database/database";
 import { date } from "../../../date";
 import { withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
-import { PageModel, UserModel } from "../../../models/models";
+import { PageModel, } from "../../../models/models";
 
 const lastSevenDays = (page: PageModel) =>
     database.responses.getAfter(
@@ -10,27 +11,29 @@ const lastSevenDays = (page: PageModel) =>
         date().last(7).days()
     )
 
-const getContent = async (owner: UserModel) => {
 
-    //FIXME: FUGLY 
-    (await Promise.all(
-        (await database.pages.getByOwner(owner.id))
-            .map(async page => ({
-                page,
-                responses: await lastSevenDays(page)
-            }))
-    )).map(async ({ page, responses }) => ({
-        page,
-        responses,
-        answers: await Promise.all(responses.map(async response => await database.answers.getByResponse(response.id)))
-    }));
+//FIXME: FUGLY
+const triggerEmailSummary = async () => {
 
-    //TODO: convert object retrieved above to some email data or something.
+    const users = await database.users.getActive();
+    //NOTE: Should NOT await for every user? (only inner)
+    await asyncForEach(users, async user => {
+
+        const pages = await database.pages.getByOwner(user.id);
+        await asyncForEach(pages, async page => {
+
+            const responses = await lastSevenDays(page);
+            await asyncForEach(responses, async response => {
+
+                const answers = await database.answers.getByResponse(response.id);
+            });
+        });
+    });
 }
 
 export default withErrorHandling(
     withMethodHandlers({
-        GET: (request, response) => {
+        GET: async (request, response) => {
 
             const expected = process.env.EMAIL_SUMMARY_SECRET;
             const actual = request.headers["x-krets-email-summary-secret"];
@@ -39,7 +42,9 @@ export default withErrorHandling(
                 return response.status(FORBIDDEN).end();
             }
 
-            return response.status(NOT_IMPLEMENTED).end();
+            triggerEmailSummary();
+
+            return response.status(ACCEPTED).end();
         }
     })
 )

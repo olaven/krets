@@ -4,7 +4,7 @@ services:
     environment:
       - PGHOST=db
     working_dir: /app
-    command: bash -c "echo $PGHOST && echo $DEBUG && yarn dev"
+    command: bash -c "yarn dev"
     image: node:14
     ports:
       - "3000:3000"
