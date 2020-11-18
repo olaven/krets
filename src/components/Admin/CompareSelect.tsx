@@ -5,7 +5,7 @@ import { CompareContext } from "../../context/CompareContext";
 import { PagesContext } from "../../context/PagesContext";
 import { Option } from "react-multi-select-component/dist/lib/interfaces";
 import { Heading } from "rebass";
-import * as text from "../../text";
+import * as text from "../../helpers/text";
 
 const SelectContent = ({ options, selectedLabel, setSelectedLabel }) => <>
     <Heading>{text.compareSelect.heading}</Heading>

@@ -1,4 +1,4 @@
-import * as uiText from "../../../../src/text";
+import * as uiText from "../../../../src/helpers/text";
 
 //NOTE: should collect some of thes in non-unit files 
 import { randomUser } from "../../../unit/database/databaseTestUtils";

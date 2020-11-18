@@ -1,5 +1,5 @@
 import { Box, Button, Text } from "rebass"
-import { emojidata } from "../../emojidata";
+import { emojidata } from "../../helpers/emojidata";
 
 export const KretsEmoji = props => {
 

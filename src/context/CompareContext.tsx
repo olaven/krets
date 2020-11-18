@@ -1,7 +1,7 @@
 import React, { createContext, useState, SetStateAction } from "react";
 import { PageModel, ResponseModel } from "../models/models";
 import { filterBody } from "node-kall";
-import { getResponses, getPage } from "../fetchers";
+import { getResponses, getPage } from "../helpers/fetchers";
 import { asyncEffect } from "../effects/asyncEffect";
 
 

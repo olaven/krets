@@ -7,7 +7,7 @@ import { AdminPage } from "../../../../src/components/Admin/AdminPage"
 import { TextList } from "../../../../src/components/Admin/TextList/TextList";
 import { waitFor, render } from "@testing-library/react"
 import { AnswerModel, Emotion, ResponseModel } from "../../../../src/models/models";
-import * as text from "../../../../src/text"
+import * as text from "../../../../src/helpers/text"
 import '@testing-library/jest-dom/extend-expect'
 import * as faker from "faker";
 import { mockFetch, mockRouter } from "../frontendTestUtils";

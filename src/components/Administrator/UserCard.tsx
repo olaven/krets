@@ -1,7 +1,7 @@
 import { NO_CONTENT, OK } from "node-kall";
 import { Button, Card, Heading, Text } from "rebass";
 import { useState } from "react";
-import { getAuthUser, putUserAdmin } from "../../fetchers";
+import { getAuthUser, putUserAdmin } from "../../helpers/fetchers";
 import { AuthModel, UserModel } from "../../models/models";
 import { DoubleConfirmationButton, TriggerLoadingButton } from "../standard/buttons";
 

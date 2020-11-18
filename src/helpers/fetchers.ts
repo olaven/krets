@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel, ResponseAnswerModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel, ResponseAnswerModel } from "../models/models";
 
 
 

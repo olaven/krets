@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import { NO_CONTENT } from "node-kall";
-import * as uiText from "../../../text";
-import { validateEmail } from "../../../email";
+import * as uiText from "../../../helpers/text";
+import { validateEmail } from "../../../helpers/email";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { Button } from "../../standard/Button";
 import { TextInput } from "../../standard/Input";
 import { UserContext } from "../../../context/UserContext";
-import { putUser } from "../../../fetchers";
+import { putUser } from "../../../helpers/fetchers";
 import { Paragraph } from "../../standard/Text";
 
 

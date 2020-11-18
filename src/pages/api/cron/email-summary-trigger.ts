@@ -1,8 +1,9 @@
 import { FORBIDDEN, ACCEPTED } from "node-kall";
-import { asyncForEach } from "../../../asyncForEach";
+import { asyncForEach } from "../../../helpers/asyncForEach";
 import { database } from "../../../database/database";
-import { date } from "../../../date";
-import { emojidata } from "../../../emojidata";
+import { date } from "../../../helpers/date";
+import { defaultQuestion } from "../../../helpers/defaultQuestion";
+import { emojidata } from "../../../helpers/emojidata";
 import { withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { PageModel, ResponseModel, UserModel, } from "../../../models/models";
 
@@ -10,28 +11,7 @@ const lastSevenDays = (page: PageModel) =>
     database.responses.getAfter(
         page.id,
         date().last(7).days()
-    )
-
-
-//FIXME: FUGLY
-const getSummaryData = async () => {
-
-    const users = await database.users.getActive();
-    //NOTE: Should NOT await for every user? (only inner)
-    await asyncForEach(users, async user => {
-
-        const pages = await database.pages.getByOwner(user.id);
-        await asyncForEach(pages, async page => {
-
-            const responses = await lastSevenDays(page);
-            await asyncForEach(responses, async response => {
-
-                const answers = await database.answers.getByResponse(response.id);
-
-            });
-        });
-    });
-}
+    );
 
 type PostMarkSummaryTemplate = {
     pages: {
@@ -54,40 +34,53 @@ type PostMarkSummaryTemplate = {
 };
 
 
-const getTemplateQuestions = (response: ResponseModel) => {
+const getTemplateQuestions = async (response: ResponseModel) => {
 
-    //TOOD: IMPlement
+    const answers = await database.answers.getByResponse(response.id);
+    const questions = await database.questions.getByPage(response.page_id);
+
+
+    return !questions.length ?
+        [{ text: defaultQuestion(response.emotion).text, answer_text: answers[0].text }] :
+        questions.map(question => ({
+            text: question.text,
+            answer_text: answers.find(answer => answer.question_id === question.id).text
+        }))
 }
 
+const getPages = (user: UserModel) => database.pages.getByOwner(user.id);
 
-const getTemplateResponses = (page: PageModel) => {
+const getTemplateResponses = async (page: PageModel) => {
 
     const responses = await lastSevenDays(page);
     return responses.map(response => ({
         emoji: emojidata[response.emotion],
         contact_details: response.contact_details,
-        questions: getTemplateQuestions(response)
+        questions: await getTemplateQuestions(response)
     }));
 }
 
-const toTemplate = (pages: PageModel[]): PostMarkSummaryTemplate => {
+const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTemplate> => {
 
-    const templatePages = pages.map(page => ({
-        name: page.name,
-        total_response_count_in_period: pages.length,
-        positive: true, // TODO: calculate 
-        percentage: 1, //TODO: calculate 
-        responses: getTemplateResponse(page)
-    }));
+    const templatePages = await Promise.all(
+        pages.map(await page => ({
+            name: page.name,
+            total_response_count_in_period: pages.length,
+            positive: true, // TODO: calculate 
+            percentage: 1, //TODO: calculate 
+            responses: await getTemplateResponses(page)
+        })
+    )
+    );
 
-    return {
-        pages: [
-            {
-                name: "some name",
+/* return {
+    pages: templatePages
+} */
+}
 
-            }
-        ]
-    }
+const send = (template: PostMarkSummaryTemplate) => {
+
+
 }
 
 const triggerEmailSummary = async () => {
@@ -96,11 +89,13 @@ const triggerEmailSummary = async () => {
     //NOTE: Should NOT await for every user? (only inner)
     await asyncForEach(users, async user => {
         send(
-            toTemplate(
-                await getSummaryData(user)
+            await toTemplate(
+                await getPages(
+                    user
+                )
             )
         )
-    }
+    })
 }
 
 export default withErrorHandling(

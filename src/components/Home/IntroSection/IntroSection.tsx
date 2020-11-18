@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Flex, Box, Text, Image, Link, Button, Heading } from "rebass";
 import { Input } from "@rebass/forms";
 import { TriggerLoadingButton } from "../../standard/buttons";
-import { intro } from "../../../text";
-import { validateEmail } from "../../../email";
-import { postEmail } from "../../../fetchers";
+import { intro } from "../../../helpers/text";
+import { validateEmail } from "../../../helpers/email";
+import { postEmail } from "../../../helpers/fetchers";
 import { CREATED, OK } from "node-kall";
 
 const DisclaimerBox = () => <Box

@@ -1,4 +1,4 @@
-import * as uiText from "../text";
+import * as uiText from "../helpers/text";
 import * as NextLink from 'next/link'
 import { useRouter } from "next/router"
 import { NO_CONTENT } from "node-kall";

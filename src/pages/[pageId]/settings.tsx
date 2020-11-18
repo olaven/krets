@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { SettingsContextProvider, SettingsContext } from "../../context/SettingsContext";
 import { UserContext } from "../../context/UserContext";
-import * as text from "../../text"
+import * as text from "../../helpers/text"
 import { Collapsible } from "../../components/Collapsible";
 import { SubscriberWrapper } from "../../components/SubscriberWrapper";
 import { Loader } from "../../components/standard/loader";

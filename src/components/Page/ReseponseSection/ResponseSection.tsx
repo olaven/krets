@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CREATED } from "node-kall";
 import { AnswerModel, Emotion, PageModel } from "../../../models/models";
-import * as uiText from "../../../text";
-import { postResponse } from "../../../fetchers";
+import * as uiText from "../../../helpers/text";
+import { postResponse } from "../../../helpers/fetchers";
 import { Thanks } from "../../standard/Thanks";
 import { Questions } from "./Questions";
 import { ContactInput } from "./ContactInput";

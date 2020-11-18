@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { Input } from "@rebass/forms";
-import * as text from "../../text"
+import * as text from "../../helpers/text"
 import { CategoryModel } from "../../models/models";
 import { UserContext } from "../../context/UserContext";
-import { postCategory } from "../../fetchers";
+import { postCategory } from "../../helpers/fetchers";
 import { CREATED } from "node-kall";
 import { CategoriesContext } from "../../context/CategoriesContext";
 

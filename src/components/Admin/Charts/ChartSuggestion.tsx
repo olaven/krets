@@ -2,10 +2,10 @@ import { useState } from "react"
 import { Button, Text } from "rebass"
 import { Label, Textarea } from "@rebass/forms"
 import { CREATED } from "node-kall"
-import { postEmail } from "../../../fetchers"
-import * as uiText from "../../../text";
+import { postEmail } from "../../../helpers/fetchers"
+import * as uiText from "../../../helpers/text";
 
-import { emojidata } from "../../../emojidata"
+import { emojidata } from "../../../helpers/emojidata"
 
 
 const Error = () => <Text>

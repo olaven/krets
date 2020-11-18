@@ -1,4 +1,4 @@
-import * as uiText from "../../../text";
+import * as uiText from "../../../helpers/text";
 import { styled } from "../../../stiches.config";
 import { Paragraph } from "../../standard/Text";
 import { Button } from "../../standard/Button";

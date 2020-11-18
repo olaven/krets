@@ -2,7 +2,7 @@ import auth0 from "../../../../auth/auth0";
 import { database } from "../../../../../src/database/database"
 import { OK } from "node-kall";
 import { withCors, withAuthentication } from "../../../../middleware/middleware";
-import { getPathParam } from "../../../../workarounds";
+import { getPathParam } from "../../../../helpers/workarounds";
 
 
 const getId = (url: string) => getPathParam(url, 2);

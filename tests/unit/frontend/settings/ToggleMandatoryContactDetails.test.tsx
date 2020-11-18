@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { randomPage, randomUser } from "../../database/databaseTestUtils";
 import { ToggleMandatoryContactDetails } from "../../../../src/components/Settings/ToggleMandatoryContactDetails";
 import { mockFetch, renderWithSettingsContext } from "../frontendTestUtils";
-import * as text from "../../../../src/text";
+import * as text from "../../../../src/helpers/text";
 import { fireEvent, waitFor } from '@testing-library/react';
 
 describe("The component for updating wether page contact details should be mandatory or not", () => {

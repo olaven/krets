@@ -1,30 +1,19 @@
 import { AnswerModel, Emotion, QuestionModel } from "../../../models/models";
-import * as uiText from "../../../text";
+import * as uiText from "../../../helpers/text";
 import { useContext, useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Checkbox as StichesCheckbox } from "../../standard/Checkbox"
 import { QuestionInput } from "../../standard/Input";
 import { QuestionsContext } from "../../../context/QuestionsContext";
-import { Choice } from "./Choice";
-import { Label, Paragraph } from "../../standard/Text";
+import { Label} from "../../standard/Text";
 import { ColumnContainer } from "../../standard/Containers";
-import { Button } from "../../standard/Button";
+import { defaultQuestion } from "../../../helpers/defaultQuestion";
 
-const getDefaultPlaceholder = (emotion: Emotion) => ({
-    ":-)": uiText.response.placeholder.happy,
-    ":-|": uiText.response.placeholder.neutral,
-    ":-(": uiText.response.placeholder.sad,
-}[emotion]);
 
 const applyDefaultQuestion = (emotion: Emotion, questions: QuestionModel[]):
     QuestionModel[] =>
     questions.length === 0 ?
-        [{
-            id: null,
-            text: getDefaultPlaceholder(emotion), //NOTE: This is the question question that will be asked if no custom questions are defined
-            page_id: null,
-            archived: false,
-        }] :
+        [defaultQuestion(emotion)] :
         questions
 
 const Container = styled("div", {

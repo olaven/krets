@@ -1,5 +1,5 @@
 import * as faker from "faker"
-import { asyncForEach } from "../../src/asyncForEach";
+import { asyncForEach } from "../../src/helpers/asyncForEach";
 
 describe("Helper function `asyncForEach", () => {
 

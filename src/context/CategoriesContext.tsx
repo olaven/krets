@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getCategories } from "../fetchers";
+import { getCategories } from "../helpers/fetchers";
 import { CategoryModel } from "../models/models";
 import { OK } from "node-kall";
 

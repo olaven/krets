@@ -8,8 +8,6 @@ import { UserContext } from '../context/UserContext';
 import { CopyURLButton } from '../components/Page/CopyURLButton';
 import { Loader } from '../components/standard/loader';
 import { QuestionsContextProvider } from '../context/QuestionsContext';
-import { styled } from '../stiches.config';
-import { emojidata } from '../emojidata';
 
 
 const PageId = () => {
