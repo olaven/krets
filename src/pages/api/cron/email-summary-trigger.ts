@@ -3,7 +3,7 @@ import { asyncForEach } from "../../../asyncForEach";
 import { database } from "../../../database/database";
 import { date } from "../../../date";
 import { withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
-import { PageModel, } from "../../../models/models";
+import { PageModel, UserModel, } from "../../../models/models";
 
 const lastSevenDays = (page: PageModel) =>
     database.responses.getAfter(
@@ -13,7 +13,7 @@ const lastSevenDays = (page: PageModel) =>
 
 
 //FIXME: FUGLY
-const triggerEmailSummary = async () => {
+const getSummaryData = async () => {
 
     const users = await database.users.getActive();
     //NOTE: Should NOT await for every user? (only inner)
@@ -26,9 +26,48 @@ const triggerEmailSummary = async () => {
             await asyncForEach(responses, async response => {
 
                 const answers = await database.answers.getByResponse(response.id);
+
             });
         });
     });
+}
+
+type PostMarkSummaryTemplate = {
+    greeting_name: string,
+    pages: {
+
+        name: string,
+        total_response_count_in_period: number,
+        positive: boolean,
+        percentage: number,
+
+        responses: {
+
+            emoji: string,
+            contact_details: string
+            questions: {
+                text: string,
+                answer_text: string,
+            }[],
+        },
+    }[],
+};
+
+
+
+const toTemplate = ({ user, responses, answers }) => { }
+
+const triggerEmailSummary = async () => {
+
+    const users = await database.users.getActive();
+    //NOTE: Should NOT await for every user? (only inner)
+    await asyncForEach(users, async user => {
+        send(
+            toTemplate(
+                await getSummaryData(user)
+            )
+        )
+    }
 }
 
 export default withErrorHandling(
