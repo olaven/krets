@@ -1,6 +1,7 @@
 import * as faker from "faker";
 import { database } from "../../../src/database/database";
 import { first } from "../../../src/database/helpers/query";
+import { asyncForEach } from "../../../src/helpers/asyncForEach";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel, EmbeddableModel } from "../../../src/models/models";
 
 
@@ -165,4 +166,34 @@ export const setupPage = async (mandatoryContactDetails = false): Promise<[UserM
 
     const [owner, [page]] = await setupPages(1, mandatoryContactDetails);
     return [owner, page];
+}
+
+
+
+export const setupSummaryTest = async (options: {
+    active: boolean,
+    wants_email_summary: boolean,
+    pages: number[]
+}): Promise<[UserModel, string[]]> => {
+
+    const user = await createWithActive(options.active);
+    await database.users.update({
+        ...user,
+        wants_email_summary: options.wants_email_summary
+    });
+
+    await asyncForEach(options.pages, async responseCount => {
+
+        const page = await database.pages.create(randomPage(user.id));
+        await asyncForEach(new Array(responseCount), async () => {
+
+            await database.responses.create(randomResponse(page.id));
+        });
+    });
+
+
+    const retrieved = comparable(
+        await database.users.getSummaryUsers()
+    );
+    return [user, retrieved,]
 }

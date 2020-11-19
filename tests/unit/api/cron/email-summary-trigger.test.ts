@@ -1,7 +1,8 @@
 import * as faker from "faker";
 import fetch from "cross-fetch";
 import { setupServer, teardownServer } from "../apiTestUtils";
-import handler from "../../../../src/pages/api/cron/email-summary-trigger";
+import { setupPages } from "../../database/databaseTestUtils";
+import handler, { toTemplate } from "../../../../src/pages/api/cron/email-summary-trigger";
 import { Server } from "net";
 import { FORBIDDEN, NOT_FOUND } from "node-kall";
 
@@ -65,6 +66,25 @@ describe("Email Summary API endpont", () => {
 
             const { status } = await trigger();
             expect(status).not.toEqual(FORBIDDEN)
+        });
+    });
+
+    describe("The function converting to a template", async () => {
+
+        it("Does not throw", async () => {
+
+            const [_, pages] = await setupPages();
+            expect(
+                toTemplate(pages)
+            ).resolves.not.toThrow();
+        });
+
+        it("Does convert to an object wiht same page id", async () => {
+
+            const [_, [page]] = await setupPages();
+            const template = await toTemplate([page]);
+
+            expect(template.pages[0].name).toEqual(page.name);
         });
     });
 });

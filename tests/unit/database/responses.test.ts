@@ -6,7 +6,7 @@ import { DistributionModel, PageModel, ResponseModel } from "../../../src/models
 import { uid } from "../api/apiTestUtils";
 import { first } from "../../../src/database/helpers/query";
 import { emotionToNumeric } from "../../../src/components/Admin/Charts/ChartUtils";
-import { date } from "../../../src/date";
+import { date } from "../../../src/helpers/date";
 
 
 describe("Database repository for pages", () => {

@@ -6,6 +6,9 @@ import { defaultQuestion } from "../../../helpers/defaultQuestion";
 import { emojidata } from "../../../helpers/emojidata";
 import { withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { PageModel, ResponseModel, UserModel, } from "../../../models/models";
+import { ServerClient } from "postmark";
+
+//FIXME: clean this file 
 
 const lastSevenDays = (page: PageModel) =>
     database.responses.getAfter(
@@ -46,7 +49,7 @@ const getTemplateQuestions = async (response: ResponseModel): Promise<TemplateQu
 
 
     return !questions.length ?
-        [{ text: defaultQuestion(response.emotion).text, answer_text: answers[0].text }] :
+        [{ text: defaultQuestion(response.emotion).text, answer_text: answers[0]?.text }] :
         questions.map(question => ({
             text: question.text,
             answer_text: answers.find(answer => answer.question_id === question.id).text
@@ -66,7 +69,8 @@ const getTemplateResponses = async (page: PageModel): Promise<TemplateResponse[]
         })));
 }
 
-const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTemplate> => {
+//NOTE: Exported to tests
+export const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTemplate> => {
 
     const templatePages = await Promise.all(
         pages.map(async page => ({
@@ -82,9 +86,19 @@ const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTemplate> 
     }
 }
 
-const send = (template: PostMarkSummaryTemplate) => {
+const send = async (template: PostMarkSummaryTemplate) => {
 
+    const client = new ServerClient(
+        process.env.POSTMARK_OUTBOUND_KEY
+    );
 
+    await client.sendEmailWithTemplate({
+        From: "post@krets.app",
+        ReplyTo: "post@krets.app",
+        MessageStream: "outbound",
+        TemplateAlias: "krets-summary",
+        TemplateModel: template
+    });
 }
 
 const triggerEmailSummary = async () => {
@@ -92,7 +106,7 @@ const triggerEmailSummary = async () => {
     const users = await database.users.getSummaryUsers()
     //NOTE: Should NOT await for every user? (only inner)
     await asyncForEach(users, async user => {
-        send(
+        await send(
             await toTemplate(
                 await getPages(
                     user

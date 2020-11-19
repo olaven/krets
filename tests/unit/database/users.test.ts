@@ -1,8 +1,6 @@
 import { database } from "../../../src/database/database";
 import * as faker from "faker";
-import { randomResponse, randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers, randomPage, comparable } from "./databaseTestUtils";
-import { UserModel } from "../../../src/models/models";
-import { asyncForEach } from "../../../src/helpers/asyncForEach";
+import { randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers, comparable, setupSummaryTest } from "./databaseTestUtils";
 
 
 describe("User repository", () => {
@@ -367,36 +365,6 @@ describe("User repository", () => {
 
     describe("getting summary users", async () => {
 
-        const getComparable = async () =>
-            comparable(
-                await database.users.getSummaryUsers()
-            );
-
-        const setupSummaryTest = async (options: {
-            active: boolean,
-            wants_email_summary: boolean,
-            pages: number[]
-        }): Promise<[UserModel, string[]]> => {
-
-            const user = await createWithActive(options.active);
-            await database.users.update({
-                ...user,
-                wants_email_summary: options.wants_email_summary
-            });
-
-            await asyncForEach(options.pages, async responseCount => {
-
-                const page = await database.pages.create(randomPage(user.id));
-                await asyncForEach(new Array(responseCount), async () => {
-
-                    await database.responses.create(randomResponse(page.id));
-                });
-            });
-
-
-            const retrieved = await getComparable();
-            return [user, retrieved,]
-        }
 
 
         it("returns active users wanting email summary, with pages containing responses", async () => {
