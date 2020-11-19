@@ -36,6 +36,7 @@ type PostMarkSummaryTemplate = {
         total_response_count_in_period: number,
         positive: boolean,
         percentage: number,
+        development_not_calculated: boolean,
         responses: TemplateResponse[]
     }[],
 };
@@ -65,17 +66,6 @@ const getTemplateQuestions = async (response: ResponseModel): Promise<TemplateQu
             }
         })
 }
-/* questions
-    .filter(question => answers.find(answer => answer.question_id === question.id)?.text !== undefined) */
-
-/* return !questions.length ?
-    [{ text: defaultQuestion(response.emotion).text, answer_text: answers[0]?.text }] :
-    questions.map(question => ({
-        text: question.text,
-        answer_text: answers.find(answer => answer.question_id === question.id)?.text
-    })) 
-    
-}*/
 
 const getPages = (user: UserModel) => database.pages.getByOwner(user.id);
 
@@ -98,7 +88,7 @@ const getTemplateResponses = async (page: PageModel): Promise<TemplateResponse[]
 }
 
 //NOTE: Exported to tests
-export const calculateDevelopment = async (page: PageModel): Promise<{ percentage: number, positive: boolean }> => {
+export const calculateDevelopment = async (page: PageModel): Promise<{ percentage: number, positive: boolean, developmentNotCalculated: boolean }> => {
 
     const lastWeek = await database.responses.averageBetween(
         date().last(7).days(),
@@ -113,14 +103,13 @@ export const calculateDevelopment = async (page: PageModel): Promise<{ percentag
     );
 
     if (isNaN(weekBefore)) {
-        return { positive: true, percentage: 100 }
+        return { positive: true, percentage: 100, developmentNotCalculated: true }
     }
 
-    console.log(weekBefore, lastWeek, page.name)
     const percentage = 100 * Math.abs((lastWeek - weekBefore) / ((lastWeek + weekBefore) / 2))
     const positive = lastWeek >= weekBefore;
 
-    return { percentage, positive };
+    return { percentage, positive, developmentNotCalculated: false };
 }
 
 //NOTE: Exported to tests
@@ -129,7 +118,7 @@ export const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTem
     const templatePages = await Promise.all(
         pages.map(async page => {
 
-            const { percentage, positive } = await calculateDevelopment(page);
+            const { percentage, positive, developmentNotCalculated } = await calculateDevelopment(page);
 
             const responses = await getTemplateResponses(page)
 
@@ -138,6 +127,7 @@ export const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTem
                 total_response_count_in_period: responses.length,
                 positive: positive,
                 percentage: percentage,
+                development_not_calculated: developmentNotCalculated,
                 responses
             }
         }));
