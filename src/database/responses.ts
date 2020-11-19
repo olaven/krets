@@ -61,6 +61,21 @@ export const getAfter = (pageId: string, date: Date) =>
         [pageId, date]
     );
 
+export const averageBetween = async (minDate: Date, maxDate: Date, pageId: string) => {
+
+    const { avg } = await first<{ avg: string }>(
+        `
+            select avg(emotion) from responses 
+            where page_id = $1
+            and created_at > $2
+            and created_at < $3
+        `,
+        [pageId, minDate, maxDate]
+    );
+
+    return parseFloat(avg);
+}
+
 export const create = async (response: ResponseModel) => {
 
     const emotion = convertEmotion.toSQL(response.emotion);

@@ -29,7 +29,7 @@ export const EnableEmailSummaries = () => {
         if (status !== NO_CONTENT)
             console.error(`${status} when updating`);
 
-        await updateUser();
+        updateUser();
     }
 
     return (
