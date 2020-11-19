@@ -1,6 +1,6 @@
 import { database } from "../../../../../database/database"
 import { asPageOwner, withAuthentication, withCors, withMethodHandlers, withMethods } from "../../../../../middleware/middleware"
-import { getPathParam } from "../../../../../workarounds";
+import { getPathParam } from "../../../../../helpers/workarounds";
 
 export default
     withCors(

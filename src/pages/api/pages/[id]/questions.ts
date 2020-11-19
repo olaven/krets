@@ -5,7 +5,7 @@ import { withAuthentication, withErrorHandling, withMethodHandlers } from "../..
 import { withCors } from "../../../../middleware/withCors";
 import { QuestionModel } from "../../../../models/models";
 import { CREATED, FORBIDDEN, BAD_REQUEST } from "node-kall";
-import {/*  getIncludeArchived, */ getPathParam } from "../../../../workarounds";
+import {/*  getIncludeArchived, */ getPathParam } from "../../../../helpers/workarounds";
 
 
 const getId = (url: string) => getPathParam(url, 2);

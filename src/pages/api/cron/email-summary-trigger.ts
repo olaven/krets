@@ -13,6 +13,19 @@ const lastSevenDays = (page: PageModel) =>
         date().last(7).days()
     );
 
+type TemplateQuestion = {
+    text: string,
+    answer_text: string,
+}
+
+type TemplateResponse = {
+
+    emoji: string,
+    contact_details?: string
+    questions: TemplateQuestion[],
+}
+
+
 type PostMarkSummaryTemplate = {
     pages: {
 
@@ -20,21 +33,13 @@ type PostMarkSummaryTemplate = {
         total_response_count_in_period: number,
         positive: boolean,
         percentage: number,
-
-        responses: {
-
-            emoji: string,
-            contact_details: string
-            questions: {
-                text: string,
-                answer_text: string,
-            }[],
-        },
+        responses: TemplateResponse[]
     }[],
 };
 
 
-const getTemplateQuestions = async (response: ResponseModel) => {
+
+const getTemplateQuestions = async (response: ResponseModel): Promise<TemplateQuestion[]> => {
 
     const answers = await database.answers.getByResponse(response.id);
     const questions = await database.questions.getByPage(response.page_id);
@@ -50,32 +55,31 @@ const getTemplateQuestions = async (response: ResponseModel) => {
 
 const getPages = (user: UserModel) => database.pages.getByOwner(user.id);
 
-const getTemplateResponses = async (page: PageModel) => {
+const getTemplateResponses = async (page: PageModel): Promise<TemplateResponse[]> => {
 
     const responses = await lastSevenDays(page);
-    return responses.map(response => ({
-        emoji: emojidata[response.emotion],
-        contact_details: response.contact_details,
-        questions: await getTemplateQuestions(response)
-    }));
+    return await Promise.all(
+        responses.map(async response => ({
+            emoji: emojidata[response.emotion],
+            contact_details: response.contact_details,
+            questions: await getTemplateQuestions(response)
+        })));
 }
 
 const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTemplate> => {
 
     const templatePages = await Promise.all(
-        pages.map(await page => ({
+        pages.map(async page => ({
             name: page.name,
             total_response_count_in_period: pages.length,
             positive: true, // TODO: calculate 
             percentage: 1, //TODO: calculate 
             responses: await getTemplateResponses(page)
-        })
-    )
-    );
+        })));
 
-/* return {
-    pages: templatePages
-} */
+    return {
+        pages: templatePages,
+    }
 }
 
 const send = (template: PostMarkSummaryTemplate) => {
@@ -85,7 +89,7 @@ const send = (template: PostMarkSummaryTemplate) => {
 
 const triggerEmailSummary = async () => {
 
-    const users = await database.users.getActive();
+    const users = await database.users.getSummaryUsers()
     //NOTE: Should NOT await for every user? (only inner)
     await asyncForEach(users, async user => {
         send(

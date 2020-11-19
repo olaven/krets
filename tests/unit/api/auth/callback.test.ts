@@ -4,7 +4,7 @@ import { authenticatedFetch, setupServer, teardownServer } from "../apiTestUtils
 import * as faker from "faker";
 import { database } from "../../../../src/database/database";
 import { randomUser } from "../../database/databaseTestUtils";
-import { validateEmail } from "../../../../src/helpers/email"";
+import { validateEmail } from "../../../../src/helpers/email";
 import users from "../../../../src/pages/api/users";
 
 jest.mock("../../../../src/auth/auth0");

@@ -1,6 +1,8 @@
 import { database } from "../../../src/database/database";
 import * as faker from "faker";
-import { comparable, randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
+import { randomResponse, randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers, randomPage, comparable } from "./databaseTestUtils";
+import { UserModel } from "../../../src/models/models";
+import { asyncForEach } from "../../../src/helpers/asyncForEach";
 
 
 describe("User repository", () => {
@@ -307,13 +309,15 @@ describe("User repository", () => {
         expect(after).toBeNull();
     });
 
+
+    const createWithActive = async (active: boolean) => {
+
+        const user = await database.users.create({ ...randomUser() });
+        return database.users.updateActive({ ...user, active });
+    }
+
     describe("Gettint active users", () => {
 
-        const createWithActive = async (active: boolean) => {
-
-            const user = await database.users.create({ ...randomUser() });
-            return database.users.updateActive({ ...user, active });
-        }
 
         it("Does return an array", async () => {
 
@@ -358,6 +362,108 @@ describe("User repository", () => {
 
             expect(retrieved).toContain(active.id);
             expect(retrieved).not.toContain(inactive.id);
+        });
+    });
+
+    describe("getting summary users", async () => {
+
+        const getComparable = async () =>
+            comparable(
+                await database.users.getSummaryUsers()
+            );
+
+        const setupSummaryTest = async (options: {
+            active: boolean,
+            wants_email_summary: boolean,
+            pages: number[]
+        }): Promise<[UserModel, string[]]> => {
+
+            const user = await createWithActive(options.active);
+            await database.users.update({
+                ...user,
+                wants_email_summary: options.wants_email_summary
+            });
+
+            await asyncForEach(options.pages, async responseCount => {
+
+                const page = await database.pages.create(randomPage(user.id));
+                await asyncForEach(new Array(responseCount), async () => {
+
+                    await database.responses.create(randomResponse(page.id));
+                });
+            });
+
+
+            const retrieved = await getComparable();
+            return [user, retrieved,]
+        }
+
+
+        it("returns active users wanting email summary, with pages containing responses", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: true,
+                pages: [2, 3, 4]
+            });
+
+            expect(retrieved).toContain(user.id);
+        });
+
+        it("does not return inactive users, even if the have pages with responses", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: false,
+                wants_email_summary: true,
+                pages: [1, 1]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("does not return active users if they have no pages", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: true,
+                pages: []
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("does not return active users if their pages have no responses", async () => {
+
+            //NOTE: pages are present, but there are no responses
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: true,
+                pages: [0, 0]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("Does not return users not waning summaries", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: false,
+                pages: [1, 2]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("Does not return users wantings summaries if they are not active", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: false,
+                wants_email_summary: true,
+                pages: [1]
+            });
+
+            expect(retrieved).not.toContain(user.id);
         });
     });
 

@@ -4,7 +4,7 @@ import auth0 from "../../../../../auth/auth0";
 import { database } from "../../../../../database/database";
 import { withErrorHandling, withAuthentication, withMethodHandlers } from "../../../../../middleware/middleware";
 import { QuestionModel } from "../../../../../models/models";
-import { getPathParam } from "../../../../../workarounds";
+import { getPathParam } from "../../../../../helpers/workarounds";
 
 
 const getPageId = (url: string) => getPathParam(url, 3);

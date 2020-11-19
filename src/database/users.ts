@@ -19,6 +19,24 @@ export const getActive = () =>
       []
    );
 
+export const getSummaryUsers = () =>
+   rows<UserModel>(
+      `
+         WITH relevant_pages AS (
+            SELECT pages.owner_id, count(responses) AS response_count
+            FROM pages INNER JOIN responses
+            ON pages.id = responses.page_id
+            GROUP BY pages.id
+         )
+         
+         SELECT DISTINCT users.* 
+         FROM relevant_pages INNER JOIN users
+         ON relevant_pages.owner_id = users.id
+         WHERE response_count > 0 AND users.active = true AND users.wants_email_summary = true;
+      `,
+      []
+   );
+
 export const get = (id: string) =>
    first<UserModel>(
       "select * from users where id = $1",

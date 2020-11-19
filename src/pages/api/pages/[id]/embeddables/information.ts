@@ -2,7 +2,7 @@ import { NOT_FOUND } from "node-kall";
 import { database } from "../../../../../database/database";
 import { withCors, withErrorHandling, withMethodHandlers } from "../../../../../middleware/middleware"
 import { EmbeddableInformationModel } from "../../../../../models/models";
-import { getPathParam } from "../../../../../workarounds";
+import { getPathParam } from "../../../../../helpers/workarounds";
 
 
 export default withCors(

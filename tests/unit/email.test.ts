@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { validateEmail } from "../../src/helpers/email"";
+import { validateEmail } from "../../src/helpers/email";
 
 describe("The module for common email utilities", () => {
 

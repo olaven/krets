@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { getAuthUser } from "../../../../auth/user";
 import { withCors, asAdmin, withAuthentication, withMethodHandlers } from "../../../../middleware/middleware";
-import { getPathParam } from "../../../../workarounds";
+import { getPathParam } from "../../../../helpers/workarounds";
 
 const applyMiddleware = (getHandler: NextApiHandler) =>
     withCors(

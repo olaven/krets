@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { withCors, withAuthentication, withMethodHandlers, asAdmin, asSameUser } from "../../../middleware/middleware";
 import auth0 from "../../../auth/auth0";
 import { database } from "../../../database/database";
-import { getPathParam } from "../../../workarounds";
+import { getPathParam } from "../../../helpers/workarounds";
 import { deleteAuthUser } from "../../../auth/delete";
 import { UserModel } from "../../../models/models";
 

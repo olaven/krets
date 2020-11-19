@@ -4,7 +4,7 @@ import { NOT_FOUND, BAD_REQUEST, NO_CONTENT } from "node-kall";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PageModel } from "../../../models/models";
 import { asPageOwner, withAuthentication, withCors, withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
-import { getPathParam } from "../../../workarounds";
+import { getPathParam } from "../../../helpers/workarounds";
 import auth0 from "../../../auth/__mocks__/auth0";
 
 
