@@ -1,5 +1,5 @@
 import { Heading } from "rebass";
-import * as text from "../text";
+import * as text from "../helpers/text";
 import { CategoryCreator } from "../components/Category/categoryCreator";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";

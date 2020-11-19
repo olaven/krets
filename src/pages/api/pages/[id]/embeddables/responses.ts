@@ -4,7 +4,7 @@ import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
 import { database } from "../../../../../database/database";
 import { EmbeddableResponseModel } from "../../../../../models/models";
 import { withErrorHandling, withMethodHandlers, withCors } from "../../../../../middleware/middleware"
-import { getPathParam } from "../../../../../workarounds";
+import { getPathParam } from "../../../../../helpers/workarounds";
 
 const getPageId = url => getPathParam(url, 3);
 

@@ -1,6 +1,6 @@
 import { Button } from "rebass";
 import { useState, useEffect } from "react";
-import * as text from "../../text";
+import * as text from "../../helpers/text";
 
 export const Download = ({ querySelector, fileName }) => {
 

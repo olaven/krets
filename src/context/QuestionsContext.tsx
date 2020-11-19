@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactChildren } from "react";
 import { OK, filterBody } from "node-kall";
 import { QuestionModel } from "../models/models";
-import { getQuestions, updateQuestion } from "../fetchers";
+import { getQuestions, updateQuestion } from "../helpers/fetchers";
 import arrayMove from "array-move";
 import { reorder } from "../components/Settings/ManageQuestions/reorder";
 

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import * as text from "../../text";
+import * as text from "../../helpers/text";
 import { styled } from "../../stiches.config";
 import { Button } from "../standard/Button";
 

@@ -4,7 +4,7 @@ import { asPageOwner, withAuthentication, withErrorHandling, withMethodHandlers 
 import { withCors } from "../../../../../../middleware/withCors";
 import { database } from "../../../../../../database/database";
 import { AnswerModel } from "../../../../../../models/models";
-import { getPathParam } from "../../../../../../workarounds";
+import { getPathParam } from "../../../../../../helpers/workarounds";
 
 
 export const getAnswers = withAuthentication(

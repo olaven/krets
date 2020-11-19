@@ -2,7 +2,7 @@ import { OK } from "node-kall";
 //import { useRouter } from "next/router"; //TODO: use this once workaround not needed
 import { database } from "../../../../database/database";
 import { withAuthentication, withCors, withMethods } from "../../../../middleware/middleware";
-import { getPathParam } from "../../../../workarounds";
+import { getPathParam } from "../../../../helpers/workarounds";
 
 const getId = (url: string) => getPathParam(url, 2);
 

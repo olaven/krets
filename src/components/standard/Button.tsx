@@ -38,7 +38,15 @@ export const Button = styled('button', {
                     textDecoration: "none"
                 }
             }
+        },
 
+        disabled: {
+
+            true: {
+
+                backgroundColor: "grey",
+                color: "white",
+            }
         },
 
         danger: {

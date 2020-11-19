@@ -1,4 +1,4 @@
-import * as uiText from "../text";
+import * as uiText from "../helpers/text";
 import { Box, Flex, Heading, Image, Link } from "rebass";
 import { TextBox } from "../components/standard/TextBox";
 

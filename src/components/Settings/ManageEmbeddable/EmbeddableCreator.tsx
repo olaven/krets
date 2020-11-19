@@ -3,9 +3,9 @@ import { useContext, useState } from "react";
 import { Flex } from "rebass";
 import { Input } from "@rebass/forms";
 import { SettingsContext } from "../../../context/SettingsContext";
-import { postEmbeddable } from "../../../fetchers";
+import { postEmbeddable } from "../../../helpers/fetchers";
 import { TriggerLoadingButton } from "../../standard/buttons";
-import * as text from "../../../text";
+import * as text from "../../../helpers/text";
 import { EmbeddableContext } from "../../../context/EmbeddableContext";
 
 const uiText = text.settings.embeddable

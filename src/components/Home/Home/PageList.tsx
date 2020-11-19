@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Box, Card, Flex, Heading } from "rebass";
 import { Loader, LoadMore } from "../../standard/loader";
-import * as text from "../../../text"
+import * as text from "../../../helpers/text"
 import { PagesContext } from "../../../context/PagesContext";
 import { ToAdmin, ToQR, ToPage, ToSettings } from "../../standard/buttons";
 import { css, styled } from "../../../stiches.config";

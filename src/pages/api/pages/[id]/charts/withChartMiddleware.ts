@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
 import { withErrorHandling, withCors, withAuthentication, asPageOwner, withMethodHandlers } from "../../../../../middleware/middleware";
-import { getPathParam } from "../../../../../workarounds";
+import { getPathParam } from "../../../../../helpers/workarounds";
 
 export const getId = (url: string) => getPathParam(url, 3);
 

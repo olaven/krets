@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { NO_CONTENT } from "node-kall";
 import { useContext } from "react";
-import * as text from "../../text";
-import { deletePage } from "../../fetchers";
+import * as text from "../../helpers/text";
+import { deletePage } from "../../helpers/fetchers";
 import { SettingsContext } from "../../context/SettingsContext";
 import { DoubleConfirmationButton } from "../standard/buttons";
 

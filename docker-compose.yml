@@ -1,0 +1,22 @@
+version: "3"
+services:
+  web:
+    environment:
+      - PGHOST=db
+    working_dir: /app
+    command: bash -c "yarn dev"
+    image: node:14
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: user
+      POSTGRES_DB: data

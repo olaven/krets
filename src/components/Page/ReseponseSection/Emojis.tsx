@@ -1,4 +1,4 @@
-import { emojidata } from "../../../emojidata";
+import { emojidata } from "../../../helpers/emojidata";
 import { Emotion } from "../../../models/models";
 import { css, styled } from "../../../stiches.config";
 

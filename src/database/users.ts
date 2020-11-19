@@ -13,6 +13,30 @@ export const getActiveUserCount = async () => {
    return parseInt(result.count);
 }
 
+export const getActive = () =>
+   rows<UserModel>(
+      `select * from users where active = true`,
+      []
+   );
+
+export const getSummaryUsers = () =>
+   rows<UserModel>(
+      `
+         WITH relevant_pages AS (
+            SELECT pages.owner_id, count(responses) AS response_count
+            FROM pages INNER JOIN responses
+            ON pages.id = responses.page_id
+            GROUP BY pages.id
+         )
+         
+         SELECT DISTINCT users.* 
+         FROM relevant_pages INNER JOIN users
+         ON relevant_pages.owner_id = users.id
+         WHERE response_count > 0 AND users.active = true AND users.wants_email_summary = true;
+      `,
+      []
+   );
+
 export const get = (id: string) =>
    first<UserModel>(
       "select * from users where id = $1",
@@ -51,11 +75,17 @@ export const getAll = (options: PaginationOptions = { amount: 10 }) =>
  */
 export const create = (user: UserModel) =>
    first<UserModel>(
-      "insert into users(id) values($1) RETURNING *",
-      [user.id] //NOTE: passed explicity, as it needs to mirror Auth0
+      "insert into users(id, contact_email) values($1, $2) RETURNING *",
+      [user.id, user.contact_email] //NOTE: passed explicity, as it needs to mirror Auth0
    );
 
 export const update = (user: UserModel) =>
+   first<UserModel>(
+      `update users set contact_email = $2, wants_email_summary = $3 where id = $1 returning * `,
+      [user.id, user.contact_email, user.wants_email_summary]
+   );
+
+export const updateActive = (user: UserModel) =>
    first<UserModel>(
       `update users set active = $2 where id = $1 returning * `,
       [user.id, user.active]

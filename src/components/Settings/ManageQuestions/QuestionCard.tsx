@@ -1,8 +1,8 @@
-import * as uiText from "../../../text";
+import * as uiText from "../../../helpers/text";
 import { NO_CONTENT } from "node-kall";
 import { QuestionModel } from "../../../models/models";
 import { useContext, useState } from "react";
-import { updateQuestion } from "../../../fetchers";
+import { updateQuestion } from "../../../helpers/fetchers";
 import { DoubleConfirmationButton, TriggerLoadingButton } from "../../standard/buttons";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";

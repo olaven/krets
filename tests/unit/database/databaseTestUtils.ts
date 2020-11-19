@@ -1,11 +1,18 @@
 import * as faker from "faker";
 import { database } from "../../../src/database/database";
-import { first, run } from "../../../src/database/helpers/query";
+import { first } from "../../../src/database/helpers/query";
+import { asyncForEach } from "../../../src/helpers/asyncForEach";
 import { PageModel, ResponseModel, Emotion, UserModel, AnswerModel, QuestionModel, EmbeddableModel } from "../../../src/models/models";
+
+
+export const comparable = (array: { id?: string }[]) =>
+    array.map(it => it.id).sort();
+
 
 export const randomUser = (id = faker.random.uuid()): UserModel => ({
     id,
     active: true,
+    wants_email_summary: false,
 });
 
 export const randomPage = (ownerId: string, color: string = null, categoryId: string = null, mandatoryContactDetails = false): PageModel => ({
@@ -18,12 +25,12 @@ export const randomPage = (ownerId: string, color: string = null, categoryId: st
 });
 
 export const randomResponse = (pageId: string, emotion: Emotion = ":-)", contactDetails: string | undefined = undefined): ResponseModel =>
-    ({
-        id: faker.random.uuid(),
-        page_id: pageId,
-        emotion: emotion,
-        contact_details: contactDetails
-    });
+({
+    id: faker.random.uuid(),
+    page_id: pageId,
+    emotion: emotion,
+    contact_details: contactDetails
+});
 
 export const randomAnswer = (responseId: string): AnswerModel => ({
     response_id: responseId,
@@ -159,4 +166,38 @@ export const setupPage = async (mandatoryContactDetails = false): Promise<[UserM
 
     const [owner, [page]] = await setupPages(1, mandatoryContactDetails);
     return [owner, page];
+}
+
+
+
+export const setupSummaryTest = async (options: {
+    active: boolean,
+    wants_email_summary: boolean,
+    pages: number[]
+}): Promise<[UserModel, string[]]> => {
+
+    const user = await database.users.create(randomUser());
+    await database.users.updateActive({
+        ...user,
+        active: options.active
+    });
+    await database.users.update({
+        ...user,
+        wants_email_summary: options.wants_email_summary
+    });
+
+    await asyncForEach(options.pages, async responseCount => {
+
+        const page = await database.pages.create(randomPage(user.id));
+        await asyncForEach(new Array(responseCount), async () => {
+
+            await database.responses.create(randomResponse(page.id));
+        });
+    });
+
+
+    const retrieved = comparable(
+        await database.users.getSummaryUsers()
+    );
+    return [user, retrieved,]
 }

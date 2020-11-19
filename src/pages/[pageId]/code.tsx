@@ -3,7 +3,7 @@ import { QRCode } from "react-qrcode-logo";
 import React, { useContext } from "react";
 import { Box, Flex, Heading } from "rebass";
 import { usePage } from "../../effects/usePage";
-import * as text from "../../text"
+import * as text from "../../helpers/text"
 import { Download } from "../../components/Code/download";
 import { UserContext } from "../../context/UserContext";
 

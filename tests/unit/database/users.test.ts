@@ -1,6 +1,6 @@
 import { database } from "../../../src/database/database";
 import * as faker from "faker";
-import { randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers } from "./databaseTestUtils";
+import { randomUser, setupEmbeddable, setupPages, setupQuestions, setupUsers, comparable, setupSummaryTest } from "./databaseTestUtils";
 
 
 describe("User repository", () => {
@@ -33,7 +33,29 @@ describe("User repository", () => {
         expect(after).toBeTruthy();
     });
 
-    test(" User has prop for wether it is active or not", async () => {
+    test("User can be created with `contact_email`", async () => {
+
+        const email = faker.internet.email();
+        const user = await database.users.create({
+            ...randomUser(),
+            contact_email: email
+        });
+
+        expect(user.contact_email).toEqual(email);
+    });
+
+    test("User may be created without a contact_email", async () => {
+
+        const email = faker.internet.email();
+        const user = await database.users.create({
+            ...randomUser(),
+            contact_email: null
+        });
+
+        expect(user.contact_email).toBe(null);
+    });
+
+    test("User has prop for wether it is active or not", async () => {
 
         const user = await database.users.create(randomUser());
         expect(user.active).toBeDefined();
@@ -81,7 +103,7 @@ describe("User repository", () => {
         expect(updated.role).toEqual("administrator");
     });
 
-    test(" `updateRole` updates only role", async () => {
+    test("`updateRole` updates only role", async () => {
 
         const original = await database.users.create(randomUser());
         const updated = await database.users.updateRole({
@@ -91,6 +113,30 @@ describe("User repository", () => {
 
         expect(updated.role).not.toEqual(!original.active);
         expect(updated.role).toEqual(original.role);
+    });
+
+    test("`updateActive` updates active status", async () => {
+
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.updateActive({
+            ...original,
+            active: !original.active, //NOTE updating something other than `role`
+        });
+
+        expect(original.active).not.toEqual(updated.active);
+    });
+
+    test("`updateActive` does not update anything other than active", async () => {
+
+        const newEmail = faker.internet.email();
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.updateActive({
+            ...original,
+            contact_email: newEmail,
+        });
+
+        //i.e. was not updated. 
+        expect(updated.contact_email).not.toEqual(newEmail);
     });
 
     test(" valid `UserRole`-values are accepted", async () => {
@@ -123,7 +169,7 @@ describe("User repository", () => {
         })).rejects.toThrow();
     });
 
-    test("Can update user `active` status through `updateUser`", async () => {
+    test("Can not update user `active` status through `update`", async () => {
 
         const original = await database.users.create(randomUser());
         const updated = await database.users.update({
@@ -131,8 +177,40 @@ describe("User repository", () => {
             active: !original.active
         });
 
-        expect(original.active).not.toEqual(updated.active);
-        expect(updated.active).toEqual(!original.active);
+        //i.e. no change. 
+        expect(original.active).toEqual(updated.active);
+    });
+
+    test("Can update user `contact_email`", async () => {
+
+        const newEmail = faker.internet.email();
+        const original = await database.users.create(randomUser());
+
+        const updated = await database.users.update({
+            ...original,
+            contact_email: newEmail
+        });
+
+        expect(original.id).toEqual(updated.id);
+        expect(updated.contact_email).not.toEqual(original.contact_email);
+        expect(updated.contact_email).toEqual(newEmail);
+    });
+
+    test("Can update wether user wants email or not", async () => {
+
+        const original = await database.users.create(randomUser());
+        const updated = await database.users.update({
+            ...original,
+            wants_email_summary: !original.wants_email_summary
+        });
+
+        expect(original.wants_email_summary).not.toEqual(updated.wants_email_summary);
+    });
+
+    test("`wants_email_summary` is false by default", async () => {
+
+        const user = await database.users.create(randomUser());
+        expect(user.wants_email_summary).toBe(false);
     });
 
     test("Can delete user after creation", async () => {
@@ -227,6 +305,134 @@ describe("User repository", () => {
 
         expect(before).toBeDefined();
         expect(after).toBeNull();
+    });
+
+
+    const createWithActive = async (active: boolean) => {
+
+        const user = await database.users.create({ ...randomUser() });
+        return database.users.updateActive({ ...user, active });
+    }
+
+    describe("Gettint active users", () => {
+
+
+        it("Does return an array", async () => {
+
+            const users = await database.users.getActive();
+            expect(users.push).toBeDefined();
+            expect(users.pop).toBeDefined();
+            expect(users.splice).toBeDefined();
+        });
+
+        it("Does return only active users", async () => {
+
+
+            const retrieved = await database.users.getActive();
+
+            expect(retrieved.length).toBeGreaterThan(0);
+            for (const user of retrieved) {
+
+                expect(user.active).toBe(true);
+            }
+        });
+
+        it("Does not return inactive user", async () => {
+
+            const user = await createWithActive(false);
+
+            const retrieved = comparable(
+                await database.users.getActive()
+            );
+
+            expect(user.active).toBe(false);
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("contains active but not inactive", async () => {
+
+            const active = await createWithActive(true);
+            const inactive = await createWithActive(false);
+
+            const retrieved = comparable(
+                await database.users.getActive()
+            );
+
+            expect(retrieved).toContain(active.id);
+            expect(retrieved).not.toContain(inactive.id);
+        });
+    });
+
+    describe("getting summary users", async () => {
+
+
+
+        it("returns active users wanting email summary, with pages containing responses", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: true,
+                pages: [2, 3, 4]
+            });
+
+            expect(retrieved).toContain(user.id);
+        });
+
+        it("does not return inactive users, even if the have pages with responses", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: false,
+                wants_email_summary: true,
+                pages: [1, 1]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("does not return active users if they have no pages", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: true,
+                pages: []
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("does not return active users if their pages have no responses", async () => {
+
+            //NOTE: pages are present, but there are no responses
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: true,
+                pages: [0, 0]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("Does not return users not waning summaries", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: true,
+                wants_email_summary: false,
+                pages: [1, 2]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
+
+        it("Does not return users wantings summaries if they are not active", async () => {
+
+            const [user, retrieved] = await setupSummaryTest({
+                active: false,
+                wants_email_summary: true,
+                pages: [1]
+            });
+
+            expect(retrieved).not.toContain(user.id);
+        });
     });
 
 

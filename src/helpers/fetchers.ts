@@ -1,5 +1,5 @@
 import { get, put, del, post } from "node-kall";
-import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel, ResponseAnswerModel } from "./models/models";
+import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, PaginatedModel, AnswerModel, QuestionModel, EmbeddableModel, EmbeddableResponseModel, UserModel, AuthModel, DistributionModel, ResponseAnswerModel } from "../models/models";
 
 
 
@@ -84,6 +84,14 @@ export const postEmbeddable = (embeddable: EmbeddableModel) =>
 
 export const putUser = (user: UserModel) =>
     put(`/api/users/${user.id}`, user);
+
+/**
+ * PUT request on user, as admin. 
+ * //DANGER: Can update `active` and `role`. 
+ * Use with caution. 
+ */
+export const putUserAdmin = (user: UserModel) =>
+    put(`/api/users/${user.id}?admin=true`, user);
 
 export const getAuthUser = (user: UserModel) =>
     get<AuthModel>(`/api/users/${user.id}/auth`); 

@@ -1,6 +1,6 @@
 import { Flex, Button } from "rebass";
 import { useState, useEffect } from "react";
-import { emojidata } from "../../../emojidata";
+import { emojidata } from "../../../helpers/emojidata";
 
 const FilterButton = ({ emotion, selected, setSelected }) => {
 

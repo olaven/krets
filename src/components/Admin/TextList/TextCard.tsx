@@ -1,13 +1,13 @@
 import { OK } from "node-kall";
 import { Card, Box, Flex, Text } from "rebass";
 import { AnswerModel, ResponseModel } from "../../../models/models";
-import * as text from "../../../text";
+import * as text from "../../../helpers/text";
 import { AdminPageContext } from "../../../context/AdminPageContext";
 import { useContext, useState } from "react";
 import { asyncEffect } from "../../../effects/asyncEffect";
-import { getAnswers } from "../../../fetchers";
+import { getAnswers } from "../../../helpers/fetchers";
 import { QuestionsContext } from "../../../context/QuestionsContext";
-import { emojidata } from "../../../emojidata";
+import { emojidata } from "../../../helpers/emojidata";
 
 
 const formatDate = (dateString: string) => {

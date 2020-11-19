@@ -1,7 +1,7 @@
 
-import { emojidata } from "../../emojidata";
+import { emojidata } from "../../helpers/emojidata";
 import { styled } from "../../stiches.config";
-import * as text from "../../text";
+import * as text from "../../helpers/text";
 import { H1 } from "./Heading";
 
 const Container = styled("div", {
