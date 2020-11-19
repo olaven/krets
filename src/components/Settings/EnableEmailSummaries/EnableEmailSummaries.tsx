@@ -34,6 +34,7 @@ export const EnableEmailSummaries = () => {
 
     return (
         <ColumnContainer>
+            <Paragraph style={{color: "orange"}}>Dette er en eksperimentell funksjon som kan endre virkemåte.</Paragraph>
             <Paragraph>{text.explanation}</Paragraph>
             <RowContainer>
                 <TextInput
