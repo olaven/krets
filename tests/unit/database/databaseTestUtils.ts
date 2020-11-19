@@ -176,7 +176,11 @@ export const setupSummaryTest = async (options: {
     pages: number[]
 }): Promise<[UserModel, string[]]> => {
 
-    const user = await createWithActive(options.active);
+    const user = await database.users.create(randomUser());
+    await database.users.updateActive({
+        ...user,
+        active: options.active
+    });
     await database.users.update({
         ...user,
         wants_email_summary: options.wants_email_summary
