@@ -5,7 +5,7 @@
 import React from "react";
 import { Charts } from "../../../../src/components/Charts"
 import { render, waitFor, fireEvent } from "@testing-library/react"
-import * as text from "../../../../src/text"
+import * as text from "../../../../src/helpers/text"
 import '@testing-library/jest-dom/extend-expect'
 import { AdminPageContext } from "../../../../src/context/AdminPageContext";
 import { UserContext } from "../../../../src/context/UserContext";

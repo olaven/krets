@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { AdminPageContext } from "../context/AdminPageContext";
 import { CompareContext } from "../context/CompareContext";
 import { styled } from "../stiches.config";
-import * as text from "../text";
+import * as text from "../helpers/text";
 import { LineChart, BarChart, DistributionChart, ChartSuggestion } from "./Admin/Charts/Charts";
 import { Collapsible } from "./Collapsible"
 

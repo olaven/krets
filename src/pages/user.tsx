@@ -1,11 +1,11 @@
-import * as uiText from "../text";
+import * as uiText from "../helpers/text";
 import * as NextLink from 'next/link'
 import { useRouter } from "next/router"
 import { NO_CONTENT } from "node-kall";
 import { Heading, Text, Flex, Box, Button, Link } from "rebass";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import { deleteUser } from '../fetchers';
+import { deleteUser } from '../helpers/fetchers';
 import { DoubleConfirmationButton } from "../components/standard/buttons";
 import { TextBox } from "../components/standard/TextBox";
 import { Loader } from "../components/standard/loader";

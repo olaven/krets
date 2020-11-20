@@ -7,11 +7,6 @@
 Ideally, completely frictionless. 
 
 ## Local setup 
-Running Krets requires a recent version of [nodejs](https://nodejs.org/en/) and [postgres](https://www.postgresql.org/) running locally. 
-This can be manually set up and installed, or it can be started with ["devcontainers" in vscode](https://code.visualstudio.com/docs/remote/containers). 
-The latter just requires the [remote development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) and clicking 
-"reopen in container" when VSCode starts. 
-
 In addition, a `.env`-file must be created at the root of the project. It must contain: 
 ```
 AUTH0_DOMAIN=<YOUR_VARIABLE_HERE>
@@ -30,3 +25,6 @@ PGDATABASE=<YOUR_VARIABLE_HERE> # data if using devcontainers
 
 CONTACT_EMAIL=<YOUR_VARIABLE_HERE>
 ```
+
+## Start the application locally 
+`docker-compose up --build -d`

@@ -1,4 +1,4 @@
-import * as uiText from "../../../text";
+import * as uiText from "../../../helpers/text";
 import { useState } from "react";
 import { styled } from "../../../stiches.config";
 import { Button } from "../../standard/Button";

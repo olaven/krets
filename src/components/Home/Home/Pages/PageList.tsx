@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { PageCard } from "./PageCard";
 import { Loader, LoadMore } from "../../../standard/loader";
 import { H1 } from "../../../standard/Heading";
-import * as text from "../../../../text"
+import * as text from "../../../../helpers/text"
 import { PagesContext } from "../../../../context/PagesContext";
 import { HomeContext } from "../../../../context/HomeContext";
 

@@ -1,5 +1,5 @@
 import { Box, Flex, Heading } from "rebass";
-import * as uiText from "../text"
+import * as uiText from "../helpers/text"
 import { Collapsible } from "../components/Collapsible";
 import { AdminVideo, GetStartedVideo, ShareVideo } from "../components/Videos";
 

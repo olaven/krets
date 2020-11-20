@@ -3,7 +3,7 @@ import { CopyBlock, github } from "react-code-blocks";
 import { Text } from "rebass";
 import { EmbeddableContext } from "../../../context/EmbeddableContext";
 import { styled } from "../../../stiches.config";
-import * as text from "../../../text";
+import * as text from "../../../helpers/text";
 
 const Container = styled("div", {
     display: "flex",

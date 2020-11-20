@@ -105,7 +105,7 @@ export const response = strings({
         thanks: "Tusen takk!",
         prefixCustomQuestionCheckbox: "Jeg vil svare på",
         suffixCustomQuestionCheckbox: "spørsmål",
-        customQuestionsCheckbox: "Huk av for å fortelle mer:",
+        customQuestionsCheckbox: "Huk av for å svare på spørsmål:",
 
         contact: {
             heading: "Jeg vil bli kontaktet igjen",
@@ -310,6 +310,19 @@ export const settings = strings({
             archiveButton: "Archive.",
             unstable: "Custom questions an unstable feature - it may change"
         },
+        email: {
+            heading: "Receive feedback in your email",
+            button: {
+                on: "Turn on",
+                off: "Turn off"
+            },
+            explanation: `
+                You may receive your feedback through email. 
+                This is useful if logging into Krets doesn't fit with your workflow. 
+                The emails arrive once a week. 
+            `,
+            placeholder: "e-posten som skal motta"
+        },
         embeddable: {
             heading: "Use Krets on your website",
             info: "Add Krets-feedback to your own website 🖇️",
@@ -346,6 +359,19 @@ export const settings = strings({
             updateButton: "Oppdater",
             archiveButton: "Arkiver.",
             unstable: "'Egne spørsmål' er en ustabil funksjon - den kan endre seg"
+        },
+        email: {
+            heading: "Integrer med din e-post",
+            button: {
+                on: "Skru på",
+                off: "Skru av"
+            },
+            explanation: `
+                Passer det dårlig å logge inn på Krets?
+                Da kan du motta tilbakemeldingene dine på e-post, i nyttige sammendrag. 
+                E-postene kommer en gang i uken. 
+            `,
+            placeholder: "e-posten som skal motta"
         },
         embeddable: {
             heading: "Bruk Krets på nettsiden din",

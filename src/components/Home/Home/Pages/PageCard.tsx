@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { HomeContext } from "../../../../context/HomeContext";
 import { styled, css } from "../../../../stiches.config";
 import { ToQR, ToPage } from "../../../standard/buttons";
-import * as uiText from "../../../../text"
+import * as uiText from "../../../../helpers/text"
 import { Button } from "../../../standard/Button";
 import { RowContainer, ColumnContainer } from "../../../standard/Containers";
 import { H2 } from "../../../standard/Heading";
@@ -119,5 +119,4 @@ export const PageCard = (page) => {
             </FadeIn >
         </Margin>
     )
-
 }

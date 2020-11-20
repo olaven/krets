@@ -1,20 +1,22 @@
-version: '3.8'
+version: "3"
 services:
   web:
-    image: node:lts-alpine
-    command: sc -c "yarn && yarn dev"
+    environment:
+      - PGHOST=db
     working_dir: /app
-    volumes:
-      - .:/app
+    command: bash -c "yarn dev"
+    image: node:14
     ports:
       - "3000:3000"
-    command: yarn dev
+    volumes:
+      - .:/app
     depends_on:
-      - db 
+      - db
   db:
     image: postgres
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: pass
       POSTGRES_USER: user
       POSTGRES_DB: data
-  

@@ -6,9 +6,9 @@ import { OK } from "node-kall";
 import { LoginButton } from "../standard/buttons";
 import { TextList } from "./TextList/TextList";
 import { Charts } from "../Charts";
-import * as text from "../../text"
+import * as text from "../../helpers/text"
 import { CompareSelect } from "./CompareSelect";
-import { getCount, getOverallAverage } from "../../fetchers";
+import { getCount, getOverallAverage } from "../../helpers/fetchers";
 import { Loader } from "../standard/loader";
 
 const AdminBox = props => <Box

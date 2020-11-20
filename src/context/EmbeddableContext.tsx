@@ -1,7 +1,7 @@
 import { NOT_FOUND, OK } from "node-kall";
 import { createContext, ReactElement, useContext, useState } from "react";
 import { asyncEffect } from "../effects/asyncEffect";
-import { getEmbeddable } from "../fetchers";
+import { getEmbeddable } from "../helpers/fetchers";
 import { EmbeddableModel } from "../models/models";
 import { HomeContext } from "./HomeContext";
 

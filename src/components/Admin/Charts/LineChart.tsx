@@ -2,7 +2,7 @@ import { VictoryChart, VictoryLabel, VictoryLine, VictoryAxis } from "victory";
 import { useState } from "react";
 import { filterBody } from "node-kall"
 import { PageInformation } from "../../../context/CompareContext";
-import { getLineCoordinates } from "../../../fetchers";
+import { getLineCoordinates } from "../../../helpers/fetchers";
 import { asyncEffect } from "../../../effects/asyncEffect";
 
 

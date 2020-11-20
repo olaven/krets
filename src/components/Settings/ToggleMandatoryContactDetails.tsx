@@ -1,8 +1,7 @@
 import { NO_CONTENT } from "node-kall";
 import { useContext } from "react"
-import { putPage } from "../../fetchers"
-import { styled } from "../../stiches.config";
-import * as text from "../../text";
+import { putPage } from "../../helpers/fetchers"
+import * as text from "../../helpers/text";
 import { Button } from "../standard/Button";
 import { Paragraph } from "../standard/Text";
 import { ColumnContainer } from "../standard/Containers";

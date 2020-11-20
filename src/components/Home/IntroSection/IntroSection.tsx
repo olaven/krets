@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Box, Text, Image, Link, Button, Heading } from "rebass";
 import { Input } from "@rebass/forms";
-import { GetStartedButton, TriggerLoadingButton } from "../../standard/buttons";
-import { intro } from "../../../text";
-import { postEmail } from "../../../fetchers";
+import { TriggerLoadingButton } from "../../standard/buttons";
+import { intro } from "../../../helpers/text";
+import { validateEmail } from "../../../helpers/email";
+import { postEmail } from "../../../helpers/fetchers";
 import { CREATED, OK } from "node-kall";
-import { QRCode } from "react-qrcode-logo";
-import { StichesButton, WithHoverColor } from "../../standard/StichesButton";
 
 const DisclaimerBox = () => <Box
     width={1}>
@@ -25,15 +24,14 @@ const DisclaimerBox = () => <Box
 
 const RequestAccess = () => {
 
+    const [beforeTyping, setBeforeTyping] = useState(true);
     const [email, setEmail] = useState("");
     const [valid, setValid] = useState(true);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
 
-        //regex source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-        const valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-        setValid(email === "" || valid);
+        setValid(beforeTyping || validateEmail(email));
     }, [email])
 
     const onRequestAccess = async () => {
@@ -58,6 +56,8 @@ const RequestAccess = () => {
                     fontSize={[13, 21]}
                     color={valid ? 'black' : 'attention'}
                     onChange={({ target: { value } }) => {
+
+                        setBeforeTyping(false);
                         setEmail(value)
                     }}
                     m={[1]}

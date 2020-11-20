@@ -1,4 +1,4 @@
-import * as text from "../../../text"
+import * as text from "../../../helpers/text"
 import { useContext } from "react";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { Loader } from "../../standard/loader";

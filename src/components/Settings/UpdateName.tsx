@@ -1,8 +1,8 @@
-import * as text from "../../text"
+import * as text from "../../helpers/text"
 import { NO_CONTENT } from "node-kall"
 import { useContext, useEffect, useState } from "react"
 import { HomeContext } from "../../context/HomeContext"
-import { putPage } from "../../fetchers"
+import { putPage } from "../../helpers/fetchers"
 import { TriggerLoadingButton } from "../standard/buttons"
 import { TextInput } from "../standard/Input";
 import { ColumnContainer } from "../standard/Containers"

@@ -492,7 +492,7 @@ describe("Database interface for pages", () => {
             it("Does not include inactive users", async () => {
 
                 const [user] = await setupPages();
-                await database.users.update({
+                await database.users.updateActive({
                     ...user,
                     active: false
                 });
@@ -505,7 +505,7 @@ describe("Database interface for pages", () => {
             it("Does include active users", async () => {
 
                 const [user] = await setupPages();
-                await database.users.update({
+                await database.users.updateActive({
                     ...user,
                     active: true
                 });

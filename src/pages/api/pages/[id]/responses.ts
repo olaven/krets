@@ -3,7 +3,7 @@ import { NOT_FOUND, BAD_REQUEST, CREATED } from "node-kall";
 import { database } from "../../../../database/database";
 import { withCors, withMethods, withMethodHandlers, withErrorHandling } from "../../../../middleware/middleware";
 import { ResponseAnswerModel, ResponseModel } from "../../../../models/models";
-import { getPathParam, nullify } from "../../../../workarounds";
+import { getPathParam, nullify } from "../../../../helpers/workarounds";
 
 
 //TODO: auth protection? 

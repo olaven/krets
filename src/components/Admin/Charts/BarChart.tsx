@@ -1,8 +1,8 @@
 import { filterBody } from "node-kall"
 import { VictoryChart, VictoryBar, VictoryAxis, Box } from "victory";
 import { PageInformation } from "../../../context/CompareContext";
-import * as text from "../../../text";
-import { getOverallAverage } from "../../../fetchers";
+import * as text from "../../../helpers/text";
+import { getOverallAverage } from "../../../helpers/fetchers";
 import { useState } from "react";
 import { asyncEffect } from "../../../effects/asyncEffect";
 

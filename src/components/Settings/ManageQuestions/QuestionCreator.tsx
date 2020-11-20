@@ -1,9 +1,9 @@
 import { CREATED } from "node-kall";
-import * as uiText from "../../../text";
+import * as uiText from "../../../helpers/text";
 import { useContext, useState } from "react";
 import { QuestionsContext } from "../../../context/QuestionsContext";
 import { HomeContext } from "../../../context/HomeContext";
-import { postQuestion } from "../../../fetchers";
+import { postQuestion } from "../../../helpers/fetchers";
 import { TriggerLoadingButton } from "../../standard/buttons";
 import { ColumnContainer } from "../../standard/Containers";
 import { H1 } from "../../standard/Heading"

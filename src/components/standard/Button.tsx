@@ -38,7 +38,6 @@ export const Button = styled('button', {
                     textDecoration: "none"
                 }
             }
-
         },
 
         disabled: {

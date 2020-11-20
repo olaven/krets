@@ -1,7 +1,7 @@
 import { Box } from "rebass";
 import BounceLoader from "react-spinners/BounceLoader";
 import { css } from "@emotion/core";
-import * as uiText from "../../text"
+import * as uiText from "../../helpers/text"
 import { styled } from "../../stiches.config";
 import { Button } from "./Button";
 

@@ -1,6 +1,6 @@
 import React, { SetStateAction, createContext, useState } from "react";
 import { PageModel } from "../models/models";
-import { getPage } from "../fetchers";
+import { getPage } from "../helpers/fetchers";
 
 interface IHomeContext {
     page?: PageModel,

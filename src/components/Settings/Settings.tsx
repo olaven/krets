@@ -1,10 +1,15 @@
-import * as text from "../../text"
-import { Collapsible } from "../../components/Collapsible";
-import { UpdateName, UpdateTitle, ManageQuestions, DeletePage } from "../../components/Settings/Options"
-import { ManageEmbeddable } from "../../components/Settings/ManageEmbeddable/ManageEmbeddable";
-import { ToggleMandatoryContactDetails } from "../../components/Settings/ToggleMandatoryContactDetails";
-import { styled } from "../../stiches.config";
-import { H1 } from "../../components/standard/Heading";
+import { styled } from "../../stiches.config"
+import * as text from "../../helpers/text";
+import { Collapsible } from "../Collapsible";
+import {
+    UpdateName,
+    UpdateTitle,
+    DeletePage,
+    ManageQuestions,
+    ManageEmbeddable, 
+    EnableEmailSummaries, 
+    ToggleMandatoryContactDetails, 
+} from "./Options"
 
 
 const Container = styled("div", {
@@ -16,10 +21,6 @@ const Container = styled("div", {
     width: "100%"
 
     
-});
-
-const Heading = styled(H1, {
-    textAlign: "left"
 });
 
 
@@ -36,6 +37,9 @@ export const Settings = () => (
         </Collapsible>
         <Collapsible text={text.settings.questions.heading}>
             <ManageQuestions />
+        </Collapsible>
+        <Collapsible text={text.settings.email.heading}>
+            <EnableEmailSummaries />
         </Collapsible>
         <Collapsible text={text.settings.mandatoryContact.heading}>
             <ToggleMandatoryContactDetails />
