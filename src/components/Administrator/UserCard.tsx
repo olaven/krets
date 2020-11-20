@@ -81,8 +81,9 @@ export const UserCard = ({ user }: { user: UserModel }) => {
     }, []); */
 
     return <Card p={[0, 1, 2]} m={[0, 1, 2]}>
-        <Heading fontSize={[13, 21]}>{authUser ? authUser.name : "laster navn.."}</Heading>
-        <Heading fontSize={[8, 13]}>{authUser ? authUser.email : "laster e-post.."}</Heading>
+        <Heading fontSize={[13, 21]}>{authUser ? authUser.name : "laster auth navn.."}</Heading>
+        <Heading fontSize={[8, 13]}>{authUser ? authUser.email : "laster auth e-post.."}</Heading>
+        <Heading fontSize={[8, 13]}>{user.contact_email}</Heading>
         <Text>id: {user.id}</Text>
         <Text>active: {user.active ? "ja" : "nei"}</Text>
         <Text>role: {user.role}</Text>
