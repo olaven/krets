@@ -6,8 +6,15 @@ import { Paragraph } from "../../../standard/Text";
 import { Button } from "../../../standard/Button";
 
 const Container = styled(ColumnContainer, {
+    position: "fixed",
+    zIndex:1, 
+    left: "50%",
+    top: "50%", 
+    transform: "translateX(-50%) translateY(-50%)",
+    padding: "$34",
     border: "solid black 1px",
     borderRadius: "15px",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
     backgroundColor: "$secondary",
     animationDuration: `250ms`,
     animationFillMode: "forwards",
@@ -15,21 +22,19 @@ const Container = styled(ColumnContainer, {
     animationName: `${css.keyframes({
         "0%": {
             opacity: 0,
-            transform: `translateY(10%) translateX(100%) scale(1)`,
+            transform: `scale(0.9) translateX(-50%) translateY(-50%)`,
         },
         "100%": {
             opacity: "1 !important",
-            transform: "translateY(-100%) translateX(-10%) scale(1.25)",
+            transform: `scale(1) translateX(-50%) translateY(-50%)`,
         }
-    })}`
+    })}` 
 });
 
 const InputContainer = styled(RowContainer, {
-    backgroundColor: "red",
     justifyContent: "center",
 
     "> *": {
-        backgroundColor: "blue",
         padding: "20px"
     }
 });
