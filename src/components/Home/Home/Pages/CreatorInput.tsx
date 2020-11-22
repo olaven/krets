@@ -63,7 +63,7 @@ const Corner = styled("div", {
     }
 });
 
-export const CreatorInput = ({setVisible}: {setVisible: () => void}) => {
+export const CreatorInput = ({setVisible}: {setVisible: (visible: boolean) => void}) => {
 
     const [name, setName] = useState("");
     const [id, setId] = useState("");
