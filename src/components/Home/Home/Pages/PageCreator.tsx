@@ -55,8 +55,8 @@ export const PageCreator = () => {
     };
 
     
-    return true /* visible */ ?
-        <CreatorInput /> :
+    return visible  ?
+        <CreatorInput setVisible={setVisible}/> :
         <CreatorButton
             onClick={() => { setVisible(true) }}>
             Lag ny side

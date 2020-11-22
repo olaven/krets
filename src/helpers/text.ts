@@ -218,15 +218,15 @@ export const myCategories = strings({
 
 export const pageCreator = strings({
     en: {
-        preview: "Your page:",
+        preview: "Page URL:",
         placeholder: "Enter the page name",
         button: "Create page",
         error: "An error occured😐",
         conflict: "A page with this ID already exists"
     },
     no: {
-        preview: "Din side:",
-        placeholder: "Skriv navnet på den nye siden her",
+        preview: "Sidens URL:",
+        placeholder: "Skriv navn her",
         button: "Lag side",
         error: "En feil oppsto😐",
         conflict: "Dette sidenavnet er opptatt."

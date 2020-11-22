@@ -1,3 +1,4 @@
+import * as uiText from "../../../../helpers/text";
 import { useState, useEffect } from "react";
 import { styled, css } from "../../../../stiches.config"
 import { RowContainer, ColumnContainer } from "../../../standard/Containers"
@@ -11,7 +12,7 @@ const Container = styled(ColumnContainer, {
     left: "50%",
     top: "50%", 
     transform: "translateX(-50%) translateY(-50%)",
-    padding: "$34",
+    padding: "$55",
     border: "solid black 1px",
     borderRadius: "15px",
     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -50,7 +51,19 @@ export const nameToId = (name: string) => name
     .replace(/[^a-zA-Z0-9s|]/g, "-");
 
 
-export const CreatorInput = () => {
+const Corner = styled("div", {
+    position: "absolute", 
+    top: 0, 
+    left: 0, 
+    margin: "$13", 
+    ":hover": {
+        cursor: "pointer",
+        transform: "scale(1.1)",
+        textDecoration: "underline", 
+    }
+});
+
+export const CreatorInput = ({setVisible}: {setVisible: () => void}) => {
 
     const [name, setName] = useState("");
     const [id, setId] = useState("");
@@ -62,14 +75,22 @@ export const CreatorInput = () => {
     }, [name]);
 
     return <Container>
-        <Paragraph>Din url: https://krets.app/{id}</Paragraph>
+        <Corner 
+        onClick={() => {setVisible(false)}}>
+            X
+        </Corner>
+        <Paragraph>{uiText.pageCreator.preview} https://krets.app/{id}</Paragraph>
         <InputContainer>
-            <TextInput value={name} onChange={(event) => {
-                setName(event.target.value);
-            }} />
+            <TextInput 
+                value={name}
+                placeholder={uiText.pageCreator.placeholder}
+                onChange={(event) => {
+                    setName(event.target.value);
+                }} 
+            />
             <Button
                 disabled={name.length <= 2}>
-                OK
+                {uiText.pageCreator.button}
             </Button>
         </InputContainer>
     </Container>
