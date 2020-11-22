@@ -8,6 +8,9 @@ import { PageModel, ResponseModel, CategoryModel, EmailModel, CoordinateModel, P
  * THINKABOUT: Consider splitting this up. 
 */
 
+export const postPage = (page: PageModel) =>
+    post<PageModel>('/api/pages', page)
+
 export const putPage = (page: PageModel) =>
     put<PageModel>(`/api/pages/${page.id}`, page);
 
