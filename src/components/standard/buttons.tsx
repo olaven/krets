@@ -84,7 +84,7 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: {
 const ListButton = (href: string, text: string) => (
 
     <StitchesButton inverted>
-        <a>
+        <a style={{color: "inherit", textDecoration: "none"}} href={href}>
             {text}
         </a>
     </StitchesButton>
