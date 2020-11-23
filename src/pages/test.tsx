@@ -1,5 +1,5 @@
 import { AdminWrapper } from "../components/AdminWrapper";
-import { jsPDF} from "jspdf";
+import { pdf } from "../pdf";
 
 
 export default AdminWrapper(() => {
@@ -7,12 +7,12 @@ export default AdminWrapper(() => {
 
     const onClick = () => {
         
-        const pdf = new jsPDF(); 
-        pdf.setFontSize(55);
-        pdf.text("10, 10", 10, 10); 
-        pdf.setFontSize(15);
-        pdf.text("20, 20", 20, 20); 
-        pdf.save("test.pdf");
+        pdf()
+            .withTextSize()
+            .writeAt.bottom("bottom")
+            .writeAt.top("top")
+            .writeAt.middle("middle 😄")
+            .save()
     }
 
     return <>
