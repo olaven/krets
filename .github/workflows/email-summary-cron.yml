@@ -15,4 +15,4 @@ jobs:
         with:
           url: https://krets.app/api/cron/email-summary-trigger
           method: GET
-          headers: '{"x-krets-email-summary-secret": "${{ env.EMAIL_SUMMARY_SECRET }}"}'
+          headers: '{"x-krets-email-summary-secret": "${{ secrets.EMAIL_SUMMARY_SECRET }}"}'
