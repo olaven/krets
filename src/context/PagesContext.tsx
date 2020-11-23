@@ -36,7 +36,7 @@ export const PagesContextProvider = ({ user, children }) => {
 
     if (!user) throw "Should not see this if not logged in!";
 
-    const [page, moreAvailable, pageLoading, getNextPages] = usePagination<PageModel>(`/api/pages`);
+    const [page, moreAvailable, pageLoading, getNextPages] = usePagination<PageModel>(`/api/pages`, 15);
     const [hasLoaded, setHasLoaded] = useState(false);
 
     //A buffer keeping old `.data`

@@ -13,12 +13,13 @@ import { PaginatedModel } from "../models/models";
  * 
  * Adapted from [this file](https://github.com/olaven/exam-pg6101/blob/master/frontend/src/utils/PaginationFetcher.jsx)
  */
-export const usePagination = function <T>(basePath: string): [
+export const usePagination = function <T>(basePath: string, maxPageSize: number): [
     PaginatedModel<T>,
     boolean,
     boolean,
     () => void,
-    () => void] {
+    () => void
+] {
 
     const [next, setNext] = useState(basePath);
     const [moreAvailable, setMoreAvailable] = useState(true);
@@ -35,10 +36,9 @@ export const usePagination = function <T>(basePath: string): [
         setPageLoading(true)
         const page = await filterBody(get<PaginatedModel<T>>(next));
 
-        console.log("got page", page);
         setPage(page);
         setPageLoading(false);
-        setMoreAvailable(page.data.length > 0);
+        setMoreAvailable(page.next && page.data.length === maxPageSize);
     }, [next]);
 
     return [page, moreAvailable, pageLoading, applyToNext(page.next), applyToNext(basePath)];

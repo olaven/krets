@@ -4,7 +4,7 @@ import { usePagination } from "./usePagination";
 
 export const useUsers = (): [UserModel[], boolean, boolean, () => void] => {
 
-    const [page, moreAvailable, loading, getNext] = usePagination<UserModel>(`/api/users`);
+    const [page, moreAvailable, loading, getNext] = usePagination<UserModel>(`/api/users`, 10);
 
     //A buffer keeping old `.data`
     const [users, setUsers] = useState<UserModel[]>([]);

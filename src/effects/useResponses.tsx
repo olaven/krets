@@ -8,7 +8,7 @@ import { usePagination } from "./usePagination";
  */
 export const useResponses = (pageId: string): [ResponseModel[], boolean, boolean, () => void] => {
 
-    const [page, moreAvailable, responsesLoading, getNext] = usePagination<ResponseModel>(`/api/pages/${pageId}/responses`);
+    const [page, moreAvailable, responsesLoading, getNext] = usePagination<ResponseModel>(`/api/pages/${pageId}/responses`, 10);
 
     //A buffer keeping old `.data`
     const [responses, setResponses] = useState<ResponseModel[]>([]);
