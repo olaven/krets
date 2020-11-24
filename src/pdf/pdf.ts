@@ -1,15 +1,21 @@
 import { jsPDF } from "jspdf";
 import "./Roboto-Light-normal";
 
-const colors = {
-    primary: "#0A585C"
-}
-
-const sizes = {
-
-    heading: 55,
-    text: 21,
-};
+export const openKretsPDF = (options: {
+    header: string,
+    subheader: string,
+    paragraph: string,
+    QRDataURL: string,
+}) =>
+    pdf()
+        .font()
+        .writeHeader(options.header)
+        .writeSubheader(options.subheader)
+        .writeParagraph(options.paragraph)
+        .setQR(options.QRDataURL)
+        .writeKretsPromo()
+        .writeEmoji()
+        .output("dataurlnewwindow")
 
 /**
  * Minimal wrapper around jsPDF, adding methods 
@@ -18,7 +24,16 @@ const sizes = {
  * Based on A4 dimmensions,  210×297 
  * @param _pdf 
  */
-export const pdf = (_pdf = new jsPDF().setFont("Roboto-Light")) => ({
+const pdf = (
+    _pdf = new jsPDF().setFont("Roboto-Light"),
+    sizes = {
+        heading: 55,
+        text: 21,
+    },
+    colors = {
+        primary: "#0A585C"
+    }
+) => ({
 
     font: () => {
         console.log(_pdf.getFont());
@@ -46,10 +61,6 @@ export const pdf = (_pdf = new jsPDF().setFont("Roboto-Light")) => ({
                 maxWidth: 130
             })
     ),
-    /**
-     * //NOTE: see Download.tsx for inspiration
-     * @param dataURL
-     */
     setQR: (dataURL) => {
 
         const size = 100;
