@@ -27,13 +27,13 @@ export const pdf = (_pdf = new jsPDF().setFont("Roboto-Light")) => ({
     writeHeader: (text: string) => pdf(
         _pdf
             .setFontSize(sizes.heading)
-            .text(text, 21, 21)
+            .text(text, 12, 34)
     ),
 
     writeSubheader: (text: string) => pdf(
         _pdf
             .setFontSize(sizes.text)
-            .text(text, 21, 80)
+            .text(text, 12, 80)
     ),
 
     writeEmoji: () => pdf(
@@ -42,19 +42,30 @@ export const pdf = (_pdf = new jsPDF().setFont("Roboto-Light")) => ({
     writeParagraph: (text: string) => pdf(
         _pdf
             .setFontSize(sizes.text)
-            .text(text, 21, 114)
+            .text(text, 12, 114, {
+                maxWidth: 130
+            })
     ),
     /**
      * //NOTE: see Download.tsx for inspiration
      * @param dataURL
      */
-    setQR: (dataURL) => pdf(
-        _pdf
-            .text("QR PLACEHOLDER", 105, 200)
-            .setFillColor(colors.primary)
-            .setDrawColor(colors.primary)
-            .roundedRect(105, 200, 200, 200, 5, 5, "F")
-    ),
+    setQR: (dataURL) => {
+
+        const size = 100;
+        const margin = size * 0.04;
+
+        const x = 50;
+        const y = 150;
+
+        return pdf(
+            _pdf
+                .setFillColor(colors.primary)
+                .setDrawColor(colors.primary)
+                .roundedRect(x, y, size, size, 5, 5, "F")
+                .addImage(dataURL, "PNG", (x + margin), (y + margin), (size - (margin * 2)), (size - (margin * 2)))
+        )
+    },
     writeKretsPromo: () => pdf(
         _pdf
             //986 × 352 - promo dimensions
