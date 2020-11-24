@@ -1,21 +1,25 @@
+import { useEffect } from "react";
 import { AdminWrapper } from "../components/AdminWrapper";
-import { pdf } from "../pdf";
+import { asyncEffect } from "../effects/asyncEffect";
+import { pdf } from "../pdf/pdf";
 
 
 export default AdminWrapper(() => {
+    
+    asyncEffect(async () => {
 
-
-    const onClick = () => {
-        
-        pdf()
-            .writeHeader("heading")
-            .writeSubheader("subheader")
-            .writeParagraph("paragraph content hello")
+        await pdf()
+            .font()
+            .writeHeader("Hvordan har du det?")
+            .writeSubheader("Din tilbakemelding betyr mye. 😄")
+            .writeParagraph("Scan koden med ditt mobilkamera og gi meg din viktige tilbakemelding")
             .setQR()
-            .save()
-    }
+            .writeEmoji()
+            .output("dataurlnewwindow")
+    }, [])
 
     return <>
-        <button onClick={onClick}>Last ned PDF</button>
+        pdf test
+        {/* <button onClick={onClick}>Last ned PDF</button> */}
     </>
 })
