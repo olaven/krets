@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { AdminWrapper } from "../components/AdminWrapper";
 import { asyncEffect } from "../effects/asyncEffect";
 import { pdf } from "../pdf/pdf";
@@ -8,7 +7,7 @@ export default AdminWrapper(() => {
     
     asyncEffect(async () => {
 
-        await pdf()
+        pdf()
             .font()
             .writeHeader("Hvordan har du det?")
             .writeSubheader("Din tilbakemelding betyr mye. 😄")

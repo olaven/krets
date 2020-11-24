@@ -33,11 +33,16 @@ export const pdf = (_pdf = new jsPDF().setFont("Roboto-Light")) => ({
             .text(text, 21, 55)
     ),
 
-    writeEmoji: () => {
+    writeEmoji: () => pdf(
+        _pdf.addImage("/smiley.png", "PNG", 15, 40, 180, 180)
+    ),
+    /**
+     * //NOTE: see Download.tsx for inspiration
+     * @param image dataURL
+     */
+    writeQR: (dataURL: string) => {
 
-        return pdf(
-            _pdf.addImage("/smiley.png", "PNG", 15, 40, 180, 180)
-        )
+
     },
     writeParagraph: (text: string) => pdf(
         _pdf
