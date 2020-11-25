@@ -25,7 +25,12 @@ const FormContainer = styled(ColumnContainer, {
     height: "100%", 
     width: "100%",
     justifyContent: "space-around",
-})
+}); 
+
+const AttributionSpan = styled("span", {
+    fontSize: ".8em", 
+    opacity: 0.8, 
+});
 
 export const DownloadPoster = ({page, getCanvasURL}) => {
 
@@ -65,6 +70,9 @@ export const DownloadPoster = ({page, getCanvasURL}) => {
                 </ColumnContainer>
                 
                 <Button onClick={onDownload}>Last ned plakat</Button>
+                <AttributionSpan>
+                    PDF-emojis er designet av "<a href="https://openmoji.org/">OpenMoji</a> – the open-source emoji and icon project". Lisens: CC BY-SA 4.0
+                </AttributionSpan>
             </FormContainer>
         
             

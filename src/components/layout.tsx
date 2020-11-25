@@ -94,7 +94,7 @@ export const Layout = (props) => {
             </Box>
         </FullScreen>
         <Footer>
-        PDF-emojis er designet av "<a href="https://openmoji.org/">OpenMoji</a> – the open-source emoji and icon project". Lisens: CC BY-SA 4.0
-    </Footer>
+            {/* NO FOOTER CONTENT */}
+        </Footer>
  </>
 };

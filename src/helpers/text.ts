@@ -126,12 +126,12 @@ export const page = strings({
     en: {
         header: "Scan and give feedback to",
         loading: "(Loading...)",
-        download: "Download!"
+        download: "Download code!"
     },
     no: {
         header: "Scan for å gi tilbakemelding til",
         loading: "(Laster...)",
-        download: "Last ned"
+        download: "Last ned code"
     }
 })
 
