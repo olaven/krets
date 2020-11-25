@@ -1,4 +1,4 @@
-import { jsPDF } from "jspdf";
+import jsPDF from "jspdf";
 import "./Roboto-Light-normal";
 
 export const openKretsPDF = (options: {
@@ -25,7 +25,7 @@ export const openKretsPDF = (options: {
  * @param _pdf 
  */
 const pdf = (
-    _pdf = new jsPDF().setFont("Roboto-Light"),
+    _pdf = new jsPDF()/* .setFont("Roboto-Light") */,
     sizes = {
         heading: 34,
         text: 21,
