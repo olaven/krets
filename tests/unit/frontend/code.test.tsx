@@ -15,11 +15,11 @@ describe("The QR/code page", () => {
     //NOT relevant, not waiting for result 
     mockFetch({})
 
-    it("'loading' while waiting for page", async () => {
+    it("Shows loader while waiting for page", async () => {
 
         mockRouter("test-id");
-        const { container, getByText } = render(<CodePage></CodePage>)
-        expect(getByText(text.page.loading)).toBeInTheDocument()
+        const { container, getByText, getByLabel } = render(<CodePage></CodePage>)
+        expect(getByLabel("loader-label")).toBeInTheDocument()
     });
 
     it("Shows name of the specified page", async () => {
