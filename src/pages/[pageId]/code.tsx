@@ -1,62 +1,33 @@
 import { useRouter } from "next/router";
-import { QRCode } from "react-qrcode-logo";
-import React, { useContext } from "react";
-import { Box, Flex, Heading } from "rebass";
 import { usePage } from "../../effects/usePage";
-import * as text from "../../helpers/text"
-import { Download } from "../../components/Code/download";
-import { UserContext } from "../../context/UserContext";
+import { extractCanvasURL } from "../../components/Code/extractCanvasURL";
+import { ColumnContainer } from "../../components/standard/Containers";
+import {Loader } from "../../components/standard/loader";
+import { QRImage } from "../../components/Code/QRImage";
+import { DownloadPoster } from "../../components/Code/DownloadPoster";
+import { DownloadQR } from "../../components/Code/DownloadQR";
+import { styled } from "../../stiches.config";
 
-export const DownloadQR = ({ page }) => {
 
-    const { authUser } = useContext(UserContext);
-    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
+const Container = styled(ColumnContainer, {
+    alignItems: "center",
+});
 
-    return <Flex>
-        <Box
-            m="auto"
-            p={[1, 2, 3]}
-        >
-            {userOwnsThePage && <Download
-                fileName={`${page?.name}-QR.png`}
-                querySelector=".qr-code > canvas" />}
-        </Box>
-    </Flex>
-}
-
-const QRImage = ({ page }) => {
-
-    const pageLink = `https://krets.app/${page?.id}`;
-
-    const headingText = page ?
-        `${text.page.header} ${page.name}` :
-        text.page.loading;
-
-    return <Box>
-        <Heading
-            my={[0, 1, 2]}
-            textAlign="center"
-            m="auto"
-            color="primary"
-        >{headingText}</Heading>
-        <Box
-            p={[1, 2]}
-            style={{ textAlign: "center" }}
-        >
-            <div className={"qr-code"}>
-                <QRCode value={pageLink} enableCORS={false} size={400} fgColor={'#0A585C'} bgColor="#EBF3FE" />
-            </div>
-        </Box>
-    </Box >
-}
 
 export default () => {
 
     const pageId = useRouter().query.pageId as string;
-    const [page, _] = usePage(pageId as string);
-
-    return <Box m={"auto"} py={[4, 8, 16]}>
+    const getCanvasURL = extractCanvasURL(".qr-code > canvas")
+    
+    const [page, loading] = usePage(pageId as string);
+    
+    return (loading? 
+    <Loader size={150}/>: 
+    <Container>
         <QRImage page={page} />
-        <DownloadQR page={page} />
-    </Box>
+        <ColumnContainer style={{marginTop: "$55"}}>
+            <DownloadPoster page={page} getCanvasURL={getCanvasURL}/> 
+            <DownloadQR page={page} getCanvasURL={getCanvasURL} />
+        </ColumnContainer>
+    </Container>)
 }

@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Link, Text, Image } from "rebass";
 import { AboutButton, GuidePageButton, LoginButton, LogoutButton, MyPageButton } from "./standard/buttons";
+import { styled } from "../stiches.config";
 
 const HeaderLogo = () => {
 
@@ -52,26 +53,48 @@ const CornerButtons = () => {
         </>
 }
 
+const Footer = styled("div", {
+    position: "absolute", 
+    fontSize: "1em",
+    bottom: "-1em",
+    opacity: 0.5
+});
+
+
+const FullScreen = styled("div", {
+    backgroundColor: "orange",
+    position: "absolute", 
+    width: "100vw", 
+    height: "100vh", 
+    top: 0, 
+    left: 0,
+    minHeight: "100%"
+});
+
 export const Layout = (props) => {
 
-    return <Box
-        minWidth={"100vw"}
-        minHeight={"100vh"}
-        sx={{
-            fontFamily: "body"
-        }}
-        backgroundColor={"secondary"}
-    >
-        <Flex px={2}
-            color='primary'
-            alignItems='center'>
+    return <>
+    <FullScreen>
+            <Box
+                minWidth={"100vw"}
+                minHeight={"100vh"}
+                sx={{
+                    fontFamily: "body"
+                }}
+                backgroundColor={"secondary"}
+            >
+                <Flex px={2}
+                    color='primary'
+                    alignItems='center'>
 
-            <HeaderLogo />
-            <CornerButtons />
-        </Flex>
-        {props.children}
-        {/*<div>
-            footer stuff
-        </div>*/}
-    </Box>
+                    <HeaderLogo />
+                    <CornerButtons />
+                </Flex>
+                {props.children}
+            </Box>
+        </FullScreen>
+        <Footer>
+            {/* NO FOOTER CONTENT */}
+        </Footer>
+ </>
 };
