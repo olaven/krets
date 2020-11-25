@@ -1,4 +1,4 @@
-import jsPDF from "jspdf";
+import { jsPDF } from "jspdf";
 import "./Roboto-Light-normal";
 
 export const openKretsPDF = (options: {
