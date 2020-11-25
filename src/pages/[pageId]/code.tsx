@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { usePage } from "../../effects/usePage";
 import { extractCanvasURL } from "../../components/Code/extractCanvasURL";
-import { ColumnContainer } from "../../components/standard/Containers";
+import { ColumnContainer, RowContainer } from "../../components/standard/Containers";
 import { QRImage } from "../../components/Code/QRImage";
 import { DownloadPoster } from "../../components/Code/DownloadPoster";
 import { DownloadQR } from "../../components/Code/DownloadQR";
@@ -22,7 +22,9 @@ export default () => {
     
     return (loading || <Container>
         <QRImage page={page} />
-        <DownloadPoster page={page} getCanvasURL={getCanvasURL}/> 
-        <DownloadQR page={page} getCanvasURL={getCanvasURL} />
+        <ColumnContainer style={{marginTop: "$55"}}>
+            <DownloadPoster page={page} getCanvasURL={getCanvasURL}/> 
+            <DownloadQR page={page} getCanvasURL={getCanvasURL} />
+        </ColumnContainer>
     </Container>)
 }
