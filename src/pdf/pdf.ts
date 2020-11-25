@@ -9,7 +9,6 @@ export const openKretsPDF = (options: {
     QRDataURL: string,
 }) =>
     pdf()
-        .font()
         .writeHeader(options.header)
         .writeSubheader(options.subheader)
         .writeParagraph(options.paragraph)
@@ -36,10 +35,6 @@ const pdf = (
     }
 ) => ({
 
-    font: () => {
-        console.log(_pdf.getFont());
-        return pdf(_pdf);
-    },
     writeHeader: (text: string) => pdf(
         _pdf
             .setFontSize(sizes.heading)
