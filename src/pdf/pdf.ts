@@ -27,7 +27,7 @@ export const openKretsPDF = (options: {
 const pdf = (
     _pdf = new jsPDF().setFont("Roboto-Light"),
     sizes = {
-        heading: 55,
+        heading: 34,
         text: 21,
     },
     colors = {
@@ -42,13 +42,17 @@ const pdf = (
     writeHeader: (text: string) => pdf(
         _pdf
             .setFontSize(sizes.heading)
-            .text(text, 12, 34)
+            .text(text, 12, 34, {
+                maxWidth: 190
+            })
     ),
 
     writeSubheader: (text: string) => pdf(
         _pdf
             .setFontSize(sizes.text)
-            .text(text, 12, 80)
+            .text(text, 12, 80, {
+                maxWidth: 140
+            })
     ),
 
     writeEmoji: () => pdf(
