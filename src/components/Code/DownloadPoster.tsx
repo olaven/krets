@@ -48,6 +48,7 @@ export const DownloadPoster = ({page, getCanvasURL}) => {
     const onDownload = () => {
         
         openKretsPDF({
+            filename: page.id + "-plakat.pdf",
             header,
             subheader,
             paragraph,

@@ -2,6 +2,7 @@ import { jsPDF } from "jspdf";
 import "./Roboto-Light-normal";
 
 export const openKretsPDF = (options: {
+    filename: string,
     header: string,
     subheader: string,
     paragraph: string,
@@ -15,7 +16,7 @@ export const openKretsPDF = (options: {
         .setQR(options.QRDataURL)
         .writeKretsPromo()
         .writeEmoji()
-        .output("dataurlnewwindow")
+        .save(options.filename)
 
 /**
  * Minimal wrapper around jsPDF, adding methods 
