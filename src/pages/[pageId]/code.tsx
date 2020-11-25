@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { usePage } from "../../effects/usePage";
 import { extractCanvasURL } from "../../components/Code/extractCanvasURL";
 import { ColumnContainer } from "../../components/standard/Containers";
-import {Loader } from "../../components/standard/Loader";
+import {Loader } from "../../components/standard/loader";
 import { QRImage } from "../../components/Code/QRImage";
 import { DownloadPoster } from "../../components/Code/DownloadPoster";
 import { DownloadQR } from "../../components/Code/DownloadQR";
