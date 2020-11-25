@@ -10,8 +10,10 @@ const Input = styled("input", {
     backgroundColor: "$secondary",
     color: "$black",
     fontSize: "$21",
+    transition: "ease 100ms",
     ":focus": {
-        outline: "none"
+        outline: "none", 
+        transform: "scale(1.005)"
     }
 });
 
