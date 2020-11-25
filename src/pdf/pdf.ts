@@ -25,7 +25,7 @@ export const openKretsPDF = (options: {
  * @param _pdf 
  */
 const pdf = (
-    _pdf = new jsPDF().setFont("Roboto-Light"),
+    _pdf = new jsPDF()/* .setFont("Roboto-Light") */,
     sizes = {
         heading: 34,
         text: 21,
