@@ -5,12 +5,10 @@ import { Button } from "../standard/Button";
 
 export const DownloadQR = ({ page, getCanvasURL }) => {
 
-    const { authUser } = useContext(UserContext);
-    const userOwnsThePage = authUser && authUser.sub === page.owner_id;
 
     const filename = `${page.id}-qr.png`
 
-    return userOwnsThePage && <Button>
+    return <Button>
         <a
             href={getCanvasURL()}
             download={filename}
