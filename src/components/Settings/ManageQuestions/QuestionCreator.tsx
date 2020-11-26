@@ -5,10 +5,9 @@ import { QuestionsContext } from "../../../context/QuestionsContext";
 import { HomeContext } from "../../../context/HomeContext";
 import { postQuestion } from "../../../helpers/fetchers";
 import { TriggerLoadingButton } from "../../standard/buttons";
-import { ColumnContainer } from "../../standard/Containers";
+import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { H1 } from "../../standard/Heading"
 import { TextInput } from "../../standard/Input";
-import { styled } from "../../../stiches.config";
 
 
 export const QuestionCreator = () => {
@@ -39,20 +38,20 @@ export const QuestionCreator = () => {
         <ColumnContainer as='form' onSubmit={e => e.preventDefault()}>
 
             <H1 left>{uiText.settings.questions.createQuestion}</H1>
-            <TextInput
-                aria-label="questionname-input"
-                placeholder={uiText.settings.questions.placeholder}
-                onChange={({ target: { value } }) => {
-                    setText(value);
-                }}
-                value={text}
-            />
-            <TriggerLoadingButton
-                text={uiText.settings.questions.createButton}
-                action={onCreateQuestion}
-            />
-
-
+            <RowContainer>
+                <TextInput
+                    aria-label="questionname-input"
+                    placeholder={uiText.settings.questions.placeholder}
+                    onChange={({ target: { value } }) => {
+                        setText(value);
+                    }}
+                    value={text}
+                />
+                <TriggerLoadingButton
+                    text={uiText.settings.questions.createButton}
+                    action={onCreateQuestion}
+                />
+            </RowContainer>
         </ColumnContainer >
 
 }

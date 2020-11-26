@@ -12,7 +12,6 @@ import { PageModel } from "../../../../models/models";
 import { PagesContext } from "../../../../context/PagesContext";
 
 
-
 export const nameToId = (name: string) => name
     .toLowerCase()
     .replace(/(Ø|ø)/g, "oe")
