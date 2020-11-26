@@ -19,6 +19,7 @@ const applyDefaultQuestion = (emotion: Emotion, questions: QuestionModel[]):
 const Container = styled("div", {
     display: "flex",
     flexDirection: "column",
+    alignSelf: "center",
 });
 
 const CheckboxContainer = styled("div", {
