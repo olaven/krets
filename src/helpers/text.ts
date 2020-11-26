@@ -126,14 +126,43 @@ export const page = strings({
     en: {
         header: "Scan and give feedback to",
         loading: "(Loading...)",
-        download: "Download!"
+        download: "Download code!",
+        pdf: {
+            labels: {
+                header: "Write your customized header",
+                subheader: "Write something encouraging!",
+                paragraph: "Explain how your customer can give feedback.",
+            },
+            defaults: {
+                header: "How are you?",
+                subheader: "Your feedback is very important",
+                paragraph: "Scan this code with your phone to leave quick feedback"
+            },
+            download: "Generate custom poster",
+            attribution: "PDF-emojis are designed by openmoji.org. Lisence: CC BY-SA 4.0",
+        }
     },
     no: {
         header: "Scan for å gi tilbakemelding til",
         loading: "(Laster...)",
-        download: "Last ned"
+        download: "Last ned code",
+        pdf: {
+            labels: {
+                header: "Tilpass overskriften",
+                subheader: "Tilpass underoverskriften. Skriv noe oppmuntrende!",
+                paragraph: "Forklar hvordan og hvorfor til kunde bør gi tilbakemelding",
+            },
+            defaults: {
+                header: "Hvordan har du det?",
+                subheader: "Din tilbakemelding betyr mye",
+                paragraph: "Scan koden med ditt mobilkamera. Tusen takk!"
+            },
+            download: "Lag din Krets-plakat",
+            attribution: "PDF-emojier er designet av openmoji.org. Lisens: CC BY-SA 4.0",
+        }
     }
 });
+
 
 export const pageList = strings({
     en: {
@@ -149,6 +178,7 @@ export const pageList = strings({
         }
     }
 });
+
 
 export const buttons = strings({
     en: {
