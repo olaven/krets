@@ -15,7 +15,7 @@ export const UpdateTitle = () => {
         ? page.custom_title :
         `${text.response.header} ${page.name}`
 
-    const { page, updatePage } = useContext(HomeContext);
+    const { selectedPage: page, updatePage } = useContext(HomeContext);
     const [title, setTitle] = useState(
         getTitle(page)
     );

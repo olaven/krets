@@ -27,9 +27,9 @@ export const renderWithEmbeddableContext = (
     Component: ReactElement,
     embeddable = randomEmbeddable("mock-render-page-id")
 ) => render(<HomeContext.Provider value={{
-    page: randomPage("mock-render-owner"),
+    selectedPage: randomPage("mock-render-owner"),
     updatePage: async () => { }, 
-    setPage: () => {}
+    setSelectedPage: () => {}
 }}>
     <EmbeddableContext.Provider value={{
         embeddable,
@@ -69,9 +69,9 @@ Component: ReactElement,
     updatePage = async () => { },
     embeddable = randomEmbeddable("mock-render-page-id")
 ) => render(<HomeContext.Provider value={{
-    page,
+    selectedPage: page,
     updatePage,
-    setPage: () => {}, 
+    setSelectedPage: () => {}, 
 }}>
     <EmbeddableContext.Provider value={{
         embeddable,

@@ -12,7 +12,7 @@ const { enabledText, disabledText, updateWhenEnabled, updateWhenDisabled } = tex
 
 export const ToggleMandatoryContactDetails = () => {
 
-    const { page, updatePage } = useContext(HomeContext);
+    const { selectedPage: page, updatePage } = useContext(HomeContext);
 
     const onUpdate = async () => {
 

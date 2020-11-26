@@ -32,7 +32,7 @@ export const addProtocol = (url: string) =>
 
 export const EmbeddableCreator = () => {
 
-    const { page } = useContext(HomeContext);
+    const { selectedPage: page } = useContext(HomeContext);
     const { refreshEmbeddables } = useContext(EmbeddableContext)
 
     const onGenerate = async () => {

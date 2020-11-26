@@ -11,7 +11,7 @@ import { HomeContext } from "../../context/HomeContext";
 //TODO: actually pull categories (from context etc.)
 export const UpdateCategory = () => {
 
-    const { page } = useContext(HomeContext);
+    const { selectedPage: page } = useContext(HomeContext);
     const options = [
         { value: "first_id", name: "My First Category" },
         { value: "second_id", name: "My Second Category" },

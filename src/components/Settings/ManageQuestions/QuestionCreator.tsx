@@ -13,7 +13,7 @@ import { styled } from "../../../stiches.config";
 
 export const QuestionCreator = () => {
 
-    const { page } = useContext(HomeContext);
+    const { selectedPage: page } = useContext(HomeContext);
     const { moreQuestionsAreAllowed, refreshQuestions } = useContext(QuestionsContext);
 
     const [text, setText] = useState("");

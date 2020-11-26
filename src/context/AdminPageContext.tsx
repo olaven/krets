@@ -18,7 +18,7 @@ export const AdminPageContext = createContext<ContextInterface>(defaultValues);
 
 export const AdminPageContextProvider = ({  children }) => {
 
-    const { page } = useContext(HomeContext)
+    const { selectedPage: page } = useContext(HomeContext)
     const [responses, moreResponsesAvailable, responsesLoading, getNextResponses] = useResponses(page.id);
 
     return <AdminPageContext.Provider value={{ page, responses, moreResponsesAvailable, responsesLoading, getNextResponses }}>

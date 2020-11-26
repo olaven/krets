@@ -13,7 +13,7 @@ import { HomeContext } from "../../context/HomeContext";
 export const Admin = () => {
 
     const { authUser } = useContext(UserContext); 
-    const { page } = useContext(HomeContext); 
+    const { selectedPage: page } = useContext(HomeContext); 
 
     return page ?
         <AdminPageContextProvider>

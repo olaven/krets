@@ -35,6 +35,12 @@ export const Tabs = ({ elements, setComponent }: Props) => {
 
     const [selected, setSelected] = useState(elements[0].label)
 
+    //NOTE: selecting first component by defualt 
+    useEffect(() => {
+
+        setComponent(elements[0].Component);
+    }, []);
+
     return <RowContainer>{
         elements.map(element =>
             //@ts-ignore

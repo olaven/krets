@@ -9,7 +9,7 @@ import { HomeContext } from "../../context/HomeContext";
 export const DeletePage = () => {
 
     const router = useRouter();
-    const { page } = useContext(HomeContext);
+    const { selectedPage: page } = useContext(HomeContext);
 
     const performDeletion = async () => {
 

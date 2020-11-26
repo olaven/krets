@@ -9,17 +9,8 @@ import { HomeContext } from "../../../../context/HomeContext";
 
 export const PageList = () => {
 
-    const { setPage } = useContext(HomeContext);
+    const { setSelectedPage } = useContext(HomeContext);
     const { pages, hasLoaded, pageLoading, moreAvailable, getNextPages } = useContext(PagesContext);
-
-    useEffect(() => {
-
-        if (pages.length) {
-
-            const [firstPage] = pages;
-            setPage(firstPage);
-        }
-    }, [pages.length])
 
     return <>
         {!hasLoaded && <Loader size={50} />}

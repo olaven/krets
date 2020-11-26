@@ -3,26 +3,27 @@ import { PageModel } from "../models/models";
 import { getPage } from "../helpers/fetchers";
 
 interface IHomeContext {
-    page?: PageModel,
-    setPage: React.Dispatch<SetStateAction<PageModel>>,
+    selectedPage?: PageModel,
+    setSelectedPage: React.Dispatch<SetStateAction<PageModel>>,
     updatePage: () => Promise<any>,
 }
 
 export const HomeContext = createContext<IHomeContext>({
-    page: null, setPage: (page: PageModel) => { }, updatePage: async () => { }
+    selectedPage: null, setSelectedPage: (page: PageModel) => { }, updatePage: async () => { }
 });
 
 
 export const HomeContextProvider = ({ children }) => {
 
-    const [page, setPage] = useState<PageModel>(null);
+    const [selectedPage, setSelectedPage] = useState<PageModel>(null);
 
+    //THINKABOUT: Remove updatePage fetching and instead just update local copy? 
     const updatePage = async () => {
-        const [status, updated] = await getPage(page.id);
-        setPage(updated);
+        const [status, updated] = await getPage(selectedPage.id);
+        setSelectedPage(updated);
     }
 
-    return <HomeContext.Provider value={{ page, setPage, updatePage }}>
+    return <HomeContext.Provider value={{ selectedPage, setSelectedPage, updatePage }}>
         {children}
     </HomeContext.Provider>
 };

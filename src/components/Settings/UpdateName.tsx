@@ -10,7 +10,7 @@ import { ColumnContainer } from "../standard/Containers"
 
 export const UpdateName = () => {
 
-    const { page, updatePage } = useContext(HomeContext);
+    const { selectedPage: page, updatePage } = useContext(HomeContext);
     const [name, setName] = useState(page.name);
 
     useEffect(() => {

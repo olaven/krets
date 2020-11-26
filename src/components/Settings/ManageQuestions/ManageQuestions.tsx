@@ -13,7 +13,7 @@ import { QuestionsList } from "./QuestionsList";
  */
 export const ManageQuestions = () => {
 
-    const { page } = useContext(HomeContext);
+    const { selectedPage: page } = useContext(HomeContext);
 
     return <QuestionsContextProvider pageId={page.id} includeArchived={false}>
         <ColumnContainer>

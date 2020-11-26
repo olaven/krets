@@ -1,6 +1,6 @@
 import React, { ReactElement, useContext, useState } from "react";
 import { PagesContextProvider } from "../../../context/PagesContext";
-import { HomeContextProvider } from "../../../context/HomeContext";
+import { HomeContextProvider, HomeContext } from "../../../context/HomeContext";
 import { UserContext } from "../../../context/UserContext";
 import { styled } from "../../../stiches.config";
 import * as text from "../../../helpers/text";
@@ -30,14 +30,30 @@ export const HomeContent = () => {
 
     const { authUser } = useContext(UserContext);
 
+    const  { selectedPage , setSelectedPage } = useContext(HomeContext); 
     const [component, setComponent] = useState<ReactElement>(null)
 
     return <OuterContainer>
         <InnerContainer>
         <PagesContextProvider user={authUser}>
-                <H1 underlined>{text.myPages.header}</H1>
-                <PageList />
-                <PageCreator />
+                {
+                    selectedPage? 
+                        <>
+                            <button onClick={() => setSelectedPage(null)}>tilbake</button>
+                            <Tabs 
+                                setComponent={setComponent}
+                                elements={[
+                                    { label: "settings", Component: <Settings />},
+                                    { label: "statistikk", Component: <Admin />}
+                                ]}/>
+                            {component}
+                        </>: 
+                        <>
+                            <H1 underlined>{text.myPages.header}</H1>
+                            <PageList />
+                            <PageCreator />
+                        </>
+                }
             </PagesContextProvider >
         </InnerContainer>
     </OuterContainer>

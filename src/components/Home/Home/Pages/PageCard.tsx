@@ -97,14 +97,14 @@ const FadeIn = styled("div", {
 export const PageCard = (page) => {
 
     const homeContext = useContext(HomeContext);
-    const selected = homeContext.page?.id === page.id;
+    const selected = homeContext.selectedPage?.id === page.id;
 
-    const onSelect = () => { homeContext.setPage(page) };
+    const onSelect = () => { homeContext.setSelectedPage(page) };
 
     return (
         <Margin>
             <FadeIn style={{ animationDuration: `${random(500)}ms` }}>
-                <Card focus={page.id === homeContext.page?.id}>
+                <Card focus={page.id === homeContext.selectedPage?.id}>
                     <LeftContainer onClick={onSelect}>
                         <H2>{page.name}</H2>
                         <SelectButton selected={selected}>

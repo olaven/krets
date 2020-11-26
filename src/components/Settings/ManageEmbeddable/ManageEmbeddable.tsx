@@ -15,7 +15,7 @@ export const EmbeddableContent = () => {
 
 export const ManageEmbeddable = () => {
 
-    const { page } = useContext(HomeContext);
+    const { selectedPage: page } = useContext(HomeContext);
     return <EmbeddableContextProvider pageId={page.id}>
         <EmbeddableContent />
     </ EmbeddableContextProvider >
