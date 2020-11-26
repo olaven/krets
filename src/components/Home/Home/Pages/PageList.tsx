@@ -22,7 +22,6 @@ export const PageList = () => {
     }, [pages.length])
 
     return <>
-        <H1 underlined>{text.myPages.header}</H1>
         {!hasLoaded && <Loader size={50} />}
         {pages
             .sort((a, b) => a.created_at < b.created_at ? 1 : -1)

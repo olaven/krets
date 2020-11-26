@@ -19,6 +19,7 @@ const Card = styled(RowContainer, {
     justifyContent: "space-between",
     transitionTimingFunction: "ease",
     transitionDuration: "100ms",
+    marginBottom: "$21",
     opacity: ".55",
 
     ":hover": {
@@ -30,8 +31,9 @@ const Card = styled(RowContainer, {
         focus: {
             true: {
                 opacity: "1",
-                transform: "scale(1.15)",
-                paddingBottom: "$21",
+                transformOrigin: "unset",
+                transform: "scale(1.01)",
+                //paddingBottom: "$21",
             }
         }
     }
