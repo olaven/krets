@@ -51,7 +51,9 @@ export const renderWithPagesContext = (
         pageLoading: false,
         moreAvailable: true,
         getNextPages: jest.fn(() => { }),
-        addPage: jest.fn((page) => { })
+        addPage: jest.fn((page) => { }), 
+        removePage: jest.fn((page) => {}), 
+        updatePage: jest.fn((page) => {}), 
     }}>
     <UserContext.Provider
         value={{
