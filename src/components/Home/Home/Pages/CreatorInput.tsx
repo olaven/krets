@@ -75,6 +75,7 @@ export const CreatorInput = ({visible, toggleVisibility}: {visible: boolean, tog
 
                 <RowContainer>
                     <TextInput 
+                        aria-label="pagename-input"
                         value={name}
                         placeholder={uiText.pageCreator.placeholder}
                         onChange={(event) => {
@@ -82,6 +83,7 @@ export const CreatorInput = ({visible, toggleVisibility}: {visible: boolean, tog
                         }} 
                         />
                     <Button
+                        aria-label="create-button"
                         onClick={onClick}
                         disabled={name.length <= 2}>
                         {uiText.pageCreator.button}
