@@ -10,6 +10,8 @@ export const LineChart = ({ pageInformations }: { pageInformations: PageInformat
 
     const [pageWithCoordinates, setPageWithCoordinates] = useState([]);
 
+    console.log(pageInformations);
+
     asyncEffect(async () => {
 
         const pageWithCoordinates = await Promise.all(

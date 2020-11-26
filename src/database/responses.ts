@@ -130,11 +130,13 @@ export const getLineCoordinates = async (pageId: string) => {
         [pageId]
     );
 
+    const coordinates: CoordinateModel[] = [];
+    if (!responses.length) return coordinates;
+
     //NOTE: non-functional loops for performance reasons, as the above query could return a lot of data
     // https://stackoverflow.com/questions/43031988/javascript-efficiency-for-vs-foreach/43032526#43032526
     // https://medium.com/tech-tajawal/loops-performances-in-node-js-9fbccf2d6aa6
 
-    const coordinates: CoordinateModel[] = [];
 
     for (const limit of responses) {
 

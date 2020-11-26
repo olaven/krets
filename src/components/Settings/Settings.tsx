@@ -18,9 +18,7 @@ const Container = styled("div", {
     alignItems: "left",
     justifyItems: "flex-start",
     margin: "auto",
-    width: "100%"
-
-    
+    width: "100%" 
 });
 
 

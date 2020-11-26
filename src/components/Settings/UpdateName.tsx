@@ -6,25 +6,24 @@ import { putPage } from "../../helpers/fetchers"
 import { TriggerLoadingButton } from "../standard/buttons"
 import { TextInput } from "../standard/Input";
 import { ColumnContainer } from "../standard/Containers"
+import { usePageUpdater } from "./usePageUpdater"
 
 
 export const UpdateName = () => {
 
-    const { selectedPage: page, updatePage } = useContext(HomeContext);
-    const [name, setName] = useState(page.name);
+    const { selectedPage, updatePage } = useContext(HomeContext);
+    const [name, setName] = useState(selectedPage.name);
+    const pageUpdater = usePageUpdater();
 
     useEffect(() => {
 
-        setName(page.name);
-    }, [page]) 
+        setName(selectedPage.name);
+    }, [selectedPage]) 
 
-    const updateName = async () => {
-
-        const [status] = await putPage({ ...page, name });
-        if (status !== NO_CONTENT)
-            console.warn(`${status} when updating page name`);
-        await updatePage();
-    }
+    const updateName = () => pageUpdater({
+        ...selectedPage, 
+        name,
+    });
 
     return <ColumnContainer>
         <TextInput
