@@ -20,23 +20,10 @@ const Card = styled(RowContainer, {
     transitionTimingFunction: "ease",
     transitionDuration: "100ms",
     marginBottom: "$21",
-    opacity: ".55",
 
     ":hover": {
-        opacity: "1",
+        transform :"scale(1.05)",
     },
-
-    variants: {
-
-        focus: {
-            true: {
-                opacity: "1",
-                transformOrigin: "unset",
-                transform: "scale(1.01)",
-                //paddingBottom: "$21",
-            }
-        }
-    }
 });
 
 const LeftContainer = styled(ColumnContainer, {
@@ -61,20 +48,9 @@ const SelectButton = styled(Button, {
     boxShadow: "4px 4px 8px grey",
 
     ":hover": {
-        transform: "scale(1.15)",
+        transform: "scale(1.05)",
         boxShadow: "4px 4px 5px grey",
     },
-
-    variants: {
-        selected: {
-            true: {
-
-                transform: "scale(1.15)",
-                color: "$primary",
-                backgroundColor: "$secondary",
-            }
-        }
-    }
 });
 
 const random = (max: number) => Math.floor(Math.random() * max + 1);
@@ -104,10 +80,10 @@ export const PageCard = (page) => {
     return (
         <Margin>
             <FadeIn style={{ animationDuration: `${random(500)}ms` }}>
-                <Card focus={page.id === homeContext.selectedPage?.id}>
+                <Card>
                     <LeftContainer onClick={onSelect}>
                         <H2>{page.name}</H2>
-                        <SelectButton selected={selected}>
+                        <SelectButton>
                             {selected ?
                                 uiText.pageList.card.selected :
                                 uiText.pageList.card.unselected}

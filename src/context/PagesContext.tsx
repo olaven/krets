@@ -7,6 +7,7 @@ type Type = {
     moreAvailable: boolean,
     getNextPages: () => void,
     addPage: (page: PageModel) => void,
+    removePage: (page: PageModel) => void,
     /**
      * false -> before first load 
      * true  -> after first load 
@@ -20,6 +21,7 @@ export const PagesContext = createContext<Type>({
     moreAvailable: true,
     getNextPages: () => { },
     addPage: (page: PageModel) => { },
+    removePage: (page: PageModel) => { },
     hasLoaded: false,
     pageLoading: true
 });
@@ -51,13 +53,28 @@ export const PagesContextProvider = ({ user, children }) => {
         if (page.next) setHasLoaded(true);
     }, [page.next]);
 
-    const addPage = (page: PageModel) => {
+    /**
+     * Adds a page to local list. 
+     * Does _not_ sync with backend
+     * @param page 
+     */
+    const addPage = (page: PageModel) => 
+        setPages(
+            [page, ...pages]
+        )
 
-        setPages([page, ...pages]);
-    }
+    /**
+     * Removes page from local list 
+     * Does _not_ sync with backend
+     * @param page 
+     */
+    const removePage = (page: PageModel) => 
+        setPages(
+            pages.filter(p => p.id !== page.id)
+        ); 
 
 
-    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, hasLoaded, pageLoading}}>
+    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, removePage, hasLoaded, pageLoading}}>
         {children}
     </PagesContext.Provider>
 };

@@ -5,18 +5,22 @@ import * as text from "../../helpers/text";
 import { deletePage } from "../../helpers/fetchers";
 import { DoubleConfirmationButton } from "../standard/buttons";
 import { HomeContext } from "../../context/HomeContext";
+import { PagesContext } from "../../context/PagesContext";
 
 export const DeletePage = () => {
 
     const router = useRouter();
-    const { selectedPage: page } = useContext(HomeContext);
+    
+    const { selectedPage, setSelectedPage } = useContext(HomeContext);
+    const { removePage } = useContext(PagesContext);
 
     const performDeletion = async () => {
 
-        const [status] = await deletePage(page.id);
+        const [status] = await deletePage(selectedPage.id);
         if (status === NO_CONTENT) {
 
-            router.replace("/");
+            removePage(selectedPage);
+            setSelectedPage(null); 
         } else {
 
             alert(text.settings.deleteError)
