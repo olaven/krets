@@ -4,7 +4,7 @@ import { HomeContextProvider, HomeContext } from "../../../context/HomeContext";
 import { UserContext } from "../../../context/UserContext";
 import { styled } from "../../../stiches.config";
 import * as text from "../../../helpers/text";
-import { ColumnContainer } from "../../standard/Containers";
+import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { H1 } from "../../standard/Heading";
 import { Button } from "../../standard/Button";
 import { SubscriberWrapper } from "../../SubscriberWrapper";
@@ -30,7 +30,8 @@ const InnerContainer = styled(ColumnContainer, {
 
 const BackButton = styled(Button, {
     width: "10vw", 
-    alignSelf: "flex-start", 
+    height: "10%",
+    justifySelf: "flex-start", 
     ":hover": {
 
         boxShadow: "4px 4px 8px grey",
@@ -56,6 +57,7 @@ export const HomeContent = () => {
                     selectedPage? 
                         <>
                             <BackButton onClick={() => setSelectedPage(null)}>Tilbake</BackButton>
+                            <H1>{selectedPage.name}</H1>  
                             <Tabs 
                                 setComponent={setComponent}
                                 elements={[

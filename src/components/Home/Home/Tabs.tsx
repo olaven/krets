@@ -16,7 +16,7 @@ const TabButton = styled(Button, {
                 borderColor: "$primary",
                 borderStyle: "solid",
                 transform: "scale(1.1)",
-                boxShadow: "4px 4px 1px grey;"
+                boxShadow: "0px 4px 5px grey;"
             }
         }
     }

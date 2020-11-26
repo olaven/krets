@@ -3,6 +3,7 @@ import { PagesContext } from "../../../../context/PagesContext";
 import { post, CREATED, CONFLICT } from "node-kall";
 import * as text from "../../../../helpers/text"
 import { PageModel } from "../../../../models/models";
+import { useToggle } from "../../../../effects/useToggle";
 import { CreatorInput } from "./CreatorInput";
 import { CreatorButton } from "./CreatorButton";
 
@@ -21,7 +22,7 @@ export const PageCreator = () => {
     const { addPage } = useContext(PagesContext);
 
 
-    const [visible, setVisible] = useState(false);
+    const [visible, toggleVisibility] = useToggle(false);
     const [name, setName] = useState("");
     const [id, setId] = useState("");
 
@@ -56,11 +57,11 @@ export const PageCreator = () => {
 
     
     return <>
-        {visible && <CreatorInput setVisible={setVisible}/>}
-        <CreatorButton
-            onClick={() => { setVisible(true) }}>
+        <CreatorInput visible={visible} toggleVisibility={toggleVisibility}/>
+        {visible || <CreatorButton
+            onClick={toggleVisibility}>
             Lag ny side
-        </CreatorButton>
+        </CreatorButton>}
     </>
     
 }; 

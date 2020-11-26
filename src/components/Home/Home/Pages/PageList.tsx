@@ -1,15 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import { PageCard } from "./PageCard";
 import { Loader, LoadMore } from "../../../standard/loader";
-import { H1 } from "../../../standard/Heading";
-import * as text from "../../../../helpers/text"
 import { PagesContext } from "../../../../context/PagesContext";
 import { HomeContext } from "../../../../context/HomeContext";
 
 
 export const PageList = () => {
 
-    const { setSelectedPage } = useContext(HomeContext);
     const { pages, hasLoaded, pageLoading, moreAvailable, getNextPages } = useContext(PagesContext);
 
     return <>
