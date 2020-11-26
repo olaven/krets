@@ -3,10 +3,12 @@ import { useContext } from "react";
 import { putPage } from "../../helpers/fetchers"
 import { PageModel } from "../../models/models";
 import { HomeContext } from "../../context/HomeContext";
+import { PagesContext } from "../../context/PagesContext";
 
 export const usePageUpdater = () => {
 
     const { setSelectedPage } = useContext(HomeContext); 
+    const { updatePage } = useContext(PagesContext);
 
     return async (page: PageModel) => {
 
@@ -15,7 +17,9 @@ export const usePageUpdater = () => {
 
         if (status !== NO_CONTENT)
             console.warn(`${status} when updating page title`);
-        else 
+        else  {
             setSelectedPage(page);
+            updatePage(page);
+        }
     }
 }

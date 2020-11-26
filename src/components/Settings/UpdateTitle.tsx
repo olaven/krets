@@ -1,43 +1,39 @@
 import * as text from "../../helpers/text";
-import { NO_CONTENT } from "node-kall";
 import { useContext, useEffect, useState } from "react";
 import { HomeContext } from "../../context/HomeContext";
-import { putPage } from "../../helpers/fetchers";
 import { TriggerLoadingButton } from "../standard/buttons";
 import { ColumnContainer } from "../standard/Containers";
 import { TextInput } from "../standard/Input";
 import { PageModel } from "../../models/models";
+import { usePageUpdater } from "./usePageUpdater";
+
+
+const getTitle = (page: PageModel) => page.custom_title 
+    ? page.custom_title :
+    `${text.response.header} ${page.name}`
 
 
 export const UpdateTitle = () => {
 
-    const getTitle = (page: PageModel) => page.custom_title 
-        ? page.custom_title :
-        `${text.response.header} ${page.name}`
 
-    const { selectedPage: page, updatePage } = useContext(HomeContext);
+    const { selectedPage } = useContext(HomeContext);
     const [title, setTitle] = useState(
-        getTitle(page)
+        getTitle(selectedPage)
     );
+
+    const pageUpdater = usePageUpdater();
 
     useEffect(() => {
 
         setTitle(
-            getTitle(page)
+            getTitle(selectedPage)
         );
-    }, [page]) 
+    }, [selectedPage]) 
 
-    const updateTitle = async () => {
-
-        const [status] = await putPage({
-            ...page,
-            custom_title: title
-        });
-
-        if (status !== NO_CONTENT)
-            console.warn(`${status} when updating page title`);
-        //updatePage(); //NOTE: Not needed, as the update title only is shown in the input field where it's already entered
-    }
+    const updateTitle = () => pageUpdater({
+        ...selectedPage, 
+        custom_title: title, 
+    });
 
     return <ColumnContainer>
         <TextInput

@@ -8,6 +8,7 @@ type Type = {
     getNextPages: () => void,
     addPage: (page: PageModel) => void,
     removePage: (page: PageModel) => void,
+    updatePage: (page: PageModel) => void,
     /**
      * false -> before first load 
      * true  -> after first load 
@@ -22,9 +23,12 @@ export const PagesContext = createContext<Type>({
     getNextPages: () => { },
     addPage: (page: PageModel) => { },
     removePage: (page: PageModel) => { },
+    updatePage: (page: PageModel) => { },
     hasLoaded: false,
     pageLoading: true
 });
+
+
 
 /**
  * Essentially a Wrapper for `usePagination`, keeping 
@@ -73,8 +77,16 @@ export const PagesContextProvider = ({ user, children }) => {
             pages.filter(p => p.id !== page.id)
         ); 
 
+    const updatePage = (page: PageModel) =>  setPages(
+            pages.map(p => 
+                p.id === page.id? 
+                    page: 
+                    p
+            )
+        );
+    
 
-    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, removePage, hasLoaded, pageLoading}}>
+    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, removePage, updatePage, hasLoaded, pageLoading}}>
         {children}
     </PagesContext.Provider>
 };

@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { NO_CONTENT } from "node-kall";
 import { useContext } from "react";
 import * as text from "../../helpers/text";
@@ -8,8 +7,6 @@ import { HomeContext } from "../../context/HomeContext";
 import { PagesContext } from "../../context/PagesContext";
 
 export const DeletePage = () => {
-
-    const router = useRouter();
     
     const { selectedPage, setSelectedPage } = useContext(HomeContext);
     const { removePage } = useContext(PagesContext);
