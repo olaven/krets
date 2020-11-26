@@ -4,8 +4,9 @@ import { HomeContextProvider, HomeContext } from "../../../context/HomeContext";
 import { UserContext } from "../../../context/UserContext";
 import { styled } from "../../../stiches.config";
 import * as text from "../../../helpers/text";
-import { ColumnContainer, RowContainer } from "../../standard/Containers";
+import { ColumnContainer } from "../../standard/Containers";
 import { H1 } from "../../standard/Heading";
+import { Button } from "../../standard/Button";
 import { SubscriberWrapper } from "../../SubscriberWrapper";
 import { PageCreator } from "./Pages/PageCreator";
 import { PageList } from "./Pages/PageList";
@@ -14,15 +15,30 @@ import { Admin } from "../../Admin/Admin";
 import { Settings } from "../../Settings/Settings";
 
 
-
 const OuterContainer = styled("div", {
     display: "flex", 
-    justifyContent: "center"
+    justifyContent: "center", 
 });
 
 const InnerContainer = styled(ColumnContainer, {
     alignContent: "center",
-    width: "55vw"
+    width: "55vw", 
+    small: {
+        width: "100vw",
+    }
+});
+
+const BackButton = styled(Button, {
+    width: "10vw", 
+    alignSelf: "flex-start", 
+    ":hover": {
+
+        boxShadow: "4px 4px 8px grey",
+    },
+    small: {
+        width: "100%",
+        alignSelf: "center", 
+    }
 })
 
 
@@ -39,12 +55,12 @@ export const HomeContent = () => {
                 {
                     selectedPage? 
                         <>
-                            <button onClick={() => setSelectedPage(null)}>tilbake</button>
+                            <BackButton onClick={() => setSelectedPage(null)}>Tilbake</BackButton>
                             <Tabs 
                                 setComponent={setComponent}
                                 elements={[
-                                    { label: "settings", Component: <Settings />},
-                                    { label: "statistikk", Component: <Admin />}
+                                    { label: text.buttons.toSettings, Component: <Settings />},
+                                    { label: text.buttons.toAdmin, Component: <Admin />}
                                 ]}/>
                             {component}
                         </>: 
