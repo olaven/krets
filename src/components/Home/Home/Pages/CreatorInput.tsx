@@ -22,6 +22,14 @@ export const nameToId = (name: string) => name
     .replace("!", "")
     .replace(/[^a-zA-Z0-9s|]/g, "-");
 
+const Container = styled(ColumnContainer, {
+    alignItems: "center",
+    marginTop: "$55",
+
+    small: {
+        marginTop: "$1"
+    }
+})
 
 export const CreatorInput = ({visible, toggleVisibility}: {visible: boolean, toggleVisibility: () => void}) => {
 
@@ -63,20 +71,24 @@ export const CreatorInput = ({visible, toggleVisibility}: {visible: boolean, tog
                 X
             </UpperLeftCorner>
 
+            <Container>
+                <Paragraph>{uiText.pageCreator.preview} https://krets.app/{id}</Paragraph>    
 
-            <Paragraph>{uiText.pageCreator.preview} https://krets.app/{id}</Paragraph>    
-            <TextInput 
-                value={name}
-                placeholder={uiText.pageCreator.placeholder}
-                onChange={(event) => {
-                    setName(event.target.value);
-                }} 
-            />
-            <Button
-                onClick={onClick}
-                disabled={name.length <= 2}>
-                {uiText.pageCreator.button}
-            </Button>
+                <RowContainer>
+                    <TextInput 
+                        value={name}
+                        placeholder={uiText.pageCreator.placeholder}
+                        onChange={(event) => {
+                            setName(event.target.value);
+                        }} 
+                        />
+                    <Button
+                        onClick={onClick}
+                        disabled={name.length <= 2}>
+                        {uiText.pageCreator.button}
+                    </Button>
+                </RowContainer>
+            </Container>
         </Modal>
     )
 }
