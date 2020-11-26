@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { QuestionsContextProvider } from "../../../context/QuestionsContext";
-import { SettingsContext } from "../../../context/SettingsContext";
+import { HomeContext } from "../../../context/HomeContext";
 import { ColumnContainer } from "../../standard/Containers";
 import { QuestionCreator } from "./QuestionCreator";
 import { QuestionsList } from "./QuestionsList";
@@ -13,7 +13,7 @@ import { QuestionsList } from "./QuestionsList";
  */
 export const ManageQuestions = () => {
 
-    const { page } = useContext(SettingsContext);
+    const { selectedPage: page } = useContext(HomeContext);
 
     return <QuestionsContextProvider pageId={page.id} includeArchived={false}>
         <ColumnContainer>

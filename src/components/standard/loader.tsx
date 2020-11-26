@@ -1,7 +1,9 @@
 import { Box } from "rebass";
 import BounceLoader from "react-spinners/BounceLoader";
 import { css } from "@emotion/core";
-import { LoadMoreButton } from "./buttons";
+import * as uiText from "../../helpers/text"
+import { styled } from "../../stiches.config";
+import { Button } from "./Button";
 
 export const Loader = ({ size }: { size: number }) => <Box width={1}>
     <span aria-label="loader-label">
@@ -15,7 +17,9 @@ export const Loader = ({ size }: { size: number }) => <Box width={1}>
     </span>
 </Box >
 
+const LoadMoreButton = styled(Button, {
 
+});
 
 export const LoadMore = ({ onClick, active, isLoading }) => {
     if (!active)
@@ -24,6 +28,8 @@ export const LoadMore = ({ onClick, active, isLoading }) => {
     if (isLoading)
         return <Loader size={10} />
 
-    return <LoadMoreButton onClick={onClick} />
+    return <LoadMoreButton onClick={onClick} >
+        {uiText.buttons.loadMore}
+    </LoadMoreButton>
 }
 

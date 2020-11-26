@@ -1,29 +1,39 @@
 import * as text from "../../helpers/text";
-import { NO_CONTENT } from "node-kall";
-import { useContext, useState } from "react";
-import { SettingsContext } from "../../context/SettingsContext";
-import { putPage } from "../../helpers/fetchers";
+import { useContext, useEffect, useState } from "react";
+import { HomeContext } from "../../context/HomeContext";
 import { TriggerLoadingButton } from "../standard/buttons";
 import { ColumnContainer } from "../standard/Containers";
 import { TextInput } from "../standard/Input";
+import { PageModel } from "../../models/models";
+import { usePageUpdater } from "./usePageUpdater";
+
+
+const getTitle = (page: PageModel) => page.custom_title 
+    ? page.custom_title :
+    `${text.response.header} ${page.name}`
 
 
 export const UpdateTitle = () => {
 
-    const { page, updatePage } = useContext(SettingsContext);
-    const [title, setTitle] = useState(page.custom_title ? page.custom_title : `${text.response.header} ${page.name}`);
 
-    const updateTitle = async () => {
+    const { selectedPage } = useContext(HomeContext);
+    const [title, setTitle] = useState(
+        getTitle(selectedPage)
+    );
 
-        const [status] = await putPage({
-            ...page,
-            custom_title: title
-        });
+    const pageUpdater = usePageUpdater();
 
-        if (status !== NO_CONTENT)
-            console.warn(`${status} when updating page title`);
-        //updatePage(); //NOTE: Not needed, as the update title only is shown in the input field where it's already entered
-    }
+    useEffect(() => {
+
+        setTitle(
+            getTitle(selectedPage)
+        );
+    }, [selectedPage]) 
+
+    const updateTitle = () => pageUpdater({
+        ...selectedPage, 
+        custom_title: title, 
+    });
 
     return <ColumnContainer>
         <TextInput

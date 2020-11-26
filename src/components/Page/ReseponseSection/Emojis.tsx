@@ -4,7 +4,6 @@ import { css, styled } from "../../../stiches.config";
 
 type Props = { selectedEmotion: Emotion, setSelectedEmotion: (emotion: Emotion) => void }
 export const Emojis = ({ selectedEmotion, setSelectedEmotion }: Props) => {
-
     return <EmojiContainer>
         {([":-)", ":-|", ":-("] as Emotion[]).map(emotion =>
             <Emoji
@@ -21,6 +20,7 @@ const EmojiContainer = styled('div', {
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
+    alignSelf: "center",
 });
 
 

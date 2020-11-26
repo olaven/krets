@@ -38,7 +38,7 @@ export const NumberInput = (props) =>
 
 //TODO: find better home 
 export const QuestionInput = styled(TextInput, {
-    width: "79%",
+    width: "90%",
     small: {
         width: "91vw",
     }

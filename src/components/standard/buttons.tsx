@@ -81,14 +81,17 @@ export const TriggerLoadingButton = ({ text, action, backgroundColor, label }: {
 
 
 
-const ListButton = (href: string, text: string) =>
-    <Box m={[1]}>
-        <Button width={1}>
-            <Link color={"secondary"} href={href}>
-                {text}
-            </Link>
-        </Button>
-    </Box >;
+const ListButton = (href: string, text: string) => (
+
+    <StitchesButton inverted>
+        <a style={{color: "inherit", textDecoration: "none"}} href={href}>
+            {text}
+        </a>
+    </StitchesButton>
+
+)
+
+
 
 export const ToAdmin = ({ id }) =>
     ListButton(`/${id}/admin`, uiText.buttons.toAdmin);
@@ -103,6 +106,7 @@ export const ToSettings = ({ id }) =>
     ListButton(`/${id}/settings`, uiText.buttons.toSettings);
 
 
+//NOTE: Deprecated, should be replaced over time with a normal button. 
 export const LoadMoreButton = ({ onClick }) =>
     <Button width={1} onClick={onClick}>
         {uiText.buttons.loadMore}

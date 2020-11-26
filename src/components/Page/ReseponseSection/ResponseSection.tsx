@@ -127,7 +127,6 @@ export const ResponseSection = ({ page }: {
         else alert(uiText.response.error);
     };
 
-
     return published ?
         <Thanks /> :
         <OuterContainer>

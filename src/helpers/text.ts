@@ -163,6 +163,23 @@ export const page = strings({
     }
 });
 
+
+export const pageList = strings({
+    en: {
+        card: {
+            selected: "Chosen",
+            unselected: "Choose",
+        }
+    },
+    no: {
+        card: {
+            selected: "VALGT",
+            unselected: "VELG",
+        }
+    }
+});
+
+
 export const buttons = strings({
     en: {
         logout: "Log out",
@@ -185,8 +202,8 @@ export const buttons = strings({
         aboutPage: "Om",
         getStarted: "Kom i gang!",
         toAdmin: "Mottatte tilbakemeldinger",
-        toQR: "Se QR-kode",
-        toPage: "Se svarside",
+        toQR: "SE KODE",
+        toPage: "SE SIDE",
         toSettings: "Innstillinger",
         loadMore: "Last flere sider",
     }
@@ -231,15 +248,15 @@ export const myCategories = strings({
 
 export const pageCreator = strings({
     en: {
-        preview: "Your page:",
+        preview: "Page URL:",
         placeholder: "Enter the page name",
         button: "Create page",
         error: "An error occured😐",
         conflict: "A page with this ID already exists"
     },
     no: {
-        preview: "Din side:",
-        placeholder: "Skriv navnet på den nye siden her",
+        preview: "Sidens URL:",
+        placeholder: "Skriv navn her",
         button: "Lag side",
         error: "En feil oppsto😐",
         conflict: "Dette sidenavnet er opptatt."

@@ -5,7 +5,7 @@ import { PageModel, UserModel } from '../../../src/models/models';
 import { PagesContext } from "../../../src/context/PagesContext";
 import { render } from '@testing-library/react';
 import { UserContext } from "../../../src/context/UserContext";
-import { SettingsContext } from "../../../src/context/SettingsContext";
+import { HomeContext } from "../../../src/context/HomeContext";
 import { randomPage } from "../api/apiTestUtils";
 import { EmbeddableContext } from "../../../src/context/EmbeddableContext";
 import { randomEmbeddable } from "../database/databaseTestUtils";
@@ -26,10 +26,10 @@ export const renderWithUserContext = (
 export const renderWithEmbeddableContext = (
     Component: ReactElement,
     embeddable = randomEmbeddable("mock-render-page-id")
-) => render(<SettingsContext.Provider value={{
-    page: randomPage("mock-render-owner"),
-    pageLoading: false,
-    updatePage: async () => { }
+) => render(<HomeContext.Provider value={{
+    selectedPage: randomPage("mock-render-owner"),
+    updatePage: async () => { }, 
+    setSelectedPage: () => {}
 }}>
     <EmbeddableContext.Provider value={{
         embeddable,
@@ -37,7 +37,7 @@ export const renderWithEmbeddableContext = (
     }}>
         {Component}
     </EmbeddableContext.Provider>
-</SettingsContext.Provider>);
+</HomeContext.Provider>);
 
 
 export const renderWithPagesContext = (
@@ -51,7 +51,9 @@ export const renderWithPagesContext = (
         pageLoading: false,
         moreAvailable: true,
         getNextPages: jest.fn(() => { }),
-        addPage: jest.fn((page) => { })
+        addPage: jest.fn((page) => { }), 
+        removePage: jest.fn((page) => {}), 
+        updatePage: jest.fn((page) => {}), 
     }}>
     <UserContext.Provider
         value={{
@@ -63,15 +65,15 @@ export const renderWithPagesContext = (
 </PagesContext.Provider>);
 
 
-export const renderWithSettingsContext = (
-    Component: ReactElement,
+export const renderWithHomeContext = (
+Component: ReactElement,
     page = randomPage("mock-render-owner"),
     updatePage = async () => { },
     embeddable = randomEmbeddable("mock-render-page-id")
-) => render(<SettingsContext.Provider value={{
-    page,
+) => render(<HomeContext.Provider value={{
+    selectedPage: page,
     updatePage,
-    pageLoading: false,
+    setSelectedPage: () => {}, 
 }}>
     <EmbeddableContext.Provider value={{
         embeddable,
@@ -79,7 +81,7 @@ export const renderWithSettingsContext = (
     }}>
         {Component}
     </EmbeddableContext.Provider>
-</SettingsContext.Provider>);
+</HomeContext.Provider>);
 
 
 

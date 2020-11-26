@@ -1,19 +1,18 @@
 import { NO_CONTENT } from "node-kall";
 import { useContext } from "react"
-import { SettingsContext } from "../../context/SettingsContext"
 import { putPage } from "../../helpers/fetchers"
-import { styled } from "../../stiches.config";
 import * as text from "../../helpers/text";
 import { Button } from "../standard/Button";
 import { Paragraph } from "../standard/Text";
 import { ColumnContainer } from "../standard/Containers";
+import { HomeContext } from "../../context/HomeContext";
 
 const { enabledText, disabledText, updateWhenEnabled, updateWhenDisabled } = text.settings.mandatoryContact
 
 
 export const ToggleMandatoryContactDetails = () => {
 
-    const { page, updatePage } = useContext(SettingsContext);
+    const { selectedPage: page, updatePage } = useContext(HomeContext);
 
     const onUpdate = async () => {
 

@@ -85,9 +85,9 @@ const AdminContent = () => <Flex flexWrap="wrap">
 export const AdminPage = () => {
 
     const { authUser } = useContext(UserContext);
-    const { page, pageLoading } = useContext(AdminPageContext);
+    const { page } = useContext(AdminPageContext);
 
-    if (pageLoading) {
+    if (!page) {
         return <Loader size={150} />
     }
 

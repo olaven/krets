@@ -5,18 +5,19 @@ export const Button = styled('button', {
     color: "$secondary",
     backgroundColor: "$primary",
     cursor: "pointer",
-    borderRadius: "5px",
     fontSize: "$21",
     padding: "$8 $13",
     margin: "$3",
+
+    borderRadius: "5px",
+    borderWidth: "1px",
 
     ":hover": {
         transitionDuration: "55ms",
         backgroundColor: "$secondary",
         color: "$primary",
-        underlineColor: "$primary",
         textDecoration: "underline",
-        borderWidth: "1px",
+
         borderColor: "$black",
     },
 
@@ -29,10 +30,9 @@ export const Button = styled('button', {
                 backgroundColor: "$secondary",
                 color: "$primary",
                 border: "solid $primary",
-                borderWidth: "$3",
+                borderWidth: "$1",
 
                 ":hover": {
-                    borderWidth: "$5",
                     color: "$secondary",
                     backgroundColor: "$primary",
                     textDecoration: "none"

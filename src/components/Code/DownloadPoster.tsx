@@ -2,7 +2,7 @@ import { useState } from "react";
 import { styled } from "../../stiches.config";
 import { useToggle } from "../../effects/useToggle";
 import { TextArea, TextInput } from "../standard/Input";
-import { Modal } from "../standard/Modal";
+import { Modal, UpperLeftCorner } from "../standard/Modal";
 import { Button } from "../standard/Button";
 import { openKretsPDF } from "../../pdf/pdf";
 import { ColumnContainer } from "../standard/Containers";
@@ -10,19 +10,6 @@ import { ColumnContainer } from "../standard/Containers";
 import * as text from "../../helpers/text";
 const uiText = text.page.pdf; 
 
-const UpperLeftCorner = styled("div", {
-    opacity: .2,
-    fontSize: "1.25em",
-    positon: "absolute", 
-    left: "$5",
-    top: "$5", 
-    ":hover": {
-        opacity: 1,
-        transition: "ease 100ms",
-        cursor: "pointer", 
-        transformOrigin: "center",
-    },
-});    
 
 const FormContainer = styled(ColumnContainer, {
     height: "100%", 

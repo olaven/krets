@@ -1,26 +1,27 @@
 import * as text from "../../helpers/text"
-import { NO_CONTENT } from "node-kall"
-import { useContext, useState } from "react"
-import { SettingsContext } from "../../context/SettingsContext"
-import { putPage } from "../../helpers/fetchers"
+import { useContext, useEffect, useState } from "react"
+import { HomeContext } from "../../context/HomeContext"
 import { TriggerLoadingButton } from "../standard/buttons"
 import { TextInput } from "../standard/Input";
-import { styled } from "../../stiches.config"
 import { ColumnContainer } from "../standard/Containers"
+import { usePageUpdater } from "./usePageUpdater"
 
 
 export const UpdateName = () => {
 
-    const { page, updatePage } = useContext(SettingsContext);
-    const [name, setName] = useState(page.name);
+    const { selectedPage } = useContext(HomeContext);
+    const [name, setName] = useState(selectedPage.name);
+    const pageUpdater = usePageUpdater();
 
-    const updateName = async () => {
+    useEffect(() => {
 
-        const [status] = await putPage({ ...page, name });
-        if (status !== NO_CONTENT)
-            console.warn(`${status} when updating page name`);
-        await updatePage();
-    }
+        setName(selectedPage.name);
+    }, [selectedPage]) 
+
+    const updateName = () => pageUpdater({
+        ...selectedPage, 
+        name,
+    });
 
     return <ColumnContainer>
         <TextInput

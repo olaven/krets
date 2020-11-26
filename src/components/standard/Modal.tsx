@@ -1,5 +1,19 @@
 import { styled } from "../../stiches.config";
 
+export const UpperLeftCorner = styled("div", {
+    opacity: .2,
+    fontSize: "1.25em",
+    positon: "absolute", 
+    left: "$5",
+    top: "$5", 
+    ":hover": {
+        opacity: 1,
+        transition: "ease 100ms",
+        cursor: "pointer", 
+        transformOrigin: "center",
+    },
+});    
+
 export const Modal = styled("div", {
     display: "none", 
     opacity: 0, 

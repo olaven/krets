@@ -10,6 +10,11 @@ const headingStyles: any = {
             true: {
                 textAlign: "left"
             }
+        },
+        underlined: {
+            true: {
+                textDecoration: "underline"
+            }
         }
     }
 }
@@ -24,6 +29,11 @@ export const H1 = styled('h1', {
         left: {
             true: {
                 textAlign: "left"
+            }
+        },
+        underlined: {
+            true: {
+                textDecoration: "underline"
             }
         }
     }

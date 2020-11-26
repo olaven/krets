@@ -1,7 +1,7 @@
 import { EmbeddableCreator } from "./EmbeddableCreator"
 import { EmbeddableContext, EmbeddableContextProvider } from "../../../context/EmbeddableContext";
 import { useContext } from "react";
-import { SettingsContext } from "../../../context/SettingsContext";
+import { HomeContext } from "../../../context/HomeContext";
 import { EmbeddableSnippet } from "./EmbeddableSnippet";
 
 //NOTE: exported to tests
@@ -15,7 +15,7 @@ export const EmbeddableContent = () => {
 
 export const ManageEmbeddable = () => {
 
-    const { page } = useContext(SettingsContext);
+    const { selectedPage: page } = useContext(HomeContext);
     return <EmbeddableContextProvider pageId={page.id}>
         <EmbeddableContent />
     </ EmbeddableContextProvider >

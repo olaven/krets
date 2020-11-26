@@ -7,6 +7,8 @@ type Type = {
     moreAvailable: boolean,
     getNextPages: () => void,
     addPage: (page: PageModel) => void,
+    removePage: (page: PageModel) => void,
+    updatePage: (page: PageModel) => void,
     /**
      * false -> before first load 
      * true  -> after first load 
@@ -20,9 +22,13 @@ export const PagesContext = createContext<Type>({
     moreAvailable: true,
     getNextPages: () => { },
     addPage: (page: PageModel) => { },
+    removePage: (page: PageModel) => { },
+    updatePage: (page: PageModel) => { },
     hasLoaded: false,
     pageLoading: true
 });
+
+
 
 /**
  * Essentially a Wrapper for `usePagination`, keeping 
@@ -36,7 +42,7 @@ export const PagesContextProvider = ({ user, children }) => {
 
     if (!user) throw "Should not see this if not logged in!";
 
-    const [page, moreAvailable, pageLoading, getNextPages] = usePagination<PageModel>(`/api/pages`);
+    const [page, moreAvailable, pageLoading, getNextPages] = usePagination<PageModel>(`/api/pages`, 15);
     const [hasLoaded, setHasLoaded] = useState(false);
 
     //A buffer keeping old `.data`
@@ -51,13 +57,36 @@ export const PagesContextProvider = ({ user, children }) => {
         if (page.next) setHasLoaded(true);
     }, [page.next]);
 
-    const addPage = (page: PageModel) => {
+    /**
+     * Adds a page to local list. 
+     * Does _not_ sync with backend
+     * @param page 
+     */
+    const addPage = (page: PageModel) => 
+        setPages(
+            [page, ...pages]
+        )
 
-        setPages([page, ...pages]);
-    }
+    /**
+     * Removes page from local list 
+     * Does _not_ sync with backend
+     * @param page 
+     */
+    const removePage = (page: PageModel) => 
+        setPages(
+            pages.filter(p => p.id !== page.id)
+        ); 
 
+    const updatePage = (page: PageModel) =>  setPages(
+            pages.map(p => 
+                p.id === page.id? 
+                    page: 
+                    p
+            )
+        );
+    
 
-    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, hasLoaded, pageLoading}}>
+    return <PagesContext.Provider value={{ pages, moreAvailable, getNextPages, addPage, removePage, updatePage, hasLoaded, pageLoading}}>
         {children}
     </PagesContext.Provider>
 };

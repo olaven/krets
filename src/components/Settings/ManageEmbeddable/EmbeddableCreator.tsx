@@ -1,12 +1,11 @@
 import { CREATED } from "node-kall";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { Flex } from "rebass";
-import { Input } from "@rebass/forms";
-import { SettingsContext } from "../../../context/SettingsContext";
 import { postEmbeddable } from "../../../helpers/fetchers";
 import { TriggerLoadingButton } from "../../standard/buttons";
 import * as text from "../../../helpers/text";
 import { EmbeddableContext } from "../../../context/EmbeddableContext";
+import { HomeContext } from "../../../context/HomeContext";
 
 const uiText = text.settings.embeddable
 
@@ -33,7 +32,7 @@ export const addProtocol = (url: string) =>
 
 export const EmbeddableCreator = () => {
 
-    const { page } = useContext(SettingsContext);
+    const { selectedPage: page } = useContext(HomeContext);
     const { refreshEmbeddables } = useContext(EmbeddableContext)
 
     const onGenerate = async () => {
