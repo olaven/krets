@@ -7,6 +7,7 @@ import { emojidata, numericEmojiToString } from "../../../helpers/emojidata";
 import { withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { PageModel, ResponseModel, UserModel, } from "../../../models/models";
 import { ServerClient } from "postmark";
+import responses from "../pages/[id]/responses";
 
 //FIXME: clean this file 
 
@@ -53,7 +54,7 @@ const getTemplateQuestions = async (response: ResponseModel): Promise<TemplateQu
         .map(answer => {
 
             //if the answer does not have a user-defined question, it is a default question
-            const question = questions.find(question => question.id === answer.question_id)
+            const question = questions.find(question => question.id === answer.question_id);
             const actual = question ? question : defaultQuestion(
                 numericEmojiToString(
                     response.emotion
@@ -86,6 +87,10 @@ const getTemplateResponses = async (page: PageModel): Promise<TemplateResponse[]
             })
         })));
 }
+
+export const filterOutIfNoQuestions = (responses: TemplateResponse[]) =>
+    responses
+        .filter(r => r.questions.length > 0);
 
 //NOTE: Exported to tests
 export const calculateDevelopment = async (page: PageModel): Promise<{ percentage: number, positive: boolean, developmentNotCalculated: boolean }> => {
@@ -120,7 +125,9 @@ export const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTem
 
             const { percentage, positive, developmentNotCalculated } = await calculateDevelopment(page);
 
-            const responses = await getTemplateResponses(page)
+            const responses = filterOutIfNoQuestions(
+                await getTemplateResponses(page)
+            );
 
             return {
                 name: page.name,
