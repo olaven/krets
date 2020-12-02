@@ -40,7 +40,7 @@ export const intro = strings({
             curious: "Nysgjerrig?"
         },
         about: "Krets hjelper din bedrift med å få tilbakemeldinger.",
-        aim: "Slik kan du ta de beste valgene for din bedrift 👍",
+        aim: "Slik kan du ta de beste valgene 👍",
         instructions: "Scan denne med telefonen din - Se hvor enkelt det er 🤳",
         create: "Å lage en Krets-side er kjapt!",
         visiting: "Ditt publikum besøker din side, med link eller QR-kode",
