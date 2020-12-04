@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../context/UserContext";
 import { AdminPageContext } from "../../context/AdminPageContext";
-import { Box, Flex, Text } from "rebass";
 import { OK } from "node-kall";
 import { LoginButton } from "../standard/buttons";
 import { TextList } from "./TextList/TextList";
@@ -10,13 +9,10 @@ import * as text from "../../helpers/text"
 import { CompareSelect } from "./CompareSelect";
 import { getCount, getOverallAverage } from "../../helpers/fetchers";
 import { Loader } from "../standard/loader";
+import { ColumnContainer, RowContainer } from "../standard/Containers";
+import { Paragraph } from "../standard/Text";
+import { styled } from "../../stiches.config";
 
-const AdminBox = props => <Box
-    width={props.width ? props.width : [1, 1 / 2]}
-    p={[1, 2, 3]}
->
-    {props.children}
-</Box>
 
 const ResponseCount = () => {
 
@@ -37,9 +33,9 @@ const ResponseCount = () => {
         })()
     }, []);
 
-    return <Text>
+    return <Paragraph>
         {text.adminPage.count} {count}
-    </Text>
+    </Paragraph>
 }
 
 
@@ -63,24 +59,28 @@ const AverageScore = () => {
         })()
     }, [])
 
-    return <Text>
+    return <Paragraph>
         {text.adminPage.average} {average + 1}/3
-    </Text>
+    </Paragraph>
 }
 
-const AdminContent = () => <Flex flexWrap="wrap">
-    <AdminBox width={1}>
-        <AverageScore />
-        <ResponseCount />
-    </AdminBox>
-    <AdminBox>
-        <CompareSelect />
-        <Charts />
-    </AdminBox>
-    <AdminBox>
-        <TextList />
-    </AdminBox>
-</Flex>
+
+const Container = styled(RowContainer, {
+    justifyContent: "space-between",
+})
+const AdminContent = () => <Container>
+    <ColumnContainer>
+        <div>
+            <AverageScore />
+            <ResponseCount />
+        </div>
+        <div>
+            <CompareSelect />
+            <Charts />
+        </div>
+    </ColumnContainer>
+    <TextList />
+</Container>
 
 export const AdminPage = () => {
 
@@ -96,9 +96,9 @@ export const AdminPage = () => {
     }
 
     if (page && authUser.sub !== page.owner_id)
-        return <AdminBox>
+        return <>
             {text.adminPage.notOwning}
-        </AdminBox>;
+        </>;
 
     return <AdminContent />
 }
