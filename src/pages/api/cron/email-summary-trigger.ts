@@ -7,7 +7,6 @@ import { emojidata, numericEmojiToString } from "../../../helpers/emojidata";
 import { withErrorHandling, withMethodHandlers } from "../../../middleware/middleware";
 import { PageModel, ResponseModel, UserModel, } from "../../../models/models";
 import { ServerClient } from "postmark";
-import responses from "../pages/[id]/responses";
 
 //FIXME: clean this file 
 
@@ -34,6 +33,7 @@ type PostMarkSummaryTemplate = {
     pages: {
 
         name: string,
+        id: string,
         total_response_count_in_period: number,
         positive: boolean,
         percentage: number,
@@ -131,6 +131,7 @@ export const toTemplate = async (pages: PageModel[]): Promise<PostMarkSummaryTem
 
             return {
                 name: page.name,
+                id: page.id,
                 total_response_count_in_period: responses.length,
                 positive: positive,
                 percentage: percentage,
