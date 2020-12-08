@@ -9,6 +9,14 @@ export const Paragraph = styled("p", {
         fontSize: "$13",
     },
 
+    variants: {
+        ligth: {
+            true: {
+                fontWeight: "lighter"
+            }
+        }
+    }
+
 });
 
 export const Label = styled("label", {

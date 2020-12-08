@@ -12,9 +12,9 @@ export default AdminWrapper(() => {
             logoURL:"https://krets.app/logo.svg"
         }, 
         {
-            companyName:"Oslo Bedrift AS",
-            quote:"“Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder”",
-            personName:"Ola Normann",
+            companyName:"Lillehammer Bedrift AS",
+            quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
+            personName:"Ola Normann, daglig leder",
             logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
         }
     ]

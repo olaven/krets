@@ -47,3 +47,15 @@ export const H3 = styled('h2', {
     ...headingStyles
 });
 
+
+export const H4 = styled('h4', {
+    ...headingStyles
+});
+
+export const H5 = styled('h5', {
+    ...headingStyles
+});
+
+export const H6 = styled('h6', {
+    ...headingStyles
+});
