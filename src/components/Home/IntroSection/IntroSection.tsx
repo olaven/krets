@@ -6,6 +6,11 @@ import { intro } from "../../../helpers/text";
 import { validateEmail } from "../../../helpers/email";
 import { postEmail } from "../../../helpers/fetchers";
 import { CREATED, OK } from "node-kall";
+import { Testemonial } from "./Testemonial";
+import { Testemonials } from "./Testemonials";
+import { ColumnContainer, RowContainer } from "../../standard/Containers";
+import { H1 } from "../../standard/Heading";
+import { TextInput } from "../../standard/Input";
 
 const DisclaimerBox = () => <Box
     width={1}>
@@ -47,35 +52,68 @@ const RequestAccess = () => {
         }
     }
 
-    return <Flex width={[1]} m="auto" flexDirection="column">
+    return <>
         <Text fontSize={[2, 3, 4]}>{intro.requestAccess.curious}</Text>
         {success ?
-            <Text textAlign="center" backgroundColor="success" color="secondary" px={[1, 2]} py={[2, 3, 4]} fontSize={[3, 4, 5]}>{intro.requestAccess.success}</Text> :
-            <Flex alignItems="center" flexDirection="column">
-                <Input
-                    fontSize={[13, 21]}
+            <H1>{intro.requestAccess.success}</H1> :
+            <div>
+                <TextInput
+                    placeholder={intro.requestAccess.placeholder}
                     color={valid ? 'black' : 'attention'}
                     onChange={({ target: { value } }) => {
 
                         setBeforeTyping(false);
                         setEmail(value)
                     }}
-                    m={[1]}
-                    placeholder={intro.requestAccess.placeholder}
                 />
                 <TriggerLoadingButton
                     text={intro.requestAccess.button}
                     action={onRequestAccess}
                 />
-            </Flex >
+            </div >
         }
-    </Flex >
+    </ >
 }
 
 export const IntroSection = () => {
 
+    return <>
+        <RowContainer style={{justifyContent: "space-evenly"}}>
+            <ColumnContainer>
+                {intro.about}
+                <br /><br />
+                {intro.aim}
+            </ColumnContainer>
+            <ColumnContainer>
+                <RequestAccess />
+                <DisclaimerBox />
+            </ColumnContainer>
+        </RowContainer>
+        <Testemonials
+            testemonials={[
+                {
+                    companyName: "Oslo Bedrift AS", 
+                    quote:"Med Krets kan vi få vite det kunden tenker, men ikke vil si direkte til oss.",
+                    personName:"Kari Normann", 
+                    logoURL:"https://krets.app/logo.svg"
+                }, 
+                {
+                    companyName:"Lillehammer Bedrift AS",
+                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
+                    personName:"Ola Normann, daglig leder",
+                    logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
+                }, 
+                {
+                    companyName:"Drammen Bedrift AS",
+                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
+                    personName:"Per Normann, daglig leder",
+                    logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
+                }
+            ]}
+        />
+    </>
 
-    return <Box>
+ /*    return <Box>
 
         <Flex py={[1, 2, 3]} justifyContent="space-around" >
 
@@ -110,5 +148,5 @@ export const IntroSection = () => {
             </Box>
             <Box width={[0, 1 / 4]}> </Box>
         </Flex>
-    </Box >
+    </Box > */
 };

@@ -1,14 +1,14 @@
 import { styled } from "../../../stiches.config"
 import { RowContainer, ColumnContainer } from "../../standard/Containers"
-import { H2 } from "../../standard/Heading"
 import { Paragraph } from "../../standard/Text"
 
-const Container = styled(RowContainer, {
-    border: "solid black 2px",
+const Container = styled(ColumnContainer, {
+    justifyContent: "space-evenly",
+    border: "solid black .5px",
     borderRadius: "20px",
-    width: "$21vw", 
     margin: "$21",
-    padding: "$21"
+    padding: "$5",
+    //padding: "$21", 
 });
 
 const CompanyContainer = styled(ColumnContainer, {
@@ -23,26 +23,29 @@ const QuoteContainer = styled(ColumnContainer, {
 });
 
 const Image = styled("img", {
-    width: "114px"
+    height: "79px"
 });
 
 const Quote = styled("span", {
     fontSize: "$13"
 });
 
-type Props = {
+
+
+export interface ITestemonial {
     companyName: string, 
     quote: string, 
     personName: string
     logoURL: string
 }
-export const Testemonial = ({ companyName, quote, personName, logoURL}: Props) => (
+
+export const Testemonial = ({ companyName, quote, personName, logoURL}: Testemonial) => (
     <Container>
         <CompanyContainer>
             <Image src={logoURL}/>
+            <h2>{companyName}</h2>
         </CompanyContainer>
         <QuoteContainer>
-            <h2>{companyName}</h2>
             <Paragraph ligth>
                 "{quote}" 
                 <br />

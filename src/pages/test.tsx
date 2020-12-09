@@ -1,5 +1,5 @@
 import { AdminWrapper } from "../components/AdminWrapper";
-import { Testemonial } from "../components/Home/IntroSection/Testemonial";
+import { Testemonials } from "../components/Home/IntroSection/Testemonials";
 
 
 export default AdminWrapper(() => {
@@ -16,13 +16,16 @@ export default AdminWrapper(() => {
             quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
             personName:"Ola Normann, daglig leder",
             logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
+        }, 
+        {
+            companyName:"Drammen Bedrift AS",
+            quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
+            personName:"Per Normann, daglig leder",
+            logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
         }
     ]
     
     return <>
-        {testemonials.map(testemonial => <Testemonial 
-            key={testemonial.companyName}
-            {...testemonial}
-        />)}
+        <Testemonials testemonials={testemonials} />
     </>
 })
