@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Box, Text, Image, Link, Button, Heading } from "rebass";
-import { Input } from "@rebass/forms";
+import { Box, Text, Link} from "rebass";
 import { TriggerLoadingButton } from "../../standard/buttons";
 import { intro } from "../../../helpers/text";
 import { validateEmail } from "../../../helpers/email";
 import { postEmail } from "../../../helpers/fetchers";
 import { CREATED, OK } from "node-kall";
-import { Testemonial } from "./Testemonial";
 import { Testemonials } from "./Testemonials";
 import { ColumnContainer, RowContainer } from "../../standard/Containers";
 import { H1 } from "../../standard/Heading";
 import { TextInput } from "../../standard/Input";
+import { Paragraph } from "../../standard/Text";
+import { styled } from "../../../stiches.config";
 
 const DisclaimerBox = () => <Box
     width={1}>
@@ -75,14 +75,22 @@ const RequestAccess = () => {
     </ >
 }
 
+const Container = styled(ColumnContainer, {
+    justifyContent: "space-between", 
+    height: "70vh"
+})
+
 export const IntroSection = () => {
 
-    return <>
+    return <Container>
         <RowContainer style={{justifyContent: "space-evenly"}}>
             <ColumnContainer>
-                {intro.about}
-                <br /><br />
-                {intro.aim}
+                <Paragraph>
+                    {intro.about}
+                </Paragraph>
+                <Paragraph>
+                    {intro.aim}
+                </Paragraph>
             </ColumnContainer>
             <ColumnContainer>
                 <RequestAccess />
@@ -101,42 +109,5 @@ export const IntroSection = () => {
             ]
         }
         />
-    </>
-
- /*    return <Box>
-
-        <Flex py={[1, 2, 3]} justifyContent="space-around" >
-
-            <Flex flexDirection="row" width={[1, 1 / 3]}>
-                <Text width={[1]} m={[2, 3]} fontSize={[3, 4, 5]}>
-                    {intro.about}
-                    <br /><br />
-                    {intro.aim}
-                </Text>
-            </Flex>
-
-            <Flex flexDirection="column" width={[1, 1 / 3]}>
-                <RequestAccess />
-                <DisclaimerBox />
-            </Flex>
-        </Flex>
-
-        <Flex py={4}>
-            <Box width={[0, 1 / 4]}> </Box>
-            <Box width={[1, 2 / 4]}>
-
-                <Box backgroundColor="primary" color="secondary" width={1} padding={[1, 2]}>
-                    <Heading textAlign="center" py={[1, 2]} fontSize={[2, 3, 5]}>{intro.instructions}</Heading>
-                    <Flex>
-                        <Box width={[1 / 20, 1 / 6]}></Box>
-                        <Box width={[9 / 10, 4 / 6]}>
-                            <Image margin="auto auto" src="/krets-qr.png" />
-                        </Box>
-                        <Box width={[1 / 20, 1 / 6]}></Box>
-                    </Flex>
-                </Box>
-            </Box>
-            <Box width={[0, 1 / 4]}> </Box>
-        </Flex>
-    </Box > */
-};
+    </Container>
+    }
