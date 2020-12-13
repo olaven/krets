@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Box, Text, Image, Link, Button, Heading } from "rebass";
-import { Input } from "@rebass/forms";
+import { Box, Text, Link} from "rebass";
 import { TriggerLoadingButton } from "../../standard/buttons";
 import { intro } from "../../../helpers/text";
 import { validateEmail } from "../../../helpers/email";
 import { postEmail } from "../../../helpers/fetchers";
 import { CREATED, OK } from "node-kall";
+import { Testemonials } from "./Testemonials";
+import { ColumnContainer, RowContainer } from "../../standard/Containers";
+import { H1 } from "../../standard/Heading";
+import { TextInput } from "../../standard/Input";
+import { Paragraph } from "../../standard/Text";
+import { styled } from "../../../stiches.config";
 
 const DisclaimerBox = () => <Box
     width={1}>
@@ -47,68 +52,62 @@ const RequestAccess = () => {
         }
     }
 
-    return <Flex width={[1]} m="auto" flexDirection="column">
+    return <>
         <Text fontSize={[2, 3, 4]}>{intro.requestAccess.curious}</Text>
         {success ?
-            <Text textAlign="center" backgroundColor="success" color="secondary" px={[1, 2]} py={[2, 3, 4]} fontSize={[3, 4, 5]}>{intro.requestAccess.success}</Text> :
-            <Flex alignItems="center" flexDirection="column">
-                <Input
-                    fontSize={[13, 21]}
+            <H1>{intro.requestAccess.success}</H1> :
+            <div>
+                <TextInput
+                    placeholder={intro.requestAccess.placeholder}
                     color={valid ? 'black' : 'attention'}
                     onChange={({ target: { value } }) => {
 
                         setBeforeTyping(false);
                         setEmail(value)
                     }}
-                    m={[1]}
-                    placeholder={intro.requestAccess.placeholder}
                 />
                 <TriggerLoadingButton
                     text={intro.requestAccess.button}
                     action={onRequestAccess}
                 />
-            </Flex >
+            </div >
         }
-    </Flex >
+    </ >
 }
+
+const Container = styled(ColumnContainer, {
+    justifyContent: "space-between", 
+    height: "70vh"
+})
 
 export const IntroSection = () => {
 
-
-    return <Box>
-
-        <Flex py={[1, 2, 3]} justifyContent="space-around" >
-
-            <Flex flexDirection="row" width={[1, 1 / 3]}>
-                <Text width={[1]} m={[2, 3]} fontSize={[3, 4, 5]}>
+    return <Container>
+        <RowContainer style={{justifyContent: "space-evenly"}}>
+            <ColumnContainer>
+                <Paragraph>
                     {intro.about}
-                    <br /><br />
+                </Paragraph>
+                <Paragraph>
                     {intro.aim}
-                </Text>
-            </Flex>
-
-            <Flex flexDirection="column" width={[1, 1 / 3]}>
+                </Paragraph>
+            </ColumnContainer>
+            <ColumnContainer>
                 <RequestAccess />
                 <DisclaimerBox />
-            </Flex>
-        </Flex>
-
-        <Flex py={4}>
-            <Box width={[0, 1 / 4]}> </Box>
-            <Box width={[1, 2 / 4]}>
-
-                <Box backgroundColor="primary" color="secondary" width={1} padding={[1, 2]}>
-                    <Heading textAlign="center" py={[1, 2]} fontSize={[2, 3, 5]}>{intro.instructions}</Heading>
-                    <Flex>
-                        <Box width={[1 / 20, 1 / 6]}></Box>
-                        <Box width={[9 / 10, 4 / 6]}>
-                            <Image margin="auto auto" src="/krets-qr.png" />
-                        </Box>
-                        <Box width={[1 / 20, 1 / 6]}></Box>
-                    </Flex>
-                </Box>
-            </Box>
-            <Box width={[0, 1 / 4]}> </Box>
-        </Flex>
-    </Box >
-};
+            </ColumnContainer>
+        </RowContainer>
+        <Testemonials
+            testemonials={
+                [
+                {
+                    companyName: "Festningen Tannklinikk AS", 
+                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre pasienter",
+                    personName:"Lars Martin Døving, daglig leder",
+                    logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
+                }, 
+            ]
+        }
+        />
+    </Container>
+    }
