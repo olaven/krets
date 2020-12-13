@@ -3,6 +3,7 @@ import { RowContainer, ColumnContainer } from "../../standard/Containers"
 import { Paragraph } from "../../standard/Text"
 
 const Container = styled(ColumnContainer, {
+    width: "44vw",
     justifyContent: "space-evenly",
     border: "solid black .5px",
     borderRadius: "20px",
@@ -39,11 +40,11 @@ export interface ITestemonial {
     logoURL: string
 }
 
-export const Testemonial = ({ companyName, quote, personName, logoURL}: Testemonial) => (
+export const Testemonial = ({ companyName, quote, personName, logoURL}: ITestemonial) => (
     <Container>
         <CompanyContainer>
             <Image src={logoURL}/>
-            <h2>{companyName}</h2>
+            <h2>{companyName}</h2> 
         </CompanyContainer>
         <QuoteContainer>
             <Paragraph ligth>

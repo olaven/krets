@@ -90,26 +90,16 @@ export const IntroSection = () => {
             </ColumnContainer>
         </RowContainer>
         <Testemonials
-            testemonials={[
+            testemonials={
+                [
                 {
-                    companyName: "Oslo Bedrift AS", 
-                    quote:"Med Krets kan vi få vite det kunden tenker, men ikke vil si direkte til oss.",
-                    personName:"Kari Normann", 
-                    logoURL:"https://krets.app/logo.svg"
-                }, 
-                {
-                    companyName:"Lillehammer Bedrift AS",
-                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
-                    personName:"Ola Normann, daglig leder",
+                    companyName: "Festningen Tannklinikk AS", 
+                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre pasienter",
+                    personName:"Lars Martin Døving, daglig leder",
                     logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
                 }, 
-                {
-                    companyName:"Drammen Bedrift AS",
-                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre kunder",
-                    personName:"Per Normann, daglig leder",
-                    logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
-                }
-            ]}
+            ]
+        }
         />
     </>
 
