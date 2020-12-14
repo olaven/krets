@@ -19,7 +19,7 @@ export const Modal = styled("div", {
     opacity: 0, 
     transition: "ease 300ms",
 
-    position: "absolute",
+    position: "fixed",
     border: "solid 1px", 
     borderRadius: "15px",
 
