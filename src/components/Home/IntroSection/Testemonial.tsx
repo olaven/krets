@@ -13,6 +13,7 @@ const Container = styled(ColumnContainer, {
 });
 
 const CompanyContainer = styled(ColumnContainer, {
+    marginTop: "$21",
     alignItems: 'center',
 }); 
 
@@ -44,13 +45,13 @@ export const Testemonial = ({ companyName, quote, personName, logoURL}: ITestemo
     <Container>
         <CompanyContainer>
             <Image src={logoURL}/>
-            <h2>{companyName}</h2> 
+            {/* <h2>{companyName}</h2>  */}
         </CompanyContainer>
         <QuoteContainer>
             <Paragraph ligth>
                 "{quote}" 
                 <br />
-                <Quote>-{personName}</Quote>
+                <Quote>- {personName}</Quote>
             </Paragraph>
         </QuoteContainer>
     </Container>
