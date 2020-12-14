@@ -106,6 +106,12 @@ export const IntroSection = () => {
                     personName:"Lars Martin Døving, daglig leder",
                     logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
                 }, 
+                {
+                    companyName: "Gamle Banken Frisør", 
+                    quote:"Med Krets kan vi få vite det kunden tenker, men ikke sier direkte til oss",
+                    personName:"Astrid Camilla Dalberg, daglig leder",
+                    logoURL:"/testemonials/gamle-banken.png",
+                }, 
             ]
         }
         />
