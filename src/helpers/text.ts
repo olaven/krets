@@ -205,7 +205,7 @@ export const buttons = strings({
         toQR: "SE KODE",
         toPage: "SE SIDE",
         toSettings: "Innstillinger",
-        loadMore: "Last flere sider",
+        loadMore: "Last mer",
     }
 });
 
