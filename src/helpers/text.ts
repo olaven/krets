@@ -585,7 +585,7 @@ export const about = strings({
         heading: "Heisann 👋 ",
         first: `
             Vil du bli bedre, er tilbakemeldinger nødvendig. 
-            Dessverre er de talt for vanlig med lange, detaljerte skjemaer 🥱 
+            Dessverre er det alt for vanlig med lange, detaljerte skjemaer 🥱 
             Vi er et alternativ til det!
         `,
         second: "Store skjemaer = lite tilbakemelding = ingen forbedring",
