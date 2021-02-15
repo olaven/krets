@@ -102,7 +102,7 @@ export const IntroSection = () => {
                 [
                 {
                     companyName: "Festningen Tannklinikk AS", 
-                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldigner fra våre pasienter",
+                    quote:"Krets har gitt oss en spennende, ny måte å hente inn tilbakemeldinger fra våre pasienter",
                     personName:"Lars Martin Døving, daglig leder",
                     logoURL:"https://www.festningen-tannklinikk.no/media/logo_postive.svg",
                 }, 
