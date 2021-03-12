@@ -26,7 +26,7 @@
     "babel-plugin-emotion": "^10.0.33",
     "cors": "^2.8.5",
     "emotion-theming": "^10.0.27",
-    "jspdf": "^2.1.1",
+    "jspdf": "^2.3.1",
     "nanoid": "^3.1.12",
     "next": "^9.5.5",
     "node-kall": "^1.0.71",
